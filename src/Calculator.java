@@ -82,7 +82,10 @@ import java.util.regex.Pattern;
                 return null;
             }
 
-            ;
+            //如果不重写此办法或者重写却return null,那么将会自动调用Parse()来自己解析。
+            public HashMap<String,Variable> onParseParamter(String paramter,ParameterRequest request,Calculator calculator){
+                return null;
+            }
         }
 
         OnReflectionFunction reflectionFunction = null;
@@ -114,10 +117,14 @@ import java.util.regex.Pattern;
 
         @Override
         String Solve(String parameterList) throws Exception {
-            Parse(parameterList);
+            HashMap<String,Variable> custom_paramter=reflectionFunction.onParseParamter(parameterList,request,getCalculator());
+            if(custom_paramter==null)
+                Parse(parameterList);
+            else
+                paramter=custom_paramter;
             if (reflectionFunction == null)
                 throw new Exception("No reflection function  callback was set!");
-            return getCalculator().Solve(reflectionFunction.onReflectionFunction(paramter, getCalculator()));
+            return /*getCalculator().Solve(*/reflectionFunction.onReflectionFunction(paramter, getCalculator());//);
         }
     }
 
@@ -168,7 +175,7 @@ import java.util.regex.Pattern;
         }
 
         class ParameterRequest {
-            public ArrayList<String> requestion_list = new ArrayList<String>();
+            private ArrayList<String> requestion_list = new ArrayList<String>();
 
             private ParameterRequest() {
             }
@@ -188,6 +195,16 @@ import java.util.regex.Pattern;
                 if (!name.isEmpty())
                     requestion_list.add(name);
             }
+
+            public int GetParamterRequestCount(){return requestion_list.size();}
+
+            public String[] GetParamterNameArray(){
+                String[] array=new String[GetParamterRequestCount()];
+                requestion_list.toArray(array);
+                return array;
+            }
+
+            public String GetParamterName(int index){return requestion_list.get(index);}
         }
 
         protected HashMap<String, Variable> paramter = new HashMap<>();
@@ -219,7 +236,7 @@ import java.util.regex.Pattern;
                 }
             }
             if (!paramter.isEmpty())
-                this.paramter.put(request.requestion_list.get(requestIndex), new Variable(request.requestion_list.get(requestIndex), getCalculator().Solve(paramter), getCalculator()));
+                this.paramter.put(request.requestion_list.get(requestIndex), new ExpressionVariable(request.requestion_list.get(requestIndex), getCalculator().Solve(paramter), getCalculator()));
         }
 
         protected String ParseDeclaring(String expression) throws Exception, StatementNotDeclaredException {
@@ -416,6 +433,7 @@ import java.util.regex.Pattern;
     public static class Variable extends Expression {
         enum VariableType{
             ExpressionVariable,
+            BooleanVariable,
             Normal,
             Unknown
         }
@@ -469,6 +487,8 @@ import java.util.regex.Pattern;
             switch (type){
                 case Normal:return new Variable(result.group(2),result.group(3),null);
                 case ExpressionVariable:return new ExpressionVariable(result.group(2),result.group(3),null);
+                case BooleanVariable:return new BooleanCaculator.BooleanVariable(result.group(2),result.group(3),null);
+
             }
             return null;
         }
@@ -480,6 +500,7 @@ import java.util.regex.Pattern;
     }
 
     public static class Digit extends Expression {
+
         public Digit(String value) {
             rawText = value;
         }
@@ -570,6 +591,12 @@ import java.util.regex.Pattern;
             return String.format("e##%s##%s",Variable_name,rawText);
         }
 
+        @Override
+        public String toString() {
+            return String.format("<expr> %s=%s",Variable_name,rawText);
+        }
+
+        public String GetExpreesion(){return rawText;}
     }
 
     private HashMap<String, Function> function_table = new HashMap<>();
@@ -582,7 +609,7 @@ import java.util.regex.Pattern;
     }
 
 
-    private Function GetFunction(String name) throws Exception, FunctionNotFoundException {
+    Function GetFunction(String name) throws Exception, FunctionNotFoundException {
         if (raw_function_table.containsKey(name)) {
             Function function = raw_function_table.get(name).Copy();
             function.setCalculator(this);
@@ -593,7 +620,7 @@ import java.util.regex.Pattern;
         return function_table.get(name);
     }
 
-    private Variable GetVariable(String name) throws VariableNotFoundException {
+    Variable GetVariable(String name) throws VariableNotFoundException {
         if (!variable_table.containsKey(name))
             throw new VariableNotFoundException(name);
         return variable_table.get(name);
@@ -607,7 +634,7 @@ import java.util.regex.Pattern;
         variable_table.put(variable.GetName(), variable);
     }
 
-    private String specialOperationChar = "+-*/~!@#$%^&();:\"\"|?><,`'\\";
+    private static String specialOperationChar = "+-*/~!@#$%^&();:\"\"|?><,`'\\";
 
     private String RequestVariable(String name) throws VariableNotFoundException {
         if (!variable_table.containsKey(name))
@@ -618,9 +645,9 @@ import java.util.regex.Pattern;
     private ArrayList<Expression> ParseExpression(String expression) throws Exception {
         ArrayList<Expression> expressionArrayList = new ArrayList<>();
         int position = 0;
-        char c;
-        Expression expr = null;
-        String statement = new String();
+        char c,tmp_c;
+        Calculator.Expression expr = null;
+        String statement = new String(),tmp_op;
         Stack<Integer> bracket_stack = new Stack<>();
         while (true) {
             if (position >= expression.length())
@@ -655,7 +682,16 @@ import java.util.regex.Pattern;
                     expr = checkConverExpression(statement);
                     if (expr != null)
                         expressionArrayList.add(expr);
-                    expressionArrayList.add(new Symbol(Character.toString(c)));
+                    tmp_op=Character.toString(c);
+                    {
+                        if(position<(expression.length()-1)){
+                            tmp_c=expression.charAt(position+1);
+                            if(specialOperationChar.contains(Character.toString(tmp_c))&&tmp_c!='('&&tmp_c==')'){
+                                tmp_op+=tmp_c;
+                            }
+                        }
+                    }
+                    expressionArrayList.add(new Calculator.Symbol(tmp_op));
                 }
                 //Reflush statement
                 statement = new String();
@@ -747,9 +783,7 @@ import java.util.regex.Pattern;
         }
 
         if (isValidVariable(expression)) {
-            if (!variable_table.containsKey(expression))
-                throw new VariableNotFoundException(expression);
-            return variable_table.get(expression).Copy();
+            return GetVariable(expression).Copy();
         }
 
         return null;
@@ -899,7 +933,7 @@ import java.util.regex.Pattern;
         }
     }
 
-    private String Solve(String expression) throws Exception {
+    String Solve(String expression) throws Exception {
         rawExpressionChain = ParseExpression(expression);
         ConverVariableToDigit();
         ConverFunctionToDigit();
@@ -927,6 +961,10 @@ import java.util.regex.Pattern;
         switch (executeType) {
             case "set": {
                 SetVariable(paramter);
+                break;
+            }
+            case "set_expr":{
+                SetExpressionVariable(paramter);
                 break;
             }
             case "reg": {
@@ -1251,4 +1289,51 @@ import java.util.regex.Pattern;
         }
         return "delete successfully";
     }
+
+    private void SetExpressionVariable(String expression)throws Exception{
+        if (expression.isEmpty())
+            throw new Exception("empty text");
+        char c;
+        String variable_name = "", variable_expression = "";
+        ExpressionVariable variable = null;
+        for (int position = 0; position < expression.length() - 1; position++) {
+            c = expression.charAt(position);
+            if (c == '=') {
+                variable_expression = expression.substring(position + 1);
+                variable = new ExpressionVariable(variable_name,variable_expression, this);
+                RegisterVariable(variable);
+                break;
+            } else {
+                variable_name += c;
+            }
+        }
+    }
+    /*
+    public String ExecuteFunction(String text)throws Exception{
+        Clear();
+        if (text.isEmpty())
+            throw new Exception("input empty text to execute");
+        char c;
+        String executeType = "", paramter = "";
+        String result = "";
+        for (int position = 0; position < text.length(); position++) {
+            c = text.charAt(position);
+            if (c == ' ') {
+                paramter = text.substring(position + 1);
+                break;
+            } else {
+                executeType += c;
+            }
+        }
+        switch (executeType) {
+            case "solve": {
+                result = Solve(paramter);
+                break;
+            }
+            default: {
+                return Execute(text);
+            }
+        }
+        return result;
+    }*/
 }
