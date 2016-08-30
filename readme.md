@@ -90,3 +90,13 @@ load用来读取前者save保存的文件，因为save保存时已经分开类�
 ```java
   load F:\mysave.opt
 ```
+##测试截图
+![](https://github.com/MikiraSora/ExtrameFunctionCalculator/blob/master/picture/test.jpg)  
+
+###正在实装以及未来将实装的新功能
+(函数)代码递归执行<br>
+(函数)布尔值运算bool()<br>
+(函数)流程控制函数if() loop()<br>
+(代码)类型检查
+(代码)操作符反射
+(代码)自定义类型运算
