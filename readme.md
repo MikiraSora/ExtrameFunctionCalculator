@@ -9,12 +9,11 @@
 
 ##语法列举/使用方式    (note :以下代码均可在ExtrameFunctionCalculator.Execute()使用)
 
-*reg
-reg 函数名(函数参数1,函数参数2,函数参数3...函数参数n)=表达式
-reg用来声明一个函数,例如:
-  reg f(x)=x*10
-  reg f(x,y,z)=g(x)+t(x,y)+o(f(z))
-
+reg 函数名(函数参数1,函数参数2,函数参数3...函数参数n)=表达式<br>
+reg用来声明一个函数,例如:<br>
+  reg f(x)=x*10<br>
+  reg f(x,y,z)=g(x)+t(x,y)+o(f(z))<br>
+  
 *set
 set 变量名=表达式
 set用来定义声明变量,例如:
