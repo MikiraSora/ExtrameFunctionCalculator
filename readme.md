@@ -7,7 +7,9 @@
 当然如果使用者觉得这货太sh[和谐]t了，那么可以使用隔壁的[BaseCalculator](https://github.com/MikiraSora/BaseCalculator)来进行四则运算，ExtrameFunctionCalculator则是
 由此基础撸成的.
 
-##语法列举/使用方式    (note :以下代码均可在ExtrameFunctionCalculator.Execute()使用)
+##语法列举/使用方式    
+------
+(note :以下代码均可在ExtrameFunctionCalculator.Execute()使用)
 
 reg 函数名(函数参数1,函数参数2,函数参数3...函数参数n)=表达式<br>
 reg用来声明一个函数,例如:<br>
