@@ -1,4 +1,4 @@
-import java.util.HashMap;
+﻿import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -273,53 +273,7 @@ public class CalculatorHelper {
                 return Double.toString(Math.toIntExact(parameter.get("x").GetDigit().GetInteger()));
             }
         });
-        /*execute
-            此方法会执行代码，但本身将会被当作参数参与计算Caculator.Solve（）。
-        */
-        Calculator.RegisterRawFunction("execute(x)", new Calculator.ReflectionFunction.OnReflectionFunction(){
-            @Override
-            public String onReflectionFunction(HashMap<String, Calculator.Variable> parameter, Calculator calculator)throws Exception{
-                Calculator c=calculator==null?new Calculator():calculator;
-                Calculator.Variable variable=parameter.get("x");
-                String execute_text="";
-                switch (variable.variable_type){
-                    case Normal:{
-                        execute_text= variable.Solve();
-                        return execute_text;
-                    }
-                    case ExpressionVariable:{
-                        execute_text= ((Calculator.ExpressionVariable)variable).GetExpreesion();
-                        break;
-                    }
-                }
-                return calculator.Execute(execute_text);
-            }
 
-            @Override
-            public HashMap<String, Calculator.Variable> onParseParamter(String paramter, Calculator.Function.ParameterRequest parameterRequest,Calculator calculator) {
-                HashMap<String, Calculator.Variable> ParamterMap=new HashMap<String, Calculator.Variable>();
-                ParamterMap.put(parameterRequest.GetParamterName(0),new Calculator.ExpressionVariable(parameterRequest.GetParamterName(0),paramter,calculator));
-                return ParamterMap;
-            }
-        });
-        /*bool
-        bool并不是独立的类型，而是普通的计算,若值为0则为false，反之true.
-         */
-        Calculator.RegisterRawFunction("bool(x)", new Calculator.ReflectionFunction.OnReflectionFunction() {
-            @Override
-            public HashMap<String, Calculator.Variable> onParseParamter(String paramter, Calculator.Function.ParameterRequest request, Calculator calculator) {
-
-                HashMap<String, Calculator.Variable> map = new HashMap<String, Calculator.Variable>();
-                map.put(request.GetParamterName(0), new Calculator.ExpressionVariable(request.GetParamterName(0), paramter, calculator));
-                return map;
-            }
-
-            @Override
-            public String onReflectionFunction(HashMap<String, Calculator.Variable> parameter, Calculator calculator) throws Exception {
-                String paramter = ((Calculator.ExpressionVariable) parameter.get("x")).GetExpreesion();
-                return paramter;
-            }
-        });
     }
 
     public static String GetHelp(){
