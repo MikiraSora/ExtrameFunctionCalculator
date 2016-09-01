@@ -1,0 +1,6 @@
+[custom functinon]
+f##f##x##x+6
+f##g##x##f(x)+5
+[variable]
+v##a##6.0
+v##v##6.0
