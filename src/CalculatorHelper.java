@@ -306,7 +306,7 @@ public class CalculatorHelper {
         /*bool
         bool并不是独立的类型，而是普通的计算,若值为0则为false，反之true.
          */
-        Calculator.RegisterRawFunction("bool(x)", new Calculator.ReflectionFunction.OnReflectionFunction() {
+        Calculator.RegisterRawFunction("bool(condition)", new Calculator.ReflectionFunction.OnReflectionFunction() {
             @Override
             public HashMap<String, Calculator.Variable> onParseParamter(String paramter, Calculator.Function.ParameterRequest request, Calculator calculator) {
                 HashMap<String, Calculator.Variable> map = new HashMap<String, Calculator.Variable>();
@@ -315,7 +315,7 @@ public class CalculatorHelper {
             }
             @Override
             public String onReflectionFunction(HashMap<String, Calculator.Variable> parameter, Calculator calculator) throws Exception {
-                String paramter = new BooleanCaculator.BooleanVariable(new BooleanCaculator(calculator).Solve(((Calculator.ExpressionVariable) parameter.get("x")).GetExpreesion()),calculator).Solve();
+                String paramter = new BooleanCaculator.BooleanVariable(new BooleanCaculator(calculator).Solve(((Calculator.ExpressionVariable) parameter.get("condition")).GetExpreesion()),calculator).Solve();
                 return paramter;
             }
         });
@@ -342,20 +342,20 @@ public class CalculatorHelper {
 
                     if (c == ',' && BracketStack.isEmpty()) {
                         String requestParamterName = request.GetParamterName(requestIndex++);
-                        variableHashMap.put(requestParamterName, new Calculator.Variable(requestParamterName, calculator.Copy().Solve(paramter), calculator.Copy()));
-                        paramter = new String();
+                        variableHashMap.put(requestParamterName, new Calculator.ExpressionVariable(requestParamterName, paramterString, calculator.Copy()));
+                        paramterString = new String();
                     } else {
-                        paramter += c;
+                        paramterString += c;
                     }
                 }
                 if (!paramter.isEmpty())
-                    variableHashMap.put(request.GetParamterName(requestIndex), new Calculator.ExpressionVariable(request.GetParamterName(requestIndex), calculator.Copy().Solve(paramter), calculator.Copy()));
-                return variableHashMap; 
+                    variableHashMap.put(request.GetParamterName(requestIndex), new Calculator.ExpressionVariable(request.GetParamterName(requestIndex), (paramterString), calculator.Copy()));
+                return variableHashMap;
             }
 
             @Override
             public String onReflectionFunction(HashMap<String, Calculator.Variable> parameter, Calculator calculator)throws Exception{
-                if(new BooleanCaculator(calculator).Solve(parameter.get("condition").Solve()))
+                if(new BooleanCaculator(calculator).Solve(((Calculator.ExpressionVariable)parameter.get("condition")).GetExpreesion()))
                     return calculator.Copy().Solve(parameter.get("true_expr").Solve());
                 else
                     return calculator.Copy().Solve(parameter.get("false_expr").Solve());

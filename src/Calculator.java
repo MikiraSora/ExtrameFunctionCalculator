@@ -1200,7 +1200,7 @@ import java.util.regex.Pattern;
             case All: {
                 stringBuffer.append("[custom functinon]").append("\n");
                 for (Map.Entry<String, Function> entry : function_table.entrySet()) {
-                    if(entry.getValue().getFunction_type()!= Function.FunctionType.Reflection_Function)//暂时未支持反射函数的序列化保存(预计先实现动态编译和反射文本)//TODO
+                    if(entry.getValue().getFunction_type()!= Function.FunctionType.Reflection_Function)//暂a时未支持反射函数的序列化保存(预计先实现动态编译和反射文本)//TODO
                         stringBuffer.append(entry.getValue().Serialize()).append("\n");
                 }
                 stringBuffer.append("[variable]").append("\n");

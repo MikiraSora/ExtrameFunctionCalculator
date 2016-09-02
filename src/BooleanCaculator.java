@@ -48,7 +48,7 @@ public class BooleanCaculator {
     Calculator.Variable GetVariable(String name) throws Calculator.VariableNotFoundException {
         return calculator.GetVariable(name);
     }
-    private static String specialOperationChar = "+-*/~!@#$%^&();:\"\"|?><,`'\\";
+    private static String specialOperationChar = "+ ++ - -- * / ~ ! != @ # $ % ^ & && ( ) ; : \" \" || ? > >= < >= , ` ' = ==";
 
     private String RequestVariable(String name) throws Calculator.VariableNotFoundException,Exception{
         return calculator.Solve(name);
@@ -98,8 +98,11 @@ public class BooleanCaculator {
                     {
                         if(position<(expression.length()-1)){
                             tmp_c=expression.charAt(position+1);
-                            if(specialOperationChar.contains(Character.toString(tmp_c))&&tmp_c!='('&&tmp_c==')'){
-                                tmp_op+=tmp_c;
+                            tmp_op+=tmp_c;
+                            position++;
+                            if(!specialOperationChar.contains(Character.toString(tmp_c))){
+                                tmp_op=Character.toString(tmp_op.charAt(0));
+                                position--;
                             }
                         }
                     }
@@ -159,7 +162,7 @@ public class BooleanCaculator {
     }
 
     private Calculator.Expression Execute(Calculator.Expression a, Calculator.Symbol op, Calculator.Expression b)throws Exception{
-        if(isBooleanOperator((Calculator.Symbol) a)){
+        if(isBooleanOperator((Calculator.Symbol) op)){
             return ExecuteBool(a,op,b);
         }
         if(!isSameType(a,b))
@@ -195,20 +198,30 @@ public class BooleanCaculator {
     }
 
     private BooleanVariable ExecuteBool(Calculator.Expression a, Calculator.Symbol op, Calculator.Expression b)throws Exception {
+        double va,vb;
         switch (op.Solve()){
             case ">":{
-                if(isCalculatable(a)&&isCalculatable(b))
-                    return new BooleanVariable(Double.valueOf(calculator.Copy().Solve(a.Solve()))>Double.valueOf(calculator.Copy().Solve(b.Solve())),calculator);
+                if(isCalculatable(a)&&isCalculatable(b)){
+                    va=Double.valueOf(calculator.Copy().Solve(a.Solve()));
+                    vb=Double.valueOf(calculator.Copy().Solve(b.Solve()));
+                    return new BooleanVariable(va>vb,calculator);
+                }
                 break;
             }
             case "<":{
-                if(isCalculatable(a)&&isCalculatable(b))
-                    return new BooleanVariable(Double.valueOf(calculator.Copy().Solve(a.Solve()))<Double.valueOf(calculator.Copy().Solve(b.Solve())),calculator);
+                if(isCalculatable(a)&&isCalculatable(b)){
+                    va=Double.valueOf(calculator.Copy().Solve(a.Solve()));
+                    vb=Double.valueOf(calculator.Copy().Solve(b.Solve()));
+                    return new BooleanVariable(va<vb,calculator);
+                }
                 break;
             }
             case "==":{
-                if(isCalculatable(a)&&isCalculatable(b))
-                    return new BooleanVariable(Double.valueOf(calculator.Copy().Solve(a.Solve()))==Double.valueOf(calculator.Copy().Solve(b.Solve())),calculator);
+                if(isCalculatable(a)&&isCalculatable(b)){
+                    va=Double.valueOf(calculator.Copy().Solve(a.Solve()));
+                    vb=Double.valueOf(calculator.Copy().Solve(b.Solve()));
+                    return new BooleanVariable(va==vb,calculator);
+                }
                 if(a.GetType()== Calculator.Expression.ExpressionType.Variable)
                     if(isSameType(a,b))
                         if(((Calculator.Variable)a).variable_type== Calculator.Variable.VariableType.BooleanVariable)
@@ -216,18 +229,26 @@ public class BooleanCaculator {
                 break;
             }
             case ">=":{
-                if(isCalculatable(a)&&isCalculatable(b))
-                    return new BooleanVariable(Double.valueOf(calculator.Copy().Solve(a.Solve()))>=Double.valueOf(calculator.Copy().Solve(b.Solve())),calculator);
+                if(isCalculatable(a)&&isCalculatable(b)){
+                    va=Double.valueOf(calculator.Copy().Solve(a.Solve()));
+                    vb=Double.valueOf(calculator.Copy().Solve(b.Solve()));
+                    return new BooleanVariable(va>=vb,calculator);
+                }
                 break;
             }
             case "<=":{
-                if(isCalculatable(a)&&isCalculatable(b))
-                    return new BooleanVariable(Double.valueOf(calculator.Copy().Solve(a.Solve()))<=Double.valueOf(calculator.Copy().Solve(b.Solve())),calculator);
+                if(isCalculatable(a)&&isCalculatable(b)){
+                    va=Double.valueOf(calculator.Copy().Solve(a.Solve()));
+                    vb=Double.valueOf(calculator.Copy().Solve(b.Solve()));
+                    return new BooleanVariable(va<=vb,calculator);
+                }
                 break;
             }
             case "!":{
-                if(isCalculatable(a))
-                    return new BooleanVariable(!(Double.valueOf(calculator.Copy().Solve(a.Solve()))!=0),calculator);
+                if(isCalculatable(a)){
+                    va=Double.valueOf(calculator.Copy().Solve(a.Solve()));
+                    return new BooleanVariable((va==0),calculator);
+                }
                 if(a.GetType()== Calculator.Expression.ExpressionType.Variable)
                     if(isSameType(a,b))
                         if(((Calculator.Variable)a).variable_type== Calculator.Variable.VariableType.BooleanVariable)
@@ -235,8 +256,11 @@ public class BooleanCaculator {
                 break;
             }
             case "||":{
-                if(isCalculatable(a)&&isCalculatable(b))
-                    return new BooleanVariable((Double.valueOf(calculator.Copy().Solve(a.Solve()))!=0)||(Double.valueOf(calculator.Copy().Solve(b.Solve()))!=0),calculator);
+                if(isCalculatable(a)&&isCalculatable(b)){
+                    va=Double.valueOf(calculator.Copy().Solve(a.Solve()));
+                    vb=Double.valueOf(calculator.Copy().Solve(b.Solve()));
+                    return new BooleanVariable((va!=0)||(vb!=0),calculator);
+                }
                 if(a.GetType()== Calculator.Expression.ExpressionType.Variable)
                     if(isSameType(a,b))
                         if(((Calculator.Variable)a).variable_type== Calculator.Variable.VariableType.BooleanVariable)
@@ -244,8 +268,11 @@ public class BooleanCaculator {
                 break;
             }
             case "&&":{
-                if(isCalculatable(a)&&isCalculatable(b))
-                    return new BooleanVariable((Double.valueOf(calculator.Copy().Solve(a.Solve()))!=0)&&(Double.valueOf(calculator.Copy().Solve(b.Solve()))!=0),calculator);
+                if(isCalculatable(a)&&isCalculatable(b)){
+                    va=Double.valueOf(calculator.Copy().Solve(a.Solve()));
+                    vb=Double.valueOf(calculator.Copy().Solve(b.Solve()));
+                    return new BooleanVariable((va!=0)&&(vb!=0),calculator);
+                }
                 if(a.GetType()== Calculator.Expression.ExpressionType.Variable)
                     if(isSameType(a,b))
                         if(((Calculator.Variable)a).variable_type== Calculator.Variable.VariableType.BooleanVariable)
@@ -254,8 +281,11 @@ public class BooleanCaculator {
                 break;
             }
             case "!=":{
-                if(isCalculatable(a)&&isCalculatable(b))
-                    return new BooleanVariable((Double.valueOf(calculator.Copy().Solve(a.Solve())))!=(Double.valueOf(calculator.Copy().Solve(b.Solve()))),calculator);
+                if(isCalculatable(a)&&isCalculatable(b)){
+                    va=Double.valueOf(calculator.Copy().Solve(a.Solve()));
+                    vb=Double.valueOf(calculator.Copy().Solve(b.Solve()));
+                    return new BooleanVariable((va!=0)!=(vb!=0),calculator);
+                }
                 if(a.GetType()== Calculator.Expression.ExpressionType.Variable)
                     if(isSameType(a,b))
                         if(((Calculator.Variable)a).variable_type== Calculator.Variable.VariableType.BooleanVariable)
@@ -423,7 +453,7 @@ public class BooleanCaculator {
                     digit_stack.push(digit_result);
                 } else {
                     if (node.GetType() == Calculator.Expression.ExpressionType.Digit) {
-                        digit_stack.push((Calculator.Digit) node);
+                        digit_stack.push(node);
                     } else
                         throw new Exception("Unknown Node");
                 }
@@ -432,7 +462,14 @@ public class BooleanCaculator {
             throw new Exception(e.getMessage());
 
         }
-        return new BooleanVariable(Double.valueOf(digit_stack.pop().Solve())!=0,calculator).boolean_value;
+        //get last expression in stack as result and output.
+        Calculator.Expression result=digit_stack.pop();
+        if(result.GetType()== Calculator.Expression.ExpressionType.Digit)
+            return Double.valueOf(digit_stack.pop().Solve())!=0;
+        if(result.GetType()== Calculator.Expression.ExpressionType.Variable)
+            if(((Calculator.Variable)result).variable_type== Calculator.Variable.VariableType.BooleanVariable)
+                return ((BooleanVariable)result).boolean_value;
+        throw new Exception("Uncalculatable type :"+result.GetType().toString());
     }
 
     public BooleanCaculator(Calculator cal){calculator=cal;}
@@ -443,5 +480,17 @@ public class BooleanCaculator {
         ConverFunctionToDigit();
         ConverToBSE();
         return ExucuteBSE();
+    }
+}
+
+abstract class List_<T>{
+    ArrayList<T> arrayList=new ArrayList<T>();
+    T getItem(int index){return arrayList.get(index);}
+}
+
+class IntegerList extends List_<Integer>{
+    @Override
+    Integer getItem(int index) {
+        return super.getItem(index);
     }
 }
