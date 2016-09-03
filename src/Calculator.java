@@ -317,10 +317,17 @@ import java.util.regex.Pattern;
         static HashMap<SymbolType, Float> OperationPrioty = new HashMap<>();
         static HashMap<SymbolType, String> OperationSet = new HashMap<>();
 
+/*
         public int CompareOperationPrioty(Symbol symbol) {
             float val = OperationPrioty.get(this.symbol_type) - OperationPrioty.get(symbol.symbol_type);
             return val == 0 ? 0 : (val > 0 ? 1 : -1);
         }
+*/
+        public int CompareOperationPrioty(Symbol symbol) {
+            float val = OperatorPrioty.get(this.rawText) - OperatorPrioty.get(symbol.rawText);
+            return val == 0 ? 0 : (val > 0 ? 1 : -1);
+        }
+
 
         private static void Init() {
             OperationPrioty.put(SymbolType.Add, 3f);
@@ -394,6 +401,26 @@ import java.util.regex.Pattern;
         ExpressionType GetType() {
             return ExpressionType.Symbol;
         }
+
+        static HashMap<String,OperatorFunction> OperatorFunction=new HashMap<>();
+        static HashMap<String,Float> OperatorPrioty=new HashMap<>();
+        static HashMap<String,Integer> OperatorRequestParamterCount=new HashMap<>();
+
+        static abstract class OperatorFunction{
+            ArrayList<Expression> onCalculate(ArrayList<Expression> paramterList,Calculator calculator) throws Exception{return null;}
+        }
+
+        public static void RegisterOperation(String operatorSymbol,int requestParamterSize,float operatorPrioty,OperatorFunction operatorFunction) {
+            OperatorFunction.put(operatorSymbol,operatorFunction);
+            OperatorPrioty.put(operatorSymbol,operatorPrioty);
+            OperatorRequestParamterCount.put(operatorSymbol,requestParamterSize);
+        }
+
+        ArrayList<Expression> Solve(ArrayList<Expression> paramterList,Calculator calculator)throws Exception{
+            return OperatorFunction.get(rawText).onCalculate(paramterList, calculator);
+        }
+
+        int GetParamterCount(){return OperatorRequestParamterCount.get(rawText);}
     }
 
     class VariableNotFoundException extends Exception {
@@ -605,7 +632,8 @@ import java.util.regex.Pattern;
     private static HashMap<String, ReflectionFunction> raw_function_table = new HashMap<>();
 
     static {
-        InitRawFunctionDeclare();
+        CalculatorHelper.InitOperatorDeclare();
+        CalculatorHelper.InitFunctionDeclare();
     }
 
 
@@ -743,7 +771,7 @@ import java.util.regex.Pattern;
             e.printStackTrace();
         }
     }
-
+/*
     private Digit Execute(Digit a, Symbol op, Digit b) {
         if (op.symbol_type == Symbol.SymbolType.Add)
             return new Digit(Double.toString(a.GetDouble() + b.GetDouble()));
@@ -760,7 +788,7 @@ import java.util.regex.Pattern;
 
         return null;
     }
-
+*/
     private Expression checkConverExpression(String expression) throws Exception {
         if (isFunction(expression)) {
             //Get function name
@@ -862,7 +890,7 @@ import java.util.regex.Pattern;
                 if (operation_stack.isEmpty())
                     operation_stack.push((Symbol) node);
                 else {
-                    if (((Symbol) node).symbol_type != Symbol.SymbolType.Bracket_Right) {// )
+                    if (!(((Symbol) node).rawText.equals(")")/*((Symbol) node).symbol_type != Symbol.SymbolType.Bracket_Right*/)){// )
                         symbol = operation_stack.peek();
                         /*
                         while ((symbol == null ? false : (symbol.symbol_type != Symbol.SymbolType.Bracket_Left && symbol.CompareOperationPrioty((Symbol) node) >= 0))) {
@@ -871,8 +899,8 @@ import java.util.regex.Pattern;
                         }*/
 
                         while(symbol!=null){
-                            if(symbol.symbol_type != Symbol.SymbolType.Bracket_Left/*&&((Symbol)node).symbol_type!= Symbol.SymbolType.Bracket_Left*/)
-                                if(symbol.CompareOperationPrioty((Symbol) node) >= 0){
+                            if(!(symbol.rawText .equals("("))/*&&((Symbol)node).symbol_type!= Symbol.SymbolType.Bracket_Left*/)
+                                    if(symbol.CompareOperationPrioty((Symbol) node) >= 0){
                                     result_list.add(operation_stack.pop());
                                     symbol = operation_stack.size() != 0 ? operation_stack.peek() : null;
                                     continue;
@@ -885,7 +913,7 @@ import java.util.regex.Pattern;
                         while (true) {
                             if (operation_stack.size() == 0)
                                 throw new Exception("喵喵喵?");
-                            if (symbol.symbol_type == Symbol.SymbolType.Bracket_Left) {
+                            if ((symbol.rawText.equals("("))/*symbol.symbol_type!= Symbol.SymbolType.Bracket_Left*/) {
                                 operation_stack.pop();
                                 break;
                             }
@@ -903,7 +931,7 @@ import java.util.regex.Pattern;
         for (int i = 0; i < result_list.size(); i++) {
             node = result_list.get(i);
             if (node.GetType() == Expression.ExpressionType.Symbol)
-                if (((Symbol) node).symbol_type == Symbol.SymbolType.Bracket_Left)
+                if (((Symbol) node).rawText.equals("(")/*((Symbol) node).symbol_type == Symbol.SymbolType.Bracket_Left*/)
                     result_list.remove(node);
         }
         BSEChain = result_list;
@@ -913,17 +941,25 @@ import java.util.regex.Pattern;
         if (BSEChain.size() == 1)
             if (BSEChain.get(0).GetType() == Expression.ExpressionType.Digit)
                 return String.valueOf((((Digit) BSEChain.get(0)).GetDouble()));
-        Stack<Digit> digit_stack = new Stack<>();
-        Digit digit_a, digit_b, digit_result;
+        Stack<Expression> digit_stack = new Stack<>();
+        //Stack<Digit> digit_stack = new Stack<>();
+        Expression/*Digit*/ digit_a, digit_b, digit_result;
         Symbol operator;
+        ArrayList<Expression> paramterList,result;
         try {
             for (Expression node : BSEChain) {
                 if (node.GetType() == Expression.ExpressionType.Symbol) {
                     operator = (Symbol) node;
-                    digit_b = digit_stack.pop();
+                    paramterList=new ArrayList<>();
+                    for(int i=0;i<operator.GetParamterCount();i++)
+                        paramterList.add(digit_stack.isEmpty() ? new Digit("0") : digit_stack.pop());
+                    /*digit_b = digit_stack.pop();
                     digit_a = digit_stack.isEmpty() ? new Digit("0") : digit_stack.pop();
-                    digit_result = Execute(digit_a, operator, digit_b);
-                    digit_stack.push(digit_result);
+                    digit_result = Execute(digit_a, operator, digit_b);*/
+                    Collections.reverse(paramterList);
+                    result=operator.Solve(paramterList,Copy());
+                    for(Expression expr:result)
+                        digit_stack.push(expr);
                 } else {
                     if (node.GetType() == Expression.ExpressionType.Digit) {
                         digit_stack.push((Digit) node);
@@ -1102,9 +1138,6 @@ import java.util.regex.Pattern;
         }
     }
 
-    private static void InitRawFunctionDeclare() {
-        CalculatorHelper.InitDeclare();
-    }
 
     public boolean ContainFunction(String name) {
         if (raw_function_table.containsKey(name))

@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Stack;
 import java.util.concurrent.ExecutionException;
@@ -7,7 +8,83 @@ import java.util.concurrent.ExecutionException;
  */
 
 public class CalculatorHelper {
-    public static void InitDeclare(){
+    public static void InitOperatorDeclare(){
+        Calculator.Symbol.RegisterOperation("+", 2, 3f, new Calculator.Symbol.OperatorFunction() {
+            @Override
+            ArrayList<Calculator.Expression> onCalculate(ArrayList<Calculator.Expression> paramterList, Calculator calculator) throws Exception {
+                ArrayList<Calculator.Expression> result=new ArrayList<Calculator.Expression>();
+                Calculator.Digit a=(Calculator.Digit) paramterList.get(0),b=(Calculator.Digit) paramterList.get(1);
+                result.add(new Calculator.Digit(Double.toString(a.GetDouble()+b.GetDouble())));
+                return result;
+            }
+        });
+
+        Calculator.Symbol.RegisterOperation("-", 2, 3f, new Calculator.Symbol.OperatorFunction() {
+            @Override
+            ArrayList<Calculator.Expression> onCalculate(ArrayList<Calculator.Expression> paramterList, Calculator calculator) throws Exception {
+                ArrayList<Calculator.Expression> result=new ArrayList<Calculator.Expression>();
+                Calculator.Digit a=(Calculator.Digit) paramterList.get(0),b=(Calculator.Digit) paramterList.get(1);
+                result.add(new Calculator.Digit(Double.toString(a.GetDouble()-b.GetDouble())));
+                return result;
+            }
+        });
+
+        Calculator.Symbol.RegisterOperation("*", 2, 6f, new Calculator.Symbol.OperatorFunction() {
+            @Override
+            ArrayList<Calculator.Expression> onCalculate(ArrayList<Calculator.Expression> paramterList, Calculator calculator) throws Exception {
+                ArrayList<Calculator.Expression> result=new ArrayList<Calculator.Expression>();
+                Calculator.Digit a=(Calculator.Digit) paramterList.get(0),b=(Calculator.Digit) paramterList.get(1);
+                result.add(new Calculator.Digit(Double.toString(a.GetDouble()*b.GetDouble())));
+                return result;
+            }
+        });
+
+        Calculator.Symbol.RegisterOperation("/", 2, 6f, new Calculator.Symbol.OperatorFunction() {
+            @Override
+            ArrayList<Calculator.Expression> onCalculate(ArrayList<Calculator.Expression> paramterList, Calculator calculator) throws Exception {
+                ArrayList<Calculator.Expression> result=new ArrayList<Calculator.Expression>();
+                Calculator.Digit a=(Calculator.Digit) paramterList.get(0),b=(Calculator.Digit) paramterList.get(1);
+                result.add(new Calculator.Digit(Double.toString(a.GetDouble()/b.GetDouble())));
+                return result;
+            }
+        });
+
+        Calculator.Symbol.RegisterOperation("%", 2, 6f, new Calculator.Symbol.OperatorFunction() {
+            @Override
+            ArrayList<Calculator.Expression> onCalculate(ArrayList<Calculator.Expression> paramterList, Calculator calculator) throws Exception {
+                ArrayList<Calculator.Expression> result=new ArrayList<Calculator.Expression>();
+                Calculator.Digit a=(Calculator.Digit) paramterList.get(0),b=(Calculator.Digit) paramterList.get(1);
+                result.add(new Calculator.Digit(Double.toString(a.GetDouble()%b.GetDouble())));
+                return result;
+            }
+        });
+
+        Calculator.Symbol.RegisterOperation("^", 2, 6f, new Calculator.Symbol.OperatorFunction() {
+            @Override
+            ArrayList<Calculator.Expression> onCalculate(ArrayList<Calculator.Expression> paramterList, Calculator calculator) throws Exception {
+                ArrayList<Calculator.Expression> result=new ArrayList<Calculator.Expression>();
+                Calculator.Digit a=(Calculator.Digit) paramterList.get(0),b=(Calculator.Digit) paramterList.get(1);
+                result.add(new Calculator.Digit(Double.toString(Math.pow(a.GetDouble(),b.GetDouble()))));
+                return result;
+            }
+        });
+
+        Calculator.Symbol.RegisterOperation("(", 0, 12f, new Calculator.Symbol.OperatorFunction() {
+            @Override
+            ArrayList<Calculator.Expression> onCalculate(ArrayList<Calculator.Expression> paramterList, Calculator calculator) throws Exception {
+                return null;
+            }
+        });
+
+        Calculator.Symbol.RegisterOperation(")", 0, 12f, new Calculator.Symbol.OperatorFunction() {
+            @Override
+            ArrayList<Calculator.Expression> onCalculate(ArrayList<Calculator.Expression> paramterList, Calculator calculator) throws Exception {
+                return null;
+            }
+        });
+    }
+
+    public static void InitFunctionDeclare(){
         //cos
         Calculator.RegisterRawFunction("cos(x)", new Calculator.ReflectionFunction.OnReflectionFunction(){
             @Override
