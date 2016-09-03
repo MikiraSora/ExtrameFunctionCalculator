@@ -82,6 +82,7 @@ public class CalculatorHelper {
                 return null;
             }
         });
+
     }
 
     public static void InitFunctionDeclare(){
@@ -351,6 +352,15 @@ public class CalculatorHelper {
                 return Double.toString(Math.toIntExact(parameter.get("x").GetDigit().GetInteger()));
             }
         });
+
+
+        /*
+        *以下的函数并非是原MATH类所存在的函数，而且大多都是非计算性用途
+        *所以使用以下函数前请务必读好函数定义前的注释。弄清楚使用方法和限定缺陷
+        *否则GG
+        * 请用master的支线版本，feature是测试用的，dev则是开发中
+        * */
+
         /*execute
             此方法会执行代码，但本身将会被当作参数参与计算Caculator.Solve（）。
         */
@@ -380,6 +390,7 @@ public class CalculatorHelper {
                 return ParamterMap;
             }
         });
+
         /*bool
         bool并不是独立的类型，而是普通的计算,若值为0则为false，反之true.
          */
@@ -397,6 +408,14 @@ public class CalculatorHelper {
             }
         });
 
+
+        /*if
+            此方法会根据条件执行相对应的表达式，但和编程语言的不一样，布尔运算的均是从左到右计算！
+            if(condition,true_expr,false_expr)
+            condition : 条件表达式，只有这里才可以执行布尔运算 ，如 4+6>10 , 4^2<0==true , x==0||y!=0
+            true_expr : 条件表达式最终结果为true或者数值不为0时就会计算此表达式(Solve())
+            true_expr : 条件表达式最终结果为false或者数值为0时就会计算此表达式(Solve())
+        */
         Calculator.RegisterRawFunction("if(condition,true_expr,false_expr)", new Calculator.ReflectionFunction.OnReflectionFunction(){
             @Override
             public HashMap<String, Calculator.Variable> onParseParamter(String paramter, Calculator.Function.ParameterRequest request, Calculator calculator)throws Exception{
@@ -437,9 +456,53 @@ public class CalculatorHelper {
                 else
                     return calculator.Copy().Solve(parameter.get("false_expr").Solve());
             }
+
         });
 
+        /*extraSolve
+        * 此函数会先计算normal_expr表达式，后计算extra_expr表达式，但返回normal_expr表达式的计算结果
+        * solve extraSolve(5+5+4,1) //返回14
+        * */
+        Calculator.RegisterRawFunction("extraSolve(normal_expr,extra_expr)", new Calculator.ReflectionFunction.OnReflectionFunction(){
+            @Override
+            public HashMap<String, Calculator.Variable> onParseParamter(String paramter, Calculator.Function.ParameterRequest request, Calculator calculator)throws Exception{
+                char c;
+                int requestIndex = 0;
+                HashMap<String, Calculator.Variable> variableHashMap=new HashMap<String, Calculator.Variable>();
+                Stack<Integer> BracketStack = new Stack<>();
+                String paramterString = new String();
+                for (int pos = 0; pos < paramter.length(); pos++) {
+                    c = paramter.charAt(pos);
+                    if (c == '(') {
+                        BracketStack.push(pos);
+                    } else if (c == ')') {
+                        if (!BracketStack.isEmpty())
+                            //BracketStack.push(pos);
+                            BracketStack.pop();
+                        else
+                            throw new Exception("Not found a pair of bracket what defining a expression");
+                    }
 
+                    if (c == ',' && BracketStack.isEmpty()) {
+                        String requestParamterName = request.GetParamterName(requestIndex++);
+                        variableHashMap.put(requestParamterName, new Calculator.ExpressionVariable(requestParamterName, paramterString, calculator.Copy()));
+                        paramterString = new String();
+                    } else {
+                        paramterString += c;
+                    }
+                }
+                if (!paramter.isEmpty())
+                    variableHashMap.put(request.GetParamterName(requestIndex), new Calculator.ExpressionVariable(request.GetParamterName(requestIndex), (paramterString), calculator.Copy()));
+                return variableHashMap;
+            }
+
+            @Override
+            public String onReflectionFunction(HashMap<String, Calculator.Variable> parameter, Calculator calculator)throws Exception{
+                String result=calculator.Copy().Solve(parameter.get("normal_expr").Solve());
+                calculator.Copy().Solve(parameter.get("extra_expr").Solve());
+                return result;
+            }
+        });
     }
 
     public static String GetHelp(){
