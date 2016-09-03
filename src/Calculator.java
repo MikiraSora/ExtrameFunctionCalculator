@@ -634,7 +634,7 @@ import java.util.regex.Pattern;
         variable_table.put(variable.GetName(), variable);
     }
 
-    private static String specialOperationChar = "+-*/~!@#$%^&();:\"\"|?><,`'\\";
+    private static String specialOperationChar = " + - * / ~ ! @ # $ % ^ & ( ) ; : \" | ? > < , ` ' \\ ";
 
     private String RequestVariable(String name) throws VariableNotFoundException {
         if (!variable_table.containsKey(name))
@@ -653,7 +653,7 @@ import java.util.regex.Pattern;
             if (position >= expression.length())
                 break;
             c = expression.charAt(position);
-            if (specialOperationChar.contains(String.valueOf(c))) {
+            if (specialOperationChar.contains(" "+String.valueOf(c)+" ")) {
                 if ((!statement.isEmpty()) && (c == '(')) {
                     //Function Parser
                     bracket_stack.clear();
@@ -686,8 +686,9 @@ import java.util.regex.Pattern;
                     {
                         if(position<(expression.length()-1)){
                             tmp_c=expression.charAt(position+1);
-                            if(specialOperationChar.contains(Character.toString(tmp_c))&&tmp_c!='('&&tmp_c==')'){
-                                tmp_op+=tmp_c;
+                            tmp_op+=tmp_c;
+                            if(!specialOperationChar.contains(" "+(tmp_op)+" ")){
+                                tmp_op=Character.toString(c);
                             }
                         }
                     }
@@ -861,11 +862,22 @@ import java.util.regex.Pattern;
                 if (operation_stack.isEmpty())
                     operation_stack.push((Symbol) node);
                 else {
-                    if (((Symbol) node).symbol_type != Symbol.SymbolType.Bracket_Right) {
+                    if (((Symbol) node).symbol_type != Symbol.SymbolType.Bracket_Right) {// )
                         symbol = operation_stack.peek();
+                        /*
                         while ((symbol == null ? false : (symbol.symbol_type != Symbol.SymbolType.Bracket_Left && symbol.CompareOperationPrioty((Symbol) node) >= 0))) {
                             result_list.add(operation_stack.pop());
                             symbol = operation_stack.size() != 0 ? operation_stack.peek() : null;
+                        }*/
+
+                        while(symbol!=null){
+                            if(symbol.symbol_type != Symbol.SymbolType.Bracket_Left/*&&((Symbol)node).symbol_type!= Symbol.SymbolType.Bracket_Left*/)
+                                if(symbol.CompareOperationPrioty((Symbol) node) >= 0){
+                                    result_list.add(operation_stack.pop());
+                                    symbol = operation_stack.size() != 0 ? operation_stack.peek() : null;
+                                    continue;
+                                }
+                            break;
                         }
                         operation_stack.push((Symbol) node);
                     } else {
