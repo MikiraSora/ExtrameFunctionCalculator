@@ -9,7 +9,7 @@ import java.util.concurrent.ExecutionException;
 
 public class CalculatorHelper {
     public static void InitOperatorDeclare(){
-        Calculator.Symbol.RegisterOperation("+", 2, 3f, new Calculator.Symbol.OperatorFunction() {
+        Calculator.Symbol.RegisterOperation("+", 2, 6f, new Calculator.Symbol.OperatorFunction() {
             @Override
             ArrayList<Calculator.Expression> onCalculate(ArrayList<Calculator.Expression> paramterList, Calculator calculator) throws Exception {
                 ArrayList<Calculator.Expression> result=new ArrayList<Calculator.Expression>();
@@ -19,7 +19,7 @@ public class CalculatorHelper {
             }
         });
 
-        Calculator.Symbol.RegisterOperation("-", 2, 3f, new Calculator.Symbol.OperatorFunction() {
+        Calculator.Symbol.RegisterOperation("-", 2, 6f, new Calculator.Symbol.OperatorFunction() {
             @Override
             ArrayList<Calculator.Expression> onCalculate(ArrayList<Calculator.Expression> paramterList, Calculator calculator) throws Exception {
                 ArrayList<Calculator.Expression> result=new ArrayList<Calculator.Expression>();
@@ -29,7 +29,7 @@ public class CalculatorHelper {
             }
         });
 
-        Calculator.Symbol.RegisterOperation("*", 2, 6f, new Calculator.Symbol.OperatorFunction() {
+        Calculator.Symbol.RegisterOperation("*", 2, 9f, new Calculator.Symbol.OperatorFunction() {
             @Override
             ArrayList<Calculator.Expression> onCalculate(ArrayList<Calculator.Expression> paramterList, Calculator calculator) throws Exception {
                 ArrayList<Calculator.Expression> result=new ArrayList<Calculator.Expression>();
@@ -39,7 +39,7 @@ public class CalculatorHelper {
             }
         });
 
-        Calculator.Symbol.RegisterOperation("/", 2, 6f, new Calculator.Symbol.OperatorFunction() {
+        Calculator.Symbol.RegisterOperation("/", 2, 9f, new Calculator.Symbol.OperatorFunction() {
             @Override
             ArrayList<Calculator.Expression> onCalculate(ArrayList<Calculator.Expression> paramterList, Calculator calculator) throws Exception {
                 ArrayList<Calculator.Expression> result=new ArrayList<Calculator.Expression>();
@@ -49,7 +49,7 @@ public class CalculatorHelper {
             }
         });
 
-        Calculator.Symbol.RegisterOperation("%", 2, 6f, new Calculator.Symbol.OperatorFunction() {
+        Calculator.Symbol.RegisterOperation("%", 2, 9f, new Calculator.Symbol.OperatorFunction() {
             @Override
             ArrayList<Calculator.Expression> onCalculate(ArrayList<Calculator.Expression> paramterList, Calculator calculator) throws Exception {
                 ArrayList<Calculator.Expression> result=new ArrayList<Calculator.Expression>();
@@ -59,7 +59,7 @@ public class CalculatorHelper {
             }
         });
 
-        Calculator.Symbol.RegisterOperation("^", 2, 6f, new Calculator.Symbol.OperatorFunction() {
+        Calculator.Symbol.RegisterOperation("^", 2, 12f, new Calculator.Symbol.OperatorFunction() {
             @Override
             ArrayList<Calculator.Expression> onCalculate(ArrayList<Calculator.Expression> paramterList, Calculator calculator) throws Exception {
                 ArrayList<Calculator.Expression> result=new ArrayList<Calculator.Expression>();
@@ -69,14 +69,14 @@ public class CalculatorHelper {
             }
         });
 
-        Calculator.Symbol.RegisterOperation("(", 0, 12f, new Calculator.Symbol.OperatorFunction() {
+        Calculator.Symbol.RegisterOperation("(", 0, 99f, new Calculator.Symbol.OperatorFunction() {
             @Override
             ArrayList<Calculator.Expression> onCalculate(ArrayList<Calculator.Expression> paramterList, Calculator calculator) throws Exception {
                 return null;
             }
         });
 
-        Calculator.Symbol.RegisterOperation(")", 0, 12f, new Calculator.Symbol.OperatorFunction() {
+        Calculator.Symbol.RegisterOperation(")", 0, 99f, new Calculator.Symbol.OperatorFunction() {
             @Override
             ArrayList<Calculator.Expression> onCalculate(ArrayList<Calculator.Expression> paramterList, Calculator calculator) throws Exception {
                 return null;

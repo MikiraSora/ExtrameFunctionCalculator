@@ -122,8 +122,6 @@ import java.util.regex.Pattern;
                 Parse(parameterList);
             else
                 paramter=custom_paramter;
-            if (reflectionFunction == null)
-                throw new Exception("No reflection function  callback was set!");
             return /*getCalculator().Solve(*/reflectionFunction.onReflectionFunction(paramter, getCalculator());//);
         }
     }
@@ -217,7 +215,7 @@ import java.util.regex.Pattern;
             String paramter = new String();
             for (int pos = 0; pos < name.length(); pos++) {
                 c = name.charAt(pos);
-                if (c == '(') {
+                if (c ==    '(') {
                     BracketStack.push(pos);
                 } else if (c == ')') {
                     if (!BracketStack.isEmpty())
@@ -302,7 +300,7 @@ import java.util.regex.Pattern;
     }
 
     public static class Symbol extends Expression {
-        public enum SymbolType {
+/*        public enum SymbolType {
             Add,//+
             Subtract,//-
             Multiply,//*
@@ -317,7 +315,7 @@ import java.util.regex.Pattern;
         static HashMap<SymbolType, Float> OperationPrioty = new HashMap<>();
         static HashMap<SymbolType, String> OperationSet = new HashMap<>();
 
-/*
+
         public int CompareOperationPrioty(Symbol symbol) {
             float val = OperationPrioty.get(this.symbol_type) - OperationPrioty.get(symbol.symbol_type);
             return val == 0 ? 0 : (val > 0 ? 1 : -1);
@@ -328,7 +326,7 @@ import java.util.regex.Pattern;
             return val == 0 ? 0 : (val > 0 ? 1 : -1);
         }
 
-
+/*
         private static void Init() {
             OperationPrioty.put(SymbolType.Add, 3f);
             OperationPrioty.put(SymbolType.Subtract, 3f);
@@ -354,10 +352,10 @@ import java.util.regex.Pattern;
         }
 
         SymbolType symbol_type = SymbolType.Unknown;
-
+*/
         Symbol(String op) {
             rawText = op;
-            switch (op) {
+/*            switch (op) {
                 case "+":
                     symbol_type = SymbolType.Add;
                     break;
@@ -384,7 +382,7 @@ import java.util.regex.Pattern;
                     break;
                 default:
                     symbol_type = SymbolType.Unknown;
-            }
+            }*/
         }
 
         @Override
@@ -630,6 +628,8 @@ import java.util.regex.Pattern;
     private HashMap<String, Variable> variable_table = new HashMap<>();
 
     private static HashMap<String, ReflectionFunction> raw_function_table = new HashMap<>();
+    private static HashMap<String, Variable> raw_variable_table = new HashMap<>();
+
 
     static {
         CalculatorHelper.InitOperatorDeclare();
@@ -649,6 +649,9 @@ import java.util.regex.Pattern;
     }
 
     Variable GetVariable(String name) throws VariableNotFoundException {
+        if(raw_variable_table.containsKey(name)){
+            return raw_variable_table.get(name);
+        }
         if (!variable_table.containsKey(name))
             throw new VariableNotFoundException(name);
         return variable_table.get(name);
@@ -1136,6 +1139,10 @@ import java.util.regex.Pattern;
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static void RegisterRawVariable(Variable variable)throws Exception{
+        raw_variable_table.put(variable.GetName(),variable);
     }
 
 
