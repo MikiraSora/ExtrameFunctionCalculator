@@ -38,8 +38,23 @@ public class BooleanCaculator {
         }
 
         @Override
+        boolean isCalculatable() {
+            return false;
+        }
+
+        @Override
+        boolean ableSetVariableDirectly() {
+            return false;
+        }
+
+        @Override
         String Solve() {
             return boolean_value?"1":"0";
+        }
+
+        @Override
+        public Calculator.Digit GetDigit() throws Exception {
+            return new Calculator.Digit(Solve());
         }
 
         @Override

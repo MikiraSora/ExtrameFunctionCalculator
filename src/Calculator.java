@@ -33,6 +33,8 @@ import java.util.regex.Pattern;
         String rawText = null;
         Calculator calculator = null;
 
+        boolean isCalculatable(){return false;}
+
         void setCalculator(Calculator calculator1) {
             calculator = calculator1;
         }
@@ -473,6 +475,16 @@ import java.util.regex.Pattern;
             setCalculator(calculator1);
         }
 
+
+        @Override
+        boolean isCalculatable() {
+            return true;
+        }
+
+        boolean ableSetVariableDirectly(){
+            return true;
+        }
+
         @Override
         String Solve() {
             return super.Solve();
@@ -591,6 +603,11 @@ import java.util.regex.Pattern;
                 e.printStackTrace();
             }
             return null;
+        }
+
+        @Override
+        boolean isCalculatable() {
+            return true;
         }
 
         @Override
@@ -1360,32 +1377,5 @@ import java.util.regex.Pattern;
             }
         }
     }
-    /*
-    public String ExecuteFunction(String text)throws Exception{
-        Clear();
-        if (text.isEmpty())
-            throw new Exception("input empty text to execute");
-        char c;
-        String executeType = "", paramter = "";
-        String result = "";
-        for (int position = 0; position < text.length(); position++) {
-            c = text.charAt(position);
-            if (c == ' ') {
-                paramter = text.substring(position + 1);
-                break;
-            } else {
-                executeType += c;
-            }
-        }
-        switch (executeType) {
-            case "solve": {
-                result = Solve(paramter);
-                break;
-            }
-            default: {
-                return Execute(text);
-            }
-        }
-        return result;
-    }*/
+
 }
