@@ -1,3 +1,4 @@
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Stack;
@@ -352,13 +353,24 @@ public class CalculatorHelper {
                 return Double.toString(Math.toIntExact(parameter.get("x").GetDigit().GetInteger()));
             }
         });
-
+        //fact
+        Calculator.RegisterRawFunction("fact(x)", new Calculator.ReflectionFunction.OnReflectionFunction(){
+            @Override
+            public String onReflectionFunction(HashMap<String, Calculator.Variable> parameter, Calculator calculator)throws Exception{
+                double max = parameter.get("x").GetDigit().GetDouble();
+                BigInteger bigInteger=BigInteger.valueOf(1);
+                long result=1;
+                for(int i=1;i<=max;i++)
+                    bigInteger=bigInteger.multiply(BigInteger.valueOf(i));
+                return bigInteger.toString();
+            }
+        });
 
         /*
         *以下的函数并非是原MATH类所存在的函数，而且大多都是非计算性用途
         *所以使用以下函数前请务必读好函数定义前的注释。弄清楚使用方法和限定缺陷
         *否则GG
-        * 请用master的支线版本，feature是测试用的，dev则是开发中
+        * 请用master的支线版本，feature是测试中的，dev则是开发中
         * */
 
         /*execute
@@ -501,6 +513,59 @@ public class CalculatorHelper {
                 String result=calculator.Copy().Solve(parameter.get("normal_expr").Solve());
                 calculator.Copy().Solve(parameter.get("extra_expr").Solve());
                 return result;
+            }
+        });
+        /*loop_with
+        * 循环某个变量x以步长step,从min到max循环执行expr
+        *
+        * */
+        Calculator.RegisterRawFunction("loop_with(x,step,min,max,expr)", new Calculator.ReflectionFunction.OnReflectionFunction() {
+            @Override
+            public HashMap<String, Calculator.Variable> onParseParamter(String paramter, Calculator.Function.ParameterRequest request, Calculator calculator)throws Exception{
+                char c;
+                int requestIndex = 0;
+                HashMap<String, Calculator.Variable> variableHashMap=new HashMap<String, Calculator.Variable>();
+                Stack<Integer> BracketStack = new Stack<>();
+                String paramterString = new String();
+                for (int pos = 0; pos < paramter.length(); pos++) {
+                    c = paramter.charAt(pos);
+                    if (c == '(') {
+                        BracketStack.push(pos);
+                    } else if (c == ')') {
+                        if (!BracketStack.isEmpty())
+                            //BracketStack.push(pos);
+                            BracketStack.pop();
+                        else
+                            throw new Exception("Not found a pair of bracket what defining a expression");
+                    }
+
+                    if (c == ',' && BracketStack.isEmpty()) {
+                        String requestParamterName = request.GetParamterName(requestIndex++);
+                        variableHashMap.put(requestParamterName, requestParamterName.equals("expr")?new Calculator.ExpressionVariable(requestParamterName, paramterString, calculator.Copy()):new Calculator.Variable(requestParamterName, paramterString, calculator.Copy()));
+                        paramterString = new String();
+                    } else {
+                        paramterString += c;
+                    }
+                }
+                if (!paramter.isEmpty())
+                    variableHashMap.put(request.GetParamterName(requestIndex), new Calculator.ExpressionVariable(request.GetParamterName(requestIndex), (paramterString), calculator.Copy()));
+                return variableHashMap;
+            }
+
+            @Override
+            public String onReflectionFunction(HashMap<String, Calculator.Variable> parameter, Calculator calculator) throws Exception {
+                double x=parameter.get("x").GetDigit().GetDouble();
+                double step=parameter.get("step").GetDigit().GetDouble();
+                double min=parameter.get("min").GetDigit().GetDouble();
+                double max=parameter.get("max").GetDigit().GetDouble();
+                String expr=((Calculator.ExpressionVariable)parameter.get("expr")).GetExpreesion();
+                Calculator.Function function=new Calculator.Function(String.format("tmp_execute(x,step,min,max,out)=%s",expr),calculator);
+                String out="0";
+                for(double i=min;i<=max;i+=step){
+                    calculator.GetFunction("loop_with").paramter.get("x").rawText=Double.toString(i);
+                    out=function.Solve(String.format("%f,%f,%f,%f,%s",i,step,min,max,out));
+                }
+                return out;
             }
         });
     }

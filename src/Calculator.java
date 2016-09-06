@@ -26,6 +26,9 @@ import java.util.regex.Pattern;
             Unknown
         }
 
+
+        int Generation=0;
+
         ExpressionType GetType() {
             return ExpressionType.Unknown;
         }
@@ -112,9 +115,11 @@ import java.util.regex.Pattern;
         }
 
         public ReflectionFunction Copy() throws Exception {
+            /*
             ReflectionFunction reflectionFunction = new ReflectionFunction(rawText, this.reflectionFunction);
             reflectionFunction.current_paramters = this.current_paramters;
-            return reflectionFunction;
+            return reflectionFunction;*/
+            return this;
         }
 
         @Override
@@ -138,6 +143,8 @@ import java.util.regex.Pattern;
         }
 
         FunctionType function_type = FunctionType.Unknown;
+
+
 
         public FunctionType getFunction_type() {
             return function_type;
@@ -169,9 +176,10 @@ import java.util.regex.Pattern;
         }
 
         public Function Copy() throws Exception {
-            Function function = new Function(rawText, getCalculator());
+            /*Function function = new Function(rawText, getCalculator());
             function.current_paramters = this.current_paramters;
-            return function;
+            return function;*/
+            return this;
         }
 
         class ParameterRequest {
@@ -302,89 +310,14 @@ import java.util.regex.Pattern;
     }
 
     public static class Symbol extends Expression {
-/*        public enum SymbolType {
-            Add,//+
-            Subtract,//-
-            Multiply,//*
-            Divide,///
-            Power,//^
-            Mod,//%
-            Bracket_Left,//(
-            Bracket_Right,//)
-            Unknown
-        }
 
-        static HashMap<SymbolType, Float> OperationPrioty = new HashMap<>();
-        static HashMap<SymbolType, String> OperationSet = new HashMap<>();
-
-
-        public int CompareOperationPrioty(Symbol symbol) {
-            float val = OperationPrioty.get(this.symbol_type) - OperationPrioty.get(symbol.symbol_type);
-            return val == 0 ? 0 : (val > 0 ? 1 : -1);
-        }
-*/
         public int CompareOperationPrioty(Symbol symbol) {
             float val = OperatorPrioty.get(this.rawText) - OperatorPrioty.get(symbol.rawText);
             return val == 0 ? 0 : (val > 0 ? 1 : -1);
         }
 
-/*
-        private static void Init() {
-            OperationPrioty.put(SymbolType.Add, 3f);
-            OperationPrioty.put(SymbolType.Subtract, 3f);
-            OperationPrioty.put(SymbolType.Multiply, 6f);
-            OperationPrioty.put(SymbolType.Divide, 6f);
-            OperationPrioty.put(SymbolType.Power, 9f);
-            OperationPrioty.put(SymbolType.Mod, 3f);
-            OperationPrioty.put(SymbolType.Bracket_Left, 12f);
-            OperationPrioty.put(SymbolType.Bracket_Right, 12f);
-
-            OperationSet.put(SymbolType.Add, "+");
-            OperationSet.put(SymbolType.Subtract, "-");
-            OperationSet.put(SymbolType.Multiply, "*");
-            OperationSet.put(SymbolType.Divide, "/");
-            OperationSet.put(SymbolType.Power, "^");
-            OperationSet.put(SymbolType.Mod, "%");
-            OperationSet.put(SymbolType.Bracket_Left, "(");
-            OperationSet.put(SymbolType.Bracket_Right, ")");
-        }
-
-        static {
-            Init();
-        }
-
-        SymbolType symbol_type = SymbolType.Unknown;
-*/
         Symbol(String op) {
             rawText = op;
-/*            switch (op) {
-                case "+":
-                    symbol_type = SymbolType.Add;
-                    break;
-                case "-":
-                    symbol_type = SymbolType.Subtract;
-                    break;
-                case "/":
-                    symbol_type = SymbolType.Divide;
-                    break;
-                case "*":
-                    symbol_type = SymbolType.Multiply;
-                    break;
-                case "%":
-                    symbol_type = SymbolType.Mod;
-                    break;
-                case "^":
-                    symbol_type = SymbolType.Power;
-                    break;
-                case "(":
-                    symbol_type = SymbolType.Bracket_Left;
-                    break;
-                case ")":
-                    symbol_type = SymbolType.Bracket_Right;
-                    break;
-                default:
-                    symbol_type = SymbolType.Unknown;
-            }*/
         }
 
         @Override
@@ -458,6 +391,8 @@ import java.util.regex.Pattern;
     }
 
     public static class Variable extends Expression {
+
+
         enum VariableType{
             ExpressionVariable,
             BooleanVariable,
@@ -538,6 +473,8 @@ import java.util.regex.Pattern;
 
     public static class Digit extends Expression {
 
+        //
+
         public Digit(String value) {
             rawText = value;
         }
@@ -557,7 +494,7 @@ import java.util.regex.Pattern;
         }
 
         public int GetInteger() {
-            return Integer.parseInt(Solve());
+            return Integer.valueOf(Solve());
         }
 
         @Override
@@ -573,6 +510,7 @@ import java.util.regex.Pattern;
 
 
     class FunctionNotFoundException extends Exception {
+
         String function_name;
 
         private FunctionNotFoundException() {
@@ -590,6 +528,8 @@ import java.util.regex.Pattern;
     }
 
     static class ExpressionVariable extends Variable{
+
+
         ExpressionVariable(String name,String expr_value,Calculator calculator1){
             super(name,expr_value,calculator1);
             variable_type=VariableType.ExpressionVariable;
@@ -647,6 +587,7 @@ import java.util.regex.Pattern;
     private static HashMap<String, ReflectionFunction> raw_function_table = new HashMap<>();
     private static HashMap<String, Variable> raw_variable_table = new HashMap<>();
 
+    int Generation=0;
 
     static {
         CalculatorHelper.InitOperatorDeclare();
@@ -759,15 +700,15 @@ import java.util.regex.Pattern;
         Expression node;
         Function function;
         Digit result;
-        for (position = 0; position < rawExpressionChain.size(); position++) {
-            node = rawExpressionChain.get(position);
+        for (position = 0; position < getRawExpressionChain_Stack().size(); position++) {
+            node = getRawExpressionChain_Stack().get(position);
             if (node.GetType() == Expression.ExpressionType.Function) {
                 function = (Function) node;
                 if (function.getFunction_type() == Function.FunctionType.Reflection_Function)
                     function.setCalculator(this);
                 result = function.GetSolveToDigit();
-                rawExpressionChain.remove(position);
-                rawExpressionChain.add(position, result);
+                getRawExpressionChain_Stack().remove(position);
+                getRawExpressionChain_Stack().add(position, result);
             }
         }
     }
@@ -778,37 +719,20 @@ import java.util.regex.Pattern;
         Variable variable;
         Digit result;
         try {
-            for (position = 0; position < rawExpressionChain.size(); position++) {
-                node = rawExpressionChain.get(position);
+            for (position = 0; position < getRawExpressionChain_Stack().size(); position++) {
+                node = getRawExpressionChain_Stack().get(position);
                 if (node.GetType() == Expression.ExpressionType.Variable) {
                     variable = (Variable) node;
                     result = variable.GetDigit();
-                    rawExpressionChain.remove(position);
-                    rawExpressionChain.add(position, result);
+                    getRawExpressionChain_Stack().remove(position);
+                    getRawExpressionChain_Stack().add(position, result);
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-/*
-    private Digit Execute(Digit a, Symbol op, Digit b) {
-        if (op.symbol_type == Symbol.SymbolType.Add)
-            return new Digit(Double.toString(a.GetDouble() + b.GetDouble()));
-        if (op.symbol_type == Symbol.SymbolType.Subtract)
-            return new Digit(Double.toString(a.GetDouble() - b.GetDouble()));
-        if (op.symbol_type == Symbol.SymbolType.Multiply)
-            return new Digit(Double.toString(a.GetDouble() * b.GetDouble()));
-        if (op.symbol_type == Symbol.SymbolType.Divide)
-            return new Digit(Double.toString(a.GetDouble() / b.GetDouble()));
-        if (op.symbol_type == Symbol.SymbolType.Mod)
-            return new Digit(Double.toString(a.GetDouble() % b.GetDouble()));
-        if (op.symbol_type == Symbol.SymbolType.Power)
-            return new Digit(Double.toString(Math.pow(a.GetDouble(), b.GetDouble())));
 
-        return null;
-    }
-*/
     private Expression checkConverExpression(String expression) throws Exception {
         if (isFunction(expression)) {
             //Get function name
@@ -895,15 +819,15 @@ import java.util.regex.Pattern;
             return false;
         return hasMatchBracket;
     }
-
+/*
     private ArrayList<Expression> rawExpressionChain = new ArrayList<>();
     private ArrayList<Expression> BSEChain = new ArrayList<>();
-
+*/
     private void ConverToBSE() throws Exception {
         ArrayList<Expression> result_list = new ArrayList<>();
         Stack<Symbol> operation_stack = new Stack<>();
         Symbol symbol = null;
-        for (Expression node : rawExpressionChain) {
+        for (Expression node : getRawExpressionChain_Stack()) {
             if (node.GetType() == Expression.ExpressionType.Digit)
                 result_list.add(node);
             else {
@@ -954,20 +878,20 @@ import java.util.regex.Pattern;
                 if (((Symbol) node).rawText.equals("(")/*((Symbol) node).symbol_type == Symbol.SymbolType.Bracket_Left*/)
                     result_list.remove(node);
         }
-        BSEChain = result_list;
+        setBSEChain_Stack(result_list);
     }
 
     private String ExucuteBSE() throws Exception {
-        if (BSEChain.size() == 1)
-            if (BSEChain.get(0).GetType() == Expression.ExpressionType.Digit)
-                return String.valueOf((((Digit) BSEChain.get(0)).GetDouble()));
+        if (getBSEChain_Stack().size() == 1)
+            if (getBSEChain_Stack().get(0).GetType() == Expression.ExpressionType.Digit)
+                return String.valueOf((((Digit) getBSEChain_Stack().get(0)).GetDouble()));
         Stack<Expression> digit_stack = new Stack<>();
         //Stack<Digit> digit_stack = new Stack<>();
         Expression/*Digit*/ digit_a, digit_b, digit_result;
         Symbol operator;
         ArrayList<Expression> paramterList,result;
         try {
-            for (Expression node : BSEChain) {
+            for (Expression node : getBSEChain_Stack()) {
                 if (node.GetType() == Expression.ExpressionType.Symbol) {
                     operator = (Symbol) node;
                     paramterList=new ArrayList<>();
@@ -995,19 +919,42 @@ import java.util.regex.Pattern;
     }
 
     private void CheckNormalizeChain() throws Exception {
-        for (Expression node : rawExpressionChain) {
+        for (Expression node : getRawExpressionChain_Stack()) {
             if (node.GetType() != Expression.ExpressionType.Digit && node.GetType() != Expression.ExpressionType.Symbol)
                 throw new Exception(node.GetName() + " isnt digit or symbol.");
         }
     }
 
+    Stack<ArrayList<Expression>> BSEChain_Stack=new Stack<>();
+    Stack<ArrayList<Expression>> rawExpressionChain_Stack=new Stack<>();
+
+    private void Init_Solve(){
+        //???
+    }
+
+    private void  setBSEChain_Stack(ArrayList<Expression> list){BSEChain_Stack.push(list);}
+    private void  setRawExpressionChain_Stack(ArrayList<Expression> list){rawExpressionChain_Stack.push(list);}
+
+    private ArrayList<Expression> getBSEChain_Stack(){return BSEChain_Stack.empty()?BSEChain_Stack.push(new ArrayList<Expression>()):BSEChain_Stack.peek();}
+    private ArrayList<Expression> getRawExpressionChain_Stack(){return rawExpressionChain_Stack.empty()?BSEChain_Stack.push(new ArrayList<Expression>()):rawExpressionChain_Stack.peek();}
+
+    private void Term_Solve(){
+        BSEChain_Stack.pop();
+        rawExpressionChain_Stack.pop();
+    }
+
     String Solve(String expression) throws Exception {
-        rawExpressionChain = ParseExpression(expression);
+        //rawExpressionChain = ParseExpression(expression);
+        setRawExpressionChain_Stack(ParseExpression(expression));
         ConverVariableToDigit();
         ConverFunctionToDigit();
         CheckNormalizeChain();
         ConverToBSE();
-        return ExucuteBSE();
+
+        String result= ExucuteBSE();
+
+        Term_Solve();
+        return result;
     }
 
     public String Execute(String text) throws Exception {
@@ -1132,16 +1079,19 @@ import java.util.regex.Pattern;
     }
 
     private String Clear() {
-        this.BSEChain.clear();
-        this.rawExpressionChain.clear();
+        this.getBSEChain_Stack().clear();
+        this.getRawExpressionChain_Stack().clear();
         return "Clean finished!";
     }
 
     public Calculator Copy() {
+        /*
         Calculator calculator = new Calculator();
         calculator.function_table = this.function_table;
         calculator.variable_table = this.variable_table;
-        return calculator;
+        calculator.Generation=this.Generation+1;
+        return calculator;*/
+        return this;
     }
 
     public void RegisterReflectionFunction(String expression, ReflectionFunction.OnReflectionFunction onReflectionFunction) throws Exception {
