@@ -43,7 +43,7 @@ import java.util.regex.Pattern;
         }
 
         Calculator getCalculator() {
-            return calculator==null?(this.calculator=new Calculator()):calculator.Copy();
+            return calculator==null?(this.calculator=new Calculator()):calculator;
         }
 
         String Solve() {
@@ -431,8 +431,8 @@ import java.util.regex.Pattern;
         }
 
         Variable Copy() {
-            Variable variable = new Variable(Variable_name, this.rawText, getCalculator());
-            return variable;
+            //Variable variable = new Variable(Variable_name, this.rawText, getCalculator());
+            return this;
         }
 
         public Digit GetDigit() throws Exception {
@@ -552,7 +552,7 @@ import java.util.regex.Pattern;
 
         @Override
         ExpressionVariable Copy() {
-            return new ExpressionVariable(Variable_name,rawText,getCalculator());
+            return this;
         }
 
         @Override
@@ -597,7 +597,7 @@ import java.util.regex.Pattern;
 
     Function GetFunction(String name) throws Exception, FunctionNotFoundException {
         if (raw_function_table.containsKey(name)) {
-            Function function = raw_function_table.get(name).Copy();
+            Function function = raw_function_table.get(name);
             function.setCalculator(this);
             return function;
         }
@@ -745,7 +745,7 @@ import java.util.regex.Pattern;
             String function_paramters = result.group(2);
             if (!ContainFunction(function_name))
                 throw new Exception(String.format("function %s hadnt declared!", function_name));
-            Function function = GetFunction(function_name).Copy();
+            Function function = GetFunction(function_name);
             function.current_paramters = function_paramters;
             return function;
             //Get function paramater list
@@ -756,7 +756,7 @@ import java.util.regex.Pattern;
         }
 
         if (isValidVariable(expression)) {
-            return GetVariable(expression).Copy();
+            return GetVariable(expression);
         }
 
         return null;
@@ -991,6 +991,10 @@ import java.util.regex.Pattern;
                 break;
             }
             case "dump": {
+                result = DumpInfo(paramter);
+                break;
+            }
+            case "test": {
                 result = DumpInfo(paramter);
                 break;
             }
