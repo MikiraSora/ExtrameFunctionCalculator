@@ -631,7 +631,7 @@ import java.util.regex.Pattern;
         return variable_table.get(name).Solve();
     }
 
-    private ArrayList<Expression> ParseExpression(String expression) throws Exception {
+    ArrayList<Expression> ParseExpression(String expression) throws Exception {
         ArrayList<Expression> expressionArrayList = new ArrayList<>();
         int position = 0;
         char c,tmp_c;
@@ -1014,6 +1014,9 @@ import java.util.regex.Pattern;
                 result=Reset();
                 break;
             }
+            case "reg_df":{
+                result=new DerivativeParser().Solve(paramter,"x");
+            }
             case "save":{
                 String type="",output_path="";
                 for (int position = 0; position < paramter.length(); position++) {
@@ -1089,12 +1092,6 @@ import java.util.regex.Pattern;
     }
 
     public Calculator Copy() {
-        /*
-        Calculator calculator = new Calculator();
-        calculator.function_table = this.function_table;
-        calculator.variable_table = this.variable_table;
-        calculator.Generation=this.Generation+1;
-        return calculator;*/
         return this;
     }
 
