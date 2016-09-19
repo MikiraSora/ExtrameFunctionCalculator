@@ -190,23 +190,7 @@ public class BooleanCaculator {
             e.printStackTrace();
         }
     }
-/*
-    private Calculator.Expression Execute(Calculator.Expression a, Calculator.Symbol op, Calculator.Expression b)throws Exception{
-        if(isBooleanOperator((Calculator.Symbol) op)){
-            return op.Solve() //return ExecuteBool(a,op,b);
-        }
-        if(!isSameType(a,b))
-            throw new Exception(String.format("It cannot calculate between %s and %s",a.GetType().toString(),b.GetType().toString()));
 
-        if(a.GetType()== Calculator.Expression.ExpressionType.Digit){
-            return new Calculator.Digit(calculator.Solve(a.Solve()+op.toString()+b.Solve()));
-        }
-        if(a.GetType()==Calculator.Expression.ExpressionType.Variable){
-            return Execute(((Calculator.Variable)a).GetDigit(),op,((Calculator.Variable)a).GetDigit());
-        }
-        return null;
-    }
-*/
     static String boolOperatorSymbol="< > == <= >= || && !=";
     private static boolean isBooleanOperator(Calculator.Symbol op){
         return boolOperatorSymbol.contains(op.Solve());
@@ -219,118 +203,14 @@ public class BooleanCaculator {
     }
 
     private static boolean isCalculatable(Calculator.Expression expression){
-
         if(expression.GetType()== Calculator.Expression.ExpressionType.Digit)
             return true;
         if(expression.GetType()== Calculator.Expression.ExpressionType.Variable)
             if(((Calculator.Variable)expression).variable_type== Calculator.Variable.VariableType.BooleanVariable)
                 return true;
         return false;
-        //return expression.isCalculatable();
     }
-/*
-    private BooleanVariable ExecuteBool(Calculator.Expression a, Calculator.Symbol op, Calculator.Expression b)throws Exception {
-        double va,vb;
-        switch (op.Solve()){
-            case ">":{
-                if(isCalculatable(a)&&isCalculatable(b)){
-                    va=Double.valueOf(calculator.Copy().Solve(a.Solve()));
-                    vb=Double.valueOf(calculator.Copy().Solve(b.Solve()));
-                    return new BooleanVariable(va>vb,calculator);
-                }
-                break;
-            }
-            case "<":{
-                if(isCalculatable(a)&&isCalculatable(b)){
-                    va=Double.valueOf(calculator.Copy().Solve(a.Solve()));
-                    vb=Double.valueOf(calculator.Copy().Solve(b.Solve()));
-                    return new BooleanVariable(va<vb,calculator);
-                }
-                break;
-            }
-            case "==":{
-                if(isCalculatable(a)&&isCalculatable(b)){
-                    va=Double.valueOf(calculator.Copy().Solve(a.Solve()));
-                    vb=Double.valueOf(calculator.Copy().Solve(b.Solve()));
-                    return new BooleanVariable(va==vb,calculator);
-                }
-                if(a.GetType()== Calculator.Expression.ExpressionType.Variable)
-                    if(isSameType(a,b))
-                        if(((Calculator.Variable)a).variable_type== Calculator.Variable.VariableType.BooleanVariable)
-                            return new BooleanVariable(((BooleanVariable)b).boolean_value==((BooleanVariable)a).boolean_value,calculator);
-                break;
-            }
-            case ">=":{
-                if(isCalculatable(a)&&isCalculatable(b)){
-                    va=Double.valueOf(calculator.Copy().Solve(a.Solve()));
-                    vb=Double.valueOf(calculator.Copy().Solve(b.Solve()));
-                    return new BooleanVariable(va>=vb,calculator);
-                }
-                break;
-            }
-            case "<=":{
-                if(isCalculatable(a)&&isCalculatable(b)){
-                    va=Double.valueOf(calculator.Copy().Solve(a.Solve()));
-                    vb=Double.valueOf(calculator.Copy().Solve(b.Solve()));
-                    return new BooleanVariable(va<=vb,calculator);
-                }
-                break;
-            }
-            case "!":{
-                if(isCalculatable(a)){
-                    va=Double.valueOf(calculator.Copy().Solve(a.Solve()));
-                    return new BooleanVariable((va==0),calculator);
-                }
-                if(a.GetType()== Calculator.Expression.ExpressionType.Variable)
-                    if(isSameType(a,b))
-                        if(((Calculator.Variable)a).variable_type== Calculator.Variable.VariableType.BooleanVariable)
-                            return new BooleanVariable(!((BooleanVariable)a).boolean_value,calculator);
-                break;
-            }
-            case "||":{
-                if(isCalculatable(a)&&isCalculatable(b)){
-                    va=Double.valueOf(calculator.Copy().Solve(a.Solve()));
-                    vb=Double.valueOf(calculator.Copy().Solve(b.Solve()));
-                    return new BooleanVariable((va!=0)||(vb!=0),calculator);
-                }
-                if(a.GetType()== Calculator.Expression.ExpressionType.Variable)
-                    if(isSameType(a,b))
-                        if(((Calculator.Variable)a).variable_type== Calculator.Variable.VariableType.BooleanVariable)
-                            return new BooleanVariable(((BooleanVariable)b).boolean_value||((BooleanVariable)a).boolean_value,calculator);
-                break;
-            }
-            case "&&":{
-                if(isCalculatable(a)&&isCalculatable(b)){
-                    va=Double.valueOf(calculator.Copy().Solve(a.Solve()));
-                    vb=Double.valueOf(calculator.Copy().Solve(b.Solve()));
-                    return new BooleanVariable((va!=0)&&(vb!=0),calculator);
-                }
-                if(a.GetType()== Calculator.Expression.ExpressionType.Variable)
-                    if(isSameType(a,b))
-                        if(((Calculator.Variable)a).variable_type== Calculator.Variable.VariableType.BooleanVariable)
-                            return new BooleanVariable(((BooleanVariable)b).boolean_value&&((BooleanVariable)a).boolean_value,calculator);
 
-                break;
-            }
-            case "!=":{
-                if(isCalculatable(a)&&isCalculatable(b)){
-                    va=Double.valueOf(calculator.Copy().Solve(a.Solve()));
-                    vb=Double.valueOf(calculator.Copy().Solve(b.Solve()));
-                    return new BooleanVariable((va!=0)!=(vb!=0),calculator);
-                }
-                if(a.GetType()== Calculator.Expression.ExpressionType.Variable)
-                    if(isSameType(a,b))
-                        if(((Calculator.Variable)a).variable_type== Calculator.Variable.VariableType.BooleanVariable)
-                            return new BooleanVariable(((BooleanVariable)b).boolean_value!=((BooleanVariable)a).boolean_value,calculator);
-
-                break;
-            }
-            default:throw new Exception(String.format("unknown bool operator symbol \"%s\"",op.Solve()));
-        }
-
-        return new BooleanVariable("",FALSE,calculator);
-    }
-*/
     private Calculator.Expression checkConverExpression(String expression) throws Exception {
         if (isFunction(expression)) {
             //Get function name
@@ -483,9 +363,6 @@ public class BooleanCaculator {
                     paramterList=new ArrayList<>();
                     for(int i=0;i<operator.GetParamterCount();i++)
                         paramterList.add(digit_stack.isEmpty() ? new Calculator.Digit("0") : digit_stack.pop());
-                    /*digit_b = digit_stack.pop();
-                    digit_a = digit_stack.isEmpty() ? new Digit("0") : digit_stack.pop();
-                    digit_result = Execute(digit_a, operator, digit_b);*/
                     Collections.reverse(paramterList);
                     result=operator.Solve(paramterList,calculator.Copy());
                     for(Calculator.Expression expr:result)

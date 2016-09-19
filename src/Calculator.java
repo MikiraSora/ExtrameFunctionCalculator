@@ -87,6 +87,12 @@ import java.util.regex.Pattern;
                 return null;
             }
 
+            public String onHelp(){return null;}
+
+            public String onDerivativeParse(){
+                return null;
+            }
+
             //如果不重写此办法或者重写却return null,那么将会自动调用Parse()来自己解析。
             public HashMap<String,Variable> onParseParamter(String paramter,ParameterRequest request,Calculator calculator)throws Exception{
                 return null;
