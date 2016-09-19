@@ -90,6 +90,38 @@ load用来读取前者save保存的文件，因为save保存时已经分开类�
 ```java
   load F:\mysave.opt
 ```
+
+##声明更为高级的内置函数
+通过Calculator的静态方法RegisterRawFunction可以定义实现类似于cos,sin那样非常规算式运算函数，甚至于更加黑科技<br>的功能函数(如if,loop_with)
+例如:
+```java
+	Calculator.RegisterRawFunction("toDegrees(x)"/*函数名和其参数*/, new Calculator.ReflectionFunction.OnReflectionFunction(){
+            @Override
+            public String onReflectionFunction(HashMap<String, Calculator.Variable> parameter/*参数列表*/, Calculator calculator/*调用的计算器*/)throws Exception{
+                return Double.toString(Math.toDegrees(parameter.get("x").GetDigit().GetDouble()));
+            }
+        });
+```
+注意:内置函数并不支持保存(save)或者读取(load)。
+
+##自定义简单的运算符
+通过Calcalator的子类Symbol静态方法RegisterOperation可以使一个或者多个符号组合作为操作符进行计算。
+例如
+```java
+	//声明符号&作为位操作中的与操作
+	Calculator.Symbol.RegisterOperation("&"/*操作符声明*/, 2/*传入数量*/, 6f/*操作符优先级*/, new Calculator.Symbol.OperatorFunction() {
+            @Override
+            ArrayList<Calculator.Expression> onCalculate(ArrayList<Calculator.Expression> paramterList/*传入值列表*/, Calculator calculator/*调用的计算器*/) throws Exception {
+                ArrayList<Calculator.Expression> result=new ArrayList<Calculator.Expression>();
+                Calculator.Digit a=(Calculator.Digit) paramterList.get(0),b=(Calculator.Digit) paramterList.get(1);
+                result.add(new Calculator.Digit(Double.toString((int)a.GetDouble()&(int)b.GetDouble())));
+                return result;
+            }
+        });
+```
+
+
+
 ##测试截图
 ![](https://github.com/MikiraSora/ExtrameFunctionCalculator/blob/master/picture/test.jpg)  
 
@@ -98,6 +130,7 @@ load用来读取前者save保存的文件，因为save保存时已经分开类�
 (函数)布尔值运算bool()(feature分支)<br>
 (函数)流程控制函数if() (feature分支)<br>
 (代码)递归优化(dev)<br>
+(功能)表达式求导转换(dev分支)<br>
 (函数)循环控制函数loop()(dev分支)<br>
 (代码)类型检查<br>
 (代码)操作符反射(feature/dev分支)<br>
