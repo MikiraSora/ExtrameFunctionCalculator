@@ -7,19 +7,66 @@ import java.util.regex.Pattern;
  * Created by MikiraSora on 2016/9/11.
  */
 public class DerivativeParser {
-    public class Expression extends Calculator.Expression{}
+    public class Expression extends Calculator.Expression{
+        DerivativeParser derivativeParser=null;
 
-    public class RawSymbol extends Expression{}
+        public DerivativeParser getDerivativeParser() {
+            return derivativeParser==null?derivativeParser=new DerivativeParser():derivativeParser;
+        }
+    }
 
-    public class RawExpression extends Expression{}
+    public class RawSymbol extends Expression{
+        Calculator.Symbol rawSymbol=null;
+        public RawSymbol(Calculator.Symbol symbol){rawSymbol=symbol;}
+    }
 
-    //public class DerivativeSymbol extends RawExpression{}
+    public class RawExpression extends Expression{
+        ArrayList<Calculator.Expression> expressionArrayList=null;
+        public void setExpressionArrayList(ArrayList<Calculator.Expression> list){expressionArrayList=list;}
+        public ArrayList<Calculator.Expression> getExpressionArrayList() {
+            return expressionArrayList;
+        }
+    }
+
+    public class DerivativeSymbol extends RawSymbol{
+        public DerivativeSymbol(Calculator.Symbol symbol){super(symbol);}
+    }
+
+    public class DerivativeFunction extends Expression{
+        String function_name=null;
+        String derivative_name=null;
+        public DerivativeFunction(String fname,String dname,DerivativeParser parser){
+            function_name=fname;
+            derivative_name=dname;
+            derivativeParser=parser;
+        }
+
+        String DerivativeSolve()throws Exception{
+            Calculator.Function function=(GetCalculator().GetFunction(function_name));
+            if(function.getFunction_type()!= Calculator.Function.FunctionType.Reflection_Function){
+                return getDerivativeParser().Solve(function.function_body,derivative_name);
+            }else{
+                Calculator.ReflectionFunction reflectionFunction=(Calculator.ReflectionFunction)function;
+                String result=reflectionFunction.reflectionFunction.onDerivativeParse();
+                if(result!=null){
+                    throw new Exception(String.format("%s(%s) is reflection function and not support derivative.",function_name,derivative_name));
+                }
+            }   return
+        }
+    }
 
     public class DerivativeExpression extends RawExpression{}
 
-    public class ResultSymbol extends Expression{}
+    public class ResultSymbol extends RawSymbol{
+        public ResultSymbol(Calculator.Symbol symbol){super(symbol);}
+    }
 
-    public class ResultExpression extends Expression{}
+    public class ResultFunction extends Expression{
+        String resultExpression=null;
+        public ResultFunction(String result){resultExpression=result;}
+    }
+
+    public class ResultExpression extends RawExpression{}
 
     private Calculator calculator=null;
     Calculator GetCalculator(){return calculator==null?calculator=new Calculator():calculator;}
@@ -104,8 +151,15 @@ public class DerivativeParser {
             String function_paramters = result.group(2);
             if (!GetCalculator().ContainFunction(function_name))
                 throw new Exception(String.format("function %s hadnt declared!", function_name));
-            Calculator.Function function =GetCalculator().GetFunction(function_name);
-            function.current_paramters = function_paramters;
+            //Calculator.Function function =GetCalculator().GetFunction(function_name);
+            //function.current_paramters = function_paramters;
+            Expression function=null;
+            if(function_paramters.equals(derivativeVariableName)){
+                //导函数
+                function=new DerivativeExpression()
+            }else{
+                //值函数
+            }
             return function;
             //Get function paramater list
         }
