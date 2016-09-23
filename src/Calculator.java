@@ -1021,7 +1021,7 @@ import java.util.regex.Pattern;
                 break;
             }
             case "reg_df":{
-                result=new DerivativeParser().Solve(paramter,"x");
+                result=new DerivativeParser(this).Solve(paramter,"x");
             }
             case "save":{
                 String type="",output_path="";

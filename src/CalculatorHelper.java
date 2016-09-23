@@ -255,6 +255,7 @@ public class CalculatorHelper {
                 return Double.toString(Math.toRadians(parameter.get("x").GetDigit().GetDouble()));
             }
         });
+
         //nextDown
         Calculator.RegisterRawFunction("nextDown(x)", new Calculator.ReflectionFunction.OnReflectionFunction(){
             @Override
@@ -283,6 +284,7 @@ public class CalculatorHelper {
                 return Double.toString(Math.tanh(parameter.get("x").GetDigit().GetDouble()));
             }
         });
+
         //addExact
         Calculator.RegisterRawFunction("addExact(x,y)", new Calculator.ReflectionFunction.OnReflectionFunction(){
             @Override

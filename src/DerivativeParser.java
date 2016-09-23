@@ -7,11 +7,13 @@ import java.util.regex.Pattern;
  * Created by MikiraSora on 2016/9/11.
  */
 public class DerivativeParser {
-    public class Expression extends Calculator.Expression{
+    public abstract class Expression extends Calculator.Expression{
         DerivativeParser derivativeParser=null;
 
+        String DerivativeSolve()throws Exception{return null;}
+
         public DerivativeParser getDerivativeParser() {
-            return derivativeParser==null?derivativeParser=new DerivativeParser():derivativeParser;
+            return derivativeParser==null?derivativeParser=new DerivativeParser(DerivativeParser.this.GetCalculator()):derivativeParser;
         }
     }
 
@@ -32,6 +34,8 @@ public class DerivativeParser {
         public DerivativeSymbol(Calculator.Symbol symbol){super(symbol);}
     }
 
+    DerivativeParser(Calculator calculator1){calculator=calculator1;}
+
     public class DerivativeFunction extends Expression{
         String function_name=null;
         String derivative_name=null;
@@ -41,6 +45,7 @@ public class DerivativeParser {
             derivativeParser=parser;
         }
 
+        @Override
         String DerivativeSolve()throws Exception{
             Calculator.Function function=(GetCalculator().GetFunction(function_name));
             if(function.getFunction_type()!= Calculator.Function.FunctionType.Reflection_Function){
@@ -51,11 +56,14 @@ public class DerivativeParser {
                 if(result!=null){
                     throw new Exception(String.format("%s(%s) is reflection function and not support derivative.",function_name,derivative_name));
                 }
-            }   return
+                return (result);
+            }
         }
     }
 
-    public class DerivativeExpression extends RawExpression{}
+    public class DerivativeExpression extends RawExpression{
+
+    }
 
     public class ResultSymbol extends RawSymbol{
         public ResultSymbol(Calculator.Symbol symbol){super(symbol);}
@@ -64,6 +72,12 @@ public class DerivativeParser {
     public class ResultFunction extends Expression{
         String resultExpression=null;
         public ResultFunction(String result){resultExpression=result;}
+    }
+
+    public class DerivativeVariable extends Expression{
+        ArrayList<Calculator.Expression> variable_list=null;
+        public DerivativeVariable(){}
+        public DerivativeVariable(ArrayList<Calculator.Expression> list){variable_list=list;}
     }
 
     public class ResultExpression extends RawExpression{}
@@ -151,16 +165,17 @@ public class DerivativeParser {
             String function_paramters = result.group(2);
             if (!GetCalculator().ContainFunction(function_name))
                 throw new Exception(String.format("function %s hadnt declared!", function_name));
-            //Calculator.Function function =GetCalculator().GetFunction(function_name);
-            //function.current_paramters = function_paramters;
-            Expression function=null;
+
             if(function_paramters.equals(derivativeVariableName)){
                 //导函数
-                function=new DerivativeExpression()
+                Expression function=null;
+                function=new DerivativeFunction(function_name,derivativeVariableName,this);
+                return function;
             }else{
-                //值函数
+                Calculator.Function function =GetCalculator().GetFunction(function_name);
+                function.current_paramters = function_paramters;
+                return function;
             }
-            return function;
             //Get function paramater list
         }
 
@@ -169,11 +184,24 @@ public class DerivativeParser {
         }
 
         if (Calculator.isValidVariable(expression)) {
-            return expression.equals(derivativeVariableName)?new DerivativeExpression()/*todo*/:GetCalculator().GetVariable(expression);
+            return expression.equals(derivativeVariableName)?new DerivativeVariable()/*todo*/:GetCalculator().GetVariable(expression);
         }
 
         return null;
     }
+
+    ArrayList<Calculator.Expression> ProcessExpression(ArrayList<Calculator.Expression> expressionArrayList){
+        //
+        Calculator.Expression expression=null;
+        ArrayList<Calculator.Expression> expressionCollection;
+        for(int pos=0;pos<expressionArrayList.size();pos++){
+            expression=expressionArrayList.get(pos);
+            if()
+        }
+
+        return null;
+        //todo
+        }
 
     public String Solve(String expression,String derivativeName)throws Exception{
         derivativeVariableName=derivativeName;
