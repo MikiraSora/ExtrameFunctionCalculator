@@ -23,6 +23,7 @@ import java.util.regex.Pattern;
             Variable,
             Digit,
             Symbol,
+            Derivative,
             Unknown
         }
 
@@ -1022,6 +1023,7 @@ import java.util.regex.Pattern;
             }
             case "reg_df":{
                 result=new DerivativeParser(this).Solve(paramter,"x");
+                break;
             }
             case "save":{
                 String type="",output_path="";

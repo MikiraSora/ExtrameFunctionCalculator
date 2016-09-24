@@ -7,19 +7,44 @@ import java.util.regex.Pattern;
  * Created by MikiraSora on 2016/9/11.
  */
 public class DerivativeParser {
-    public abstract class Expression extends Calculator.Expression{
+    public abstract static class Expression extends Calculator.Expression{
+        enum DerivativeType{
+            RawSymbol,
+            RawExpression,
+            DerivativeSymbol,
+            DerivativeFunction,
+            DerivativeExpression,
+            ResultSymbol,
+            ResultFunction,
+            DerivativeVariable,
+            ResultExpression,
+            Unknown
+        }
+
+        DerivativeType GetDerivateType(){return null;}
+
         DerivativeParser derivativeParser=null;
 
         String DerivativeSolve()throws Exception{return null;}
 
+        @Override
+        ExpressionType GetType() {
+            return ExpressionType.Derivative;
+        }
+
         public DerivativeParser getDerivativeParser() {
-            return derivativeParser==null?derivativeParser=new DerivativeParser(DerivativeParser.this.GetCalculator()):derivativeParser;
+            return derivativeParser==null?derivativeParser=new DerivativeParser(null):derivativeParser;
         }
     }
 
     public class RawSymbol extends Expression{
         Calculator.Symbol rawSymbol=null;
         public RawSymbol(Calculator.Symbol symbol){rawSymbol=symbol;}
+
+        @Override
+        DerivativeType GetDerivateType() {
+            return DerivativeType.RawSymbol;
+        }
     }
 
     public class RawExpression extends Expression{
@@ -28,10 +53,18 @@ public class DerivativeParser {
         public ArrayList<Calculator.Expression> getExpressionArrayList() {
             return expressionArrayList;
         }
+        @Override
+        DerivativeType GetDerivateType() {
+            return DerivativeType.RawExpression;
+        }
     }
 
     public class DerivativeSymbol extends RawSymbol{
         public DerivativeSymbol(Calculator.Symbol symbol){super(symbol);}
+        @Override
+        DerivativeType GetDerivateType() {
+            return DerivativeType.DerivativeSymbol;
+        }
     }
 
     DerivativeParser(Calculator calculator1){calculator=calculator1;}
@@ -43,6 +76,11 @@ public class DerivativeParser {
             function_name=fname;
             derivative_name=dname;
             derivativeParser=parser;
+        }
+
+        @Override
+        DerivativeType GetDerivateType() {
+            return DerivativeType.DerivativeFunction;
         }
 
         @Override
@@ -62,7 +100,11 @@ public class DerivativeParser {
     }
 
     public class DerivativeExpression extends RawExpression{
-
+        @Override
+        DerivativeType GetDerivateType() {
+            return DerivativeType.DerivativeExpression;
+        }
+        DerivativeExpression(DerivativeParser parser){this.derivativeParser=parser;}
     }
 
     public class ResultSymbol extends RawSymbol{
@@ -70,17 +112,30 @@ public class DerivativeParser {
     }
 
     public class ResultFunction extends Expression{
+        @Override
+        DerivativeType GetDerivateType() {
+            return DerivativeType.ResultFunction;
+        }
         String resultExpression=null;
         public ResultFunction(String result){resultExpression=result;}
     }
 
     public class DerivativeVariable extends Expression{
+        @Override
+        DerivativeType GetDerivateType() {
+            return DerivativeType.DerivativeVariable;
+        }
         ArrayList<Calculator.Expression> variable_list=null;
         public DerivativeVariable(){}
         public DerivativeVariable(ArrayList<Calculator.Expression> list){variable_list=list;}
     }
 
-    public class ResultExpression extends RawExpression{}
+    public class ResultExpression extends RawExpression{
+        @Override
+        DerivativeType GetDerivateType() {
+            return DerivativeType.ResultExpression;
+        }
+    }
 
     private Calculator calculator=null;
     Calculator GetCalculator(){return calculator==null?calculator=new Calculator():calculator;}
@@ -194,19 +249,69 @@ public class DerivativeParser {
         //
         Calculator.Expression expression=null;
         ArrayList<Calculator.Expression> expressionCollection;
+        Stack<Integer> bracketStack=new Stack<>();
+        int start=0,end=0;
         for(int pos=0;pos<expressionArrayList.size();pos++){
             expression=expressionArrayList.get(pos);
-            if()
+            if(expression.GetType()== Calculator.Expression.ExpressionType.Symbol)
+                if(((Calculator.Symbol)expression).rawText.equals("(")){
+                    start=pos;
+                    expressionCollection=new ArrayList<>();
+                    for(++pos;pos<expressionArrayList.size();pos++){
+                        expression=expressionArrayList.get(pos);
+                        if(expression.GetType()== Calculator.Expression.ExpressionType.Symbol) {
+                            if (((Calculator.Symbol) expression).rawText.equals("(")) {
+                                bracketStack.add(pos);
+                            }else if (((Calculator.Symbol) expression).rawText.equals(")"){
+                                if(bracketStack.empty()) {
+                                    end = pos;
+                                    for (int mpos = start; mpos <= end; mpos++) {
+                                        expressionArrayList.remove(start);
+                                    }
+                                    DerivativeExpression derivativeExpression = new DerivativeExpression(this);
+                                    derivativeExpression.setExpressionArrayList(expressionCollection);
+                                    expressionArrayList.add(start, derivativeExpression);
+                                    expressionCollection = new ArrayList<>();
+                                    pos = start;
+                                    break;
+                                }else{
+                                    bracketStack.pop();
+                                }
+                            }
+
+                        }
+                        expressionCollection.add(expression);
+                    }
+                }
         }
 
-        return null;
+        for(int pos=0;pos<expressionArrayList.size();pos++){
+            expression=expressionArrayList.get(pos);
+            if(expression.GetType()== Calculator.Expression.ExpressionType.Symbol){
+                if(((Calculator.Symbol)expression).rawText.equals("^")){
+                    /*
+                    if(pos>=(expressionArrayList.size()-1))
+                        break;
+                    if(pos==0)
+                        break;*/
+                    Calculator.Expression previous=expressionArrayList.get(pos-1),next=expressionArrayList.get(pos+1);
+                    if(previous.GetType()==Calculator.Expression.ExpressionType.Derivative){
+                        if(((Expression)expression).GetDerivateType()== Expression.DerivativeType.DerivativeVariable){
+                            
+                        }
+                    }
+                }
+            }
+        }
+
+        return expressionArrayList;
         //todo
         }
 
     public String Solve(String expression,String derivativeName)throws Exception{
         derivativeVariableName=derivativeName;
         ArrayList<Calculator.Expression> expression_list=ParseExpression(expression);
-
+        expression_list=ProcessExpression(expression_list);
         return null;//// TODO: 2016/9/11
     }
 
