@@ -518,10 +518,10 @@ public class CalculatorHelper {
             }
         });
         /*loop_with
-        * 循环某个变量x以步长step,从min到max循环执行expr
-        *
+        * 以步长step,从min到max循环执行expr,内置_in,_step,_min,_max,_out变量
+        * 注意expr是要计算的表达式而不是语句
         * */
-        Calculator.RegisterRawFunction("loop_with(x,step,min,max,expr)", new Calculator.ReflectionFunction.OnReflectionFunction() {
+        Calculator.RegisterRawFunction("loop_with(step,min,max,expr)", new Calculator.ReflectionFunction.OnReflectionFunction() {
             @Override
             public HashMap<String, Calculator.Variable> onParseParamter(String paramter, Calculator.Function.ParameterRequest request, Calculator calculator)throws Exception{
                 char c;
@@ -556,15 +556,15 @@ public class CalculatorHelper {
 
             @Override
             public String onReflectionFunction(HashMap<String, Calculator.Variable> parameter, Calculator calculator) throws Exception {
-                double x=parameter.get("x").GetDigit().GetDouble();
+                //double x=parameter.get("x").GetDigit().GetDouble();
                 double step=parameter.get("step").GetDigit().GetDouble();
                 double min=parameter.get("min").GetDigit().GetDouble();
                 double max=parameter.get("max").GetDigit().GetDouble();
                 String expr=((Calculator.ExpressionVariable)parameter.get("expr")).GetExpreesion();
-                Calculator.Function function=new Calculator.Function(String.format("tmp_execute(x,step,min,max,out)=%s",expr),calculator);
+                Calculator.Function function=new Calculator.Function(String.format("tmp_execute(_in,_step,_min,_max,_out)=%s",expr),calculator);
                 String out="0";
                 for(double i=min;i<=max;i+=step){
-                    calculator.GetFunction("loop_with").paramter.get("x").rawText=Double.toString(i);
+//                    calculator.GetFunction("loop_with").paramter.get("x").rawText=Double.toString(i);
                     out=function.Solve(String.format("%f,%f,%f,%f,%s",i,step,min,max,out));
                 }
                 return out;

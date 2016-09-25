@@ -262,7 +262,7 @@ public class DerivativeParser {
                         if(expression.GetType()== Calculator.Expression.ExpressionType.Symbol) {
                             if (((Calculator.Symbol) expression).rawText.equals("(")) {
                                 bracketStack.add(pos);
-                            }else if (((Calculator.Symbol) expression).rawText.equals(")"){
+                            }else if (((Calculator.Symbol) expression).rawText.equals(")")){
                                 if(bracketStack.empty()) {
                                     end = pos;
                                     for (int mpos = start; mpos <= end; mpos++) {
@@ -285,6 +285,7 @@ public class DerivativeParser {
                 }
         }
 
+        //Calculator.Expression forwardExpression,nextExpression;
         for(int pos=0;pos<expressionArrayList.size();pos++){
             expression=expressionArrayList.get(pos);
             if(expression.GetType()== Calculator.Expression.ExpressionType.Symbol){
@@ -297,7 +298,7 @@ public class DerivativeParser {
                     Calculator.Expression previous=expressionArrayList.get(pos-1),next=expressionArrayList.get(pos+1);
                     if(previous.GetType()==Calculator.Expression.ExpressionType.Derivative){
                         if(((Expression)expression).GetDerivateType()== Expression.DerivativeType.DerivativeVariable){
-                            
+
                         }
                     }
                 }
