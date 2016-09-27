@@ -561,7 +561,7 @@ public class CalculatorHelper {
                 double min=parameter.get("min").GetDigit().GetDouble();
                 double max=parameter.get("max").GetDigit().GetDouble();
                 String expr=((Calculator.ExpressionVariable)parameter.get("expr")).GetExpreesion();
-                Calculator.Function function=new Calculator.Function(String.format("tmp_execute(_in,_step,_min,_max,_out)=%s",expr),calculator);
+                Calculator.Function function=new Calculator.Function(String.format("tmp_execute(_index,_step,_min,_max,_out)=%s",expr),calculator);
                 String out="0";
                 for(double i=min;i<=max;i+=step){
 //                    calculator.GetFunction("loop_with").paramter.get("x").rawText=Double.toString(i);

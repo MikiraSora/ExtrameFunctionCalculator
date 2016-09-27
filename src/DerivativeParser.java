@@ -126,8 +126,29 @@ public class DerivativeParser {
             return DerivativeType.DerivativeVariable;
         }
         ArrayList<Calculator.Expression> variable_list=null;
+
+        ArrayList<Calculator.Expression> powerExtraExpressionList=null;
+
+        public void SetPowerExtraExpressionList(ArrayList<Calculator.Expression> powerExtraExpressionList) {
+            this.powerExtraExpressionList = powerExtraExpressionList;
+        }
+
         public DerivativeVariable(){}
         public DerivativeVariable(ArrayList<Calculator.Expression> list){variable_list=list;}
+
+        @Override
+        String DerivativeSolve() throws Exception {
+            return null;
+        }
+
+        ArrayList<Calculator.Expression> Cover(){
+            ArrayList<Calculator.Expression> resultExpressionList=new ArrayList<>();
+            if(powerExtraExpressionList==null)
+            {
+                resultExpressionList.add(new ResultExpression());
+            }
+            return resultExpressionList;
+        }
     }
 
     public class ResultExpression extends RawExpression{
@@ -297,7 +318,8 @@ public class DerivativeParser {
                         break;*/
                     Calculator.Expression previous=expressionArrayList.get(pos-1),next=expressionArrayList.get(pos+1);
                     if(previous.GetType()==Calculator.Expression.ExpressionType.Derivative){
-                        if(((Expression)expression).GetDerivateType()== Expression.DerivativeType.DerivativeVariable){
+                        if(((Expression)previous).GetDerivateType()== Expression.DerivativeType.DerivativeVariable&&((next).GetType()!= Calculator.Expression.ExpressionType.Derivative)){
+                            //D^(!D)
 
                         }
                     }

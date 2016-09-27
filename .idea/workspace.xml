@@ -2,11 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ddeeca72-93f9-42ce-8261-e5e9304e1aec" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator$Symbol$SymbolType.class" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/BooleanCaculator$BooleanVariable.class" afterPath="$PROJECT_DIR$/out/production/Calculator/BooleanCaculator$BooleanVariable.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/BooleanCaculator$1.class" afterPath="$PROJECT_DIR$/out/production/Calculator/BooleanCaculator$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/BooleanCaculator$2.class" afterPath="$PROJECT_DIR$/out/production/Calculator/BooleanCaculator$2.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/BooleanCaculator$3.class" afterPath="$PROJECT_DIR$/out/production/Calculator/BooleanCaculator$3.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/BooleanCaculator$4.class" afterPath="$PROJECT_DIR$/out/production/Calculator/BooleanCaculator$4.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/BooleanCaculator$5.class" afterPath="$PROJECT_DIR$/out/production/Calculator/BooleanCaculator$5.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/BooleanCaculator$6.class" afterPath="$PROJECT_DIR$/out/production/Calculator/BooleanCaculator$6.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/BooleanCaculator$7.class" afterPath="$PROJECT_DIR$/out/production/Calculator/BooleanCaculator$7.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/BooleanCaculator$8.class" afterPath="$PROJECT_DIR$/out/production/Calculator/BooleanCaculator$8.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/BooleanCaculator.class" afterPath="$PROJECT_DIR$/out/production/Calculator/BooleanCaculator.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator$1.class" afterPath="$PROJECT_DIR$/out/production/Calculator/Calculator$1.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator$Digit.class" afterPath="$PROJECT_DIR$/out/production/Calculator/Calculator$Digit.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator$Expression$ExpressionType.class" afterPath="$PROJECT_DIR$/out/production/Calculator/Calculator$Expression$ExpressionType.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator$Expression.class" afterPath="$PROJECT_DIR$/out/production/Calculator/Calculator$Expression.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator$ExpressionVariable.class" afterPath="$PROJECT_DIR$/out/production/Calculator/Calculator$ExpressionVariable.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator$Function$FunctionType.class" afterPath="$PROJECT_DIR$/out/production/Calculator/Calculator$Function$FunctionType.class" />
@@ -18,37 +25,12 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator$ReflectionFunction.class" afterPath="$PROJECT_DIR$/out/production/Calculator/Calculator$ReflectionFunction.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator$SaveType.class" afterPath="$PROJECT_DIR$/out/production/Calculator/Calculator$SaveType.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator$StatementNotDeclaredException.class" afterPath="$PROJECT_DIR$/out/production/Calculator/Calculator$StatementNotDeclaredException.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator$Symbol$OperatorFunction.class" afterPath="$PROJECT_DIR$/out/production/Calculator/Calculator$Symbol$OperatorFunction.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator$Symbol.class" afterPath="$PROJECT_DIR$/out/production/Calculator/Calculator$Symbol.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator$Variable$VariableType.class" afterPath="$PROJECT_DIR$/out/production/Calculator/Calculator$Variable$VariableType.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator$Variable.class" afterPath="$PROJECT_DIR$/out/production/Calculator/Calculator$Variable.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator$VariableNotFoundException.class" afterPath="$PROJECT_DIR$/out/production/Calculator/Calculator$VariableNotFoundException.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator.class" afterPath="$PROJECT_DIR$/out/production/Calculator/Calculator.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$1.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$10.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$10.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$11.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$11.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$12.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$12.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$13.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$13.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$14.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$14.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$15.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$15.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$16.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$16.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$17.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$17.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$18.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$18.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$19.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$19.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$2.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$20.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$20.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$21.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$21.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$22.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$22.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$23.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$23.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$24.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$24.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$25.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$25.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$26.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$26.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$27.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$27.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$28.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$28.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$29.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$29.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$3.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$3.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$30.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$30.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$31.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$31.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$32.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$32.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$33.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$33.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$34.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$34.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$35.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$35.class" />
@@ -56,20 +38,32 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$37.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$37.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$38.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$38.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$39.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$39.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$4.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$4.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$40.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$40.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$41.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$41.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$5.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$5.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$6.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$6.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$7.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$7.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$8.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$8.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$9.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$9.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$42.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$42.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$43.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$43.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$44.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$44.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$45.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$45.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$46.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$46.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$47.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$47.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$48.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$48.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$49.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$49.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$50.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$50.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$51.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$51.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$52.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$52.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$53.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$53.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/Test.class" afterPath="$PROJECT_DIR$/out/production/Calculator/Test.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/DerivativeParser$DerivativeExpression.class" afterPath="$PROJECT_DIR$/out/production/Calculator/DerivativeParser$DerivativeExpression.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/DerivativeParser$Expression.class" afterPath="$PROJECT_DIR$/out/production/Calculator/DerivativeParser$Expression.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/DerivativeParser$RawExpression.class" afterPath="$PROJECT_DIR$/out/production/Calculator/DerivativeParser$RawExpression.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/DerivativeParser$RawSymbol.class" afterPath="$PROJECT_DIR$/out/production/Calculator/DerivativeParser$RawSymbol.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/DerivativeParser$ResultExpression.class" afterPath="$PROJECT_DIR$/out/production/Calculator/DerivativeParser$ResultExpression.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/DerivativeParser$ResultSymbol.class" afterPath="$PROJECT_DIR$/out/production/Calculator/DerivativeParser$ResultSymbol.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/DerivativeParser.class" afterPath="$PROJECT_DIR$/out/production/Calculator/DerivativeParser.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/BooleanCaculator.java" afterPath="$PROJECT_DIR$/src/BooleanCaculator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Calculator.java" afterPath="$PROJECT_DIR$/src/Calculator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/CalculatorHelper.java" afterPath="$PROJECT_DIR$/src/CalculatorHelper.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/DerivativeParser.java" afterPath="$PROJECT_DIR$/src/DerivativeParser.java" />
     </list>
     <ignored path="Calculator.iws" />
@@ -91,60 +85,62 @@
     <favorites_list name="Calculator" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5029164">
-      <split-first>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="BooleanCaculator.java" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/BooleanCaculator.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="119">
-                  <caret line="134" column="29" selection-start-line="134" selection-start-column="29" selection-end-line="134" selection-end-column="29" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="CalculatorHelper.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/CalculatorHelper.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="6647">
-                  <caret line="536" column="32" selection-start-line="536" selection-start-column="32" selection-end-line="536" selection-end-column="32" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="Test.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/Test.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-622">
-                  <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="Calculator.java" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/Calculator.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="348">
-                  <caret line="92" column="28" selection-start-line="92" selection-start-column="28" selection-end-line="92" selection-end-column="28" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                    <element signature="e#2531#2532#0" expanded="true" />
-                    <element signature="e#2574#2575#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="Calculator.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Calculator.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2006">
+              <caret line="138" column="0" selection-start-line="138" selection-start-column="0" selection-end-line="138" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#9572#9573#0" expanded="true" />
+                <element signature="e#9621#9622#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BooleanCaculator.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/BooleanCaculator.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1632">
+              <caret line="112" column="48" selection-start-line="112" selection-start-column="48" selection-end-line="112" selection-end-column="48" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DerivativeParser.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/DerivativeParser.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="193">
+              <caret line="320" column="185" selection-start-line="320" selection-start-column="185" selection-end-line="320" selection-end-column="185" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CalculatorHelper.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/CalculatorHelper.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="7276">
+              <caret line="573" column="0" selection-start-line="573" selection-start-column="0" selection-end-line="573" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Test.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Test.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="774">
+              <caret line="82" column="0" selection-start-line="82" selection-start-column="0" selection-end-line="82" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -154,6 +150,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="MikiraSora &lt;mikirasora0409@126.com&gt;" />
+      </list>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GradleLocalSettings">
@@ -170,10 +171,10 @@
         <option value="$PROJECT_DIR$/src/Function.java" />
         <option value="$PROJECT_DIR$/src/RawFunctionDeclareHelper.java" />
         <option value="$PROJECT_DIR$/src/Test.java" />
-        <option value="$PROJECT_DIR$/src/CalculatorHelper.java" />
-        <option value="$PROJECT_DIR$/src/DerivativeParser.java" />
         <option value="$PROJECT_DIR$/src/BooleanCaculator.java" />
         <option value="$PROJECT_DIR$/src/Calculator.java" />
+        <option value="$PROJECT_DIR$/src/CalculatorHelper.java" />
+        <option value="$PROJECT_DIR$/src/DerivativeParser.java" />
       </list>
     </option>
   </component>
@@ -187,7 +188,7 @@
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1936" />
+    <option name="width" value="1932" />
     <option name="height" value="1056" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
@@ -301,11 +302,14 @@
   <component name="PropertiesComponent">
     <property name="aspect.path.notification.shown" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Console Colors" />
+    <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://H:/BaiduYunDownload/Calculator/src/BooleanCaculator.java" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -502,7 +506,7 @@
       <option name="PROGRAM_PARAMETERS" value="" />
       <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ALTERNATIVE_JRE_PATH" value="D:\Program Files\Java\jdk1.7.0_79\jre" />
       <option name="ENABLE_SWING_INSPECTOR" value="false" />
       <option name="ENV_VARIABLES" />
       <option name="PASS_PARENT_ENVS" value="true" />
@@ -554,21 +558,21 @@
     <option name="totallyTimeSpent" value="197433000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1932" height="1056" extended-state="0" />
+    <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32910052" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32910052" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32910052" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26666668" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26666668" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24947916" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19635417" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19624217" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35449734" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -620,6 +624,10 @@
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="test" />
+    <option name="LAST_COMMIT_MESSAGE" value="test" />
+  </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
@@ -631,30 +639,26 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Calculator.java</url>
-          <line>923</line>
+          <line>924</line>
           <properties />
           <option name="timeStamp" value="119" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/DerivativeParser.java</url>
-          <line>127</line>
+          <line>329</line>
           <properties />
-          <option name="timeStamp" value="123" />
+          <option name="timeStamp" value="127" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Calculator.java</url>
-          <line>1023</line>
+          <url>file://$PROJECT_DIR$/src/DerivativeParser.java</url>
+          <line>336</line>
           <properties />
-          <option name="timeStamp" value="124" />
+          <option name="timeStamp" value="131" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="127" />
+      <option name="time" value="134" />
     </breakpoint-manager>
-    <watches-manager>
-      <configuration name="Application">
-        <watch expression="prev_t" />
-      </configuration>
-    </watches-manager>
+    <watches-manager />
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
@@ -691,8 +695,8 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2531#2532#0" expanded="true" />
-            <element signature="e#2574#2575#0" expanded="true" />
+            <element signature="e#9572#9573#0" expanded="true" />
+            <element signature="e#9621#9622#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -719,8 +723,8 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2531#2532#0" expanded="true" />
-            <element signature="e#2574#2575#0" expanded="true" />
+            <element signature="e#9572#9573#0" expanded="true" />
+            <element signature="e#9621#9622#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -731,8 +735,8 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2531#2532#0" expanded="true" />
-            <element signature="e#2574#2575#0" expanded="true" />
+            <element signature="e#9572#9573#0" expanded="true" />
+            <element signature="e#9621#9622#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -775,8 +779,8 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2531#2532#0" expanded="true" />
-            <element signature="e#2574#2575#0" expanded="true" />
+            <element signature="e#9572#9573#0" expanded="true" />
+            <element signature="e#9621#9622#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -787,8 +791,8 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2531#2532#0" expanded="true" />
-            <element signature="e#2574#2575#0" expanded="true" />
+            <element signature="e#9572#9573#0" expanded="true" />
+            <element signature="e#9621#9622#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -815,8 +819,8 @@
           <caret line="831" column="28" selection-start-line="831" selection-start-column="28" selection-end-line="831" selection-end-column="28" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2531#2532#0" expanded="true" />
-            <element signature="e#2574#2575#0" expanded="true" />
+            <element signature="e#9572#9573#0" expanded="true" />
+            <element signature="e#9621#9622#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -836,8 +840,8 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2531#2532#0" expanded="true" />
-            <element signature="e#2574#2575#0" expanded="true" />
+            <element signature="e#9572#9573#0" expanded="true" />
+            <element signature="e#9621#9622#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -856,8 +860,8 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2531#2532#0" expanded="true" />
-            <element signature="e#2574#2575#0" expanded="true" />
+            <element signature="e#9572#9573#0" expanded="true" />
+            <element signature="e#9621#9622#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -876,8 +880,8 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2531#2532#0" expanded="true" />
-            <element signature="e#2574#2575#0" expanded="true" />
+            <element signature="e#9572#9573#0" expanded="true" />
+            <element signature="e#9621#9622#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -896,8 +900,8 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2531#2532#0" expanded="true" />
-            <element signature="e#2574#2575#0" expanded="true" />
+            <element signature="e#9572#9573#0" expanded="true" />
+            <element signature="e#9621#9622#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -917,8 +921,8 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2531#2532#0" expanded="true" />
-            <element signature="e#2574#2575#0" expanded="true" />
+            <element signature="e#9572#9573#0" expanded="true" />
+            <element signature="e#9621#9622#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -938,8 +942,8 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2531#2532#0" expanded="true" />
-            <element signature="e#2574#2575#0" expanded="true" />
+            <element signature="e#9572#9573#0" expanded="true" />
+            <element signature="e#9621#9622#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -959,8 +963,8 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2531#2532#0" expanded="true" />
-            <element signature="e#2574#2575#0" expanded="true" />
+            <element signature="e#9572#9573#0" expanded="true" />
+            <element signature="e#9621#9622#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -982,65 +986,127 @@
     <entry file="file://$PROJECT_DIR$/src/RawFunctionDeclareHelper.java" />
     <entry file="file://$PROJECT_DIR$/src/CalcaulatorHelper.java" />
     <entry file="file://G:/Calculator/src/Calculator.java" />
-    <entry file="jar://D:/Program Files/Java/jdk1.8.0_101/src.zip!/java/util/Stack.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-99">
-          <caret line="101" column="0" selection-start-line="101" selection-start-column="0" selection-end-line="101" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/DerivativeParser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="520">
-          <caret line="117" column="19" selection-start-line="117" selection-start-column="19" selection-end-line="117" selection-end-column="19" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Test.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-622">
-          <caret line="17" column="0" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/CalculatorHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6647">
-          <caret line="536" column="32" selection-start-line="536" selection-start-column="32" selection-end-line="536" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="jar://D:/Program Files/Java/jdk1.8.0_101/src.zip!/java/util/Stack.java" />
     <entry file="file://$PROJECT_DIR$/src/BooleanCaculator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="134" column="29" selection-start-line="134" selection-start-column="29" selection-end-line="134" selection-end-column="29" />
+        <state relative-caret-position="1632">
+          <caret line="112" column="48" selection-start-line="112" selection-start-column="48" selection-end-line="112" selection-end-column="48" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Calculator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="348">
-          <caret line="92" column="28" selection-start-line="92" selection-start-column="28" selection-end-line="92" selection-end-column="28" />
+        <state relative-caret-position="2006">
+          <caret line="138" column="0" selection-start-line="138" selection-start-column="0" selection-end-line="138" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2531#2532#0" expanded="true" />
-            <element signature="e#2574#2575#0" expanded="true" />
+            <element signature="e#9572#9573#0" expanded="true" />
+            <element signature="e#9621#9622#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/CalculatorHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="7276">
+          <caret line="573" column="0" selection-start-line="573" selection-start-column="0" selection-end-line="573" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Test.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="774">
+          <caret line="82" column="0" selection-start-line="82" selection-start-column="0" selection-end-line="82" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DerivativeParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="193">
+          <caret line="320" column="185" selection-start-line="320" selection-start-column="185" selection-end-line="320" selection-end-column="185" />
+          <folding />
         </state>
       </provider>
     </entry>
   </component>
   <component name="masterDetails">
     <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>Calculator</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
       <state key="ProjectJDKs.UI">
         <settings>
           <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
           <splitter-proportions>
             <option name="proportions">
               <list>
