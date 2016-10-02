@@ -495,7 +495,17 @@ import java.util.regex.Pattern;
         }
 
         public double GetDouble() {
-            return (Double.parseDouble(/*String.format("%.10f",Double.parseDouble(Solve()))*/Solve())*10)/10;
+            //return (Double.parseDouble(/*String.format("%.14f",Double.parseDouble(Solve()))*/Solve()));
+            return CutMaxPerseicelDecimal(Solve());
+        }
+
+        private double CutMaxPerseicelDecimal(String decimal){
+            //15
+            if(!decimal.contains("."))
+                return Double.parseDouble(decimal);
+            if(decimal.length()-decimal.lastIndexOf(".")>=15)
+                return Double.parseDouble(decimal.substring(0,decimal.length()-1));
+            return Double.parseDouble(decimal);
         }
 
         public int GetInteger() {
@@ -685,6 +695,8 @@ import java.util.regex.Pattern;
                                 expressionArrayList.add(checkConverExpression(statement));//should always return Function
                                 break;
                             }
+                            statement += c;
+                        }else{
                             statement += c;
                         }
                         position++;

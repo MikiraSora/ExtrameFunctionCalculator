@@ -28,8 +28,8 @@ public class Test {
                 e.printStackTrace();
             }
         }
-        /*
-        System.out.println(String.format("test start!"));
+/*
+        System.out.println(String.format("test start!,calculate 1+1"));
         long times_total=0,raw_times_total=0;
         //c.Execute("reg f(x)=if(x==0,0,f(x-1)+1)");
         for(int i=0;i<10;i++) {
@@ -59,12 +59,12 @@ public class Test {
         }
         System.out.println(String.format("ave--> %.2ftimes/sec , raw: %.2ftimes/sec =>%.2f%%",times_total/10.0f,raw_times_total/10.0f,(times_total/10.0f)/(raw_times_total/10.0f)*100));
 
-
+/*
         System.out.println("------Test Start------");
         for(String str:getTest())
             System.out.println(String.format("%s ==> %s",str,c.Execute(str)));
-        System.out.println("------Test End------");
-        */
+        System.out.println("------Test End------");*/
+
     }
 
     public static String[] getTest(){
