@@ -78,7 +78,7 @@ public class BooleanCaculator {
     Calculator.Variable GetVariable(String name) throws Calculator.VariableNotFoundException {
         return calculator.GetVariable(name);
     }
-    private static String specialOperationChar = "+ ++ - -- * / ~ ! != @ # $ % ^ & && ( ) ; : \" \" || ? > >= < >= , ` ' = ==";
+    private static String specialOperationChar = "+ ++ - -- * / ~ ! != @ # $ % ^ & && ( ) ; : \" \" || ? > >= < <= , ` ' = ==";
 
     private String RequestVariable(String name) throws Calculator.VariableNotFoundException,Exception{
         return calculator.Solve(name);
@@ -211,11 +211,12 @@ public class BooleanCaculator {
         return false;
     }
 
+    private static Pattern checkFunctionFormatRegex = Pattern.compile("([a-zA-Z]\\w*)\\((.*)\\)");
     private Calculator.Expression checkConverExpression(String expression) throws Exception {
         if (isFunction(expression)) {
             //Get function name
-            Pattern reg = Pattern.compile("([a-zA-Z]\\w*)\\((.*)\\)");
-            Matcher result = reg.matcher(expression);
+            //Pattern reg = Pattern.compile("([a-zA-Z]\\w*)\\((.*)\\)");
+            Matcher result = checkFunctionFormatRegex.matcher(expression);
             result.find();
             if (result.groupCount() != 2)
                 throw new Exception("Cannot parse function ：" + expression);
@@ -312,7 +313,7 @@ public class BooleanCaculator {
                 if (operation_stack.isEmpty())
                     operation_stack.push((Calculator.Symbol) node);
                 else {
-                    if (!((Calculator.Symbol) node).rawText.equals(")") /*((Calculator.Symbol) node).symbol_type != Calculator.Symbol.SymbolType.Bracket_Right*/) {
+                    if (!((Calculator.Symbol) node).rawText.equals(")")) {
                         symbol = operation_stack.peek();
                         while ((symbol == null ? false : (!symbol.rawText.equals("(") && symbol.CompareOperationPrioty((Calculator.Symbol) node) >= 0))/*(symbol == null ? false : (symbol.symbol_type != Calculator.Symbol.SymbolType.Bracket_Left && symbol.CompareOperationPrioty((Calculator.Symbol) node) >= 0))*/) {
                             result_list.add(operation_stack.pop());

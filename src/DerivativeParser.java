@@ -11,6 +11,7 @@ public class DerivativeParser {
         enum DerivativeType{
             RawSymbol,
             RawExpression,
+            RawVariable,
             DerivativeSymbol,
             DerivativeFunction,
             DerivativeExpression,
@@ -120,21 +121,21 @@ public class DerivativeParser {
         public ResultFunction(String result){resultExpression=result;}
     }
 
-    public class DerivativeVariable extends Expression{
+    public class RawVariable extends Expression{
         @Override
         DerivativeType GetDerivateType() {
-            return DerivativeType.DerivativeVariable;
+            return DerivativeType.RawVariable;
         }
         ArrayList<Calculator.Expression> variable_list=null;
 
-        ArrayList<Calculator.Expression> powerExtraExpressionList=null;
+        Calculator.Expression powerExtraExpressionList=null;
 
-        public void SetPowerExtraExpressionList(ArrayList<Calculator.Expression> powerExtraExpressionList) {
+        public void SetPowerExtraExpressionList(Calculator.Expression powerExtraExpressionList) {
             this.powerExtraExpressionList = powerExtraExpressionList;
         }
 
-        public DerivativeVariable(){}
-        public DerivativeVariable(ArrayList<Calculator.Expression> list){variable_list=list;}
+        public RawVariable(){}
+        public RawVariable(ArrayList<Calculator.Expression> list){variable_list=list;}
 
         @Override
         String DerivativeSolve() throws Exception {
@@ -145,9 +146,33 @@ public class DerivativeParser {
             ArrayList<Calculator.Expression> resultExpressionList=new ArrayList<>();
             if(powerExtraExpressionList==null)
             {
-                resultExpressionList.add(new ResultExpression());
+                resultExpressionList.add(new ResultVariable(powerExtraExpressionList));
+            }
+            else{
+                resultExpressionList.add(new Calculator.Digit(powerExtraExpressionList.Solve()));
+                resultExpressionList.add(new ResultVariable(powerExtraExpressionList));
             }
             return resultExpressionList;
+        }
+    }
+
+    public class DerivativeVariable extends RawVariable{
+        DerivativeVariable(ArrayList<Calculator.Expression> list){super(list);}
+        DerivativeVariable(){}
+
+        @Override
+        DerivativeType GetDerivateType() {
+            return DerivativeType.DerivativeVariable;
+        }
+    }
+
+    public class ResultVariable extends DerivativeVariable{
+        Calculator.Expression extraExpression=null;
+        public ResultVariable(Calculator.Expression _extraExpression){extraExpression=_extraExpression;}
+
+        @Override
+        String Solve() {
+            return derivativeVariableName+extraExpression==null?"":String.format("((%s)-1)",extraExpression.Solve());
         }
     }
 
@@ -260,13 +285,13 @@ public class DerivativeParser {
         }
 
         if (Calculator.isValidVariable(expression)) {
-            return expression.equals(derivativeVariableName)?new DerivativeVariable()/*todo*/:GetCalculator().GetVariable(expression);
+            return expression.equals(derivativeVariableName)?new RawVariable()/*todo*/:GetCalculator().GetVariable(expression);
         }
 
         return null;
     }
 
-    ArrayList<Calculator.Expression> ProcessExpression(ArrayList<Calculator.Expression> expressionArrayList){
+    ArrayList<Calculator.Expression> ProcessExpression(ArrayList<Calculator.Expression> expressionArrayList)throws Exception{
         //
         Calculator.Expression expression=null;
         ArrayList<Calculator.Expression> expressionCollection;
@@ -311,16 +336,15 @@ public class DerivativeParser {
             expression=expressionArrayList.get(pos);
             if(expression.GetType()== Calculator.Expression.ExpressionType.Symbol){
                 if(((Calculator.Symbol)expression).rawText.equals("^")){
-                    /*
-                    if(pos>=(expressionArrayList.size()-1))
-                        break;
-                    if(pos==0)
-                        break;*/
                     Calculator.Expression previous=expressionArrayList.get(pos-1),next=expressionArrayList.get(pos+1);
                     if(previous.GetType()==Calculator.Expression.ExpressionType.Derivative){
-                        if(((Expression)previous).GetDerivateType()== Expression.DerivativeType.DerivativeVariable&&((next).GetType()!= Calculator.Expression.ExpressionType.Derivative)){
+                        if(((Expression)previous).GetDerivateType()== Expression.DerivativeType.RawVariable&&((next).GetType()!= Calculator.Expression.ExpressionType.Derivative)){
                             //D^(!D)
-
+                            ((RawVariable)previous).SetPowerExtraExpressionList(next);
+                            expressionArrayList.remove(expression);
+                            expressionArrayList.remove(next);
+                        }else{
+                            throw new Exception("Cannot parse the Expression :"+next.rawText+",because it needs higher feature.");
                         }
                     }
                 }
@@ -331,7 +355,10 @@ public class DerivativeParser {
         //todo
         }
 
+
+
     public String Solve(String expression,String derivativeName)throws Exception{
+        String expression_=expression;
         derivativeVariableName=derivativeName;
         ArrayList<Calculator.Expression> expression_list=ParseExpression(expression);
         expression_list=ProcessExpression(expression_list);

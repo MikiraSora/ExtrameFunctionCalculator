@@ -424,7 +424,7 @@ public class CalculatorHelper {
 
 
         /*if
-            此方法会根据条件执行相对应的表达式，但和编程语言的不一样，布尔运算的均是从左到右计算！
+            此方法会根据条件执行相对应的表达式，布尔运算的是从左到右计算
             if(condition,true_expr,false_expr)
             condition : 条件表达式，只有这里才可以执行布尔运算 ，如 4+6>10 , 4^2<0==true , x==0||y!=0
             true_expr : 条件表达式最终结果为true或者数值不为0时就会计算此表达式(Solve())
@@ -444,7 +444,6 @@ public class CalculatorHelper {
                         BracketStack.push(pos);
                     } else if (c == ')') {
                         if (!BracketStack.isEmpty())
-                            //BracketStack.push(pos);
                             BracketStack.pop();
                         else
                             throw new Exception("Not found a pair of bracket what defining a expression");
@@ -518,7 +517,7 @@ public class CalculatorHelper {
             }
         });
         /*loop_with
-        * 以步长step,从min到max循环执行expr,内置_in,_step,_min,_max,_out变量
+        * 以步长step,从min到max循环执行expr,内置_index,_step,_min,_max,_out变量
         * 注意expr是要计算的表达式而不是语句
         * */
         Calculator.RegisterRawFunction("loop_with(step,min,max,expr)", new Calculator.ReflectionFunction.OnReflectionFunction() {
@@ -561,7 +560,7 @@ public class CalculatorHelper {
                 double min=parameter.get("min").GetDigit().GetDouble();
                 double max=parameter.get("max").GetDigit().GetDouble();
                 String expr=((Calculator.ExpressionVariable)parameter.get("expr")).GetExpreesion();
-                Calculator.Function function=new Calculator.Function(String.format("tmp_execute(_index,_step,_min,_max,_out)=%s",expr),calculator);
+                Calculator.Function function=new Calculator.Function(String.format("tmp_execute(_index,_step,_min,_max,_out)=%s",expr),calculator);//todo 可优化
                 String out="0";
                 for(double i=min;i<=max;i+=step){
 //                    calculator.GetFunction("loop_with").paramter.get("x").rawText=Double.toString(i);

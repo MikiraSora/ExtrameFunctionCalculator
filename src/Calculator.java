@@ -65,14 +65,15 @@ import java.util.regex.Pattern;
     }
 
     public static class ReflectionFunction extends Function {
+        private static Pattern FunctionFormatRegex = Pattern.compile("([a-zA-Z]\\w*)\\((.*)\\)");
         ReflectionFunction(String expression, OnReflectionFunction onReflectionFunction) throws Exception {
             super();
             if (expression == null)
                 return;
             setReflectionFunction(onReflectionFunction);
             rawText = expression;
-            Pattern reg = Pattern.compile("([a-zA-Z]\\w*)\\((.*)\\)");
-            Matcher result = reg.matcher(expression);
+            //Pattern reg = Pattern.compile("([a-zA-Z]\\w*)\\((.*)\\)");
+            Matcher result = FunctionFormatRegex.matcher(expression);
             result.find();
             if (result.groupCount() != 2)
                 throw new Exception("Cannot parse function ：" + expression);
@@ -163,14 +164,13 @@ import java.util.regex.Pattern;
         protected Function() {
             super();
         }
-
+        private static Pattern FunctionFormatRegex = Pattern.compile("([a-zA-Z]\\w*)\\((.*)\\)=(.+)");
         public Function(String expression, Calculator calculator1) throws Exception {
             super(calculator1);
             if (expression == null)
                 return;
             rawText = expression;
-            Pattern reg = Pattern.compile("([a-zA-Z]\\w*)\\((.*)\\)=(.+)");
-            Matcher result = reg.matcher(expression);
+            Matcher result = FunctionFormatRegex.matcher(expression);
             result.find();
             if (result.groupCount() != 3)
                 throw new Exception("Cannot parse function ：" + expression);
@@ -299,10 +299,9 @@ import java.util.regex.Pattern;
             return ExpressionType.Function;
         }
 
-        private static String reg_expr="(\\w)##([a-zA-Z_]+\\w*)##(.*?)##(.*)";
+        private static Pattern FunctionDeserializeRegex=Pattern.compile("(\\w)##([a-zA-Z_]+\\w*)##(.*?)##(.*)");
         static Function Deserialize(String text)throws Exception{
-            Pattern reg=Pattern.compile(reg_expr);
-            Matcher result=reg.matcher(text);
+            Matcher result=FunctionDeserializeRegex.matcher(text);
             if(!result.find())
                 throw new Exception("Cannot parse text :"+text);
             String rawText=String.format("%s(%s)=%s",result.group(2),result.group(3),result.group(4));
@@ -456,10 +455,9 @@ import java.util.regex.Pattern;
             return ExpressionType.Variable;
         }
 
-        private static String reg_expr="(\\w)##([a-zA-Z_]+\\w*)##(.*)";
+        private static Pattern VariableDeserializeRegex=Pattern.compile("(\\w)##([a-zA-Z_]+\\w*)##(.*)");
         static Variable Deserialize(VariableType type,String text)throws Exception{
-            Pattern reg=Pattern.compile(reg_expr);
-            Matcher result=reg.matcher(text);
+            Matcher result=VariableDeserializeRegex.matcher(text);
             if(!result.find())
                 throw new Exception("Cannot parse text :"+text);
             //String rawText=String.format("%s=%s",result.group(2),result.group(3));
@@ -497,7 +495,7 @@ import java.util.regex.Pattern;
         }
 
         public double GetDouble() {
-            return Double.parseDouble(Solve());
+            return (Double.parseDouble(/*String.format("%.10f",Double.parseDouble(Solve()))*/Solve())*10)/10;
         }
 
         public int GetInteger() {
@@ -566,10 +564,10 @@ import java.util.regex.Pattern;
         public Digit GetDigit() throws Exception {
             return new Digit(Solve());
         }
-        private static String reg_expr="(\\w)##([a-zA-Z_]+\\w*)##(.*)";
+
+        private static Pattern ExpressionVariableRegex=Pattern.compile("(\\w)##([a-zA-Z_]+\\w*)##(.*)");
         static ExpressionVariable Deserialize(String text)throws Exception{
-            Pattern reg=Pattern.compile(reg_expr);
-            Matcher result=reg.matcher(text);
+            Matcher result=ExpressionVariableRegex.matcher(text);
             if(!result.find())
                 throw new Exception("Cannot parse text :"+text);
             return new ExpressionVariable(result.group(2),result.group(3),null);
@@ -658,9 +656,27 @@ import java.util.regex.Pattern;
                             break;
                         c = expression.charAt(position);
                         if (c == '(') {
-                            bracket_stack.push(position);
+                            //判断是否有无限循环小数格式的可能
+                            if(!isDigit(statement)){
+                                bracket_stack.push(position);
+                                statement += c;
+                            }
+                            else {
+                                //无限循环小数格式
+                                int size=0;
+                                while(true){
+                                    statement+=c;
+                                    if(c==')')
+                                        break;
+                                    size++;
+                                    c=expression.charAt(++position);
+                                }
+                                expressionArrayList.add(new ExpressionVariable("",RepeatingDecimalCoverToExpression(statement),this));
+                                statement="";
+                                break;
+                            }
                         }
-                        if (c == ')') {
+                        else if (c == ')') {
                             if (bracket_stack.isEmpty())
                                 throw new Exception("Extra brackets in position: " + position);
                             bracket_stack.pop();
@@ -669,9 +685,8 @@ import java.util.regex.Pattern;
                                 expressionArrayList.add(checkConverExpression(statement));//should always return Function
                                 break;
                             }
-
+                            statement += c;
                         }
-                        statement += c;
                         position++;
                     }
                 } else {
@@ -700,6 +715,74 @@ import java.util.regex.Pattern;
         if (!statement.isEmpty())
             expressionArrayList.add(checkConverExpression(statement));
         return expressionArrayList;
+    }
+
+    //10.4412312312312.. -> (10.44+123/99900)
+    private static String ExpressionCoverToRepeatingDecimal(String decimalExpr)throws Exception{
+        Matcher result=RepeatingDecimalReg.matcher(decimalExpr);
+        if(!result.matches())
+            throw new Exception(decimalExpr+" is invalid repeating decimal!");
+        String intDigit=result.group(1),notRepeatDecimal=result.group(2),RepeatDecimal=result.group(3),endDecimal=result.group(4);
+        if(endDecimal.length()>RepeatDecimal.length())
+            throw new Exception(decimalExpr+" is invalid repeating decimal!");
+        String devNumber="";
+        for(int i=0;i<RepeatDecimal.length();i++)
+            devNumber+=9;
+        for(int i=0;i<notRepeatDecimal.length();i++)
+            devNumber+=0;
+        String expr=String.format("(%s.%s+%s/%s)",intDigit,notRepeatDecimal,RepeatDecimal,devNumber);
+        return expr;
+    }
+
+    //0.6(7) -> 0.677777777... -> (0.6+7/90)
+    private static String RepeatingDecimalCoverToExpression(String decimalExpr)throws Exception{
+        char c=0;
+        int pos=0,notRepeatingDecimalLength=0;
+        String notRepeating="",Repeating="";
+        while(true){
+            c=decimalExpr.charAt(pos);
+            if(c!='('&&c!=')'){
+                if(c!='.'){
+                    notRepeating+=c;
+                }
+                else {
+                    notRepeating+=c;
+                    pos++;
+                    while (true){
+                        c=decimalExpr.charAt(pos);
+                        if(c=='(')
+                            break;
+                        notRepeating+=c;
+                        notRepeatingDecimalLength++;
+                        pos++;
+                        if(pos>=decimalExpr.length())
+                            throw new Exception(decimalExpr+"cant cover to Expression");
+                    }
+                    pos--;
+                }
+            }else{
+                if(c=='('){
+                    pos++;
+                    while (true){
+                        c=decimalExpr.charAt(pos);
+                        if(c==')')
+                            break;
+                        Repeating+=c;
+                        pos++;
+                        if(pos>=decimalExpr.length())
+                            throw new Exception(decimalExpr+"cant cover to Expression");
+                    }
+                    break;
+                }
+            }
+            pos++;
+        }
+        String devNumber="";
+        for(int i=0;i<Repeating.length();i++)
+            devNumber+=9;
+        for(int i=0;i<notRepeatingDecimalLength;i++)
+            devNumber+=0;
+        return String.format("(%s+%s/%s)",notRepeating,Repeating,devNumber);
     }
 
     private void ConverFunctionToDigit() throws FunctionNotFoundException, VariableNotFoundException {
@@ -740,11 +823,11 @@ import java.util.regex.Pattern;
         }
     }
 
+    private static Pattern checkFunctionFormatRegex=Pattern.compile("([a-zA-Z]\\w*)\\((.*)\\)");
     private Expression checkConverExpression(String expression) throws Exception {
         if (isFunction(expression)) {
             //Get function name
-            Pattern reg = Pattern.compile("([a-zA-Z]\\w*)\\((.*)\\)");
-            Matcher result = reg.matcher(expression);
+            Matcher result = checkFunctionFormatRegex.matcher(expression);
             result.find();
             if (result.groupCount() != 2)
                 throw new Exception("Cannot parse function ：" + expression);
@@ -893,8 +976,7 @@ import java.util.regex.Pattern;
             if (getBSEChain_Stack().get(0).GetType() == Expression.ExpressionType.Digit)
                 return String.valueOf((((Digit) getBSEChain_Stack().get(0)).GetDouble()));
         Stack<Expression> digit_stack = new Stack<>();
-        //Stack<Digit> digit_stack = new Stack<>();
-        Expression/*Digit*/ digit_a, digit_b, digit_result;
+        Expression digit_a, digit_b, digit_result;
         Symbol operator;
         ArrayList<Expression> paramterList,result;
         try {
@@ -955,7 +1037,7 @@ import java.util.regex.Pattern;
         setRawExpressionChain_Stack(ParseExpression(expression));
         ConverVariableToDigit();
         ConverFunctionToDigit();
-        CheckNormalizeChain();
+        CheckNormalizeChain();//// TODO: 2016/10/2 此方法存在争议，暂时保留
         ConverToBSE();
 
         String result= ExucuteBSE();
@@ -1252,6 +1334,17 @@ import java.util.regex.Pattern;
         }
         ParseLoadText(stringBuffer.toString());
         return "Load finished!";
+    }
+
+    private static Pattern RepeatingDecimalReg=Pattern.compile("^(\\p{Nd}*)\\.(\\p{Nd}*?)(\\p{Nd}+?)(\\3)+(\\p{Nd}*)$");
+    public boolean isRepeatingDecimal(String Decimal){
+        Matcher result=RepeatingDecimalReg.matcher(Decimal);
+        if(!result.matches())
+            return false;
+        String /*intDigit=result.group(1),notRepeatDecimal=result.group(2),*/RepeatDecimal=result.group(3),endDecimal=result.group(4);
+        if(endDecimal.length()>RepeatDecimal.length())
+            return false;
+        return true;
     }
 
     public void ParseLoadText(String rawText) throws IOException {

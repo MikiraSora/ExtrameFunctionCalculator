@@ -15,9 +15,9 @@ public class Test {
         long time_max = 1000000000;//1000000000;
         long x = 0;
 
-
         while(true){
             try {
+                System.gc();
                 System.out.println("input : ");
                 Scanner input = new Scanner(System.in);
                 String expression = input.nextLine();
@@ -27,16 +27,18 @@ public class Test {
             }catch (Exception e){
                 e.printStackTrace();
             }
-        }/*
+        }
+        /*
         System.out.println(String.format("test start!"));
         long times_total=0,raw_times_total=0;
+        //c.Execute("reg f(x)=if(x==0,0,f(x-1)+1)");
         for(int i=0;i<10;i++) {
             time=0;
             times=0;
             while (time < time_max) {
 
                 prev_t = System.nanoTime();
-                c.Execute("solve 4*(2+3)");
+                c.Execute("solve 1+1");
                 time += (System.nanoTime() - prev_t);
                 times++;
             }
@@ -45,9 +47,10 @@ public class Test {
             time=0;
             raw_times=0;
             while (time < time_max) {
-
+                x=1;
                 prev_t = System.nanoTime();
-                x=4*(2+3);
+                x=1+1;
+                //x=4*(2+3);
                 time += (System.nanoTime() - prev_t);
                 raw_times++;
             }
@@ -56,10 +59,12 @@ public class Test {
         }
         System.out.println(String.format("ave--> %.2ftimes/sec , raw: %.2ftimes/sec =>%.2f%%",times_total/10.0f,raw_times_total/10.0f,(times_total/10.0f)/(raw_times_total/10.0f)*100));
 
-*/
-        /*
+
+        System.out.println("------Test Start------");
         for(String str:getTest())
-            System.out.println(String.format("%s ==> %s\n",str,c.Execute(str)));*/
+            System.out.println(String.format("%s ==> %s",str,c.Execute(str)));
+        System.out.println("------Test End------");
+        */
     }
 
     public static String[] getTest(){
@@ -75,7 +80,13 @@ public class Test {
                 "set_expr myexpr=a+b*c-d%g(c)",
                 "set_expr d=a+b+g(f(c))",
                 "reg g(x)=x+100",
-                "solve myexpr"
+                "solve myexpr",
+                "reg g(x)=sin(x)-sin(-x)",
+                "delete variable a",
+                "delete function f",
+                "solve g(1)+g(fact(2))",
+                "dump -all",
+                "reset"
         };
         return test;
     }
