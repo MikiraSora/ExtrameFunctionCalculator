@@ -8,7 +8,7 @@ public class Test {
     public static void main(String args[])throws Exception {
         System.out.println("Test Start");
         Calculator c=new Calculator();
-        System.out.println("please input \"help\" if you dont known how to use this.");
+        System.out.println("please input \"help\" if you dont know how to use this.");
         long time = 0, prev_t = System.nanoTime();
         long times = 0;
         long raw_times = 0;

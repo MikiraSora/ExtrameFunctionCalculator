@@ -503,8 +503,9 @@ import java.util.regex.Pattern;
             //15
             if(!decimal.contains("."))
                 return Double.parseDouble(decimal);
-            if(decimal.length()-decimal.lastIndexOf(".")>=15)
-                return Double.parseDouble(decimal.substring(0,decimal.length()-1));
+            int pointPos=decimal.lastIndexOf(".");
+            if(decimal.length()-pointPos>=15)
+                return Double.parseDouble(decimal.substring(0,pointPos+14));
             return Double.parseDouble(decimal);
         }
 
@@ -1016,7 +1017,8 @@ import java.util.regex.Pattern;
             throw new Exception(e.getMessage());
 
         }
-        return digit_stack.pop().Solve();
+        Expression resultExpr=digit_stack.pop();
+        return (resultExpr.GetType()== Expression.ExpressionType.Digit)?Double.toString(((Digit)resultExpr).GetDouble()):resultExpr.Solve();
     }
 
     private void CheckNormalizeChain() throws Exception {
