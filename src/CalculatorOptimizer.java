@@ -22,6 +22,7 @@ public class CalculatorOptimizer {
     }
 
     private class Operator extends Expression{
+        private Operator(){}
         Operator(Calculator.Symbol symbol){super(symbol);}
 
         @Override
@@ -33,26 +34,31 @@ public class CalculatorOptimizer {
 
         private float GetOperatorPriorty(){return Calculator.Symbol.OperatorPrioty.containsKey(GetOperatorReference().rawText)?Calculator.Symbol.OperatorPrioty.get(GetOperatorReference().rawText):-1;}
 
-        boolean isSameLevelLayout(Operator operator){return }
+        boolean isSameLevelLayout(Operator operator){return this.GetOperatorPriorty()==operator.GetOperatorPriorty();}
+
+        boolean isBaseOperator(){
+            switch (GetOperatorReference().rawText){
+                case "+":
+                case "-":
+                case "*":
+                case "/":
+                    return true;
+            }
+            return false;
+        }
     }
 
+    private class Digit extends Expression{
+        private Digit(){}
+        Digit(Calculator.Digit digit){super(digit);}
 
+        @Override
+        ExpressionType GetType() {
+            return ExpressionType.Digit;
+        }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        Calculator.Digit GetDigitReference(){return (Calculator.Digit)GetExpressionReference();}
+    }
 
     private boolean enableOptimize=false;
     private int OptimizeLevel=1;
@@ -73,7 +79,20 @@ public class CalculatorOptimizer {
         return expressionArrayList;
     }
 
-    //
+    private ArrayList<Expression> AnalyseConver(ArrayList<Calculator.Expression> expressionArrayList){
+        ArrayList<Expression> result=new ArrayList<>();
+        for(Calculator.Expression expression:expressionArrayList){
+            if(expression.GetType()== Calculator.Expression.ExpressionType.Digit){
+                result.add(new Digit((Calculator.Digit)expression));
+                continue;
+            }
+            if(expression.GetType()== Calculator.Expression.ExpressionType.Symbol){
+                result.add(new Operator((Calculator.Symbol)expression));
+            }
+        }
+    }
+
+    //lv.1
     private ArrayList<Calculator.Expression> Level1Optimize(ArrayList<Calculator.Expression> expressionArrayList,Calculator calculator){
 
         return expressionArrayList;
