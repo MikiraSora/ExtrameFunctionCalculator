@@ -610,6 +610,10 @@ import java.util.regex.Pattern;
         CalculatorHelper.InitFunctionDeclare();
     }
 
+    public Calculator(){
+        calculatorOptimizer=new CalculatorOptimizer(this);
+    }
+
 
     Function GetFunction(String name) throws Exception, FunctionNotFoundException {
         if (raw_function_table.containsKey(name)) {
@@ -1052,12 +1056,45 @@ import java.util.regex.Pattern;
         ConverVariableToDigit();
         ConverFunctionToDigit();
         CheckNormalizeChain();//// TODO: 2016/10/2 此方法存在争议，暂时保留
+        ExpressionOptimization();
         ConverToBSE();
 
         String result= ExucuteBSE();
 
         Term_Solve();
         return result;
+    }
+
+    private CalculatorOptimizer calculatorOptimizer=null;
+
+    public void OptimizeEnable(boolean sw){
+        if(sw)
+            calculatorOptimizer.Enable();
+        else
+            calculatorOptimizer.DisEnable();
+    }
+
+    public String Optimize(String sw)throws Exception{
+        switch (sw){
+            case "true":{
+                OptimizeEnable(true);
+                return "Optimized open.";
+            }
+            case "false":{
+                OptimizeEnable(false);
+                return "Optimized close.";
+            }
+            default:throw new Exception("unknown command");
+        }
+    }
+
+    private void ExpressionOptimization(){
+        ArrayList<Expression> optimizeResult=calculatorOptimizer.OptimizeExpression(getRawExpressionChain_Stack());
+        if(optimizeResult==null)
+            return;
+        getRawExpressionChain_Stack().clear();
+        getRawExpressionChain_Stack().addAll(optimizeResult);
+        return;
     }
 
     public String Execute(String text) throws Exception {
@@ -1133,6 +1170,10 @@ import java.util.regex.Pattern;
                     }
                 }
                 result=Save(type,output_path);
+                break;
+            }
+            case "optimize":{
+                result=Optimize(paramter);
                 break;
             }
             case "delete":{

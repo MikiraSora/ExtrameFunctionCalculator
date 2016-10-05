@@ -15,6 +15,8 @@ public class Test {
         long time_max = 1000000000;//1000000000;
         long x = 0;
 
+        c.OptimizeEnable(true);
+
         while(true){
             try {
                 System.gc();
@@ -29,35 +31,34 @@ public class Test {
             }
         }
 /*
-        System.out.println(String.format("test start!,calculate 1+1"));
+        System.out.println(String.format("test start!,calculate 4*6*0/1*6*88888/9999"));
         long times_total=0,raw_times_total=0;
         //c.Execute("reg f(x)=if(x==0,0,f(x-1)+1)");
+
         for(int i=0;i<10;i++) {
             time=0;
             times=0;
+            c.OptimizeEnable(false);
             while (time < time_max) {
-
                 prev_t = System.nanoTime();
-                c.Execute("solve 1+1");
+                c.Execute("solve 4*6*0/1*6*88888/9999");
                 time += (System.nanoTime() - prev_t);
                 times++;
             }
             times_total+=times;
-
+            c.OptimizeEnable(true);
             time=0;
             raw_times=0;
             while (time < time_max) {
-                x=1;
                 prev_t = System.nanoTime();
-                x=1+1;
-                //x=4*(2+3);
+                c.Execute("solve 4*6*0/1*6*88888/9999");
                 time += (System.nanoTime() - prev_t);
                 raw_times++;
             }
-            System.out.println(String.format("%d--> %dtimes/sec , raw: %dtimes/sec =>%.2f%%",i,times,raw_times,(times*1.0f/raw_times)*100));
+            System.out.println(String.format("raw: %d--> %dtimes/sec , optimize: %dtimes/sec =>%.2f%%",i,times,raw_times,(times*1.0f/raw_times)*100));
             raw_times_total+=raw_times;
         }
-        System.out.println(String.format("ave--> %.2ftimes/sec , raw: %.2ftimes/sec =>%.2f%%",times_total/10.0f,raw_times_total/10.0f,(times_total/10.0f)/(raw_times_total/10.0f)*100));
+        System.out.println(String.format("ave--> raw: %.2ftimes/sec , optimize: %.2ftimes/sec =>%.2f%%",times_total/10.0f,raw_times_total/10.0f,(times_total/10.0f)/(raw_times_total/10.0f)*100));
 
 /*
         System.out.println("------Test Start------");

@@ -9,6 +9,7 @@ public class CalculatorOptimizer {
         enum ExpressionType{
             Operator,
             Digit,
+            Fraction,
             Unknown
         }
         private Calculator.Expression Cal_ExpressionReference=null;
@@ -48,6 +49,11 @@ public class CalculatorOptimizer {
             }
             return false;
         }
+
+        @Override
+        public String toString() {
+            return GetOperatorReference().rawText;
+        }
     }
 
     private class Digit extends Expression{
@@ -60,6 +66,11 @@ public class CalculatorOptimizer {
         }
 
         Calculator.Digit GetDigitReference(){return (Calculator.Digit)GetExpressionReference();}
+
+        @Override
+        public String toString() {
+            return GetDigitReference().rawText;
+        }
     }
 
     private class Fraction extends Expression{
@@ -74,8 +85,10 @@ public class CalculatorOptimizer {
     }
 
 
+    public CalculatorOptimizer(Calculator calculator){this.calculator=calculator;}
+
     private boolean enableOptimize=false;
-    private int OptimizeLevel=1;
+    private int OptimizeLevel=999;
     private Calculator calculator=null;
 
     public void SetOptimiizeLevel(int i){OptimizeLevel=i;}
@@ -84,15 +97,17 @@ public class CalculatorOptimizer {
     private  Calculator GetCalculator(){return calculator==null?calculator=new Calculator():calculator;}
 
 
-    public ArrayList<Calculator.Expression> OptimizeExpression(ArrayList<Calculator.Expression> expressionArrayList,Calculator calculator){
-        this.calculator=calculator;
+    public ArrayList<Calculator.Expression> OptimizeExpression(ArrayList<Calculator.Expression> expressionArrayList){
         if(!enableOptimize)
-            return expressionArrayList;
+            return null;
         ArrayList<Expression> tmpAnalyseExpressionArrayList=AnalyseConver(expressionArrayList);
         expressionArrayList=null;
 
         if(OptimizeLevel>=1)
-            tmpAnalyseExpressionArrayList=Level1Optimize(tmpAnalyseExpressionArrayList,GetCalculator());
+            tmpAnalyseExpressionArrayList=Level1_Optimize(tmpAnalyseExpressionArrayList,GetCalculator());
+
+        if(OptimizeLevel>=2)
+            tmpAnalyseExpressionArrayList=Level2_Optimize(tmpAnalyseExpressionArrayList,GetCalculator());
 
         expressionArrayList=ConverToCalExpression(tmpAnalyseExpressionArrayList);
         return expressionArrayList;
@@ -126,7 +141,7 @@ public class CalculatorOptimizer {
     }
 
     //lv.1
-    private ArrayList<Expression> Level1Optimize(ArrayList<Expression> expressionArrayList,Calculator calculator){
+    private ArrayList<Expression> Level1_Optimize(ArrayList<Expression> expressionArrayList,Calculator calculator){
         Expression expression=null;
         Digit digit=null;
         for(int position=0;position<expressionArrayList.size();position++){
@@ -141,20 +156,22 @@ public class CalculatorOptimizer {
                 * */
                 if(position!=expressionArrayList.size()-1)/*判断是否在末尾，如果是就跳过后面的删除*/ {
                     if(((Operator) expressionArrayList.get(position + 1)).isSameLevelLayout("*")) {
-                        while (((Operator) expressionArrayList.get(position + 1)).isSameLevelLayout("*")) {
+                        while ((position+1)<expressionArrayList.size()?((Operator) expressionArrayList.get(position + 1)).isSameLevelLayout("*"):false) {
                             expressionArrayList.remove(position + 1);
                             expressionArrayList.remove(position + 1);
                         }
                     }else{
                         expressionArrayList.remove(position);
                         expressionArrayList.remove(position);
+                        position-=1;
                     }
                 }
-
                 if(position!=0)/*判断是否在首位，如果是就跳前面的删除*/{
-                    while (((Operator) expressionArrayList.get(position - 1)).isSameLevelLayout("*")) {
-                        expressionArrayList.remove(position - 1);
-                        expressionArrayList.remove(position - 1);
+                    if(((Operator) expressionArrayList.get(position - 1)).isSameLevelLayout("*")) {
+                        while ((position-1)>=0?((Operator) expressionArrayList.get(position - 1)).isSameLevelLayout("*"):false) {
+                            expressionArrayList.remove(--position);
+                            expressionArrayList.remove(--position);
+                        }
                     }
                 }
                 continue;
@@ -166,6 +183,41 @@ public class CalculatorOptimizer {
                 * */
             }
         }
+        return expressionArrayList;
+    }
+
+    private ArrayList<Expression> Level2_Optimize(ArrayList<Expression> expressionArrayList,Calculator calculator){
+        Expression expression=null;
+        Digit digit=null;
+        Operator operator=null;
+        for (int position=0;position<expressionArrayList.size();position++){
+            expression=expressionArrayList.get(position);
+            if(expression.GetType()!= Expression.ExpressionType.Operator)
+                continue;
+            operator=(Operator) expression;
+            if(!operator.GetOperatorReference().rawText.equals("/"))
+                continue;
+            expressionArrayList.remove(position);
+            expressionArrayList.add(new Operator(new Calculator.Symbol("*")));
+            expressionArrayList.add(new Fraction(((Digit)expressionArrayList.remove(position)).GetDigitReference().GetDouble()));
+        }
+
+        Fraction a,b,f;
+
+        if(expressionArrayList.size()>=3){
+            while(expressionArrayList.get(expressionArrayList.size()-3).GetType()==Expression.ExpressionType.Fraction&&expressionArrayList.get(expressionArrayList.size()-1).GetType()==Expression.ExpressionType.Fraction&&(expressionArrayList.get(expressionArrayList.size()-2).GetType()== Expression.ExpressionType.Operator?((Operator)expressionArrayList.get(expressionArrayList.size()-2)).GetOperatorReference().rawText.equals("*"):false)){
+                a=(Fraction) expressionArrayList.remove(expressionArrayList.size()-1);
+                expressionArrayList.remove(expressionArrayList.size()-1);
+                b=(Fraction) expressionArrayList.remove(expressionArrayList.size()-1);
+                expressionArrayList.add(a.Multi(b));
+            }
+        }
+
+        f=(Fraction) expressionArrayList.remove(expressionArrayList.size()-1);
+        expressionArrayList.remove(expressionArrayList.size()-1);
+        expressionArrayList.add(new Operator(new Calculator.Symbol("*")));
+        
+
         return expressionArrayList;
     }
 }
