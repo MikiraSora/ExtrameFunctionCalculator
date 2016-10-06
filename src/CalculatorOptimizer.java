@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Stack;
 
 /**
  * Created by MikiraSora on 2016/10/3.
@@ -12,7 +13,7 @@ public class CalculatorOptimizer {
             Fraction,
             Unknown
         }
-        private Calculator.Expression Cal_ExpressionReference=null;
+        Calculator.Expression Cal_ExpressionReference=null;
 
         ExpressionType GetType(){return ExpressionType.Unknown;}
 
@@ -73,6 +74,46 @@ public class CalculatorOptimizer {
         }
     }
 
+    private class ExpressionDigit extends Digit{
+        Calculator calculator=null;
+        Calculator GetCalculator(){return calculator==null?calculator=new Calculator():calculator;}
+        Calculator.Digit DigitResult=null;
+
+        ArrayList<Expression> expressionArrayList=null;
+
+        private ExpressionDigit(){}
+        ExpressionDigit(ArrayList<Expression> expressions,Calculator calculator){
+            this.calculator=calculator;
+            expressionArrayList=expressions;
+            try {
+                DigitResult=new Calculator.Digit(GetCalculator().Solve(toString()));
+            }catch (Exception e){
+                DigitResult=new Calculator.Digit("0");
+            }
+            expressionArrayList=null;
+
+        }
+
+        @Override
+        Calculator.Digit GetDigitReference() {
+            return DigitResult;
+        }
+
+        @Override
+        Calculator.Expression GetExpressionReference() {
+            return this.GetDigitReference();
+        }
+
+        @Override
+        public String toString() {
+            StringBuilder stringBuilder=new StringBuilder();
+            for(Expression expression:expressionArrayList){
+                stringBuilder.append(expression.toString());
+            }
+            return stringBuilder.toString();
+        }
+    }
+
     private class Fraction extends Expression{
         private double Numerator=1;
         private double Denominator;
@@ -88,7 +129,7 @@ public class CalculatorOptimizer {
     public CalculatorOptimizer(Calculator calculator){this.calculator=calculator;}
 
     private boolean enableOptimize=false;
-    private int OptimizeLevel=999;
+    private int OptimizeLevel=1;
     private Calculator calculator=null;
 
     public void SetOptimiizeLevel(int i){OptimizeLevel=i;}
@@ -114,14 +155,44 @@ public class CalculatorOptimizer {
     }
 
     private ArrayList<Expression> AnalyseConver(ArrayList<Calculator.Expression> expressionArrayList){
-        ArrayList<Expression> result=new ArrayList<>();
-        for(Calculator.Expression expression:expressionArrayList){
+        ArrayList<Expression> result=new ArrayList<>(),bracketList=null;
+        Stack<Integer> stack=new Stack();
+        Calculator.Expression expression=null;
+        Calculator.Symbol symbol=null;
+        for(int position=0;position<expressionArrayList.size();position++){
+            expression=expressionArrayList.get(position);
             if(expression.GetType()== Calculator.Expression.ExpressionType.Digit){
                 result.add(new Digit((Calculator.Digit)expression));
                 continue;
             }
             if(expression.GetType()== Calculator.Expression.ExpressionType.Symbol){
-                result.add(new Operator((Calculator.Symbol)expression));
+                symbol=(Calculator.Symbol)expression;
+                if(symbol.rawText.equals("(")){
+                    stack.clear();
+                    stack.push(position);
+                    bracketList=new ArrayList<>();
+                    for(++position;position<expressionArrayList.size();position++){
+                        expression=expressionArrayList.get(position);
+                        if(expression.GetType()== Calculator.Expression.ExpressionType.Symbol){
+                            if (((Calculator.Symbol) expression).rawText.equals("(")){
+                                bracketList.add(new Operator((Calculator.Symbol) expression));
+                                stack.push(position);
+                            } else if (((Calculator.Symbol) expression).rawText.equals(")")) {
+                                stack.pop();
+                                if (stack.isEmpty()) {
+                                    result.add(new ExpressionDigit(bracketList, GetCalculator()));
+                                    bracketList = new ArrayList<>();
+                                    break;
+                                }
+                                bracketList.add(new Operator((Calculator.Symbol) expression));
+                            }else
+                                bracketList.add(new Operator((Calculator.Symbol) expression));
+                        }else
+                            bracketList.add(new Digit((Calculator.Digit) expression));
+                    }
+                }else {
+                    result.add(new Operator((Calculator.Symbol)expression));
+                }
             }
         }
         return result;
@@ -167,7 +238,7 @@ public class CalculatorOptimizer {
                     }
                 }
                 if(position!=0)/*判断是否在首位，如果是就跳前面的删除*/{
-                    if(((Operator) expressionArrayList.get(position - 1)).isSameLevelLayout("*")) {
+                    if(((Operator)expressionArrayList.get(position - 1)).isSameLevelLayout("*")) {
                         while ((position-1)>=0?((Operator) expressionArrayList.get(position - 1)).isSameLevelLayout("*"):false) {
                             expressionArrayList.remove(--position);
                             expressionArrayList.remove(--position);
@@ -216,8 +287,6 @@ public class CalculatorOptimizer {
         f=(Fraction) expressionArrayList.remove(expressionArrayList.size()-1);
         expressionArrayList.remove(expressionArrayList.size()-1);
         expressionArrayList.add(new Operator(new Calculator.Symbol("*")));
-        
-
         return expressionArrayList;
     }
 }

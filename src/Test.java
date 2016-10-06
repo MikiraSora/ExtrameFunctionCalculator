@@ -14,7 +14,7 @@ public class Test {
         long raw_times = 0;
         long time_max = 1000000000;//1000000000;
         long x = 0;
-
+/*
         c.OptimizeEnable(true);
 
         while(true){
@@ -30,8 +30,8 @@ public class Test {
                 e.printStackTrace();
             }
         }
-/*
-        System.out.println(String.format("test start!,calculate 4*6*0/1*6*88888/9999"));
+/**/
+        System.out.println(String.format("test start!,calculate solve 4*6*(0/1+4*(1*0*1))*6+0*88888/9999"));
         long times_total=0,raw_times_total=0;
         //c.Execute("reg f(x)=if(x==0,0,f(x-1)+1)");
 
@@ -41,7 +41,7 @@ public class Test {
             c.OptimizeEnable(false);
             while (time < time_max) {
                 prev_t = System.nanoTime();
-                c.Execute("solve 4*6*0/1*6*88888/9999");
+                c.Execute("solve 4*6*(0/1+4*(1*0*1))*6+0*88888/9999");
                 time += (System.nanoTime() - prev_t);
                 times++;
             }
@@ -51,7 +51,7 @@ public class Test {
             raw_times=0;
             while (time < time_max) {
                 prev_t = System.nanoTime();
-                c.Execute("solve 4*6*0/1*6*88888/9999");
+                c.Execute("solve 4*6*(0/1+4*(1*0*1))*6+0*88888/9999");
                 time += (System.nanoTime() - prev_t);
                 raw_times++;
             }
