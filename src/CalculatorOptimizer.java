@@ -175,7 +175,6 @@ public class CalculatorOptimizer {
                         expression=expressionArrayList.get(position);
                         if(expression.GetType()== Calculator.Expression.ExpressionType.Symbol){
                             if (((Calculator.Symbol) expression).rawText.equals("(")){
-                                bracketList.add(new Operator((Calculator.Symbol) expression));
                                 stack.push(position);
                             } else if (((Calculator.Symbol) expression).rawText.equals(")")) {
                                 stack.pop();
@@ -184,7 +183,6 @@ public class CalculatorOptimizer {
                                     bracketList = new ArrayList<>();
                                     break;
                                 }
-                                bracketList.add(new Operator((Calculator.Symbol) expression));
                             }else
                                 bracketList.add(new Operator((Calculator.Symbol) expression));
                         }else
@@ -252,6 +250,25 @@ public class CalculatorOptimizer {
                 * 1*a*b*1*c-5 -> a*b*c-5
                 * a/1*6*1*7 -> a*6*7
                 * */
+                if (position<expressionArrayList.size()-1) {
+                    expression = expressionArrayList.get(position + 1);
+                    if (expression.GetType() == Expression.ExpressionType.Operator ? ((Operator) expression).GetOperatorReference().rawText.equals("*") : false) {
+                        expressionArrayList.remove(position);
+                        expressionArrayList.remove(position);
+                        position--;
+                        continue;
+                    }
+                }
+                if(position>0) {
+                    expression = expressionArrayList.get(position - 1);
+                    if (expression.GetType() == Expression.ExpressionType.Operator ? ((Operator) expression).GetOperatorReference().rawText.equals("*") : false) {
+                        expressionArrayList.remove(position);
+                        expressionArrayList.remove(--position);
+                    } else if (expression.GetType() == Expression.ExpressionType.Operator ? ((Operator) expression).GetOperatorReference().rawText.equals("/") : false) {
+                        expressionArrayList.remove(position);
+                        expressionArrayList.remove(--position);
+                    }
+                }
             }
         }
         return expressionArrayList;

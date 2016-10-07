@@ -15,7 +15,12 @@ public class Test {
         long time_max = 1000000000;//1000000000;
         long x = 0;
 /*
-        c.OptimizeEnable(true);
+        int a=(4+6)*2;
+
+        //测试中,暂时开启
+        c.Enable(Calculator.EnableType.ExpressionOptimize);
+        c.Enable(Calculator.EnableType.FunctionStaticParse);
+
 
         while(true){
             try {
@@ -31,27 +36,27 @@ public class Test {
             }
         }
 /**/
-        System.out.println(String.format("test start!,calculate solve 4*6*(0/1+4*(1*0*1))*6+0*88888/9999"));
+        System.out.println(String.format("test start!,calculate solve 4*1*6*(0/1+4*(1*0*1))*6+0*88888/9999"));
         long times_total=0,raw_times_total=0;
         //c.Execute("reg f(x)=if(x==0,0,f(x-1)+1)");
 
         for(int i=0;i<10;i++) {
             time=0;
             times=0;
-            c.OptimizeEnable(false);
+            c.DisEnable(Calculator.EnableType.ExpressionOptimize);
             while (time < time_max) {
                 prev_t = System.nanoTime();
-                c.Execute("solve 4*6*(0/1+4*(1*0*1))*6+0*88888/9999");
+                c.Execute("solve 4*1*6*(0/1+4*(1*0*1))*6+0*88888/9999");
                 time += (System.nanoTime() - prev_t);
                 times++;
             }
             times_total+=times;
-            c.OptimizeEnable(true);
+            c.Enable(Calculator.EnableType.ExpressionOptimize);
             time=0;
             raw_times=0;
             while (time < time_max) {
                 prev_t = System.nanoTime();
-                c.Execute("solve 4*6*(0/1+4*(1*0*1))*6+0*88888/9999");
+                c.Execute("solve 4*1*6*(0/1+4*(1*0*1))*6+0*88888/9999");
                 time += (System.nanoTime() - prev_t);
                 raw_times++;
             }

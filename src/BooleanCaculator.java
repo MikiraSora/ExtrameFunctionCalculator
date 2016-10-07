@@ -28,7 +28,7 @@ public class BooleanCaculator {
             boolean_value=value;
         }
 
-        @Override
+
         Calculator.ExpressionVariable Copy() {
             try{
                 return new BooleanVariable(boolean_value,calculator);
@@ -224,7 +224,7 @@ public class BooleanCaculator {
             String function_paramters = result.group(2);
             if (!calculator.ContainFunction(function_name))
                 throw new Exception(String.format("function %s hadnt declared!", function_name));
-            Calculator.Function function = GetFunction(function_name).Copy();
+            Calculator.Function function = GetFunction(function_name);
             function.current_paramters = function_paramters;
             return function;
             //Get function paramater list
@@ -235,7 +235,7 @@ public class BooleanCaculator {
         }
 
         if (isValidVariable(expression)) {
-            return calculator.GetVariable(expression).Copy();
+            return calculator.GetVariable(expression);
         }
 
         return null;

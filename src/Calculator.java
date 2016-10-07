@@ -9,7 +9,8 @@ import java.util.regex.Pattern;
  * Created by mikir on 2016/8/20.
  */
     public class Calculator {
-    static abstract class Expression {
+
+    public static abstract class Expression {
         Expression() {
             this(null);
         }
@@ -18,6 +19,9 @@ import java.util.regex.Pattern;
             setCalculator(calculator1);
         }
 
+        /**
+         * 表达式类型
+         * */
         enum ExpressionType {
             Function,
             Variable,
@@ -27,38 +31,60 @@ import java.util.regex.Pattern;
             Unknown
         }
 
-
-        int Generation=0;
-
+        /**
+         * 返回表达式的类型
+         * @return 表达式的类型
+         * */
         ExpressionType GetType() {
             return ExpressionType.Unknown;
         }
 
+        /**
+         * 原文本，不同子类有不同定义
+         * */
         String rawText = null;
-        Calculator calculator = null;
 
+        Calculator calculator = null;
+        /**
+         * 是否被Solve()计算出结果
+         * @return 如果返回true，则意味着这表达式可以通过Solve()计算得到结果;<br>
+         *     如果返回false，则意味着这表达式并不能直接通过Solve()计算得到结果*/
         boolean isCalculatable(){return false;}
 
-        void setCalculator(Calculator calculator1) {
-            calculator = calculator1;
+        /**
+         * 绑定计算器到表达式对象上,可以通过GetCalculator()来获取此计算器对象
+         * @param calculator 被绑定的计算器对象
+         * */
+        void setCalculator(Calculator calculator) {
+            this.calculator = calculator;
         }
 
+        /**
+         * 获取自身绑定的计算器以便于查找内容，若没有则自行new一个计算器器对象并返回<br></>
+         * @return 自己的绑定的计算器*/
         Calculator getCalculator() {
             return calculator==null?(this.calculator=new Calculator()):calculator;
         }
 
+        /**
+         * 此方法必须被重载，根据自己不同定义表达式做出不同计算实现，但返回内容可以是被计算器计算的表达式
+         * @return 可被计算的表达式*/
         String Solve() {
             return rawText;
         }
 
-        ;
-
+        /**
+         * 获取表达式的名称
+         * @return 表达式的名称*/
         String GetName() {
             return null;
         }
 
         //static Expression Deserialize(String text)throws Exception{return null;}
 
+        /**
+         * 表达式可以通过此方法控制序列化的内容，但反序列化也必须自己定义实现
+         * @return 序列化后的内容**/
         String Serialize(){
             return null;
         }
@@ -91,6 +117,7 @@ import java.util.regex.Pattern;
 
             public String onHelp(){return null;}
 
+            //返回null意味此函数不可求导
             public String onDerivativeParse(){
                 return null;
             }
@@ -123,15 +150,11 @@ import java.util.regex.Pattern;
         }
 
         public ReflectionFunction Copy() throws Exception {
-            /*
-            ReflectionFunction reflectionFunction = new ReflectionFunction(rawText, this.reflectionFunction);
-            reflectionFunction.current_paramters = this.current_paramters;
-            return reflectionFunction;*/
             return this;
         }
 
         @Override
-        String Solve(String parameterList) throws Exception {
+        protected String Solve(String parameterList) throws Exception {
             HashMap<String,Variable> custom_paramter=reflectionFunction.onParseParamter(parameterList,request,getCalculator());
             if(custom_paramter==null)
                 Parse(parameterList);
@@ -144,27 +167,87 @@ import java.util.regex.Pattern;
 
 
     public static class Function extends Expression {
-        enum FunctionType {
+
+        static enum FunctionType {
             Normal_Function,
             Reflection_Function,
             Unknown
         }
 
+        /**
+         * 静态解析限定，间接变量
+         * */
+        class RequestVariable extends Variable{
+            Function function=null;
+            RequestVariable(String name,Calculator calculator1,Function function){super(name,null,calculator1);this.function=function;}
+            @Override
+            String Solve() {
+                if(function!=null){
+                    if(function.paramter.containsKey(Variable_name))
+                        return function.paramter.get(Variable_name).Solve();
+                }
+                try {
+                    return this.getCalculator().GetVariable(Variable_name).Solve();
+                }catch (Exception e){return "0";}
+            }
+        }
+
+        /**
+         * 静态解析限定，间接函数
+         * */
+        class RequestFunction extends Function{
+            String function_name=null;
+            RequestFunction(String name,Calculator calculator1)throws Exception{super(null,calculator1);}
+
+            @Override
+            String Solve() {
+                try {
+                    return this.getCalculator().GetFunction(function_name).Solve(current_paramters);
+                }catch (Exception e){return "0";}
+            }
+        }
+
         FunctionType function_type = FunctionType.Unknown;
 
+        ArrayList<Expression> staticBSEList=null;
 
+        //boolean isStaticParse=false;
 
+        /**
+         * 返回函数的类型
+         * @return Normal_Function 返回普通函数的字段
+         * Reflection_Function 返回反射函数的字段
+         * */
         public FunctionType getFunction_type() {
             return function_type;
         }
 
-        protected String function_name, function_paramters, function_body;
+        /**
+         * 函数名
+         * */
+        protected String function_name;
+        /**
+         * 函数参数
+         * */
+        protected String function_paramters;
+        /**
+         * 普通函数的表达式
+         * */
+        protected String function_body;
+        /**
+         * 当前参数,默认无参
+         * */
         protected String current_paramters = "";
 
         protected Function() {
             super();
         }
+
+        /**
+         * 解析普通函数的正则表达式
+         * */
         private static Pattern FunctionFormatRegex = Pattern.compile("([a-zA-Z]\\w*)\\((.*)\\)=(.+)");
+
         public Function(String expression, Calculator calculator1) throws Exception {
             super(calculator1);
             if (expression == null)
@@ -182,19 +265,156 @@ import java.util.regex.Pattern;
             function_type = FunctionType.Normal_Function;
         }
 
-        public Function Copy() throws Exception {
-            /*Function function = new Function(rawText, getCalculator());
-            function.current_paramters = this.current_paramters;
-            return function;*/
-            return this;
+        /**
+         * 解析函数表达式，并将结果再以转换成后缀表达式并保存
+         * */
+        private void StaticParseExpression()throws Exception{
+            ArrayList<Expression> tmpBSEArrayList=ParseExpression(function_body);
+            staticBSEList=getCalculator().ConverToBSE(tmpBSEArrayList);
         }
 
+        /**
+         * 将函数表达式解析成可以分析的表达式组
+         * @param expression 函数表达式，通常是function_body字段传入
+         *
+         * @return 表达式组
+         * */
+        ArrayList<Expression> ParseExpression(String expression) throws Exception {
+            ArrayList<Expression> expressionArrayList = new ArrayList<>();
+            int position = 0;
+            char c,tmp_c;
+            Calculator.Expression expr = null;
+            String statement = new String(),tmp_op;
+            Stack<Integer> bracket_stack = new Stack<>();
+            while (true) {
+                if (position >= expression.length())
+                    break;
+                c = expression.charAt(position);
+                if (specialOperationChar.contains(" "+String.valueOf(c)+" ")) {
+                    if ((!statement.isEmpty()) && (c == '(')) {
+                        //Function Parser
+                        bracket_stack.clear();
+                        while (true) {
+                            if (position >= expression.length())
+                                break;
+                            c = expression.charAt(position);
+                            if (c == '(') {
+                                //判断是否有无限循环小数格式的可能
+                                if(!isDigit(statement)){
+                                    bracket_stack.push(position);
+                                    statement += c;
+                                }
+                                else {
+                                    //无限循环小数格式
+                                    int size=0;
+                                    while(true){
+                                        statement+=c;
+                                        if(c==')')
+                                            break;
+                                        size++;
+                                        c=expression.charAt(++position);
+                                    }
+                                    expressionArrayList.add(new ExpressionVariable("",RepeatingDecimalCoverToExpression(statement),this.getCalculator()));
+                                    statement="";
+                                    break;
+                                }
+                            }
+                            else if (c == ')') {
+                                if (bracket_stack.isEmpty())
+                                    throw new Exception("Extra brackets in position: " + position);
+                                bracket_stack.pop();
+                                if (bracket_stack.isEmpty()) {
+                                    statement += ")";
+                                    expressionArrayList.add(checkConverExpression(statement));//should always return Function
+                                    break;
+                                }
+                                statement += c;
+                            }else{
+                                statement += c;
+                            }
+                            position++;
+                        }
+                    } else {
+                        expr = checkConverExpression(statement);
+                        if (expr != null)
+                            expressionArrayList.add(expr);
+                        tmp_op=Character.toString(c);
+                        {
+                            if(position<(expression.length()-1)){
+                                tmp_c=expression.charAt(position+1);
+                                tmp_op+=tmp_c;
+                                if(!specialOperationChar.contains(" "+(tmp_op)+" ")){
+                                    tmp_op=Character.toString(c);
+                                }
+                            }
+                        }
+                        expressionArrayList.add(new Calculator.Symbol(tmp_op));
+                    }
+                    //Reflush statement
+                    statement = new String();
+                } else {
+                    statement += c;
+                }
+                position++;
+            }
+            if (!statement.isEmpty())
+                expressionArrayList.add(checkConverExpression(statement));
+            return expressionArrayList;
+        }
+
+        /**
+         * 分割文本的正则表达式
+         * */
+        private static Pattern checkFunctionFormatRegex=Pattern.compile("([a-zA-Z]\\w*)\\((.*)\\)");
+
+        /**
+         * 分析文本，并转换成相对应的表达式元素对象
+         * @param text 传入文本
+         * @return 解析后的表达式对象
+         * */
+        private Expression checkConverExpression(String text) throws Exception {
+            if (isFunction(text)) {
+                //Get function name
+                Matcher result = checkFunctionFormatRegex.matcher(text);
+                result.find();
+                if (result.groupCount() != 2)
+                    throw new Exception("Cannot parse function ：" + text);
+                String function_name = result.group(1);
+                String function_paramters = result.group(2);
+                if (!this.getCalculator().ContainFunction(function_name))
+                    throw new Exception(String.format("function %s hadnt declared!", function_name));
+                Function function = new RequestFunction(function_name,getCalculator()) /*this.getCalculator().GetFunction(function_name)*/;
+                function.current_paramters = function_paramters;
+                return function;
+            }
+
+            if (isDigit(text)) {
+                return new Digit(text);
+            }
+
+            if (isValidVariable(text)) {
+                return new RequestVariable(text,this.getCalculator(),this);
+            }
+            return null;
+        }
+
+        /**
+         * 函数参数解析类,函数声明时便创建，以便调用时辅助参数传入
+         * */
         class ParameterRequest {
+            /**
+             * 参数列表
+             * */
             private ArrayList<String> requestion_list = new ArrayList<String>();
 
             private ParameterRequest() {
             }
 
+            /**
+             * 初始化参数列表
+             * @param rawText 函数声明时所传入参数文本<br>
+             *                如f(x,y,z)=x+y+z，rawText便是"x,y,z"
+             * */
             public ParameterRequest(String rawText) {
                 char c;
                 String name = new String();
@@ -211,20 +431,41 @@ import java.util.regex.Pattern;
                     requestion_list.add(name);
             }
 
+            /**
+             * 获取调用函数所需要传入参数的个数
+             * @return 参数数量
+             * */
             public int GetParamterRequestCount(){return requestion_list.size();}
 
+            /**
+             * 获取调用函数所需要传入参数名的集合
+             * @return 参数名的集合
+             * */
             public String[] GetParamterNameArray(){
                 String[] array=new String[GetParamterRequestCount()];
                 requestion_list.toArray(array);
                 return array;
             }
 
+            /**
+             * 获取第index个参数的名字
+             * @return 参数名
+             * */
             public String GetParamterName(int index){return requestion_list.get(index);}
         }
 
+        /**
+         * 函数调用解析后的参数列表
+         * */
         protected HashMap<String, Variable> paramter = new HashMap<>();
+
+        /**参数列表*/
         protected ParameterRequest request;
 
+        /**
+         * 解析函数调用时传入的参数文本
+         * @return 无，但解析的结果放到paramter对象中
+         * */
         protected void Parse(String name) throws Exception {
             char c;
             int requestIndex = 0;
@@ -236,12 +477,10 @@ import java.util.regex.Pattern;
                     BracketStack.push(pos);
                 } else if (c == ')') {
                     if (!BracketStack.isEmpty())
-                        //BracketStack.push(pos);
                         BracketStack.pop();
                     else
                         throw new Exception("Not found a pair of bracket what defining a expression");
                 }
-
                 if (c == ',' && BracketStack.isEmpty()) {
                     String requestParamterName = request.requestion_list.get(requestIndex++);
                     this.paramter.put(requestParamterName, new Variable(requestParamterName, getCalculator().Solve(paramter), getCalculator()));
@@ -254,6 +493,11 @@ import java.util.regex.Pattern;
                 this.paramter.put(request.requestion_list.get(requestIndex), new ExpressionVariable(request.requestion_list.get(requestIndex), getCalculator().Solve(paramter), getCalculator()));
         }
 
+        /**
+         * 参数替换到函数表达文本上
+         * @param expression 函数表达式文本，通常由function_body传入
+         * @return 替换后的表达式文本
+         * */
         protected String ParseDeclaring(String expression) throws Exception, StatementNotDeclaredException {
             String newExpression = expression;
             for (Map.Entry<String, Variable> pair : paramter.entrySet()) {
@@ -268,6 +512,10 @@ import java.util.regex.Pattern;
             return String.format("%s(%s)=%s", function_name, function_paramters, function_body);
         }
 
+        /**
+         * 函数调用计算
+         * @return 计算结果
+         * */
         @Override
         String Solve() {
             try {
@@ -278,28 +526,90 @@ import java.util.regex.Pattern;
             return null;
         }
 
-        String Solve(String parameterList) throws Exception {
-            String exression;
+        protected String Solve(String parameterList) throws Exception {
             Parse(parameterList);
+            if(this.getCalculator().ableStaticParseFunction){
+                if(staticBSEList==null)
+                    StaticParseExpression();
+                return Solve(staticBSEList);
+            }else{
+                staticBSEList=null;
+            }
+            String exression;
             exression = ParseDeclaring(function_body);
+            paramter.clear();
             return getCalculator().Solve(exression);
         }
 
+        /**函数调用计算(静态解析限定)*/
+        private String Solve(ArrayList<Expression> expressionArrayList)throws Exception{
+            if(!this.getCalculator().ableStaticParseFunction)
+                throw new Exception("cant not solve with static parsing");
+            if (expressionArrayList.size() == 1)
+                if (expressionArrayList.get(0).GetType() == Expression.ExpressionType.Digit||expressionArrayList.get(0).GetType()==ExpressionType.Variable)
+                    return String.valueOf((((Digit) expressionArrayList.get(0)).GetDouble()));
+            Stack<Expression> digit_stack = new Stack<>();
+            Expression digit_a, digit_b, digit_result;
+            Symbol operator;
+            ArrayList<Expression> paramterList,result;
+            try {
+                for (Expression node : expressionArrayList) {
+                    if (node.GetType() == Expression.ExpressionType.Symbol) {
+                        operator = (Symbol) node;
+                        paramterList=new ArrayList<>();
+                        for(int i=0;i<operator.GetParamterCount();i++)
+                            paramterList.add(digit_stack.isEmpty() ? new Digit("0") : digit_stack.pop());
+                        Collections.reverse(paramterList);
+                        result=operator.Solve(paramterList,this.getCalculator());
+                        for(Expression expr:result)
+                            digit_stack.push(expr);
+                    } else {
+                        if (node.GetType() == Expression.ExpressionType.Digit||node.GetType()==ExpressionType.Function||node.GetType()==ExpressionType.Variable) {
+                            digit_stack.push(new Digit(node.Solve()));
+                        } else
+                            throw new Exception("Unknown Node");
+                    }
+                }
+            } catch (Exception e) {
+                throw new Exception(e.getMessage());
+
+            }
+            Expression resultExpr=digit_stack.pop();
+            return (resultExpr.GetType()== Expression.ExpressionType.Digit)?Double.toString(((Digit)resultExpr).GetDouble()):resultExpr.Solve();
+        }
+
+        /**获取函数计算结果的数值对象
+         * @return 计算结果后的数值对象
+         * */
         Digit GetSolveToDigit() {
             return new Digit(Solve());
         }
 
+        /**获取函数名称
+         * @return 函数名*/
         @Override
         String GetName() {
             return function_name;
         }
 
+        /**
+         * 获取表达式类型字段
+         * @return 函数字段*/
         @Override
         ExpressionType GetType() {
             return ExpressionType.Function;
         }
 
+        /**
+         * 反序列化正则表达式
+         * */
         private static Pattern FunctionDeserializeRegex=Pattern.compile("(\\w)##([a-zA-Z_]+\\w*)##(.*?)##(.*)");
+
+        /**
+         * 反序列化字符串转换成函数
+         * @param text 文本内容
+         * @return 反序列化后的新的函数对象
+         * */
         static Function Deserialize(String text)throws Exception{
             Matcher result=FunctionDeserializeRegex.matcher(text);
             if(!result.find())
@@ -309,6 +619,10 @@ import java.util.regex.Pattern;
             return function;
         }
 
+        /**
+         * 将当前对象序列化并输出
+         * @return 序列化后的文本,可被Deserialize()反序列化
+         * */
         @Override
         String Serialize() {
             return String.format("f##%s##%s##%s",function_name,function_paramters,function_body);
@@ -317,6 +631,13 @@ import java.util.regex.Pattern;
 
     public static class Symbol extends Expression {
 
+        /**
+         * 比较符号和当前符号优先值
+         * @param symbol 比较的符号
+         * @return 返回0意味着优先级相等<br>
+         * 返回1 意味着当前表达式比要比较的符号有更高优先<br>
+         * 返回-1 意味着要比较的符号比当前符号有更高的优先
+         * */
         public int CompareOperationPrioty(Symbol symbol) {
             float val = OperatorPrioty.get(this.rawText) - OperatorPrioty.get(symbol.rawText);
             return val == 0 ? 0 : (val > 0 ? 1 : -1);
@@ -326,14 +647,16 @@ import java.util.regex.Pattern;
             rawText = op;
         }
 
+        /*
         @Override
         String Solve() {
             return super.Solve();
         }
+*/
 
         @Override
         public String toString() {
-            return "operation symbol : " + rawText;
+            return rawText;
         }
 
         @Override
@@ -341,24 +664,51 @@ import java.util.regex.Pattern;
             return ExpressionType.Symbol;
         }
 
+        /**
+         * 操作符计算映射表
+         * */
         static HashMap<String,OperatorFunction> OperatorFunction=new HashMap<>();
+
+        /**
+         * 操作符优先级查询表
+         * */
         static HashMap<String,Float> OperatorPrioty=new HashMap<>();
+
+        /**
+         * 操作符参数查询表
+         * */
         static HashMap<String,Integer> OperatorRequestParamterCount=new HashMap<>();
 
         static abstract class OperatorFunction{
             ArrayList<Expression> onCalculate(ArrayList<Expression> paramterList,Calculator calculator) throws Exception{return null;}
         }
 
+        /**
+         * 注册记录操作符映射
+         * @param operatorSymbol 操作符符号
+         * @param requestParamterSize 操作符参数数量
+         * @param operatorPrioty 操作符优先级<br>
+         *                          加和减优先级为6<br>    乘除以取余优先级为9<br>  乘方优先级为12<br>    左右括号有限度为99<br>
+         * */
         public static void RegisterOperation(String operatorSymbol,int requestParamterSize,float operatorPrioty,OperatorFunction operatorFunction) {
             OperatorFunction.put(operatorSymbol,operatorFunction);
             OperatorPrioty.put(operatorSymbol,operatorPrioty);
             OperatorRequestParamterCount.put(operatorSymbol,requestParamterSize);
         }
 
+        /**
+         * 操作符计算表达式
+         * @param paramterList 参数列表
+         * @param calculator 当前计算器对象
+         * @return 返回结果表达式，通常只有一个Digit类
+         * */
         ArrayList<Expression> Solve(ArrayList<Expression> paramterList,Calculator calculator)throws Exception{
             return OperatorFunction.get(rawText).onCalculate(paramterList, calculator);
         }
 
+        /**
+         * 获取操作符所需数值数量
+         * */
         int GetParamterCount(){return OperatorRequestParamterCount.get(rawText);}
     }
 
@@ -398,14 +748,19 @@ import java.util.regex.Pattern;
 
     public static class Variable extends Expression {
 
-
         enum VariableType{
             ExpressionVariable,
             BooleanVariable,
             Normal,
             Unknown
         }
+
+        /**变量类型*/
         VariableType variable_type=VariableType.Unknown;
+
+        /**
+         * 变量名
+         * */
         String Variable_name;
 
         public Variable(String name, String value, Calculator calculator1) {
@@ -422,10 +777,19 @@ import java.util.regex.Pattern;
             return true;
         }
 
+        /**
+         * 是否可以直设置变量的值为数值
+         * @return 返回true 可以直接设置数值<br>
+         *     返回false 不可以直接设置数值<br>
+         * */
         boolean ableSetVariableDirectly(){
             return true;
         }
 
+        /**
+         * 返回变量的值
+         * @return 变量的值
+         * */
         @Override
         String Solve() {
             return super.Solve();
@@ -436,15 +800,18 @@ import java.util.regex.Pattern;
             return String.format("%s=%s", GetName(), Solve());
         }
 
-        Variable Copy() {
-            //Variable variable = new Variable(Variable_name, this.rawText, getCalculator());
-            return this;
-        }
-
+        /**
+         * 获取变量的值并以Digit类对象返回
+         * @return 变量的值(Ditgit)
+         * */
         public Digit GetDigit() throws Exception {
             return new Digit(rawText == null ? getCalculator().RequestVariable(this.GetName()) : rawText);
         }
 
+        /**
+         * 获取变量的名称
+         * @return 变量名
+         * */
         @Override
         String GetName() {
             return Variable_name;
@@ -455,7 +822,15 @@ import java.util.regex.Pattern;
             return ExpressionType.Variable;
         }
 
+        /**
+         * 文本反序列化正则表达式
+         * */
         private static Pattern VariableDeserializeRegex=Pattern.compile("(\\w)##([a-zA-Z_]+\\w*)##(.*)");
+
+        /**
+         * 反序列化文本至变量并返回
+         * @return 反序列化后的新建变量对象
+         * */
         static Variable Deserialize(VariableType type,String text)throws Exception{
             Matcher result=VariableDeserializeRegex.matcher(text);
             if(!result.find())
@@ -470,6 +845,10 @@ import java.util.regex.Pattern;
             return null;
         }
 
+        /**
+         * 将当前变量对象序列化成文本并返回
+         * @return 变量序列化后的文本
+         * */
         @Override
         String Serialize() {
             return String.format("v##%s##%s",Variable_name,rawText);
@@ -484,6 +863,7 @@ import java.util.regex.Pattern;
             rawText = value;
         }
 
+        /**返回数值*/
         @Override
         String Solve() {
             return rawText;
@@ -494,11 +874,20 @@ import java.util.regex.Pattern;
             return ExpressionType.Digit;
         }
 
+        /**
+         * 获取以浮点形式的数值，注意:只有15位精确度
+         * @return 浮点数值
+         * */
         public double GetDouble() {
             //return (Double.parseDouble(/*String.format("%.14f",Double.parseDouble(Solve()))*/Solve()));
             return CutMaxPerseicelDecimal(Solve());
         }
 
+        /**
+         * 判断并截取至15位精度
+         * @param decimal 浮点数值字符串
+         * @return 处理后的浮点数值
+         * */
         private double CutMaxPerseicelDecimal(String decimal){
             //15
             if(!decimal.contains("."))
@@ -509,10 +898,17 @@ import java.util.regex.Pattern;
             return Double.parseDouble(decimal);
         }
 
+        /**
+         * 获取以浮点形式的数值
+         * @return 整数数值
+         * */
         public int GetInteger() {
             return Integer.valueOf(Solve());
         }
 
+        /**
+         *
+         * */
         @Override
         String GetName() {
             return super.GetName();
@@ -551,6 +947,10 @@ import java.util.regex.Pattern;
             variable_type=VariableType.ExpressionVariable;
         }
 
+        /**
+         * 计算表达式
+         * @return 表达式计算的结果
+         * */
         @Override
         String Solve(){
             try {
@@ -566,16 +966,17 @@ import java.util.regex.Pattern;
             return true;
         }
 
-        @Override
-        ExpressionVariable Copy() {
-            return this;
-        }
-
+        /**
+         * 计算表达式，并以Digit类对象返回
+         * */
         @Override
         public Digit GetDigit() throws Exception {
             return new Digit(Solve());
         }
 
+        /**
+         * 反序列化表达式变量正则表达式
+         * */
         private static Pattern ExpressionVariableRegex=Pattern.compile("(\\w)##([a-zA-Z_]+\\w*)##(.*)");
         static ExpressionVariable Deserialize(String text)throws Exception{
             Matcher result=ExpressionVariableRegex.matcher(text);
@@ -584,6 +985,10 @@ import java.util.regex.Pattern;
             return new ExpressionVariable(result.group(2),result.group(3),null);
         }
 
+        /**
+         * 将当前表达式变量对象序列化成文本
+         * @return 序列化后的文本
+         * */
         @Override
         String Serialize() {
             return String.format("e##%s##%s",Variable_name,rawText);
@@ -594,16 +999,37 @@ import java.util.regex.Pattern;
             return String.format("<expr> %s=%s",Variable_name,rawText);
         }
 
+        /**
+         * 获取表达式文本
+         * @return 表达式文本
+         * */
         public String GetExpreesion(){return rawText;}
     }
 
+    /**
+     * 已经声明定义的函数列表
+     * */
     private HashMap<String, Function> function_table = new HashMap<>();
+
+    /**
+     * 已经声明定义的变量列表
+     * */
     private HashMap<String, Variable> variable_table = new HashMap<>();
 
+    /**
+     * 内置变量列表
+     * */
     private static HashMap<String, ReflectionFunction> raw_function_table = new HashMap<>();
+
+    /**
+     * 内置函数列表
+     * */
     private static HashMap<String, Variable> raw_variable_table = new HashMap<>();
 
-    int Generation=0;
+    /**
+     * 函数静态解析开关
+     **/
+    boolean ableStaticParseFunction=true;
 
     static {
         CalculatorHelper.InitOperatorDeclare();
@@ -614,7 +1040,46 @@ import java.util.regex.Pattern;
         calculatorOptimizer=new CalculatorOptimizer(this);
     }
 
+    enum EnableType{
+        FunctionStaticParse,
+        ExpressionOptimize
+    }
 
+    /**
+     * 开启功能，这些功能均为可选的,可以通过DisEnable()关闭
+     * @param enableType 功能类型
+     * */
+    public void Enable(EnableType enableType){
+        switch (enableType){
+            case FunctionStaticParse:
+                FunctionStaticEnable(true);
+                break;
+            case ExpressionOptimize:
+                OptimizeEnable(true);
+                break;
+        }
+    }
+
+    /**
+     *关闭功能，这些功能均为可选的,可以通过Enable()开启
+     * @param enableType 功能类型
+     * */
+    public void DisEnable(EnableType enableType){
+        switch (enableType){
+            case FunctionStaticParse:
+                FunctionStaticEnable(false);
+                break;
+            case ExpressionOptimize:
+                OptimizeEnable(false);
+                break;
+        }
+    }
+
+    /**
+     * 根据获取名为name的函数，会在内置函数列表和定义函数中搜寻
+     * @param name 函数名
+     * @return 函数对象
+     * */
     Function GetFunction(String name) throws Exception, FunctionNotFoundException {
         if (raw_function_table.containsKey(name)) {
             Function function = raw_function_table.get(name);
@@ -626,6 +1091,11 @@ import java.util.regex.Pattern;
         return function_table.get(name);
     }
 
+    /**
+     * 根据获取名为name的变量，会在内置变量列表和定义变量中搜寻
+     * @param name 变量名
+     * @return 变量对象
+     * */
     Variable GetVariable(String name) throws VariableNotFoundException {
         if(raw_variable_table.containsKey(name)){
             return raw_variable_table.get(name);
@@ -635,22 +1105,43 @@ import java.util.regex.Pattern;
         return variable_table.get(name);
     }
 
+    /**
+     * 声明函数并加入函数列表
+     * @param function 要登记加入的函数对象
+     * */
     private void RegisterFunction(Function function) {
         function_table.put(function.GetName(), function);
     }
 
+    /**
+     * 声明函数并加入变量列表
+     * @param variable 要登记加入的变量对象
+     * */
     private void RegisterVariable(Variable variable) {
         variable_table.put(variable.GetName(), variable);
     }
 
+    /**
+     * 操作符列表
+     * */
     private static String specialOperationChar = " + - * / ~ ! @ # $ % ^ & ( ) ; : \" | ? > < , ` ' \\ ";
 
+    /**
+     * 获取名为name的变量的值
+     * @param name 变量名
+     * @return name变量的值
+     * */
     private String RequestVariable(String name) throws VariableNotFoundException {
         if (!variable_table.containsKey(name))
             throw new VariableNotFoundException(name);
         return variable_table.get(name).Solve();
     }
 
+    /**
+     * 解析文本成表达式链
+     * @param expression 表达式文本,如"4+x/(abs(sin(x))+6)+1*2"
+     * @return 解析好的表达式链表
+     * */
     ArrayList<Expression> ParseExpression(String expression) throws Exception {
         ArrayList<Expression> expressionArrayList = new ArrayList<>();
         int position = 0;
@@ -691,17 +1182,20 @@ import java.util.regex.Pattern;
                                 break;
                             }
                         }
-                        else if (c == ')') {
-                            if (bracket_stack.isEmpty())
-                                throw new Exception("Extra brackets in position: " + position);
-                            bracket_stack.pop();
-                            if (bracket_stack.isEmpty()) {
-                                statement += ")";
-                                expressionArrayList.add(checkConverExpression(statement));//should always return Function
-                                break;
-                            }
-                            statement += c;
-                        }else{
+                        else {
+                            if (c == ')') {
+                                if (bracket_stack.isEmpty())
+                                    throw new Exception("Extra brackets in position: " + position);
+                                bracket_stack.pop();
+                                if (bracket_stack.isEmpty()) {
+                                    statement += ")";
+                                    expressionArrayList.add(checkConverExpression(statement));//should always return Function
+                                    break;
+                                }
+                                //statement += c;
+                            } /*else {
+                                //statement += c;
+                            }*/
                             statement += c;
                         }
                         position++;
@@ -734,7 +1228,13 @@ import java.util.regex.Pattern;
         return expressionArrayList;
     }
 
+
     //10.4412312312312.. -> (10.44+123/99900)
+    /**
+     * 将无限小数的文本转换成可计算的表达式文本
+     * @param decimalExpr 浮点文本,如"10.4412312312312"
+     * @return 可计算的表达式文本，如"(10.44+123/99900)"
+     * */
     private static String ExpressionCoverToRepeatingDecimal(String decimalExpr)throws Exception{
         Matcher result=RepeatingDecimalReg.matcher(decimalExpr);
         if(!result.matches())
@@ -752,6 +1252,11 @@ import java.util.regex.Pattern;
     }
 
     //0.6(7) -> 0.677777777... -> (0.6+7/90)
+    /**
+     * 将无限小数的文本转换成可计算的表达式文本
+     * @param decimalExpr 浮点文本,如"0.6(7)"
+     * @return 可计算的表达式文本，如"(0.6+7/90)"
+     * */
     private static String RepeatingDecimalCoverToExpression(String decimalExpr)throws Exception{
         char c=0;
         int pos=0,notRepeatingDecimalLength=0;
@@ -802,6 +1307,9 @@ import java.util.regex.Pattern;
         return String.format("(%s+%s/%s)",notRepeating,Repeating,devNumber);
     }
 
+    /**
+     * 将表达式链中的函数都进行计算并将结果替换
+     * */
     private void ConverFunctionToDigit() throws FunctionNotFoundException, VariableNotFoundException {
         int position = 0;
         Expression node;
@@ -820,6 +1328,9 @@ import java.util.regex.Pattern;
         }
     }
 
+    /**
+     * 将表达式链中的变量都进行计算并将结果替换
+     * */
     private void ConverVariableToDigit() throws Exception, VariableNotFoundException {
         int position = 0;
         Expression node;
@@ -840,14 +1351,23 @@ import java.util.regex.Pattern;
         }
     }
 
+    /**
+     * 函数格式解析正则表达式
+     * */
     private static Pattern checkFunctionFormatRegex=Pattern.compile("([a-zA-Z]\\w*)\\((.*)\\)");
-    private Expression checkConverExpression(String expression) throws Exception {
-        if (isFunction(expression)) {
+
+    /**
+     * 分析文本，并转换成相对应的表达式元素对象
+     * @param text 传入文本
+     * @return 解析后的表达式对象
+     * */
+    private Expression checkConverExpression(String text) throws Exception {
+        if (isFunction(text)) {
             //Get function name
-            Matcher result = checkFunctionFormatRegex.matcher(expression);
+            Matcher result = checkFunctionFormatRegex.matcher(text);
             result.find();
             if (result.groupCount() != 2)
-                throw new Exception("Cannot parse function ：" + expression);
+                throw new Exception("Cannot parse function ：" + text);
             String function_name = result.group(1);
             String function_paramters = result.group(2);
             if (!ContainFunction(function_name))
@@ -858,17 +1378,22 @@ import java.util.regex.Pattern;
             //Get function paramater list
         }
 
-        if (isDigit(expression)) {
-            return new Digit(expression);
+        if (isDigit(text)) {
+            return new Digit(text);
         }
 
-        if (isValidVariable(expression)) {
-            return GetVariable(expression);
+        if (isValidVariable(text)) {
+            return GetVariable(text);
         }
 
         return null;
     }
 
+    /**
+     * 判断字符串是否为有效数字
+     * @param expression 测试文本
+     * @return 判断结果
+     * */
     public static boolean isDigit(String expression) {
         if (expression.isEmpty())
             return false;
@@ -879,6 +1404,11 @@ import java.util.regex.Pattern;
         return true;
     }
 
+    /**
+     * 判断字符串是否为有效的变量名(不管这个变量是否存在)
+     * @param expression 测试文本
+     * @return 判断结果
+     * */
     public static boolean isValidVariable(String expression) {
         expression.isEmpty();
         if (expression.isEmpty())
@@ -893,6 +1423,11 @@ import java.util.regex.Pattern;
         return true;
     }
 
+    /**
+     * 判断字符串是否为有效的函数名(不管这个函数是否存在)
+     * @param expression 测试文本
+     * @return 判断结果
+     * */
     public static boolean isFunction(String expression) {
         if (expression.isEmpty())
             return false;
@@ -926,32 +1461,28 @@ import java.util.regex.Pattern;
             return false;
         return hasMatchBracket;
     }
-/*
-    private ArrayList<Expression> rawExpressionChain = new ArrayList<>();
-    private ArrayList<Expression> BSEChain = new ArrayList<>();
-*/
-    private void ConverToBSE() throws Exception {
+
+    /**
+     * 将表达式链转换成后缀表达式并返回
+     * @param expressionArrayList 表达式链表,通常由ParseExpression()处理获得
+     * @return 后缀表达式形式的表达式链表
+     * */
+    ArrayList<Expression> ConverToBSE(ArrayList<Expression> expressionArrayList) throws Exception {
         ArrayList<Expression> result_list = new ArrayList<>();
         Stack<Symbol> operation_stack = new Stack<>();
         Symbol symbol = null;
-        for (Expression node : getRawExpressionChain_Stack()) {
-            if (node.GetType() == Expression.ExpressionType.Digit)
+        for (Expression node : expressionArrayList) {
+            if (node.GetType() == Expression.ExpressionType.Digit||(ableStaticParseFunction?(node.GetType()== Expression.ExpressionType.Function||node.GetType()== Expression.ExpressionType.Variable):false))
                 result_list.add(node);
             else {
                 if (operation_stack.isEmpty())
                     operation_stack.push((Symbol) node);
                 else {
-                    if (!(((Symbol) node).rawText.equals(")")/*((Symbol) node).symbol_type != Symbol.SymbolType.Bracket_Right*/)){// )
+                    if (!(((Symbol) node).rawText.equals(")"))){
                         symbol = operation_stack.peek();
-                        /*
-                        while ((symbol == null ? false : (symbol.symbol_type != Symbol.SymbolType.Bracket_Left && symbol.CompareOperationPrioty((Symbol) node) >= 0))) {
-                            result_list.add(operation_stack.pop());
-                            symbol = operation_stack.size() != 0 ? operation_stack.peek() : null;
-                        }*/
-
                         while(symbol!=null){
-                            if(!(symbol.rawText .equals("("))/*&&((Symbol)node).symbol_type!= Symbol.SymbolType.Bracket_Left*/)
-                                    if(symbol.CompareOperationPrioty((Symbol) node) >= 0){
+                            if(!(symbol.rawText .equals("(")))
+                                    if(symbol.CompareOperationPrioty((Symbol)node) >= 0){
                                     result_list.add(operation_stack.pop());
                                     symbol = operation_stack.size() != 0 ? operation_stack.peek() : null;
                                     continue;
@@ -964,7 +1495,7 @@ import java.util.regex.Pattern;
                         while (true) {
                             if (operation_stack.size() == 0)
                                 throw new Exception("喵喵喵?");
-                            if ((symbol.rawText.equals("("))/*symbol.symbol_type!= Symbol.SymbolType.Bracket_Left*/) {
+                            if ((symbol.rawText.equals("("))) {
                                 operation_stack.pop();
                                 break;
                             }
@@ -982,12 +1513,15 @@ import java.util.regex.Pattern;
         for (int i = 0; i < result_list.size(); i++) {
             node = result_list.get(i);
             if (node.GetType() == Expression.ExpressionType.Symbol)
-                if (((Symbol) node).rawText.equals("(")/*((Symbol) node).symbol_type == Symbol.SymbolType.Bracket_Left*/)
+                if (((Symbol) node).rawText.equals("("))
                     result_list.remove(node);
         }
-        setBSEChain_Stack(result_list);
+        return result_list;
     }
 
+    /**
+     * 执行后缀表达式链表，并输出结果
+     * */
     private String ExucuteBSE() throws Exception {
         if (getBSEChain_Stack().size() == 1)
             if (getBSEChain_Stack().get(0).GetType() == Expression.ExpressionType.Digit)
@@ -1003,11 +1537,8 @@ import java.util.regex.Pattern;
                     paramterList=new ArrayList<>();
                     for(int i=0;i<operator.GetParamterCount();i++)
                         paramterList.add(digit_stack.isEmpty() ? new Digit("0") : digit_stack.pop());
-                    /*digit_b = digit_stack.pop();
-                    digit_a = digit_stack.isEmpty() ? new Digit("0") : digit_stack.pop();
-                    digit_result = Execute(digit_a, operator, digit_b);*/
                     Collections.reverse(paramterList);
-                    result=operator.Solve(paramterList,Copy());
+                    result=operator.Solve(paramterList,this);
                     for(Expression expr:result)
                         digit_stack.push(expr);
                 } else {
@@ -1025,6 +1556,10 @@ import java.util.regex.Pattern;
         return (resultExpr.GetType()== Expression.ExpressionType.Digit)?Double.toString(((Digit)resultExpr).GetDouble()):resultExpr.Solve();
     }
 
+    /**
+     * 严格判断里面是否只存在可计算的符号Symbol或者常量数值Digit
+     * @deprecated
+     * */
     private void CheckNormalizeChain() throws Exception {
         for (Expression node : getRawExpressionChain_Stack()) {
             if (node.GetType() != Expression.ExpressionType.Digit && node.GetType() != Expression.ExpressionType.Symbol)
@@ -1032,32 +1567,63 @@ import java.util.regex.Pattern;
         }
     }
 
+    /**
+     * 当前保存的后缀表达式链的栈
+     * */
     Stack<ArrayList<Expression>> BSEChain_Stack=new Stack<>();
+
+    /**
+     * 当前保存的表达式链的栈
+     * */
     Stack<ArrayList<Expression>> rawExpressionChain_Stack=new Stack<>();
 
-    private void Init_Solve(){
-        //???
-    }
-
+    /**
+     * 将后缀表达式链表推入栈并当当前计算的后缀表达式链
+     * @param list 后缀表达式链表，通常由ConverToBSE()得到
+     * */
     private void  setBSEChain_Stack(ArrayList<Expression> list){BSEChain_Stack.push(list);}
+
+    /**
+     * 将表达式链表推入栈并当当前计算的表达式链
+     * @param list 表达式链表，通常由ParseExpression()得到
+     * */
     private void  setRawExpressionChain_Stack(ArrayList<Expression> list){rawExpressionChain_Stack.push(list);}
 
+    /**
+     * 获取当前计算的后缀表达式链表
+     * @return 当前后缀表达式链表
+     * */
     private ArrayList<Expression> getBSEChain_Stack(){return BSEChain_Stack.empty()?BSEChain_Stack.push(new ArrayList<Expression>()):BSEChain_Stack.peek();}
+
+    /**
+     * 获取当前计算的表达式链表
+     * @return 当前表达式链表
+     * */
     private ArrayList<Expression> getRawExpressionChain_Stack(){return rawExpressionChain_Stack.empty()?BSEChain_Stack.push(new ArrayList<Expression>()):rawExpressionChain_Stack.peek();}
 
+    /**
+     * 结束计算，清空不必要的内容
+     * */
     private void Term_Solve(){
         BSEChain_Stack.pop();
         rawExpressionChain_Stack.pop();
     }
 
-    String Solve(String expression) throws Exception {
+    /**
+     * 计算表达式文本
+     *  @param expression 表达式文本,如"4+f(2)-1*a/b"
+     *  @return 计算结果,如"5"
+     * */
+    public String Solve(String expression) throws Exception {
+        expression=expression.replaceAll(" ","");
         //rawExpressionChain = ParseExpression(expression);
         setRawExpressionChain_Stack(ParseExpression(expression));
         ConverVariableToDigit();
         ConverFunctionToDigit();
         CheckNormalizeChain();//// TODO: 2016/10/2 此方法存在争议，暂时保留
         ExpressionOptimization();
-        ConverToBSE();
+
+        setBSEChain_Stack(ConverToBSE(getRawExpressionChain_Stack()));
 
         String result= ExucuteBSE();
 
@@ -1065,29 +1631,53 @@ import java.util.regex.Pattern;
         return result;
     }
 
+    /**计算优化器*/
     private CalculatorOptimizer calculatorOptimizer=null;
 
-    public void OptimizeEnable(boolean sw){
+    /**
+     * 开关优化
+     * @param sw 状态开关
+     * */
+    private void OptimizeEnable(boolean sw){
         if(sw)
             calculatorOptimizer.Enable();
         else
             calculatorOptimizer.DisEnable();
     }
 
-    public String Optimize(String sw)throws Exception{
+    /**
+     * 开关函数静态解析
+     * @param sw 解析开关
+     * */
+    private void FunctionStaticEnable(boolean sw){
+        ableStaticParseFunction=sw;
+    }
+
+    /**
+     * 优化表达式开关
+     * @param sw 开关文本，格式"< 开关状态 open|close > < 优化等级 >0 >"
+     * @return 调用结果
+     * */
+    private String Optimize(String sw)throws Exception{
+        String level=sw.substring(sw.indexOf(" ")).replaceAll(" ","");
+        sw=sw.substring(0,sw.indexOf(" ")).replaceAll(" ","");
         switch (sw){
             case "true":{
-                OptimizeEnable(true);
+                Enable(EnableType.ExpressionOptimize);
+                calculatorOptimizer.SetOptimiizeLevel(Integer.valueOf(level));
                 return "Optimized open.";
             }
             case "false":{
-                OptimizeEnable(false);
+                DisEnable(EnableType.ExpressionOptimize);
                 return "Optimized close.";
             }
             default:throw new Exception("unknown command");
         }
     }
 
+    /**
+     * 优化表达式,若优化已经关闭则无变化
+     * */
     private void ExpressionOptimization(){
         ArrayList<Expression> optimizeResult=calculatorOptimizer.OptimizeExpression(getRawExpressionChain_Stack());
         if(optimizeResult==null)
@@ -1097,6 +1687,11 @@ import java.util.regex.Pattern;
         return;
     }
 
+    /**
+     * 命令执行并返回命令执行结果
+     * @param text 命令文本,格式是"< 命令 solve|reg|set|.. >  < 参数 > "
+     * @return 执行结果
+     * */
     public String Execute(String text) throws Exception {
         Clear();
         if (text.isEmpty())
@@ -1197,6 +1792,10 @@ import java.util.regex.Pattern;
         return result;
     }
 
+    /**
+     * 声明变量
+     * @param expression 声明文本，格式"< 变量名 >=< 表达式 >",表达式将会计算成常量数值才赋值给变量
+     * */
     private void SetVariable(String expression) throws Exception {
         if (expression.isEmpty())
             throw new Exception("empty text");
@@ -1216,6 +1815,10 @@ import java.util.regex.Pattern;
         }
     }
 
+    /**
+     * 声明定义函数
+     * @param expression 声明定义文本，格式"< 函数名 >(< 表达式 x,y,z...>)=< 表达式 >"
+     * */
     private void SetFunction(String expression) throws Exception {
         if (expression.isEmpty())
             throw new Exception("empty text");
@@ -1223,6 +1826,10 @@ import java.util.regex.Pattern;
         RegisterFunction(function);
     }
 
+    /**
+     * 重置计算器，并清除已经定义的变量和函数
+     * @return 执行结果
+     * */
     public String Reset() {
         Clear();
         this.variable_table.clear();
@@ -1230,21 +1837,27 @@ import java.util.regex.Pattern;
         return "Reset finished!";
     }
 
+    /**
+     * 清除计算器，清空当前表达式链和后缀表达式链
+     * @return 执行结果
+     * */
     private String Clear() {
         this.getBSEChain_Stack().clear();
         this.getRawExpressionChain_Stack().clear();
         return "Clean finished!";
     }
 
-    public Calculator Copy() {
-        return this;
-    }
-
-    public void RegisterReflectionFunction(String expression, ReflectionFunction.OnReflectionFunction onReflectionFunction) throws Exception {
+    /**
+     * 声明反射函数并加入函数列表
+     * @param expression 函数声明表达文本，如"getMin(a,b,c)","getRandom()"
+     * @param onReflectionFunction 反射函数接口
+     * */
+    void RegisterReflectionFunction(String expression, ReflectionFunction.OnReflectionFunction onReflectionFunction) throws Exception {
         ReflectionFunction reflectionFunction = new ReflectionFunction(expression, onReflectionFunction);
         RegisterFunction(reflectionFunction);
     }
 
+    /***/
     public static void RegisterRawFunction(String expression, ReflectionFunction.OnReflectionFunction reflectionFunction) {
         try {
             ReflectionFunction function = new ReflectionFunction(expression, reflectionFunction);
@@ -1273,7 +1886,7 @@ import java.util.regex.Pattern;
         VARIABLE_LIST
     }
 
-    private String DumpInfo(String name) {
+    public String DumpInfo(String name) {
         switch (name) {
             case "-rf":
             case "raw_function":
@@ -1378,7 +1991,7 @@ import java.util.regex.Pattern;
         return stringBuffer.toString();
     }
 
-    private String Load(String input_path)throws Exception{
+    public String Load(String input_path)throws Exception{
         Reader reader=new InputStreamReader(new FileInputStream(input_path));
         if(!reader.ready())
             throw new Exception("Cannot load from file :"+input_path);
@@ -1448,7 +2061,7 @@ import java.util.regex.Pattern;
         }
     }
 
-    private String Delete(String type,String name)throws Exception{
+    public String Delete(String type,String name)throws Exception{
         switch (type){
             case "variable":{
                 if(variable_table.containsKey(name))
@@ -1466,7 +2079,7 @@ import java.util.regex.Pattern;
         return "delete successfully";
     }
 
-    private void SetExpressionVariable(String expression)throws Exception{
+    public void SetExpressionVariable(String expression)throws Exception{
         if (expression.isEmpty())
             throw new Exception("empty text");
         char c;
