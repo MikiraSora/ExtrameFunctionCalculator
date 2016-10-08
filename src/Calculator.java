@@ -1960,6 +1960,12 @@ import java.util.regex.Pattern;
         All
     }
 
+    /**
+     * 保存类型数据
+     * @param type 保存类型
+     * @param output_path 保存地址
+     * @return 处理结果
+     * */
     private String Save(String type, String output_path) throws Exception {
         String buffer = null;
         switch (type) {
@@ -1980,6 +1986,11 @@ import java.util.regex.Pattern;
         return "Save Successfully!";
     }
 
+    /**
+     * 根据类型格式化序列化
+     * @param type 保存类型
+     * @return 序列化后文本，可被Load()反序列化加载
+     * */
     public String Save(SaveType type) {
         StringBuffer stringBuffer = new StringBuffer();
         switch (type) {
@@ -2014,6 +2025,11 @@ import java.util.regex.Pattern;
         return stringBuffer.toString();
     }
 
+    /**
+     * 加载文本转换对象
+     * @param input_path 加载地址
+     * @return 处理结果
+     * */
     public String Load(String input_path)throws Exception{
         Reader reader=new InputStreamReader(new FileInputStream(input_path));
         if(!reader.ready())
@@ -2027,7 +2043,16 @@ import java.util.regex.Pattern;
         return "Load finished!";
     }
 
+    /**
+     *无限循环小数判断正则表达式
+     * */
     private static Pattern RepeatingDecimalReg=Pattern.compile("^(\\p{Nd}*)\\.(\\p{Nd}*?)(\\p{Nd}+?)(\\3)+(\\p{Nd}*)$");
+
+    /**
+     * 判断数字是否为无限循环小数
+     * @param Decimal 数字,如"0.1521515151515"
+     * @return 返回true则为无限循环小数，否则不是，
+     * */
     public boolean isRepeatingDecimal(String Decimal){
         Matcher result=RepeatingDecimalReg.matcher(Decimal);
         if(!result.matches())
@@ -2038,6 +2063,10 @@ import java.util.regex.Pattern;
         return true;
     }
 
+    /**
+     *将文本分行解析并反序列化
+     * @param rawText 传入文本，通常读取某个文件或者Load()传入
+     */
     public void ParseLoadText(String rawText) throws IOException {
         StringReader stringReader = new StringReader(rawText);
         String text = "";
@@ -2057,6 +2086,10 @@ import java.util.regex.Pattern;
             DecodeLoadString(text);
     }
 
+    /**
+     * 解析文本并反序列化
+     * @param text 传入文本,例如"v##myvar##6"会被当做变量并反序列化成变量
+     * */
     private void DecodeLoadString(String text) {
         try {
             switch (text.charAt(0)) {
@@ -2084,6 +2117,12 @@ import java.util.regex.Pattern;
         }
     }
 
+    /**
+     * 删除某个变量或者函数
+     * @param type 指定类型
+     * @param name 变量名或者函数名
+     * @return 处理结果
+     * */
     public String Delete(String type,String name)throws Exception{
         switch (type){
             case "variable":{
@@ -2102,6 +2141,10 @@ import java.util.regex.Pattern;
         return "delete successfully";
     }
 
+    /**
+     * 声明一个表达式变量并加入变量列表
+     * @param expression 表达式文本，如"myexpr_var=a+b-rand()",此类变量只有在参与运算时候才计算自身表达式。
+     * */
     public void SetExpressionVariable(String expression)throws Exception{
         if (expression.isEmpty())
             throw new Exception("empty text");

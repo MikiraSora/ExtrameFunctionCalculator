@@ -11,11 +11,25 @@ import java.util.regex.Pattern;
  * Created by mikir on 2016/8/28.
  */
 public class BooleanCaculator {
+    /**
+     * 绑定的计算器
+     * */
     Calculator calculator=null;
+
+    /**
+     * 获取本对象绑定的计算器
+     * @return 绑定的计算器,如果没绑定，则新建一个绑定，再返回
+     * */
     private Calculator getCalculator(){return calculator==null?calculator=new Calculator():calculator;}
+
     static String TRUE="true",FALSE="false";
+
     public static class BooleanVariable extends Calculator.ExpressionVariable{
+        /**
+         * 布尔变量的值
+         * */
         boolean boolean_value=false;
+
         BooleanVariable(String name,String expression,Calculator c)throws Exception{
             super(name,expression,c);
             setCalculator(c);
@@ -28,10 +42,14 @@ public class BooleanCaculator {
             boolean_value=value;
         }
 
-
+        /**
+         * 获取此布尔变量的复制实例
+         * @return 本实例的复制体
+         * @deprecated
+         * */
         Calculator.ExpressionVariable Copy() {
             try{
-                return new BooleanVariable(boolean_value,calculator);
+                return this;//new BooleanVariable(boolean_value,calculator);
             }catch (Exception e){
                 return null;
             }
@@ -42,11 +60,19 @@ public class BooleanCaculator {
             return false;
         }
 
+        /**
+         * 是否可以直接设置变量
+         * @return 返回true则可以直接设置变量的值,反之不可以.
+         * */
         @Override
         boolean ableSetVariableDirectly() {
             return false;
         }
 
+        /**
+         * 获取布尔变量的值
+         * @return 返回1代表true,返回0代表false
+         * */
         @Override
         String Solve() {
             return boolean_value?"1":"0";
