@@ -365,7 +365,7 @@ public class BooleanCaculator {
                     for(int i=0;i<operator.GetParamterCount();i++)
                         paramterList.add(digit_stack.isEmpty() ? new Calculator.Digit("0") : digit_stack.pop());
                     Collections.reverse(paramterList);
-                    result=operator.Solve(paramterList,calculator.Copy());
+                    result=operator.Solve(paramterList,calculator);
                     for(Calculator.Expression expr:result)
                         digit_stack.push(expr);
                 } else {
@@ -417,8 +417,8 @@ public class BooleanCaculator {
                 ArrayList<Calculator.Expression> result=new ArrayList<Calculator.Expression>();
                 Calculator.Expression a=paramterList.get(0),b=paramterList.get(1);
                 if(isCalculatable(a)&&isCalculatable(b)){
-                    double va=Double.valueOf(calculator.Copy().Solve(a.Solve()));
-                    double vb=Double.valueOf(calculator.Copy().Solve(b.Solve()));
+                    double va=Double.valueOf(calculator.Solve(a.Solve()));
+                    double vb=Double.valueOf(calculator.Solve(b.Solve()));
                     result.add(new BooleanVariable(va>vb,calculator));
                     return result;
                 }
@@ -432,8 +432,8 @@ public class BooleanCaculator {
                 ArrayList<Calculator.Expression> result=new ArrayList<Calculator.Expression>();
                 Calculator.Expression a=paramterList.get(0),b=paramterList.get(1);
                 if(isCalculatable(a)&&isCalculatable(b)){
-                    double va=Double.valueOf(calculator.Copy().Solve(a.Solve()));
-                    double vb=Double.valueOf(calculator.Copy().Solve(b.Solve()));
+                    double va=Double.valueOf(calculator.Solve(a.Solve()));
+                    double vb=Double.valueOf(calculator.Solve(b.Solve()));
                     result.add(new BooleanVariable(va<vb,calculator));
                     return result;
                 }
@@ -447,8 +447,8 @@ public class BooleanCaculator {
                 ArrayList<Calculator.Expression> result=new ArrayList<Calculator.Expression>();
                 Calculator.Expression a=paramterList.get(0),b=paramterList.get(1);
                 if(isCalculatable(a)&&isCalculatable(b)){
-                    double va=Double.valueOf(calculator.Copy().Solve(a.Solve()));
-                    double vb=Double.valueOf(calculator.Copy().Solve(b.Solve()));
+                    double va=Double.valueOf(calculator.Solve(a.Solve()));
+                    double vb=Double.valueOf(calculator.Solve(b.Solve()));
                     result.add(new BooleanVariable(va>=vb,calculator));
                     return result;
                 }
@@ -462,8 +462,8 @@ public class BooleanCaculator {
                 ArrayList<Calculator.Expression> result=new ArrayList<Calculator.Expression>();
                 Calculator.Expression a=paramterList.get(0),b=paramterList.get(1);
                 if(isCalculatable(a)&&isCalculatable(b)){
-                    double va=Double.valueOf(calculator.Copy().Solve(a.Solve()));
-                    double vb=Double.valueOf(calculator.Copy().Solve(b.Solve()));
+                    double va=Double.valueOf(calculator.Solve(a.Solve()));
+                    double vb=Double.valueOf(calculator.Solve(b.Solve()));
                     result.add(new BooleanVariable(va<=vb,calculator));
                     return result;
                 }
@@ -477,8 +477,8 @@ public class BooleanCaculator {
                 ArrayList<Calculator.Expression> result=new ArrayList<Calculator.Expression>();
                 Calculator.Expression a=paramterList.get(0),b=paramterList.get(1);
                 if(isCalculatable(a)&&isCalculatable(b)){
-                    double va=Double.valueOf(calculator.Copy().Solve(a.Solve()));
-                    double vb=Double.valueOf(calculator.Copy().Solve(b.Solve()));
+                    double va=Double.valueOf(calculator.Solve(a.Solve()));
+                    double vb=Double.valueOf(calculator.Solve(b.Solve()));
                     result.add(new BooleanVariable(va==vb,calculator));
                     return result;
                 }
@@ -492,8 +492,8 @@ public class BooleanCaculator {
                 ArrayList<Calculator.Expression> result=new ArrayList<Calculator.Expression>();
                 Calculator.Expression a=paramterList.get(0),b=paramterList.get(1);
                 if(isCalculatable(a)&&isCalculatable(b)){
-                    double va=Double.valueOf(calculator.Copy().Solve(a.Solve()));
-                    double vb=Double.valueOf(calculator.Copy().Solve(b.Solve()));
+                    double va=Double.valueOf(calculator.Solve(a.Solve()));
+                    double vb=Double.valueOf(calculator.Solve(b.Solve()));
                     result.add(new BooleanVariable(va!=vb,calculator));
                     return result;
                 }
@@ -507,8 +507,8 @@ public class BooleanCaculator {
                 ArrayList<Calculator.Expression> result=new ArrayList<Calculator.Expression>();
                 Calculator.Expression a=paramterList.get(0),b=paramterList.get(1);
                 if(isCalculatable(a)&&isCalculatable(b)){
-                    double va=Double.valueOf(calculator.Copy().Solve(a.Solve()));
-                    double vb=Double.valueOf(calculator.Copy().Solve(b.Solve()));
+                    double va=Double.valueOf(calculator.Solve(a.Solve()));
+                    double vb=Double.valueOf(calculator.Solve(b.Solve()));
                     result.add(new BooleanVariable((va!=0)&&(vb!=0),calculator));
                     return result;
                 }
@@ -522,8 +522,8 @@ public class BooleanCaculator {
                 ArrayList<Calculator.Expression> result=new ArrayList<Calculator.Expression>();
                 Calculator.Expression a=paramterList.get(0),b=paramterList.get(1);
                 if(isCalculatable(a)&&isCalculatable(b)){
-                    double va=Double.valueOf(calculator.Copy().Solve(a.Solve()));
-                    double vb=Double.valueOf(calculator.Copy().Solve(b.Solve()));
+                    double va=Double.valueOf(calculator.Solve(a.Solve()));
+                    double vb=Double.valueOf(calculator.Solve(b.Solve()));
                     result.add(new BooleanVariable((va!=0)||(vb!=0),calculator));
                     return result;
                 }

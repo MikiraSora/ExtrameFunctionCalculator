@@ -1857,7 +1857,11 @@ import java.util.regex.Pattern;
         RegisterFunction(reflectionFunction);
     }
 
-    /***/
+    /**
+     * 声明反射函数并加入内置函数列表，全计算器对象将会共有此函数
+     * @param expression 函数声明表达文本，如"getMin(a,b,c)","getRandom()"
+     * @param reflectionFunction 反射函数接口
+     * */
     public static void RegisterRawFunction(String expression, ReflectionFunction.OnReflectionFunction reflectionFunction) {
         try {
             ReflectionFunction function = new ReflectionFunction(expression, reflectionFunction);
@@ -1867,11 +1871,20 @@ import java.util.regex.Pattern;
         }
     }
 
+    /**
+     * 声明一个变量为内置变量，全计算器对象将会共有此变量
+     * @param variable 要内置的变量
+     * */
     public static void RegisterRawVariable(Variable variable)throws Exception{
         raw_variable_table.put(variable.GetName(),variable);
     }
 
 
+    /**
+     * 判断是否存在函数
+     * @param name 函数名
+     * @return 返回true，则存在此函数;否则不存在此函数。
+     * */
     public boolean ContainFunction(String name) {
         if (raw_function_table.containsKey(name))
             return true;
@@ -1886,6 +1899,11 @@ import java.util.regex.Pattern;
         VARIABLE_LIST
     }
 
+    /**
+     * 返回(打印)相关信息
+     * @param name ；打印类型
+     * @return 相关信息内容
+     * */
     public String DumpInfo(String name) {
         switch (name) {
             case "-rf":
@@ -1909,6 +1927,11 @@ import java.util.regex.Pattern;
         return "unknown type";
     }
 
+    /**
+     * 返回(打印)相关信息
+     * @param type 要打印的类型
+     * @return 传回结果
+     * */
     public String DumpInfo(InfoType type) {
         StringBuffer stringBuffer = new StringBuffer();
         switch (type) {

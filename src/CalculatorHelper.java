@@ -451,23 +451,23 @@ public class CalculatorHelper {
 
                     if (c == ',' && BracketStack.isEmpty()) {
                         String requestParamterName = request.GetParamterName(requestIndex++);
-                        variableHashMap.put(requestParamterName, new Calculator.ExpressionVariable(requestParamterName, paramterString, calculator.Copy()));
+                        variableHashMap.put(requestParamterName, new Calculator.ExpressionVariable(requestParamterName, paramterString, calculator));
                         paramterString = new String();
                     } else {
                         paramterString += c;
                     }
                 }
                 if (!paramter.isEmpty())
-                    variableHashMap.put(request.GetParamterName(requestIndex), new Calculator.ExpressionVariable(request.GetParamterName(requestIndex), (paramterString), calculator.Copy()));
+                    variableHashMap.put(request.GetParamterName(requestIndex), new Calculator.ExpressionVariable(request.GetParamterName(requestIndex), (paramterString), calculator));
                 return variableHashMap;
             }
 
             @Override
             public String onReflectionFunction(HashMap<String, Calculator.Variable> parameter, Calculator calculator)throws Exception{
                 if(new BooleanCaculator(calculator).Solve(((Calculator.ExpressionVariable)parameter.get("condition")).GetExpreesion()))
-                    return calculator.Copy().Solve(parameter.get("true_expr").Solve());
+                    return calculator.Solve(parameter.get("true_expr").Solve());
                 else
-                    return calculator.Copy().Solve(parameter.get("false_expr").Solve());
+                    return calculator.Solve(parameter.get("false_expr").Solve());
             }
 
         });
@@ -498,21 +498,21 @@ public class CalculatorHelper {
 
                     if (c == ',' && BracketStack.isEmpty()) {
                         String requestParamterName = request.GetParamterName(requestIndex++);
-                        variableHashMap.put(requestParamterName, new Calculator.ExpressionVariable(requestParamterName, paramterString, calculator.Copy()));
+                        variableHashMap.put(requestParamterName, new Calculator.ExpressionVariable(requestParamterName, paramterString, calculator));
                         paramterString = new String();
                     } else {
                         paramterString += c;
                     }
                 }
                 if (!paramter.isEmpty())
-                    variableHashMap.put(request.GetParamterName(requestIndex), new Calculator.ExpressionVariable(request.GetParamterName(requestIndex), (paramterString), calculator.Copy()));
+                    variableHashMap.put(request.GetParamterName(requestIndex), new Calculator.ExpressionVariable(request.GetParamterName(requestIndex), (paramterString), calculator));
                 return variableHashMap;
             }
 
             @Override
             public String onReflectionFunction(HashMap<String, Calculator.Variable> parameter, Calculator calculator)throws Exception{
-                String result=calculator.Copy().Solve(parameter.get("normal_expr").Solve());
-                calculator.Copy().Solve(parameter.get("extra_expr").Solve());
+                String result=calculator.Solve(parameter.get("normal_expr").Solve());
+                calculator.Solve(parameter.get("extra_expr").Solve());
                 return result;
             }
         });
@@ -542,14 +542,14 @@ public class CalculatorHelper {
 
                     if (c == ',' && BracketStack.isEmpty()) {
                         String requestParamterName = request.GetParamterName(requestIndex++);
-                        variableHashMap.put(requestParamterName, requestParamterName.equals("expr")?new Calculator.ExpressionVariable(requestParamterName, paramterString, calculator.Copy()):new Calculator.Variable(requestParamterName, paramterString, calculator.Copy()));
+                        variableHashMap.put(requestParamterName, requestParamterName.equals("expr")?new Calculator.ExpressionVariable(requestParamterName, paramterString, calculator):new Calculator.Variable(requestParamterName, paramterString, calculator));
                         paramterString = new String();
                     } else {
                         paramterString += c;
                     }
                 }
                 if (!paramter.isEmpty())
-                    variableHashMap.put(request.GetParamterName(requestIndex), new Calculator.ExpressionVariable(request.GetParamterName(requestIndex), (paramterString), calculator.Copy()));
+                    variableHashMap.put(request.GetParamterName(requestIndex), new Calculator.ExpressionVariable(request.GetParamterName(requestIndex), (paramterString), calculator));
                 return variableHashMap;
             }
 
