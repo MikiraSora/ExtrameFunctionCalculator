@@ -5,7 +5,10 @@
 	ExtrameFunctionCalculator是一个功能看起来强大(？迷)的计算器,使用者能够声明变量甚至于自定义一个函数来计算。
 目前能够正常使用，但因为正在实现添加技能或者未进行大规模测试。使用者请勿将此正式投入其他重要的项目当中，后果自负。
 当然如果使用者觉得这货太sh[和谐]t了，那么可以使用隔壁的[BaseCalculator](https://github.com/MikiraSora/BaseCalculator)来进行四则运算，ExtrameFunctionCalculator则是
-由此基础撸成的.
+由此基础撸成的.<br>
+
+文档已上线！
+[文档入口](https://mikirasora.github.io/ExtrameFunctionCalculator/)
 
 ##语法列举/使用方式    
 ------
