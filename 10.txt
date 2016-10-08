@@ -1,6 +1,0 @@
-[custom functinon]
-f##f##x##x+x
-f##g##x##f(x)+1
-[variable]
-v##a##6.0
-v##b##9.0
