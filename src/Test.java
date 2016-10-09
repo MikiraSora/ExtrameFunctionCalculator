@@ -14,7 +14,7 @@ public class Test {
         long raw_times = 0;
         long time_max = 1000000000;//1000000000;
         long x = 0;
-/*
+
         int a=(4+6)*2;
 
         //测试中,暂时开启
@@ -35,7 +35,7 @@ public class Test {
                 e.printStackTrace();
             }
         }
-/**/
+/*
         System.out.println(String.format("test start!,calculate solve 4*1*6*(0/1+4*(1*0*1))*6+0*88888/9999"));
         long times_total=0,raw_times_total=0;
         //c.Execute("reg f(x)=if(x==0,0,f(x-1)+1)");

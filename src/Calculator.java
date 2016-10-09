@@ -1076,7 +1076,7 @@ import java.util.regex.Pattern;
     }
 
     /**
-     * 根据获取名为name的函数，会在内置函数列表和定义函数中搜寻
+     * 获取指定名称的函数，会在内置函数列表和定义函数中搜寻
      * @param name 函数名
      * @return 函数对象
      * */
@@ -1092,7 +1092,7 @@ import java.util.regex.Pattern;
     }
 
     /**
-     * 根据获取名为name的变量，会在内置变量列表和定义变量中搜寻
+     * 获取指定名称的变量，会在内置变量列表和定义变量中搜寻
      * @param name 变量名
      * @return 变量对象
      * */
@@ -1521,6 +1521,7 @@ import java.util.regex.Pattern;
 
     /**
      * 执行后缀表达式链表，并输出结果
+     * @return 计算结果
      * */
     private String ExucuteBSE() throws Exception {
         if (getBSEChain_Stack().size() == 1)

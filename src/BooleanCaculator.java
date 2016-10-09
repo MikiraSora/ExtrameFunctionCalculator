@@ -78,16 +78,29 @@ public class BooleanCaculator {
             return boolean_value?"1":"0";
         }
 
+        /**
+         * 获取数值形式的布尔值
+         * @return 数值类对象
+         * */
         @Override
         public Calculator.Digit GetDigit() throws Exception {
             return new Calculator.Digit(Solve());
         }
 
+
+        /**
+         * 返回布尔值名
+         * @return 返回"True"或"False"
+         * */
         @Override
         String GetName() {
             return boolean_value?TRUE:FALSE;//boolean_value?"bool_"+TRUE:"bool_"+FALSE;
         }
 
+        /**
+         * 序列化当前对象为文本
+         * @return 序列化后的文本
+         * */
         @Override
         String Serialize() {
             return String.format("b##%s##%s",Variable_name,rawText);
@@ -96,20 +109,43 @@ public class BooleanCaculator {
     }
 
 
-
+    /**
+     * 获取指定名称的函数，会在内置函数列表和定义函数中搜寻
+     * @param name 函数名
+     * @return 函数对象
+     * */
     Calculator.Function GetFunction(String name) throws Exception, Calculator.FunctionNotFoundException {
         return calculator.GetFunction(name);
     }
 
+    /**
+     * 获取指定名称的变量，会在内置变量列表和定义变量中搜寻
+     * @param name 变量名
+     * @return 变量对象
+     * */
     Calculator.Variable GetVariable(String name) throws Calculator.VariableNotFoundException {
         return calculator.GetVariable(name);
     }
+
+    /**
+     * 操作符列表
+     * */
     private static String specialOperationChar = "+ ++ - -- * / ~ ! != @ # $ % ^ & && ( ) ; : \" \" || ? > >= < <= , ` ' = ==";
 
+    /**
+     * 获取名为name的变量的值
+     * @param name 变量名
+     * @return name变量的值
+     * */
     private String RequestVariable(String name) throws Calculator.VariableNotFoundException,Exception{
         return calculator.Solve(name);
     }
 
+    /**
+     * 解析文本成表达式链
+     * @param expression 表达式文本,如"4+x/(abs(sin(x))+6)+1*2"
+     * @return 解析好的表达式链表
+     * */
     private ArrayList<Calculator.Expression> ParseExpression(String expression) throws Exception {
         ArrayList<Calculator.Expression> expressionArrayList = new ArrayList<>();
         int position = 0;
@@ -176,6 +212,9 @@ public class BooleanCaculator {
         return expressionArrayList;
     }
 
+    /**
+     * 将表达式链中的函数都进行计算并将结果替换
+     * */
     private void ConverFunctionToDigit() throws Calculator.FunctionNotFoundException, Calculator.VariableNotFoundException {
         int position = 0;
         Calculator.Expression node;
@@ -194,6 +233,9 @@ public class BooleanCaculator {
         }
     }
 
+    /**
+     * 将表达式链中的变量都进行计算并将结果替换
+     * */
     private void ConverVariableToDigit() throws Exception, Calculator.VariableNotFoundException {
         int position = 0;
         Calculator.Expression node;
@@ -217,17 +259,33 @@ public class BooleanCaculator {
         }
     }
 
+    /**
+     * 布尔运算操作符
+     * */
     static String boolOperatorSymbol="< > == <= >= || && !=";
+
+    /**
+     * 判断是否为布尔运算操作符
+     * @return 如果返回true则是布尔运算操作符，反之不是。
+     * */
     private static boolean isBooleanOperator(Calculator.Symbol op){
         return boolOperatorSymbol.contains(op.Solve());
     }
 
+    /**
+     * 判断两者是否同类表达式
+     * @return 如果返回true则是同类表达式,反之不是。
+     * */
     private static boolean isSameType(Calculator.Expression a, Calculator.Expression b){
         if(a.GetType()!=b.GetType())
             return false;
         return true;
     }
 
+    /**
+     * 判断表达式是否可计算出值
+     * @return 如果返回true则是可以直接计算，反之不是。
+     * */
     private static boolean isCalculatable(Calculator.Expression expression){
         if(expression.GetType()== Calculator.Expression.ExpressionType.Digit)
             return true;
@@ -237,15 +295,24 @@ public class BooleanCaculator {
         return false;
     }
 
+    /**
+     * 函数格式解析正则表达式
+     * */
     private static Pattern checkFunctionFormatRegex = Pattern.compile("([a-zA-Z]\\w*)\\((.*)\\)");
-    private Calculator.Expression checkConverExpression(String expression) throws Exception {
-        if (isFunction(expression)) {
+
+    /**
+     * 分析文本，并转换成相对应的表达式元素对象
+     * @param text 传入文本
+     * @return 解析后的表达式对象
+     * */
+    private Calculator.Expression checkConverExpression(String text) throws Exception {
+        if (isFunction(text)) {
             //Get function name
             //Pattern reg = Pattern.compile("([a-zA-Z]\\w*)\\((.*)\\)");
-            Matcher result = checkFunctionFormatRegex.matcher(expression);
+            Matcher result = checkFunctionFormatRegex.matcher(text);
             result.find();
             if (result.groupCount() != 2)
-                throw new Exception("Cannot parse function ：" + expression);
+                throw new Exception("Cannot parse function ：" + text);
             String function_name = result.group(1);
             String function_paramters = result.group(2);
             if (!calculator.ContainFunction(function_name))
@@ -256,17 +323,22 @@ public class BooleanCaculator {
             //Get function paramater list
         }
 
-        if (isDigit(expression)) {
-            return new Calculator.Digit(expression);
+        if (isDigit(text)) {
+            return new Calculator.Digit(text);
         }
 
-        if (isValidVariable(expression)) {
-            return calculator.GetVariable(expression);
+        if (isValidVariable(text)) {
+            return calculator.GetVariable(text);
         }
 
         return null;
     }
 
+    /**
+     * 判断字符串是否为有效数字
+     * @param expression 测试文本
+     * @return 判断结果
+     * */
     public static boolean isDigit(String expression) {
         if (expression.isEmpty())
             return false;
@@ -277,6 +349,11 @@ public class BooleanCaculator {
         return true;
     }
 
+    /**
+     * 判断字符串是否为有效的变量名(不管这个变量是否存在)
+     * @param expression 测试文本
+     * @return 判断结果
+     * */
     public static boolean isValidVariable(String expression) {
         expression.isEmpty();
         if (expression.isEmpty())
@@ -291,6 +368,11 @@ public class BooleanCaculator {
         return true;
     }
 
+    /**
+     * 判断字符串是否为有效的函数名(不管这个函数是否存在)
+     * @param expression 测试文本
+     * @return 判断结果
+     * */
     public static boolean isFunction(String expression) {
         if (expression.isEmpty())
             return false;
@@ -328,6 +410,10 @@ public class BooleanCaculator {
     private ArrayList<Calculator.Expression> rawExpressionChain = new ArrayList<>();
     private ArrayList<Calculator.Expression> BSEChain = new ArrayList<>();
 
+    /**
+     * 将表达式链转换成后缀表达式并返回
+     * @return 后缀表达式形式的表达式链表
+     * */
     private void ConverToBSE() throws Exception {
         ArrayList<Calculator.Expression> result_list = new ArrayList<>();
         Stack<Calculator.Symbol> operation_stack = new Stack<>();
@@ -375,6 +461,10 @@ public class BooleanCaculator {
         BSEChain = result_list;
     }
 
+    /**
+     * 执行后缀表达式链表，并输出结果
+     * @return 计算结果
+     * */
     private boolean ExucuteBSE() throws Exception {
         if (BSEChain.size() == 1)
             if (BSEChain.get(0).GetType() == Calculator.Expression.ExpressionType.Digit)
@@ -417,6 +507,11 @@ public class BooleanCaculator {
 
     public BooleanCaculator(Calculator cal){calculator=cal;}
 
+    /**
+     * 布尔运算表达式文本
+     *  @param expression 表达式文本,如"4+f(2)-1*a/b"
+     *  @return 运算结果
+     * */
     public Boolean Solve(String expression)throws Exception{
         rawExpressionChain = ParseExpression(expression);
         ConverVariableToDigit();
@@ -436,6 +531,9 @@ public class BooleanCaculator {
         }
     }
 
+    /**
+     * 初始动态加载布尔运算操作符
+     * */
     private static void InitBoolOperatorDeclare(){
         Calculator.Symbol.RegisterOperation(">", 2, 3f, new Calculator.Symbol.OperatorFunction() {
             @Override
