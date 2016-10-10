@@ -2,57 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ddeeca72-93f9-42ce-8261-e5e9304e1aec" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/able normal.opt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/all.ooo" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out.lll" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator.Digit.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator.EnableType.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator.Expression.ExpressionType.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator.Expression.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator.ExpressionVariable.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator.Function.FunctionType.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator.Function.ParameterRequest.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator.Function.RequestFunction.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator.Function.RequestVariable.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator.Function.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator.FunctionNotFoundException.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator.InfoType.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator.ReflectionFunction.OnReflectionFunction.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator.ReflectionFunction.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator.SaveType.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator.StatementNotDeclaredException.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator.Symbol.OperatorFunction.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator.Symbol.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator.Variable.VariableType.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator.Variable.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator.VariableNotFoundException.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/allclasses-frame.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/allclasses-noframe.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/constant-values.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/deprecated-list.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/help-doc.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/index-all.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/overview-tree.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/package-frame.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/package-list" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/package-summary.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/package-tree.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/resources/background.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/resources/tab.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/resources/titlebar.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/resources/titlebar_end.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/stylesheet.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/output.opt" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator$1.class" afterPath="$PROJECT_DIR$/out/production/Calculator/Calculator$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator$InfoType.class" afterPath="$PROJECT_DIR$/out/production/Calculator/Calculator$InfoType.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator$SaveType.class" afterPath="$PROJECT_DIR$/out/production/Calculator/Calculator$SaveType.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator.class" afterPath="$PROJECT_DIR$/out/production/Calculator/Calculator.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/BooleanCaculator.java" afterPath="$PROJECT_DIR$/src/BooleanCaculator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Calculator.java" afterPath="$PROJECT_DIR$/src/Calculator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Test.java" afterPath="$PROJECT_DIR$/src/Test.java" />
     </list>
     <ignored path="Calculator.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -73,68 +24,37 @@
     <favorites_list name="Calculator" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.5">
-      <split-first>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="BooleanCaculator.java" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/BooleanCaculator.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="6715">
-                  <caret line="413" column="23" selection-start-line="413" selection-start-column="23" selection-end-line="413" selection-end-column="23" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="DerivativeParser.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/DerivativeParser.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="856">
-                  <caret line="313" column="8" selection-start-line="313" selection-start-column="8" selection-end-line="313" selection-end-column="8" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="CalculatorHelper.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/CalculatorHelper.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1016">
-                  <caret line="556" column="136" selection-start-line="556" selection-start-column="136" selection-end-line="556" selection-end-column="136" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file leaf-file-name="Test.java" pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/src/Test.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="363">
-                  <caret line="35" column="13" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
-                  <folding />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf>
-          <file leaf-file-name="Calculator.java" pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/src/Calculator.java">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="177">
-                  <caret line="1623" column="30" selection-start-line="1623" selection-start-column="30" selection-end-line="1623" selection-end-column="30" />
-                  <folding>
-                    <element signature="imports" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="Log.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Log/src/Log.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="111">
+              <caret line="18" column="1" selection-start-line="18" selection-start-column="1" selection-end-line="18" selection-end-column="1" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#402#403#0" expanded="true" />
+                <element signature="e#448#449#0" expanded="true" />
+                <element signature="e#1117#1118#0" expanded="true" />
+                <element signature="e#1168#1169#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LogServer.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/LogSever/src/LogServer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="391">
+              <caret line="23" column="41" selection-start-line="23" selection-start-column="41" selection-end-line="23" selection-end-column="41" />
+              <folding>
+                <element signature="e#600#601#0" expanded="true" />
+                <element signature="e#628#629#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -169,6 +89,8 @@
         <option value="$PROJECT_DIR$/src/Calculator.java" />
         <option value="$PROJECT_DIR$/src/BooleanCaculator.java" />
         <option value="$PROJECT_DIR$/src/Test.java" />
+        <option value="$PROJECT_DIR$/Log/src/Log.java" />
+        <option value="$PROJECT_DIR$/LogSever/src/LogServer.java" />
       </list>
     </option>
   </component>
@@ -278,7 +200,7 @@
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectView">
-    <navigator proportions="" version="1">
+    <navigator currentView="ProjectPane" proportions="" version="1">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -291,7 +213,67 @@
       <manualOrder />
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes />
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Calculator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Calculator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Calculator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Calculator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Calculator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="LogSever" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Calculator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Calculator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="LogSever" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="LogServer.java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scratches" />
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+    </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="aspect.path.notification.shown" value="true" />
@@ -310,7 +292,7 @@
       <recent name="F:\新建文件夹 (3)\Calculator\src" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Test">
+  <component name="RunManager" selected="Application.LogServer test">
     <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
       <module name="" />
       <option name="DEPLOY" value="true" />
@@ -508,8 +490,40 @@
       <envs />
       <method />
     </configuration>
-    <list size="1">
+    <configuration default="false" name="LogClient test" type="Application" factoryName="Application" singleton="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" value="LogTest" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="ALTERNATIVE_JRE_PATH" value="1.8" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="Log" />
+      <envs />
+      <method />
+    </configuration>
+    <configuration default="false" name="LogServer test" type="Application" factoryName="Application" singleton="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" value="LogServerTest" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="LogSever" />
+      <envs />
+      <method />
+    </configuration>
+    <list size="3">
       <item index="0" class="java.lang.String" itemvalue="Application.Test" />
+      <item index="1" class="java.lang.String" itemvalue="Application.LogClient test" />
+      <item index="2" class="java.lang.String" itemvalue="Application.LogServer test" />
     </list>
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
@@ -565,9 +579,9 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24947916" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24947916" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Memory View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19583334" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1953125" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35449734" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -654,22 +668,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/BooleanCaculator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="361">
-          <caret line="19" column="29" selection-start-line="19" selection-start-column="29" selection-end-line="19" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/CalculatorHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5415">
-          <caret line="285" column="33" selection-start-line="285" selection-start-column="33" selection-end-line="285" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Test.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="304">
@@ -962,7 +960,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/DerivativeParser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="856">
+        <state relative-caret-position="4896">
           <caret line="313" column="8" selection-start-line="313" selection-start-column="8" selection-end-line="313" selection-end-column="8" />
           <folding />
         </state>
@@ -970,7 +968,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Test.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="363">
+        <state relative-caret-position="578">
           <caret line="35" column="13" selection-start-line="35" selection-start-column="13" selection-end-line="35" selection-end-column="13" />
           <folding />
         </state>
@@ -978,7 +976,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/CalculatorHelper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1016">
+        <state relative-caret-position="6987">
           <caret line="556" column="136" selection-start-line="556" selection-start-column="136" selection-end-line="556" selection-end-column="136" />
           <folding />
         </state>
@@ -986,9 +984,34 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/BooleanCaculator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6715">
+        <state relative-caret-position="17">
           <caret line="413" column="23" selection-start-line="413" selection-start-column="23" selection-end-line="413" selection-end-column="23" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Log/src/Log.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="111">
+          <caret line="18" column="1" selection-start-line="18" selection-start-column="1" selection-end-line="18" selection-end-column="1" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#402#403#0" expanded="true" />
+            <element signature="e#448#449#0" expanded="true" />
+            <element signature="e#1117#1118#0" expanded="true" />
+            <element signature="e#1168#1169#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/LogSever/src/LogServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="23" column="41" selection-start-line="23" selection-start-column="41" selection-end-line="23" selection-end-column="41" />
+          <folding>
+            <element signature="e#600#601#0" expanded="true" />
+            <element signature="e#628#629#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1044,7 +1067,7 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>Calculator</last-edited>
+          <last-edited>LogSever</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
