@@ -3,6 +3,8 @@ import sun.rmi.runtime.Log;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Created by MikiraSora on 2016/10/10.
@@ -24,10 +26,27 @@ class LogServerTest{
             public void onWaitConnecting() {
                 System.out.println("waiting for clients in port "+logServer.GetPort());
             }
+
+            @Override
+            public void onConnected() {
+                System.out.println("Connected!");
+            }
+
+            @Override
+            public void onConnectedLost() {
+                System.out.println("Connecting Lost!");
+            }
+
+            @Override
+            public boolean onConnectError(Exception e) {
+                System.out.println("Connected Error!now close all.");
+                return true;
+            }
         });
 
         logServer.LoopRun();
 
+        return;
     }
 }
 
@@ -88,16 +107,19 @@ public class LogServer {
             socket=server_socket.accept();
             if(trigger_onChangeNetStatus!=null)
                 trigger_onChangeNetStatus.onConnected();
-            inputStream=socket.getInputStream();
-            bufferedReader=new BufferedReader(new InputStreamReader(inputStream));
+            //inputStream=socket.getInputStream();
+            bufferedReader=new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
+            //bufferedReader=new BufferedReader(new InputStreamReader(inputStream));
             while (Looping){
                 message=bufferedReader.readLine();
+                port=port;
                 if(trigger_onReceiveMessage!=null)
                     trigger_onReceiveMessage.onReceiveMessage(message);
             }
             if(trigger_onChangeNetStatus!=null)
                 trigger_onChangeNetStatus.onConnectedLost();
         }catch (Exception e){
+            e.printStackTrace();
             if(trigger_onChangeNetStatus!=null)
                 if(trigger_onChangeNetStatus.onConnectError(e))
                     return;
@@ -109,7 +131,7 @@ public class LogServer {
                 if (bufferedReader != null)
                     bufferedReader.close();
             }catch (Exception e){
-
+                return;
             }
         }
     }
