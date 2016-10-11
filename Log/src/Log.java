@@ -4,18 +4,37 @@ import java.lang.ref.SoftReference;
 import java.net.Socket;
 import java.net.SocketAddress;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * Created by MikiraSora on 2016/10/10.
  */
 class LogTest{
-    public static void main(String[] args){
+
+    public static void main(String[] args) {
         System.out.print("hello log!");
+        String message=null;
+        Scanner scanner = new Scanner(System.in);
+
+        Log.SetPort(2857);
+        Log.SetAddress("127.0.0.1");
+
+        try {
+            Log.Connect();
+        }catch (Exception e){
+            e.printStackTrace();
+            return;
+        }
+        while (true) {
+            try {
+                message = scanner.nextLine();
+                Log.Debug(message);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
     }
+
 }
 
 public class Log {
@@ -68,7 +87,7 @@ public class Log {
     public static void SetPort(int port){Log.port=port;}
 
     private static String address="127.0.0.1";
-    public static void SetPort(String address){Log.address=address;}
+    public static void SetAddress(String address){Log.address=address;}
 
     private static ArrayList<Message> messages_history=new ArrayList<>();
 
@@ -87,7 +106,7 @@ public class Log {
         return socket.isConnected();
     }
 
-    private static void Connect()throws Exception{
+    public static void Connect()throws Exception{
         if(IsConnecting())
             socket.close();
         if(socket!=null)
@@ -105,9 +124,9 @@ public class Log {
         GetOutputStream().flush();
     }
 
-    public static void LogWrite(Message message){
+    public static void LogWrite(Message message)throws Exception{
         if(!IsConnecting())
-            return;
+            Connect();
         try {
             SocketWrite(message.toString());
         }catch (Exception e){
@@ -116,17 +135,17 @@ public class Log {
         PushHistory(message);
     }
 
-    public static void Error(String message){
+    public static void Error(String message)throws Exception{
         Message msg=new Message(Message.Type.Exception,message);
         LogWrite(msg);
     }
 
-    public static void Debug(String message){
+    public static void Debug(String message)throws Exception{
         Message msg=new Message(Message.Type.Debug,message);
         LogWrite(msg);
     }
 
-    public static void Warning(String message){
+    public static void Warning(String message)throws Exception{
         Message msg=new Message(Message.Type.Warning,message);
         LogWrite(msg);
     }
