@@ -39,20 +39,20 @@ class LogServerTest{
 
             @Override
             public boolean onConnectError(Exception e) {
-                System.out.println("Connected Error!now close all.");
-                return true;
+                System.out.println("Connected Error!now reset server and waiting new connection.");
+                return false;
             }
         });
 
-        logServer.LoopRun();
+        while (true)
+            logServer.LoopRun();
 
-        return;
+        //return;
     }
 }
 
 public class LogServer {
 
-    //private ServerSocket server_socket=null;
     public LogServer(int port){this.port=port;}
 
     private int port=2857;
@@ -79,19 +79,6 @@ public class LogServer {
     private volatile boolean Looping=true;
     public void StopLoop(){Looping=false;}
 
-    /*
-    public boolean IsConnected(){
-        if(server_socket==null)
-            return false;
-        return !server_socket.isClosed();
-    }
-
-    /*public void WaitForConnecting()throws Exception{
-        if(IsConnected())
-            return;
-        server_socket=new ServerSocket(port);
-    }
-*/
     public void LoopRun(){
         Looping=true;
         ServerSocket server_socket=null;
@@ -107,29 +94,29 @@ public class LogServer {
             socket=server_socket.accept();
             if(trigger_onChangeNetStatus!=null)
                 trigger_onChangeNetStatus.onConnected();
-            //inputStream=socket.getInputStream();
             bufferedReader=new BufferedReader(new InputStreamReader(socket.getInputStream(), StandardCharsets.UTF_8));
-            //bufferedReader=new BufferedReader(new InputStreamReader(inputStream));
-            while (Looping){
+            while (socket.isConnected()){
                 message=bufferedReader.readLine();
                 port=port;
                 if(trigger_onReceiveMessage!=null)
                     trigger_onReceiveMessage.onReceiveMessage(message);
             }
+            socket.close();
             if(trigger_onChangeNetStatus!=null)
                 trigger_onChangeNetStatus.onConnectedLost();
         }catch (Exception e){
-            e.printStackTrace();
-            if(trigger_onChangeNetStatus!=null)
-                if(trigger_onChangeNetStatus.onConnectError(e))
-                    return;
-            LoopRun();
+            if(trigger_onChangeNetStatus!=null){
+                trigger_onChangeNetStatus.onConnectError(e);
+            }
+
         }finally {
             try {
                 if (inputStream != null)
                     inputStream.close();
                 if (bufferedReader != null)
                     bufferedReader.close();
+                socket.close();
+                server_socket.close();
             }catch (Exception e){
                 return;
             }
