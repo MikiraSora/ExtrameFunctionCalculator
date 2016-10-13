@@ -569,6 +569,22 @@ public class CalculatorHelper {
                 return out;
             }
         });
+
+        Calculator.RegisterRawFunction("complex_add(a_a,a_i,b_a,b_i)", new Calculator.ReflectionFunction.OnReflectionFunction(){
+            @Override
+            public String onReflectionFunction(HashMap<String, Calculator.Variable> parameter, Calculator calculator)throws Exception{
+                Calculator.Function function=calculator.GetFunction("print_complex_number");
+                function.current_paramters=String.format("%d,%d",parameter.get("a_a").GetDigit().GetDouble()+parameter.get("a_a").GetDigit().GetDouble(),parameter.get("b_i").GetDigit().GetDouble()+parameter.get("a_i").GetDigit().GetDouble());
+                return function.Solve();
+            }
+        });
+
+        Calculator.RegisterRawFunction("print_complex_number(x,y)", new Calculator.ReflectionFunction.OnReflectionFunction(){
+            @Override
+            public String onReflectionFunction(HashMap<String, Calculator.Variable> parameter, Calculator calculator)throws Exception{
+                return ((parameter.get("x").GetDigit().GetDouble()+"+"+parameter.get("y").GetDigit().GetDouble()+"i"));
+            }
+        });
     }
 
     public static String GetHelp(){

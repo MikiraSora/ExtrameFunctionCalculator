@@ -150,6 +150,7 @@ public class CalculatorOptimizer {
         if(OptimizeLevel>=2)
             tmpAnalyseExpressionArrayList=Level2_Optimize(tmpAnalyseExpressionArrayList,GetCalculator());
 
+        Log.Debug(String.format("Optimize finished: %s",tmpAnalyseExpressionArrayList.toString()));
         expressionArrayList=ConverToCalExpression(tmpAnalyseExpressionArrayList);
         return expressionArrayList;
     }
@@ -198,9 +199,6 @@ public class CalculatorOptimizer {
 
     private ArrayList<Calculator.Expression> ConverToCalExpression(ArrayList<Expression> expressions){
         ArrayList<Calculator.Expression> resultArrayList=new ArrayList<>();
-        /*
-        for(Expression expression:expressions)
-            resultArrayList.add(expression.GetExpressionReference());*/
         Expression expression=null;
         for(int i=0;i<expressions.size();i++){
             expression=expressions.get(i);

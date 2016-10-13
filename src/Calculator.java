@@ -1066,6 +1066,7 @@ import java.util.regex.Pattern;
                 OptimizeEnable(true);
                 break;
         }
+        Log.Debug(String.format("开启功能:%s",enableType.toString()));
     }
 
     /**
@@ -1081,6 +1082,7 @@ import java.util.regex.Pattern;
                 OptimizeEnable(false);
                 break;
         }
+        Log.Debug(String.format("关闭功能:%s",enableType.toString()));
     }
 
     /**
@@ -1118,6 +1120,7 @@ import java.util.regex.Pattern;
      * @param function 要登记加入的函数对象
      * */
     private void RegisterFunction(Function function) {
+        Log.Debug(function.toString());
         function_table.put(function.GetName(), function);
     }
 
@@ -1126,6 +1129,7 @@ import java.util.regex.Pattern;
      * @param variable 要登记加入的变量对象
      * */
     private void RegisterVariable(Variable variable) {
+        Log.Debug(variable.toString());
         variable_table.put(variable.GetName(), variable);
     }
 
@@ -1641,6 +1645,7 @@ import java.util.regex.Pattern;
      * */
     public String Solve(String expression) throws Exception {
         expression=expression.replaceAll(" ","");
+        Log.Debug(String.format("Solve : %s",expression));
         //rawExpressionChain = ParseExpression(expression);
         setRawExpressionChain_Stack(ParseExpression(expression));
         ConverVariableToDigit();

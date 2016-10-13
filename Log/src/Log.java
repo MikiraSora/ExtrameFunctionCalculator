@@ -5,12 +5,15 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.lang.ref.SoftReference;
+import java.lang.reflect.Method;
 import java.net.Socket;
 import java.net.SocketAddress;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.locks.Lock;
+
+import static java.lang.Thread.currentThread;
 
 /**
  * Created by MikiraSora on 2016/10/10.
@@ -68,6 +71,8 @@ public class Log {
 
         private Type message_type=Type.Debug;
 
+        String callerMethodName=null;
+
         private long time_strip=0;
 
         private String message=null;
@@ -82,6 +87,13 @@ public class Log {
             time_strip=GetCurrentTime();
         }
 
+        public Message(Type type,long time,String message,String methodname){
+            callerMethodName=methodname;
+            message_type=type;
+            time_strip=time;
+            this.message=message;
+        }
+
         public Message(Type type,long time,String message){
             message_type=type;
             time_strip=time;
@@ -89,6 +101,7 @@ public class Log {
         }
 
         public Message(Type type,String message){this(type,GetCurrentTime(),message);}
+        public Message(Type type,String message,String methodname){this(type,GetCurrentTime(),message,methodname);}
 
         private static final String COLOR_RESET = "\u001B[0m";
         private static final String COLOR_EXCEPTION = "\u001B[31m";
@@ -110,16 +123,25 @@ public class Log {
             long min=time_strip/1000/60;
             long sec=(time_strip-min*1000*60)/1000;
             long mill_sec=time_strip-min*60*1000-sec*1000;
-            return String.format("[%2d:%2d:%2d %s]%s",min,sec,mill_sec,message_type.toString(),message);
-            //return String.format("%s[%d:%d:%d %s]%s %s",GetColorWithType(message_type),min,sec,mill_sec,message_type.toString(),message,COLOR_RESET);
+            if(Log.IsShowCallerMethod())
+                return String.format("[%2d:%2d:%2d %s]%s():%s", min, sec, mill_sec, message_type.toString(), callerMethodName != null ? callerMethodName : "unknown_method", message);
+            return String.format("[%2d:%2d:%2d %s]%s", min, sec, mill_sec, message_type.toString(),message);
         }
     }
+
+    private static boolean IsShowCallerMethod=true;
+    public static void SetShowCallerMethod(boolean isShowCallerMethod){IsThreadCommitLog=isShowCallerMethod;}
+    public static boolean IsShowCallerMethod(){return IsShowCallerMethod;}
 
     private static Socket socket;
 
     public static void InitRecordTime(){Message.InitRecordTime();}
 
     public static Thread thread=null;
+
+    public static boolean EnableLog=true;
+    public static void EnableLog(boolean sw){EnableLog=sw;}
+    public static boolean GetEnableLog(){return EnableLog;}
 
     private static class MaintenanceRunnable implements Runnable{
         private volatile boolean isLock=true;
@@ -144,7 +166,7 @@ public class Log {
             while (!isExit){
                 while (isLock){
                     try {
-                        Thread.currentThread().sleep(flushInv);
+                        currentThread().sleep(flushInv);
                     }catch (Exception e){}
                 }
                 /*
@@ -237,6 +259,8 @@ public class Log {
     }
 
     public static void LogWrite(Message message)throws Exception{
+        if(!EnableLog)
+            return;
         if(IsThreadCommitLog){
             maintenanceRunnable.CommitLog(message);
             return;
@@ -249,30 +273,37 @@ public class Log {
         PushHistory(message);
     }
 
+    public static String GetCallerMethodName(){
+        StackTraceElement[] stackTraceElements= Thread.currentThread().getStackTrace();
+        int caller_method=3;
+        StackTraceElement caller=stackTraceElements[caller_method];
+        return caller.getMethodName();
+    }
+
     public static void Error(String message)throws Exception{
-        Message msg = new Message(Message.Type.Exception, message);
+        Message msg = new Message(Message.Type.Exception,message,GetCallerMethodName());
         LogWrite(msg);
         Exception exception=new Exception(message);
-        exception.setStackTrace(Thread.currentThread().getStackTrace());
+        exception.setStackTrace(currentThread().getStackTrace());
         throw exception;
     }
 
     public static void ExceptionError(Exception e)throws Exception{
-        Message msg = new Message(Message.Type.Exception, e.getMessage());
+        Message msg=IsShowCallerMethod?new Message(Message.Type.Exception, e.getMessage(),GetCallerMethodName()):new Message(Message.Type.Exception,e.getMessage());
         LogWrite(msg);
         throw e;
     }
 
     public static void Debug(String message){
         try {
-            Message msg = new Message(Message.Type.Debug, message);
+            Message msg =IsShowCallerMethod?new Message(Message.Type.Debug, message,GetCallerMethodName()):new Message(Message.Type.Debug, message);
             LogWrite(msg);
         }catch (Exception e){}
     }
 
     public static void Warning(String message){
         try {
-            Message msg = new Message(Message.Type.Warning, message);
+            Message msg =IsShowCallerMethod?new Message(Message.Type.Warning, message,GetCallerMethodName()):new Message(Message.Type.Warning, message);
             LogWrite(msg);
         }catch (Exception e){}
     }
