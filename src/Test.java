@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 /**
  * Created by mikir on 2016/8/20.
- */
+* */
 public class Test {
     public static void main(String args[])throws Exception {
         System.out.println("Test Start");
@@ -32,7 +32,7 @@ public class Test {
                 System.out.print(c.Execute(expression));
                 System.out.print(String.format("(用时 %f ms)\n",(System.nanoTime()-time)/1000000.0f));
             }catch (Exception e){
-                e.printStackTrace();
+                System.out.println("execute command error :"+e.getMessage());
             }
         }
 /*

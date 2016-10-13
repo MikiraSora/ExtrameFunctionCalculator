@@ -230,9 +230,11 @@ public class CalculatorOptimizer {
                             expressionArrayList.remove(position + 1);
                         }
                     }else{
-                        expressionArrayList.remove(position);
-                        expressionArrayList.remove(position);
-                        position-=1;
+                        if(((Operator)expressionArrayList.get(position + 1)).GetOperatorReference().rawText.equals("+")) {
+                            expressionArrayList.remove(position);
+                            expressionArrayList.remove(position);
+                            position -= 1;
+                        }
                     }
                 }
                 if(position!=0)/*判断是否在首位，如果是就跳前面的删除*/{

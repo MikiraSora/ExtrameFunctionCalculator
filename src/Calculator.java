@@ -1,4 +1,6 @@
 
+import javafx.geometry.Pos;
+
 import java.io.*;
 import java.sql.Ref;
 import java.util.*;
@@ -7,7 +9,8 @@ import java.util.regex.Pattern;
 
 /**
  * Created by mikir on 2016/8/20.
- */
+ * */
+
     public class Calculator {
 
     public static abstract class Expression {
@@ -102,7 +105,7 @@ import java.util.regex.Pattern;
             Matcher result = FunctionFormatRegex.matcher(expression);
             result.find();
             if (result.groupCount() != 2)
-                throw new Exception("Cannot parse function ：" + expression);
+                Log.ExceptionError( new Exception("Cannot parse function ：" + expression));
             function_name = result.group(1);
             function_paramters = result.group(2);
             ParameterRequest parameterRequest = new ParameterRequest(function_paramters);
@@ -139,7 +142,7 @@ import java.util.regex.Pattern;
             try {
                 return Solve(current_paramters);
             } catch (Exception e) {
-                e.printStackTrace();
+                Log.Warning(e.getMessage());
             }
             return null;
         }
@@ -256,7 +259,7 @@ import java.util.regex.Pattern;
             Matcher result = FunctionFormatRegex.matcher(expression);
             result.find();
             if (result.groupCount() != 3)
-                throw new Exception("Cannot parse function ：" + expression);
+                Log.ExceptionError( new Exception("Cannot parse function ：" + expression));
             function_name = result.group(1);
             function_paramters = result.group(2);
             ParameterRequest parameterRequest = new ParameterRequest(function_paramters);
@@ -321,7 +324,7 @@ import java.util.regex.Pattern;
                             }
                             else if (c == ')') {
                                 if (bracket_stack.isEmpty())
-                                    throw new Exception("Extra brackets in position: " + position);
+                                    Log.ExceptionError( new Exception("Extra brackets in position: " + position));
                                 bracket_stack.pop();
                                 if (bracket_stack.isEmpty()) {
                                     statement += ")";
@@ -378,11 +381,11 @@ import java.util.regex.Pattern;
                 Matcher result = checkFunctionFormatRegex.matcher(text);
                 result.find();
                 if (result.groupCount() != 2)
-                    throw new Exception("Cannot parse function ：" + text);
+                    Log.ExceptionError( new Exception("Cannot parse function ：" + text));
                 String function_name = result.group(1);
                 String function_paramters = result.group(2);
                 if (!this.getCalculator().ContainFunction(function_name))
-                    throw new Exception(String.format("function %s hadnt declared!", function_name));
+                    Log.ExceptionError( new Exception(String.format("function %s hadnt declared!", function_name)));
                 Function function = new RequestFunction(function_name,getCalculator()) /*this.getCalculator().GetFunction(function_name)*/;
                 function.current_paramters = function_paramters;
                 return function;
@@ -479,7 +482,7 @@ import java.util.regex.Pattern;
                     if (!BracketStack.isEmpty())
                         BracketStack.pop();
                     else
-                        throw new Exception("Not found a pair of bracket what defining a expression");
+                        Log.ExceptionError( new Exception("Not found a pair of bracket what defining a expression"));
                 }
                 if (c == ',' && BracketStack.isEmpty()) {
                     String requestParamterName = request.requestion_list.get(requestIndex++);
@@ -521,7 +524,7 @@ import java.util.regex.Pattern;
             try {
                 return Solve(current_paramters);
             } catch (Exception e) {
-                e.printStackTrace();
+                Log.Warning(e.getMessage());
             }
             return null;
         }
@@ -544,7 +547,7 @@ import java.util.regex.Pattern;
         /**函数调用计算(静态解析限定)*/
         private String Solve(ArrayList<Expression> expressionArrayList)throws Exception{
             if(!this.getCalculator().ableStaticParseFunction)
-                throw new Exception("cant not solve with static parsing");
+                Log.ExceptionError( new Exception("cant not solve with static parsing"));
             if (expressionArrayList.size() == 1)
                 if (expressionArrayList.get(0).GetType() == Expression.ExpressionType.Digit||expressionArrayList.get(0).GetType()==ExpressionType.Variable)
                     return String.valueOf((((Digit) expressionArrayList.get(0)).GetDouble()));
@@ -567,11 +570,11 @@ import java.util.regex.Pattern;
                         if (node.GetType() == Expression.ExpressionType.Digit||node.GetType()==ExpressionType.Function||node.GetType()==ExpressionType.Variable) {
                             digit_stack.push(new Digit(node.Solve()));
                         } else
-                            throw new Exception("Unknown Node");
+                            Log.ExceptionError( new Exception("Unknown Node"));
                     }
                 }
             } catch (Exception e) {
-                throw new Exception(e.getMessage());
+                Log.ExceptionError( new Exception(e.getMessage()));
 
             }
             Expression resultExpr=digit_stack.pop();
@@ -613,7 +616,7 @@ import java.util.regex.Pattern;
         static Function Deserialize(String text)throws Exception{
             Matcher result=FunctionDeserializeRegex.matcher(text);
             if(!result.find())
-                throw new Exception("Cannot parse text :"+text);
+                Log.ExceptionError( new Exception("Cannot parse text :"+text));
             String rawText=String.format("%s(%s)=%s",result.group(2),result.group(3),result.group(4));
             Function function=new Function(rawText,null);
             return function;
@@ -834,7 +837,7 @@ import java.util.regex.Pattern;
         static Variable Deserialize(VariableType type,String text)throws Exception{
             Matcher result=VariableDeserializeRegex.matcher(text);
             if(!result.find())
-                throw new Exception("Cannot parse text :"+text);
+                Log.ExceptionError( new Exception("Cannot parse text :"+text));
             //String rawText=String.format("%s=%s",result.group(2),result.group(3));
             switch (type){
                 case Normal:return new Variable(result.group(2),result.group(3),null);
@@ -956,7 +959,7 @@ import java.util.regex.Pattern;
             try {
                 return getCalculator().Solve(rawText);
             }catch (Exception e){
-                e.printStackTrace();
+                Log.Warning(e.getMessage());
             }
             return null;
         }
@@ -981,7 +984,7 @@ import java.util.regex.Pattern;
         static ExpressionVariable Deserialize(String text)throws Exception{
             Matcher result=ExpressionVariableRegex.matcher(text);
             if(!result.find())
-                throw new Exception("Cannot parse text :"+text);
+                Log.ExceptionError( new Exception("Cannot parse text :"+text));
             return new ExpressionVariable(result.group(2),result.group(3),null);
         }
 
@@ -1032,6 +1035,11 @@ import java.util.regex.Pattern;
     boolean ableStaticParseFunction=true;
 
     static {
+        Log.SetPort(2857);
+        Log.SetAddress("127.0.0.1");
+        Log.InitRecordTime();
+        Log.SetIsThreadCommitLog(true);
+        //Log.Debug("Log Init");
         CalculatorHelper.InitOperatorDeclare();
         CalculatorHelper.InitFunctionDeclare();
     }
@@ -1087,7 +1095,7 @@ import java.util.regex.Pattern;
             return function;
         }
         if (!function_table.containsKey(name))
-            throw new FunctionNotFoundException(name);
+            Log.ExceptionError( new FunctionNotFoundException(name));
         return function_table.get(name);
     }
 
@@ -1096,12 +1104,12 @@ import java.util.regex.Pattern;
      * @param name 变量名
      * @return 变量对象
      * */
-    Variable GetVariable(String name) throws VariableNotFoundException {
+    Variable GetVariable(String name) throws Exception {
         if(raw_variable_table.containsKey(name)){
             return raw_variable_table.get(name);
         }
         if (!variable_table.containsKey(name))
-            throw new VariableNotFoundException(name);
+            Log.ExceptionError( new VariableNotFoundException(name));
         return variable_table.get(name);
     }
 
@@ -1131,9 +1139,9 @@ import java.util.regex.Pattern;
      * @param name 变量名
      * @return name变量的值
      * */
-    private String RequestVariable(String name) throws VariableNotFoundException {
+    private String RequestVariable(String name) throws Exception {
         if (!variable_table.containsKey(name))
-            throw new VariableNotFoundException(name);
+            Log.ExceptionError( new VariableNotFoundException(name));
         return variable_table.get(name).Solve();
     }
 
@@ -1185,7 +1193,7 @@ import java.util.regex.Pattern;
                         else {
                             if (c == ')') {
                                 if (bracket_stack.isEmpty())
-                                    throw new Exception("Extra brackets in position: " + position);
+                                    Log.ExceptionError( new Exception("Extra brackets in position: " + position));
                                 bracket_stack.pop();
                                 if (bracket_stack.isEmpty()) {
                                     statement += ")";
@@ -1238,10 +1246,10 @@ import java.util.regex.Pattern;
     private static String ExpressionCoverToRepeatingDecimal(String decimalExpr)throws Exception{
         Matcher result=RepeatingDecimalReg.matcher(decimalExpr);
         if(!result.matches())
-            throw new Exception(decimalExpr+" is invalid repeating decimal!");
+            Log.ExceptionError( new Exception(decimalExpr+" is invalid repeating decimal!"));
         String intDigit=result.group(1),notRepeatDecimal=result.group(2),RepeatDecimal=result.group(3),endDecimal=result.group(4);
         if(endDecimal.length()>RepeatDecimal.length())
-            throw new Exception(decimalExpr+" is invalid repeating decimal!");
+            Log.ExceptionError( new Exception(decimalExpr+" is invalid repeating decimal!"));
         String devNumber="";
         for(int i=0;i<RepeatDecimal.length();i++)
             devNumber+=9;
@@ -1278,7 +1286,7 @@ import java.util.regex.Pattern;
                         notRepeatingDecimalLength++;
                         pos++;
                         if(pos>=decimalExpr.length())
-                            throw new Exception(decimalExpr+"cant cover to Expression");
+                            Log.ExceptionError( new Exception(decimalExpr+"cant cover to Expression"));
                     }
                     pos--;
                 }
@@ -1292,7 +1300,7 @@ import java.util.regex.Pattern;
                         Repeating+=c;
                         pos++;
                         if(pos>=decimalExpr.length())
-                            throw new Exception(decimalExpr+"cant cover to Expression");
+                            Log.ExceptionError( new Exception(decimalExpr+"cant cover to Expression"));
                     }
                     break;
                 }
@@ -1347,7 +1355,7 @@ import java.util.regex.Pattern;
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.Warning(e.getMessage());
         }
     }
 
@@ -1367,11 +1375,11 @@ import java.util.regex.Pattern;
             Matcher result = checkFunctionFormatRegex.matcher(text);
             result.find();
             if (result.groupCount() != 2)
-                throw new Exception("Cannot parse function ：" + text);
+                Log.ExceptionError( new Exception("Cannot parse function ：" + text));
             String function_name = result.group(1);
             String function_paramters = result.group(2);
             if (!ContainFunction(function_name))
-                throw new Exception(String.format("function %s hadnt declared!", function_name));
+                Log.ExceptionError( new Exception(String.format("function %s hadnt declared!", function_name)));
             Function function = GetFunction(function_name);
             function.current_paramters = function_paramters;
             return function;
@@ -1468,6 +1476,8 @@ import java.util.regex.Pattern;
      * @return 后缀表达式形式的表达式链表
      * */
     ArrayList<Expression> ConverToBSE(ArrayList<Expression> expressionArrayList) throws Exception {
+        if(expressionArrayList.get(expressionArrayList.size()-1).GetType()== Expression.ExpressionType.Symbol)
+            Log.ExceptionError(new Exception("the last expression in list cannot be symbol"));
         ArrayList<Expression> result_list = new ArrayList<>();
         Stack<Symbol> operation_stack = new Stack<>();
         Symbol symbol = null;
@@ -1494,7 +1504,7 @@ import java.util.regex.Pattern;
                         symbol = operation_stack.peek();
                         while (true) {
                             if (operation_stack.size() == 0)
-                                throw new Exception("喵喵喵?");
+                                Log.ExceptionError( new Exception("喵喵喵?"));
                             if ((symbol.rawText.equals("("))) {
                                 operation_stack.pop();
                                 break;
@@ -1530,14 +1540,28 @@ import java.util.regex.Pattern;
         Stack<Expression> digit_stack = new Stack<>();
         Expression digit_a, digit_b, digit_result;
         Symbol operator;
+        Expression node=null;
+        ArrayList<Expression> executeList=getBSEChain_Stack();
         ArrayList<Expression> paramterList,result;
         try {
-            for (Expression node : getBSEChain_Stack()) {
+            for (int position=0;position<executeList.size();position++) {
+                node=executeList.get(position);
                 if (node.GetType() == Expression.ExpressionType.Symbol) {
                     operator = (Symbol) node;
                     paramterList=new ArrayList<>();
                     for(int i=0;i<operator.GetParamterCount();i++)
-                        paramterList.add(digit_stack.isEmpty() ? new Digit("0") : digit_stack.pop());
+                    {
+                        if(digit_stack.isEmpty()){
+                            if(operator.rawText.equals("-")&&i!=0){
+                                paramterList.add(new Digit("0"));
+                            }else{
+                                Log.ExceptionError(new Exception("expression synatx error!because not enough calculatable type could solve with current operator \""+operator.rawText+"\""));
+                            }
+                        }else{
+                            paramterList.add(digit_stack.pop());
+                        }
+                    }
+                        //paramterList.add(digit_stack.isEmpty() ? (?new Digit("0")): digit_stack.pop());
                     Collections.reverse(paramterList);
                     result=operator.Solve(paramterList,this);
                     for(Expression expr:result)
@@ -1546,11 +1570,11 @@ import java.util.regex.Pattern;
                     if (node.GetType() == Expression.ExpressionType.Digit) {
                         digit_stack.push((Digit) node);
                     } else
-                        throw new Exception("Unknown Node");
+                        Log.ExceptionError( new Exception("Unknown Node"));
                 }
             }
         } catch (Exception e) {
-            throw new Exception(e.getMessage());
+            Log.ExceptionError( new Exception(e.getMessage()));
 
         }
         Expression resultExpr=digit_stack.pop();
@@ -1564,7 +1588,7 @@ import java.util.regex.Pattern;
     private void CheckNormalizeChain() throws Exception {
         for (Expression node : getRawExpressionChain_Stack()) {
             if (node.GetType() != Expression.ExpressionType.Digit && node.GetType() != Expression.ExpressionType.Symbol)
-                throw new Exception(node.GetName() + " isnt digit or symbol.");
+                Log.ExceptionError( new Exception(node.GetName() + " isnt digit or symbol."));
         }
     }
 
@@ -1656,7 +1680,7 @@ import java.util.regex.Pattern;
 
     /**
      * 优化表达式开关
-     * @param sw 开关文本，格式"< 开关状态 open|close > < 优化等级 >0 >"
+     * @param sw 开关文本，格式"< 开关状态 open|close > < 优化等级 >0 >",例如"true 2""false""true 999"
      * @return 调用结果
      * */
     private String Optimize(String sw)throws Exception{
@@ -1672,8 +1696,9 @@ import java.util.regex.Pattern;
                 DisEnable(EnableType.ExpressionOptimize);
                 return "Optimized close.";
             }
-            default:throw new Exception("unknown command");
+            default:{Log.ExceptionError( new Exception("unknown command"));}
         }
+        return "unknown command";
     }
 
     /**
@@ -1696,7 +1721,7 @@ import java.util.regex.Pattern;
     public String Execute(String text) throws Exception {
         Clear();
         if (text.isEmpty())
-            throw new Exception("input empty text to execute");
+            Log.ExceptionError( new Exception("empty text to execute"));
         char c;
         String executeType = "", paramter = "";
         String result = "";
@@ -1787,7 +1812,7 @@ import java.util.regex.Pattern;
                 break;
             }
             default: {
-                throw new Exception(String.format("unknown execution other \"%s\"", executeType));
+                Log.ExceptionError( new Exception(String.format("unknown command \"%s\"", executeType)));
             }
         }
         return result;
@@ -1799,7 +1824,7 @@ import java.util.regex.Pattern;
      * */
     private void SetVariable(String expression) throws Exception {
         if (expression.isEmpty())
-            throw new Exception("empty text");
+            Log.ExceptionError( new Exception("empty text"));
         char c;
         String variable_name = "", variable_expression = "";
         Variable variable = null;
@@ -1822,7 +1847,7 @@ import java.util.regex.Pattern;
      * */
     private void SetFunction(String expression) throws Exception {
         if (expression.isEmpty())
-            throw new Exception("empty text");
+            Log.ExceptionError( new Exception("empty text"));
         Function function = new Function(expression, this);
         RegisterFunction(function);
     }
@@ -1868,7 +1893,7 @@ import java.util.regex.Pattern;
             ReflectionFunction function = new ReflectionFunction(expression, reflectionFunction);
             raw_function_table.put(function.GetName(), function);
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.Warning(e.getMessage());
         }
     }
 
@@ -2034,7 +2059,7 @@ import java.util.regex.Pattern;
     public String Load(String input_path)throws Exception{
         Reader reader=new InputStreamReader(new FileInputStream(input_path));
         if(!reader.ready())
-            throw new Exception("Cannot load from file :"+input_path);
+            Log.ExceptionError( new Exception("Cannot load from file :"+input_path));
         int c=0;
         StringBuffer stringBuffer=new StringBuffer();
         while((c=reader.read())>=0){
@@ -2137,7 +2162,7 @@ import java.util.regex.Pattern;
                 break;
             }
             default:
-                throw new Exception("Cannot recongize type :"+type);
+                Log.ExceptionError( new Exception("Cannot recongize type :"+type));
         }
         return "delete successfully";
     }
@@ -2148,7 +2173,7 @@ import java.util.regex.Pattern;
      * */
     public void SetExpressionVariable(String expression)throws Exception{
         if (expression.isEmpty())
-            throw new Exception("empty text");
+            Log.ExceptionError( new Exception("empty text"));
         char c;
         String variable_name = "", variable_expression = "";
         ExpressionVariable variable = null;

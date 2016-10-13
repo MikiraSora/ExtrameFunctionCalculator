@@ -16,10 +16,11 @@ import java.util.concurrent.locks.Lock;
  * Created by MikiraSora on 2016/10/10.
  */
 class LogTest{
-
+    /*
     public static void main(String[] args) {
         String message=null;
         Scanner scanner = new Scanner(System.in);
+        Log.InitRecordTime();
 
         Log.SetPort(2857);
         Log.SetAddress("127.0.0.1");
@@ -52,14 +53,11 @@ class LogTest{
                 e.printStackTrace();
             }
         }
-    }
+    }*/
 
 }
 
 public class Log {
-    static {
-        InitRecordTime();
-    }
 
     static class Message{
         enum Type{
@@ -178,8 +176,11 @@ public class Log {
     public static void SetIsThreadCommitLog(Boolean isThreadCommitLog){
         IsThreadCommitLog=isThreadCommitLog;
         if(IsThreadCommitLog){
-            if(thread==null)
+            if(thread==null){
                 thread=new Thread(maintenanceRunnable);
+                thread.setName("Log_Commit thread");
+                thread.start();
+            }
             if(maintenanceRunnable.IsExit())
                 thread.start();
         }else{
@@ -249,18 +250,31 @@ public class Log {
     }
 
     public static void Error(String message)throws Exception{
-        Message msg=new Message(Message.Type.Exception,message);
+        Message msg = new Message(Message.Type.Exception, message);
         LogWrite(msg);
+        Exception exception=new Exception(message);
+        exception.setStackTrace(Thread.currentThread().getStackTrace());
+        throw exception;
     }
 
-    public static void Debug(String message)throws Exception{
-        Message msg=new Message(Message.Type.Debug,message);
+    public static void ExceptionError(Exception e)throws Exception{
+        Message msg = new Message(Message.Type.Exception, e.getMessage());
         LogWrite(msg);
+        throw e;
     }
 
-    public static void Warning(String message)throws Exception{
-        Message msg=new Message(Message.Type.Warning,message);
-        LogWrite(msg);
+    public static void Debug(String message){
+        try {
+            Message msg = new Message(Message.Type.Debug, message);
+            LogWrite(msg);
+        }catch (Exception e){}
+    }
+
+    public static void Warning(String message){
+        try {
+            Message msg = new Message(Message.Type.Warning, message);
+            LogWrite(msg);
+        }catch (Exception e){}
     }
 
     public static void DisConnect()throws Exception{

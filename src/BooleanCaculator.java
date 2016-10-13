@@ -123,7 +123,7 @@ public class BooleanCaculator {
      * @param name 变量名
      * @return 变量对象
      * */
-    Calculator.Variable GetVariable(String name) throws Calculator.VariableNotFoundException {
+    Calculator.Variable GetVariable(String name) throws Exception {
         return calculator.GetVariable(name);
     }
 
