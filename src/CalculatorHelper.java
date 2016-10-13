@@ -569,7 +569,7 @@ public class CalculatorHelper {
                 return out;
             }
         });
-
+/*
         Calculator.RegisterRawFunction("complex_add(a_a,a_i,b_a,b_i)", new Calculator.ReflectionFunction.OnReflectionFunction(){
             @Override
             public String onReflectionFunction(HashMap<String, Calculator.Variable> parameter, Calculator calculator)throws Exception{
@@ -585,6 +585,7 @@ public class CalculatorHelper {
                 return ((parameter.get("x").GetDigit().GetDouble()+"+"+parameter.get("y").GetDigit().GetDouble()+"i"));
             }
         });
+        */
     }
 
     public static String GetHelp(){

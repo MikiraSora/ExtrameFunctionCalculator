@@ -2,16 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ddeeca72-93f9-42ce-8261-e5e9304e1aec" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Log/Log$1.class" afterPath="$PROJECT_DIR$/out/production/Log/Log$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Log/Log$MaintenanceRunnable.class" afterPath="$PROJECT_DIR$/out/production/Log/Log$MaintenanceRunnable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Log/Log$Message$Type.class" afterPath="$PROJECT_DIR$/out/production/Log/Log$Message$Type.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Log/Log$Message.class" afterPath="$PROJECT_DIR$/out/production/Log/Log$Message.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Log/Log.class" afterPath="$PROJECT_DIR$/out/production/Log/Log.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Log/LogTest.class" afterPath="$PROJECT_DIR$/out/production/Log/LogTest.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Log/src/Log.java" afterPath="$PROJECT_DIR$/Log/src/Log.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Calculator.java" afterPath="$PROJECT_DIR$/src/Calculator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/CalculatorHelper.java" afterPath="$PROJECT_DIR$/src/CalculatorHelper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/CalculatorOptimizer.java" afterPath="$PROJECT_DIR$/src/CalculatorOptimizer.java" />
     </list>
     <ignored path="Calculator.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -48,7 +40,7 @@
       <file leaf-file-name="Calculator.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Calculator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="185">
+            <state relative-caret-position="1766">
               <caret line="1712" column="0" selection-start-line="1712" selection-start-column="0" selection-end-line="1712" selection-end-column="0" />
               <folding>
                 <element signature="e#27103#27104#0" expanded="true" />
@@ -58,11 +50,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CalculatorOptimizer.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="CalculatorOptimizer.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/CalculatorOptimizer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-646">
-              <caret line="143" column="83" selection-start-line="143" selection-start-column="83" selection-end-line="143" selection-end-column="83" />
+            <state relative-caret-position="-3953">
+              <caret line="38" column="62" selection-start-line="38" selection-start-column="60" selection-end-line="38" selection-end-column="62" />
               <folding />
             </state>
           </provider>
@@ -71,17 +63,17 @@
       <file leaf-file-name="CalculatorHelper.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/CalculatorHelper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="962">
-              <caret line="568" column="17" selection-start-line="568" selection-start-column="17" selection-end-line="568" selection-end-column="17" />
+            <state relative-caret-position="357">
+              <caret line="587" column="10" selection-start-line="587" selection-start-column="10" selection-end-line="587" selection-end-column="10" />
               <folding>
-                <element signature="e#33111#33469#0" expanded="true" />
-                <element signature="e#33468#33469#0" expanded="true" />
+                <marker date="1476372352749" expanded="false" signature="32426:32640" ph="onReflectionFunction(parameter, calculator) → {" />
+                <marker date="1476372352749" expanded="false" signature="33026:33041" ph="}" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Test.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Test.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Test.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="475">
@@ -930,25 +922,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/CalculatorHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="962">
-          <caret line="568" column="17" selection-start-line="568" selection-start-column="17" selection-end-line="568" selection-end-column="17" />
-          <folding>
-            <element signature="e#33111#33469#0" expanded="true" />
-            <element signature="e#33468#33469#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/BooleanCaculator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="185">
-          <caret line="125" column="56" selection-start-line="125" selection-start-column="56" selection-end-line="125" selection-end-column="56" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://D:/Program Files/Java/jdk1.8.0_101/src.zip!/java/util/AbstractCollection.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="277">
@@ -967,9 +940,36 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Calculator.java">
+    <entry file="file://$PROJECT_DIR$/src/Test.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="475">
+          <caret line="87" column="33" selection-start-line="87" selection-start-column="33" selection-end-line="87" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/BooleanCaculator.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="185">
+          <caret line="125" column="56" selection-start-line="125" selection-start-column="56" selection-end-line="125" selection-end-column="56" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/CalculatorHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="587" column="10" selection-start-line="587" selection-start-column="10" selection-end-line="587" selection-end-column="10" />
+          <folding>
+            <marker date="1476372352749" expanded="false" signature="32426:32640" ph="onReflectionFunction(parameter, calculator) → {" />
+            <marker date="1476372352749" expanded="false" signature="33026:33041" ph="}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Calculator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1766">
           <caret line="1712" column="0" selection-start-line="1712" selection-start-column="0" selection-end-line="1712" selection-end-column="0" />
           <folding>
             <element signature="e#27103#27104#0" expanded="true" />
@@ -980,16 +980,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/CalculatorOptimizer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-646">
-          <caret line="143" column="83" selection-start-line="143" selection-start-column="83" selection-end-line="143" selection-end-column="83" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Test.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="475">
-          <caret line="87" column="33" selection-start-line="87" selection-start-column="33" selection-end-line="87" selection-end-column="33" />
+        <state relative-caret-position="-3953">
+          <caret line="38" column="62" selection-start-line="38" selection-start-column="60" selection-end-line="38" selection-end-column="62" />
           <folding />
         </state>
       </provider>
