@@ -228,19 +228,22 @@ public class CalculatorOptimizer {
                             expressionArrayList.remove(position + 1);
                         }
                     }else{
-                        if(((Operator)expressionArrayList.get(position + 1)).GetOperatorReference().rawText.equals("+")) {
-                            expressionArrayList.remove(position);
-                            expressionArrayList.remove(position);
+                        if(((Operator)expressionArrayList.get(position + 1)).GetOperatorReference().rawText.equals("+")&&(position!=0?((Operator)expressionArrayList.get(position-1)).isSameLevelLayout((Operator)expressionArrayList.get(position+1)):true)) {
+                            expressionArrayList.remove(position--);
+                            expressionArrayList.remove(position--);
                             position -= 1;
                         }
                     }
                 }
-                if(position!=0)/*判断是否在首位，如果是就跳前面的删除*/{
+                if(position!=0?expressionArrayList.get(position-1).GetType()== Expression.ExpressionType.Operator:false)/*判断是否在首位，如果是就跳前面的删除*/{
                     if(((Operator)expressionArrayList.get(position - 1)).isSameLevelLayout("*")) {
                         while ((position-1)>=0?((Operator) expressionArrayList.get(position - 1)).isSameLevelLayout("*"):false) {
                             expressionArrayList.remove(--position);
                             expressionArrayList.remove(--position);
                         }
+                    }else if(((Operator)expressionArrayList.get(position - 1)).isSameLevelLayout("+")){
+                        expressionArrayList.remove(position--);
+                        expressionArrayList.remove(position);
                     }
                 }
                 continue;
