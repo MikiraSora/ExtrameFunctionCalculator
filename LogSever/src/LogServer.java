@@ -11,13 +11,21 @@ import java.nio.charset.StandardCharsets;
  */
 
 class LogServerTest{
+
+    private static String SegmentationMarker="#@#seg_marker#%#";
+
     public static void main(String[] args){
+
+
+
         LogServer logServer=new LogServer(2857);
 
         logServer.SetOnReceiveMessage(new LogServer.OnReceiveMessage() {
             @Override
             public void onReceiveMessage(String message) {
-                System.out.println(message);
+                String[] messageList=message.split(SegmentationMarker);
+                for(String str : messageList)
+                    System.out.println(str);
             }
         });
 

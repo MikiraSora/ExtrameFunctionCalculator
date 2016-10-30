@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -17,9 +18,10 @@ public class Test {
 
         int a=(4+6)*2;
 
-        //测试中,暂时开启
-        c.Enable(Calculator.EnableType.ExpressionOptimize);
+        //DEBUG中，请勿随便开
+        c.DisEnable(Calculator.EnableType.ExpressionOptimize);
         c.Enable(Calculator.EnableType.FunctionStaticParse);
+        c.DisEnable(Calculator.EnableType.PrecisionTruncation);
 
 
         while(true){
@@ -32,6 +34,7 @@ public class Test {
                 System.out.print(c.Execute(expression));
                 System.out.print(String.format("(用时 %f ms)\n",(System.nanoTime()-time)/1000000.0f));
             }catch (Exception e){
+                //throw e;
                 System.out.println("execute command error :"+e.getMessage());
             }
         }
@@ -64,12 +67,20 @@ public class Test {
             raw_times_total+=raw_times;
         }
         System.out.println(String.format("ave--> raw: %.2ftimes/sec , optimize: %.2ftimes/sec =>%.2f%%",times_total/10.0f,raw_times_total/10.0f,(times_total/10.0f)/(raw_times_total/10.0f)*100));
-
-/*
+*
+        Random rand=new Random();
         System.out.println("------Test Start------");
-        for(String str:getTest())
-            System.out.println(String.format("%s ==> %s",str,c.Execute(str)));
-        System.out.println("------Test End------");*/
+        String[] arr=getTest();
+        Log.EnableLog(false);
+        for(String str:arr)
+            System.out.println(String.format("%s",c.Execute(str)));
+        while (true){
+            //System.out.println(String.format("%s",c.Execute(arr[rand.nextInt(arr.length-1)])));
+            c.Execute(arr[rand.nextInt(arr.length-1)]);
+            Thread.currentThread().sleep(1);
+        }
+        //System.out.println("------Test End------");
+        // */
 
     }
 
@@ -82,17 +93,18 @@ public class Test {
                 "set b=9",
                 "set c=100",
                 "solve a+b-c",
-                "reg f(x)=if(x==0,0,f(x-1)+x)",
+                "reg f(x)=if(x%2==0,2,1)",
                 "set_expr myexpr=a+b*c-d%g(c)",
                 "set_expr d=a+b+g(f(c))",
                 "reg g(x)=x+100",
                 "solve myexpr",
                 "reg g(x)=sin(x)-sin(-x)",
+                /*
                 "delete variable a",
-                "delete function f",
-                "solve g(1)+g(fact(2))",
+                "delete function f",*/
+                "solve g(1)+g(fact(2))",/*
                 "dump -all",
-                "reset"
+                "reset"*/
         };
         return test;
     }

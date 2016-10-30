@@ -2,10 +2,50 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ddeeca72-93f9-42ce-8261-e5e9304e1aec" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorOptimizer.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorOptimizer.class" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator$1.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator$Digit.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator$EnableType.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator$ExpressionVariable.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator$Function$FunctionType.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator$Function$ParameterRequest.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator$Function$RequestFunction.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator$Function$RequestVariable.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator$Function.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator$FunctionNotFoundException.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator$InfoType.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator$ReflectionFunction.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator$SaveType.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator$StatementNotDeclaredException.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator$Symbol$OperatorFunction.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator$Symbol.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator$Variable$VariableType.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator$Variable.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator$VariableNotFoundException.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator.class" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/BooleanCaculator$1.class" afterPath="$PROJECT_DIR$/out/production/Calculator/BooleanCaculator$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/BooleanCaculator$2.class" afterPath="$PROJECT_DIR$/out/production/Calculator/BooleanCaculator$2.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/BooleanCaculator$3.class" afterPath="$PROJECT_DIR$/out/production/Calculator/BooleanCaculator$3.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/BooleanCaculator$4.class" afterPath="$PROJECT_DIR$/out/production/Calculator/BooleanCaculator$4.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/BooleanCaculator$5.class" afterPath="$PROJECT_DIR$/out/production/Calculator/BooleanCaculator$5.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/BooleanCaculator$6.class" afterPath="$PROJECT_DIR$/out/production/Calculator/BooleanCaculator$6.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/BooleanCaculator$7.class" afterPath="$PROJECT_DIR$/out/production/Calculator/BooleanCaculator$7.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/BooleanCaculator$8.class" afterPath="$PROJECT_DIR$/out/production/Calculator/BooleanCaculator$8.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/BooleanCaculator.class" afterPath="$PROJECT_DIR$/out/production/Calculator/BooleanCaculator.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$52.class" afterPath="$PROJECT_DIR$/out/production/Calculator/CalculatorHelper$52.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/Test.class" afterPath="$PROJECT_DIR$/out/production/Calculator/Test.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Log/Log$1.class" afterPath="$PROJECT_DIR$/out/production/Log/Log$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Log/Log$MaintenanceRunnable.class" afterPath="$PROJECT_DIR$/out/production/Log/Log$MaintenanceRunnable.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Log/Log$Message$Type.class" afterPath="$PROJECT_DIR$/out/production/Log/Log$Message$Type.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Log/Log$Message.class" afterPath="$PROJECT_DIR$/out/production/Log/Log$Message.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Log/Log.class" afterPath="$PROJECT_DIR$/out/production/Log/Log.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Log/LogTest.class" afterPath="$PROJECT_DIR$/out/production/Log/LogTest.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/CalculatorOptimizer.java" afterPath="$PROJECT_DIR$/src/CalculatorOptimizer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Log/src/Log.java" afterPath="$PROJECT_DIR$/Log/src/Log.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/LogSever/src/LogServer.java" afterPath="$PROJECT_DIR$/LogSever/src/LogServer.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/BooleanCaculator.java" afterPath="$PROJECT_DIR$/src/BooleanCaculator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Calculator.java" afterPath="$PROJECT_DIR$/src/Calculator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/CalculatorHelper.java" afterPath="$PROJECT_DIR$/src/CalculatorHelper.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Test.java" afterPath="$PROJECT_DIR$/src/Test.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/untitled/.idea/workspace.xml" afterPath="$PROJECT_DIR$/untitled/.idea/workspace.xml" />
     </list>
     <ignored path="Calculator.iws" />
@@ -31,19 +71,18 @@
       <file leaf-file-name="Calculator.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Calculator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-19">
-              <caret line="1649" column="62" selection-start-line="1649" selection-start-column="52" selection-end-line="1649" selection-end-column="62" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CalculatorOptimizer.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/CalculatorOptimizer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="338">
-              <caret line="170" column="47" selection-start-line="170" selection-start-column="47" selection-end-line="170" selection-end-column="47" />
-              <folding />
+            <state relative-caret-position="231">
+              <caret line="1088" column="9" selection-start-line="1088" selection-start-column="9" selection-end-line="1088" selection-end-column="9" />
+              <folding>
+                <element signature="e#1348#1349#0" expanded="true" />
+                <element signature="e#1400#1401#0" expanded="true" />
+                <element signature="e#1538#1539#0" expanded="true" />
+                <element signature="e#1631#1632#0" expanded="true" />
+                <element signature="e#22031#22032#0" expanded="true" />
+                <element signature="e#22080#22081#0" expanded="true" />
+                <element signature="e#30003#30004#0" expanded="true" />
+                <element signature="e#30054#30055#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -51,21 +90,30 @@
       <file leaf-file-name="CalculatorHelper.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/CalculatorHelper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="451">
-              <caret line="587" column="10" selection-start-line="587" selection-start-column="10" selection-end-line="587" selection-end-column="10" />
+            <state relative-caret-position="287">
+              <caret line="466" column="0" selection-start-line="466" selection-start-column="0" selection-end-line="466" selection-end-column="0" />
               <folding>
-                <marker date="1476372352749" expanded="false" signature="32426:32640" ph="onReflectionFunction(parameter, calculator) → {" />
-                <marker date="1476372352749" expanded="false" signature="33026:33041" ph="}" />
+                <element signature="e#24771#24800#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Test.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Test.java">
+      <file leaf-file-name="DerivativeParser.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/DerivativeParser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="31" column="50" selection-start-line="31" selection-start-column="50" selection-end-line="31" selection-end-column="50" />
+            <state relative-caret-position="4828">
+              <caret line="309" column="54" selection-start-line="309" selection-start-column="54" selection-end-line="309" selection-end-column="54" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CalculatorOptimizer.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/CalculatorOptimizer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="69" column="0" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -74,47 +122,19 @@
       <file leaf-file-name="BooleanCaculator.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/BooleanCaculator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1853">
-              <caret line="125" column="56" selection-start-line="125" selection-start-column="56" selection-end-line="125" selection-end-column="56" />
-              <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#1633#1634#0" expanded="false" />
-                <element signature="e#1669#1670#0" expanded="false" />
-                <element signature="e#1824#1825#0" expanded="false" />
-                <element signature="e#1860#1861#0" expanded="false" />
-                <element signature="e#1990#1991#0" expanded="false" />
-                <element signature="e#2042#2043#0" expanded="false" />
-                <element signature="e#2383#2384#0" expanded="false" />
-                <element signature="e#2481#2482#0" expanded="false" />
-                <element signature="e#2604#2605#0" expanded="false" />
-                <element signature="e#2683#2684#0" expanded="false" />
-                <element signature="e#8734#8735#0" expanded="false" />
-                <element signature="e#8796#8797#0" expanded="false" />
-                <element signature="e#19153#19983#0" expanded="false" />
-                <element signature="e#19433#19456#0" expanded="false" />
-                <element signature="e#19982#19983#0" expanded="false" />
-                <element signature="e#20043#20873#0" expanded="false" />
-                <element signature="e#20323#20346#0" expanded="false" />
-                <element signature="e#20872#20873#0" expanded="false" />
-                <element signature="e#20934#21765#0" expanded="false" />
-                <element signature="e#21214#21237#0" expanded="false" />
-                <element signature="e#21764#21765#0" expanded="false" />
-                <element signature="e#21826#22657#0" expanded="false" />
-                <element signature="e#22106#22129#0" expanded="false" />
-                <element signature="e#22656#22657#0" expanded="false" />
-                <element signature="e#22720#23551#0" expanded="false" />
-                <element signature="e#23000#23023#0" expanded="false" />
-                <element signature="e#23550#23551#0" expanded="false" />
-                <element signature="e#23613#24444#0" expanded="false" />
-                <element signature="e#23893#23916#0" expanded="false" />
-                <element signature="e#24443#24444#0" expanded="false" />
-                <element signature="e#24507#25348#0" expanded="false" />
-                <element signature="e#24787#24810#0" expanded="false" />
-                <element signature="e#25347#25348#0" expanded="false" />
-                <element signature="e#25409#26250#0" expanded="false" />
-                <element signature="e#25689#25712#0" expanded="false" />
-                <element signature="e#26249#26250#0" expanded="false" />
-              </folding>
+            <state relative-caret-position="5704">
+              <caret line="529" column="8" selection-start-line="529" selection-start-column="8" selection-end-line="529" selection-end-column="8" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Test.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/Test.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="23" column="61" selection-start-line="23" selection-start-column="61" selection-end-line="23" selection-end-column="61" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -150,13 +170,13 @@
         <option value="$PROJECT_DIR$/src/Function.java" />
         <option value="$PROJECT_DIR$/src/RawFunctionDeclareHelper.java" />
         <option value="$PROJECT_DIR$/src/DerivativeParser.java" />
-        <option value="$PROJECT_DIR$/LogSever/src/LogServer.java" />
-        <option value="$PROJECT_DIR$/src/BooleanCaculator.java" />
-        <option value="$PROJECT_DIR$/Log/src/Log.java" />
-        <option value="$PROJECT_DIR$/src/Calculator.java" />
-        <option value="$PROJECT_DIR$/src/CalculatorHelper.java" />
-        <option value="$PROJECT_DIR$/src/Test.java" />
         <option value="$PROJECT_DIR$/src/CalculatorOptimizer.java" />
+        <option value="$PROJECT_DIR$/src/CalculatorHelper.java" />
+        <option value="$PROJECT_DIR$/LogSever/src/LogServer.java" />
+        <option value="$PROJECT_DIR$/Log/src/Log.java" />
+        <option value="$PROJECT_DIR$/src/BooleanCaculator.java" />
+        <option value="$PROJECT_DIR$/src/Calculator.java" />
+        <option value="$PROJECT_DIR$/src/Test.java" />
       </list>
     </option>
   </component>
@@ -284,11 +304,11 @@
   <component name="PropertiesComponent">
     <property name="aspect.path.notification.shown" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="settings.editor.selected.configurable" value="reference.projectsettings.compiler.javacompiler" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://H:/BaiduYunDownload/Calculator/src/BooleanCaculator.java" />
+    <property name="last_opened_file_path" value="D:/Program Files/jprofiler9/bin/jprofiler.exe" />
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://H:/BaiduYunDownload/Calculator/src/Calculator.java" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -494,6 +514,9 @@
       <option name="PASS_PARENT_ENVS" value="true" />
       <module name="Calculator" />
       <envs />
+      <RunnerSettings RunnerId="JProfiler">
+        <option name="WINDOW" value="false" />
+      </RunnerSettings>
       <method />
     </configuration>
     <configuration default="false" name="LogClient test" type="Application" factoryName="Application" singleton="true">
@@ -571,11 +594,20 @@
   <component name="TimeTrackingManager">
     <option name="totallyTimeSpent" value="197433000" />
   </component>
+  <component name="TodoView" selected-index="1">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
-    <editor active="false" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32910052" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32804233" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -587,9 +619,10 @@
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.13958333" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Memory View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.19479166" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="JProfiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32910052" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19427083" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35449734" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35343915" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -649,36 +682,51 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Calculator.java</url>
-          <line>927</line>
+          <line>938</line>
           <properties />
           <option name="timeStamp" value="119" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/DerivativeParser.java</url>
-          <line>329</line>
+          <url>file://$PROJECT_DIR$/src/Calculator.java</url>
+          <line>972</line>
           <properties />
-          <option name="timeStamp" value="127" />
+          <option name="timeStamp" value="186" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/DerivativeParser.java</url>
-          <line>336</line>
+          <url>file://$PROJECT_DIR$/Log/src/Log.java</url>
+          <line>184</line>
           <properties />
-          <option name="timeStamp" value="131" />
+          <option name="timeStamp" value="194" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/CalculatorOptimizer.java</url>
-          <line>211</line>
+          <url>file://$PROJECT_DIR$/LogSever/src/LogServer.java</url>
+          <line>27</line>
           <properties />
-          <option name="timeStamp" value="173" />
+          <option name="timeStamp" value="196" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Test.java</url>
-          <line>34</line>
+          <url>file://$PROJECT_DIR$/src/Calculator.java</url>
+          <line>1589</line>
           <properties />
-          <option name="timeStamp" value="174" />
+          <option name="timeStamp" value="200" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Calculator.java</url>
+          <line>517</line>
+          <properties />
+          <option name="timeStamp" value="206" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Calculator.java</url>
+          <line>209</line>
+          <properties />
+          <option name="timeStamp" value="211" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="175" />
+      <breakpoints-dialog>
+        <breakpoints-dialog />
+      </breakpoints-dialog>
+      <option name="time" value="212" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -687,29 +735,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/Test.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="16" column="3" selection-start-line="16" selection-start-column="3" selection-end-line="16" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Calculator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Calculator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/CalculatorHelper.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5947">
@@ -742,7 +767,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#1348#1349#0" expanded="true" />
+            <element signature="e#1400#1401#0" expanded="true" />
+            <element signature="e#1538#1539#0" expanded="true" />
+            <element signature="e#1631#1632#0" expanded="true" />
+            <element signature="e#22031#22032#0" expanded="true" />
+            <element signature="e#22080#22081#0" expanded="true" />
+            <element signature="e#30003#30004#0" expanded="true" />
+            <element signature="e#30054#30055#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -750,7 +784,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#1348#1349#0" expanded="true" />
+            <element signature="e#1400#1401#0" expanded="true" />
+            <element signature="e#1538#1539#0" expanded="true" />
+            <element signature="e#1631#1632#0" expanded="true" />
+            <element signature="e#22031#22032#0" expanded="true" />
+            <element signature="e#22080#22081#0" expanded="true" />
+            <element signature="e#30003#30004#0" expanded="true" />
+            <element signature="e#30054#30055#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -772,7 +815,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15789">
           <caret line="831" column="28" selection-start-line="831" selection-start-column="28" selection-end-line="831" selection-end-column="28" />
-          <folding />
+          <folding>
+            <element signature="e#1348#1349#0" expanded="true" />
+            <element signature="e#1400#1401#0" expanded="true" />
+            <element signature="e#1538#1539#0" expanded="true" />
+            <element signature="e#1631#1632#0" expanded="true" />
+            <element signature="e#22031#22032#0" expanded="true" />
+            <element signature="e#22080#22081#0" expanded="true" />
+            <element signature="e#30003#30004#0" expanded="true" />
+            <element signature="e#30054#30055#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -788,7 +840,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#1348#1349#0" expanded="true" />
+            <element signature="e#1400#1401#0" expanded="true" />
+            <element signature="e#1538#1539#0" expanded="true" />
+            <element signature="e#1631#1632#0" expanded="true" />
+            <element signature="e#22031#22032#0" expanded="true" />
+            <element signature="e#22080#22081#0" expanded="true" />
+            <element signature="e#30003#30004#0" expanded="true" />
+            <element signature="e#30054#30055#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -803,7 +864,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#1348#1349#0" expanded="true" />
+            <element signature="e#1400#1401#0" expanded="true" />
+            <element signature="e#1538#1539#0" expanded="true" />
+            <element signature="e#1631#1632#0" expanded="true" />
+            <element signature="e#22031#22032#0" expanded="true" />
+            <element signature="e#22080#22081#0" expanded="true" />
+            <element signature="e#30003#30004#0" expanded="true" />
+            <element signature="e#30054#30055#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -818,7 +888,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#1348#1349#0" expanded="true" />
+            <element signature="e#1400#1401#0" expanded="true" />
+            <element signature="e#1538#1539#0" expanded="true" />
+            <element signature="e#1631#1632#0" expanded="true" />
+            <element signature="e#22031#22032#0" expanded="true" />
+            <element signature="e#22080#22081#0" expanded="true" />
+            <element signature="e#30003#30004#0" expanded="true" />
+            <element signature="e#30054#30055#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -833,7 +912,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#1348#1349#0" expanded="true" />
+            <element signature="e#1400#1401#0" expanded="true" />
+            <element signature="e#1538#1539#0" expanded="true" />
+            <element signature="e#1631#1632#0" expanded="true" />
+            <element signature="e#22031#22032#0" expanded="true" />
+            <element signature="e#22080#22081#0" expanded="true" />
+            <element signature="e#30003#30004#0" expanded="true" />
+            <element signature="e#30054#30055#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -849,7 +937,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#1348#1349#0" expanded="true" />
+            <element signature="e#1400#1401#0" expanded="true" />
+            <element signature="e#1538#1539#0" expanded="true" />
+            <element signature="e#1631#1632#0" expanded="true" />
+            <element signature="e#22031#22032#0" expanded="true" />
+            <element signature="e#22080#22081#0" expanded="true" />
+            <element signature="e#30003#30004#0" expanded="true" />
+            <element signature="e#30054#30055#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -865,7 +962,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#1348#1349#0" expanded="true" />
+            <element signature="e#1400#1401#0" expanded="true" />
+            <element signature="e#1538#1539#0" expanded="true" />
+            <element signature="e#1631#1632#0" expanded="true" />
+            <element signature="e#22031#22032#0" expanded="true" />
+            <element signature="e#22080#22081#0" expanded="true" />
+            <element signature="e#30003#30004#0" expanded="true" />
+            <element signature="e#30054#30055#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -881,7 +987,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#1348#1349#0" expanded="true" />
+            <element signature="e#1400#1401#0" expanded="true" />
+            <element signature="e#1538#1539#0" expanded="true" />
+            <element signature="e#1631#1632#0" expanded="true" />
+            <element signature="e#22031#22032#0" expanded="true" />
+            <element signature="e#22080#22081#0" expanded="true" />
+            <element signature="e#30003#30004#0" expanded="true" />
+            <element signature="e#30054#30055#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -902,25 +1017,10 @@
     <entry file="file://$PROJECT_DIR$/src/CalcaulatorHelper.java" />
     <entry file="file://G:/Calculator/src/Calculator.java" />
     <entry file="jar://D:/Program Files/Java/jdk1.8.0_101/src.zip!/java/util/Stack.java" />
-    <entry file="file://$PROJECT_DIR$/src/DerivativeParser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4896">
-          <caret line="313" column="8" selection-start-line="313" selection-start-column="8" selection-end-line="313" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Log/Log.iml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/LogSever/src/LogServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" column="20" selection-start-line="12" selection-start-column="20" selection-end-line="12" selection-end-column="20" />
         </state>
       </provider>
     </entry>
@@ -931,94 +1031,98 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://D:/Program Files/Java/jdk1.8.0_101/src.zip!/java/lang/Thread.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2543">
+          <caret line="757" column="23" selection-start-line="757" selection-start-column="23" selection-end-line="757" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/Program Files/Java/jdk1.8.0_101/src.zip!/java/lang/StackTraceElement.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1533">
+          <caret line="41" column="31" selection-start-line="41" selection-start-column="31" selection-end-line="41" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/LogSever/src/LogServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="27" column="20" selection-start-line="27" selection-start-column="20" selection-end-line="27" selection-end-column="44" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Log/src/Log.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3978">
-          <caret line="251" column="0" selection-start-line="251" selection-start-column="0" selection-end-line="251" selection-end-column="0" />
-          <folding>
-            <element signature="e#2174#2175#0" expanded="false" />
-            <element signature="e#2225#2226#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="1547">
+          <caret line="255" column="54" selection-start-line="255" selection-start-column="54" selection-end-line="255" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://D:/Program Files/Java/jdk1.8.0_101/src.zip!/java/util/ArrayList.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="194">
+          <caret line="105" column="13" selection-start-line="105" selection-start-column="13" selection-end-line="105" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DerivativeParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4828">
+          <caret line="309" column="54" selection-start-line="309" selection-start-column="54" selection-end-line="309" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/CalculatorOptimizer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="69" column="0" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/BooleanCaculator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1853">
-          <caret line="125" column="56" selection-start-line="125" selection-start-column="56" selection-end-line="125" selection-end-column="56" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#1633#1634#0" expanded="false" />
-            <element signature="e#1669#1670#0" expanded="false" />
-            <element signature="e#1824#1825#0" expanded="false" />
-            <element signature="e#1860#1861#0" expanded="false" />
-            <element signature="e#1990#1991#0" expanded="false" />
-            <element signature="e#2042#2043#0" expanded="false" />
-            <element signature="e#2383#2384#0" expanded="false" />
-            <element signature="e#2481#2482#0" expanded="false" />
-            <element signature="e#2604#2605#0" expanded="false" />
-            <element signature="e#2683#2684#0" expanded="false" />
-            <element signature="e#8734#8735#0" expanded="false" />
-            <element signature="e#8796#8797#0" expanded="false" />
-            <element signature="e#19153#19983#0" expanded="false" />
-            <element signature="e#19433#19456#0" expanded="false" />
-            <element signature="e#19982#19983#0" expanded="false" />
-            <element signature="e#20043#20873#0" expanded="false" />
-            <element signature="e#20323#20346#0" expanded="false" />
-            <element signature="e#20872#20873#0" expanded="false" />
-            <element signature="e#20934#21765#0" expanded="false" />
-            <element signature="e#21214#21237#0" expanded="false" />
-            <element signature="e#21764#21765#0" expanded="false" />
-            <element signature="e#21826#22657#0" expanded="false" />
-            <element signature="e#22106#22129#0" expanded="false" />
-            <element signature="e#22656#22657#0" expanded="false" />
-            <element signature="e#22720#23551#0" expanded="false" />
-            <element signature="e#23000#23023#0" expanded="false" />
-            <element signature="e#23550#23551#0" expanded="false" />
-            <element signature="e#23613#24444#0" expanded="false" />
-            <element signature="e#23893#23916#0" expanded="false" />
-            <element signature="e#24443#24444#0" expanded="false" />
-            <element signature="e#24507#25348#0" expanded="false" />
-            <element signature="e#24787#24810#0" expanded="false" />
-            <element signature="e#25347#25348#0" expanded="false" />
-            <element signature="e#25409#26250#0" expanded="false" />
-            <element signature="e#25689#25712#0" expanded="false" />
-            <element signature="e#26249#26250#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Calculator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-19">
-          <caret line="1649" column="62" selection-start-line="1649" selection-start-column="52" selection-end-line="1649" selection-end-column="62" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Test.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="31" column="50" selection-start-line="31" selection-start-column="50" selection-end-line="31" selection-end-column="50" />
+        <state relative-caret-position="5704">
+          <caret line="529" column="8" selection-start-line="529" selection-start-column="8" selection-end-line="529" selection-end-column="8" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/CalculatorHelper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="451">
-          <caret line="587" column="10" selection-start-line="587" selection-start-column="10" selection-end-line="587" selection-end-column="10" />
+        <state relative-caret-position="287">
+          <caret line="466" column="0" selection-start-line="466" selection-start-column="0" selection-end-line="466" selection-end-column="0" />
           <folding>
-            <marker date="1476372352749" expanded="false" signature="32426:32640" ph="onReflectionFunction(parameter, calculator) → {" />
-            <marker date="1476372352749" expanded="false" signature="33026:33041" ph="}" />
+            <element signature="e#24771#24800#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/CalculatorOptimizer.java">
+    <entry file="file://$PROJECT_DIR$/src/Calculator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="338">
-          <caret line="170" column="47" selection-start-line="170" selection-start-column="47" selection-end-line="170" selection-end-column="47" />
+        <state relative-caret-position="231">
+          <caret line="1088" column="9" selection-start-line="1088" selection-start-column="9" selection-end-line="1088" selection-end-column="9" />
+          <folding>
+            <element signature="e#1348#1349#0" expanded="true" />
+            <element signature="e#1400#1401#0" expanded="true" />
+            <element signature="e#1538#1539#0" expanded="true" />
+            <element signature="e#1631#1632#0" expanded="true" />
+            <element signature="e#22031#22032#0" expanded="true" />
+            <element signature="e#22080#22081#0" expanded="true" />
+            <element signature="e#30003#30004#0" expanded="true" />
+            <element signature="e#30054#30055#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Test.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="23" column="61" selection-start-line="23" selection-start-column="61" selection-end-line="23" selection-end-column="61" />
           <folding />
         </state>
       </provider>

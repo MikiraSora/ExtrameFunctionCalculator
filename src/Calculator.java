@@ -1,4 +1,5 @@
 
+import com.sun.org.apache.bcel.internal.generic.PUSH;
 import javafx.geometry.Pos;
 
 import java.io.*;
@@ -152,18 +153,15 @@ import java.util.regex.Pattern;
             return String.format("%s(%s)", function_name, function_paramters);
         }
 
-        public ReflectionFunction Copy() throws Exception {
-            return this;
-        }
-
         @Override
         protected String Solve(String parameterList) throws Exception {
             HashMap<String,Variable> custom_paramter=reflectionFunction.onParseParamter(parameterList,request,getCalculator());
-            if(custom_paramter==null)
+
+            if(custom_paramter==null)/*返回null意味着按照国际惯例来解析传入参数*/
                 Parse(parameterList);
             else
                 paramter=custom_paramter;
-            return /*getCalculator().Solve(*/reflectionFunction.onReflectionFunction(paramter, getCalculator());//);
+            return reflectionFunction.onReflectionFunction(paramter, getCalculator());
         }
     }
 
@@ -171,7 +169,7 @@ import java.util.regex.Pattern;
 
     public static class Function extends Expression {
 
-        static enum FunctionType {
+        enum FunctionType {
             Normal_Function,
             Reflection_Function,
             Unknown
@@ -191,7 +189,10 @@ import java.util.regex.Pattern;
                 }
                 try {
                     return this.getCalculator().GetVariable(Variable_name).Solve();
-                }catch (Exception e){return "0";}
+                }catch (Exception e){
+                    Log.Warning(String.format("cant get value of request variable cause :%s ,so return 0",e.getMessage()));
+                    return "0";
+                }
             }
         }
 
@@ -199,22 +200,27 @@ import java.util.regex.Pattern;
          * 静态解析限定，间接函数
          * */
         class RequestFunction extends Function{
-            String function_name=null;
-            RequestFunction(String name,Calculator calculator1)throws Exception{super(null,calculator1);}
+            Function function=null;
+            RequestFunction(String name,Calculator calculator1,Function function)throws Exception{super(null,calculator1);function_name=name;this.function=function;}
 
             @Override
             String Solve() {
+                String result=null;
                 try {
-                    return this.getCalculator().GetFunction(function_name).Solve(current_paramters);
-                }catch (Exception e){return "0";}
+                    this.getCalculator().PushTmpVariable(function.paramter);
+                    result= this.getCalculator().GetFunction(function_name).Solve(current_paramters);
+                    this.getCalculator().PopTmpVariable();
+                    return result;
+                }catch (Exception e){
+                    Log.Warning(String.format("cant get value of request function cause :%s ,so return 0 as value result",e.getMessage()));
+                    return "0";
+                }
             }
         }
 
         FunctionType function_type = FunctionType.Unknown;
 
         ArrayList<Expression> staticBSEList=null;
-
-        //boolean isStaticParse=false;
 
         /**
          * 返回函数的类型
@@ -237,6 +243,7 @@ import java.util.regex.Pattern;
          * 普通函数的表达式
          * */
         protected String function_body;
+
         /**
          * 当前参数,默认无参
          * */
@@ -346,6 +353,7 @@ import java.util.regex.Pattern;
                             if(position<(expression.length()-1)){
                                 tmp_c=expression.charAt(position+1);
                                 tmp_op+=tmp_c;
+                                /*判断是否存在双字符组合的操作符,兼容逻辑操作符，如>= == !=*/
                                 if(!specialOperationChar.contains(" "+(tmp_op)+" ")){
                                     tmp_op=Character.toString(c);
                                 }
@@ -386,7 +394,7 @@ import java.util.regex.Pattern;
                 String function_paramters = result.group(2);
                 if (!this.getCalculator().ContainFunction(function_name))
                     Log.ExceptionError( new Exception(String.format("function %s hadnt declared!", function_name)));
-                Function function = new RequestFunction(function_name,getCalculator()) /*this.getCalculator().GetFunction(function_name)*/;
+                Function function = new RequestFunction(function_name,getCalculator(),this);
                 function.current_paramters = function_paramters;
                 return function;
             }
@@ -502,9 +510,10 @@ import java.util.regex.Pattern;
          * @return 替换后的表达式文本
          * */
         protected String ParseDeclaring(String expression) throws Exception, StatementNotDeclaredException {
-            String newExpression = expression;
+            String newExpression = expression,replaceParam;
             for (Map.Entry<String, Variable> pair : paramter.entrySet()) {
-                newExpression = newExpression.replace(pair.getKey(), pair.getValue().Solve());
+                //replaceParam="("+pair.getValue().Solve()+")";
+                newExpression = newExpression.replaceAll(pair.getKey(),"("+pair.getValue().Solve()+")");
             }
             return newExpression;
         }
@@ -526,12 +535,13 @@ import java.util.regex.Pattern;
             } catch (Exception e) {
                 Log.Warning(e.getMessage());
             }
-            return null;
+            return null;//// TODO: 2016/10/30 搞事情，Expression的Solve()将会throws Exception. 
         }
 
+        boolean specialAbleStaticParseFunction=true;
         protected String Solve(String parameterList) throws Exception {
             Parse(parameterList);
-            if(this.getCalculator().ableStaticParseFunction){
+            if(specialAbleStaticParseFunction&&this.getCalculator().ableStaticParseFunction){
                 if(staticBSEList==null)
                     StaticParseExpression();
                 return Solve(staticBSEList);
@@ -860,7 +870,7 @@ import java.util.regex.Pattern;
 
     public static class Digit extends Expression {
 
-        //
+        static boolean IsPrecisionTruncation=false;
 
         public Digit(String value) {
             rawText = value;
@@ -882,8 +892,7 @@ import java.util.regex.Pattern;
          * @return 浮点数值
          * */
         public double GetDouble() {
-            //return (Double.parseDouble(/*String.format("%.14f",Double.parseDouble(Solve()))*/Solve()));
-            return CutMaxPerseicelDecimal(Solve());
+            return IsPrecisionTruncation?CutMaxPerseicelDecimal(Solve()):Double.valueOf(Solve());
         }
 
         /**
@@ -959,6 +968,7 @@ import java.util.regex.Pattern;
             try {
                 return getCalculator().Solve(rawText);
             }catch (Exception e){
+                e.printStackTrace();
                 Log.Warning(e.getMessage());
             }
             return null;
@@ -1050,8 +1060,9 @@ import java.util.regex.Pattern;
 
     enum EnableType{
         FunctionStaticParse,
-        ExpressionOptimize
-    }
+        ExpressionOptimize,
+        PrecisionTruncation
+        }
 
     /**
      * 开启功能，这些功能均为可选的,可以通过DisEnable()关闭
@@ -1064,6 +1075,9 @@ import java.util.regex.Pattern;
                 break;
             case ExpressionOptimize:
                 OptimizeEnable(true);
+                break;
+            case PrecisionTruncation:
+                Digit.IsPrecisionTruncation=true;
                 break;
         }
         Log.Debug(String.format("开启功能:%s",enableType.toString()));
@@ -1080,6 +1094,9 @@ import java.util.regex.Pattern;
                 break;
             case ExpressionOptimize:
                 OptimizeEnable(false);
+                break;
+            case PrecisionTruncation:
+                Digit.IsPrecisionTruncation=false;
                 break;
         }
         Log.Debug(String.format("关闭功能:%s",enableType.toString()));
@@ -1107,6 +1124,9 @@ import java.util.regex.Pattern;
      * @return 变量对象
      * */
     Variable GetVariable(String name) throws Exception {
+        Variable tmp_variable=GetTmpVariable(name);
+        if(tmp_variable!=null)
+            return tmp_variable;
         if(raw_variable_table.containsKey(name)){
             return raw_variable_table.get(name);
         }
@@ -1419,7 +1439,7 @@ import java.util.regex.Pattern;
     /**
      * 判断字符串是否为有效的变量名(不管这个变量是否存在)
      * @param expression 测试文本
-     * @return 判断结果
+     * @returns 判断结果
      * */
     public static boolean isValidVariable(String expression) {
         expression.isEmpty();
@@ -1480,15 +1500,24 @@ import java.util.regex.Pattern;
      * @return 后缀表达式形式的表达式链表
      * */
     ArrayList<Expression> ConverToBSE(ArrayList<Expression> expressionArrayList) throws Exception {
-        if(expressionArrayList.get(expressionArrayList.size()-1).GetType()== Expression.ExpressionType.Symbol)
+        if(expressionArrayList.get(expressionArrayList.size()-1).GetType()== Expression.ExpressionType.Symbol?!((Symbol)expressionArrayList.get(expressionArrayList.size()-1)).rawText.equals(")"):false)
             Log.ExceptionError(new Exception("the last expression in list cannot be symbol"));
         ArrayList<Expression> result_list = new ArrayList<>();
         Stack<Symbol> operation_stack = new Stack<>();
         Symbol symbol = null;
-        for (Expression node : expressionArrayList) {
+        Expression node=null;
+        for (int position=0;position<expressionArrayList.size();position++) {
+            node=expressionArrayList.get(position);
             if (node.GetType() == Expression.ExpressionType.Digit||(ableStaticParseFunction?(node.GetType()== Expression.ExpressionType.Function||node.GetType()== Expression.ExpressionType.Variable):false))
                 result_list.add(node);
             else {
+                if(((Symbol)node).rawText.equals("-")){
+                    if(position==0){
+                        result_list.add(new Digit("0"));
+                    }else if(expressionArrayList.get(position-1).GetType()== Expression.ExpressionType.Symbol)
+                        if(((Symbol)expressionArrayList.get(position-1)).rawText.equals("("))
+                            result_list.add(new Digit("0"));
+                }
                 if (operation_stack.isEmpty())
                     operation_stack.push((Symbol) node);
                 else {
@@ -1523,7 +1552,6 @@ import java.util.regex.Pattern;
         while (!operation_stack.isEmpty()) {
             result_list.add(operation_stack.pop());
         }
-        Expression node;
         for (int i = 0; i < result_list.size(); i++) {
             node = result_list.get(i);
             if (node.GetType() == Expression.ExpressionType.Symbol)
@@ -1610,7 +1638,9 @@ import java.util.regex.Pattern;
      * 将后缀表达式链表推入栈并当当前计算的后缀表达式链
      * @param list 后缀表达式链表，通常由ConverToBSE()得到
      * */
-    private void  setBSEChain_Stack(ArrayList<Expression> list){BSEChain_Stack.push(list);}
+    private void  setBSEChain_Stack(ArrayList<Expression> list){
+        BSEChain_Stack.push(list);
+    }
 
     /**
      * 将表达式链表推入栈并当当前计算的表达式链
@@ -1628,7 +1658,7 @@ import java.util.regex.Pattern;
      * 获取当前计算的表达式链表
      * @return 当前表达式链表
      * */
-    private ArrayList<Expression> getRawExpressionChain_Stack(){return rawExpressionChain_Stack.empty()?BSEChain_Stack.push(new ArrayList<Expression>()):rawExpressionChain_Stack.peek();}
+    private ArrayList<Expression> getRawExpressionChain_Stack(){return rawExpressionChain_Stack.empty()?rawExpressionChain_Stack.push(new ArrayList<Expression>()):rawExpressionChain_Stack.peek();}
 
     /**
      * 结束计算，清空不必要的内容
@@ -1645,7 +1675,8 @@ import java.util.regex.Pattern;
      * */
     public String Solve(String expression) throws Exception {
         expression=expression.replaceAll(" ","");
-        Log.Debug(String.format("Solve : %s",expression));
+        if(isDigit(expression))
+            return expression;
         //rawExpressionChain = ParseExpression(expression);
         setRawExpressionChain_Stack(ParseExpression(expression));
         ConverVariableToDigit();
@@ -1724,12 +1755,14 @@ import java.util.regex.Pattern;
      * @return 执行结果
      * */
     public String Execute(String text) throws Exception {
+        Log.Debug(String.format("Try Execute : %s",text));
         Clear();
         if (text.isEmpty())
             Log.ExceptionError( new Exception("empty text to execute"));
         char c;
         String executeType = "", paramter = "";
         String result = "";
+
         for (int position = 0; position < text.length(); position++) {
             c = text.charAt(position);
             if (c == ' ') {
@@ -1873,8 +1906,10 @@ import java.util.regex.Pattern;
      * @return 执行结果
      * */
     private String Clear() {
-        this.getBSEChain_Stack().clear();
-        this.getRawExpressionChain_Stack().clear();
+        if(!BSEChain_Stack.empty())
+            this.getBSEChain_Stack().clear();
+        if(!rawExpressionChain_Stack.empty())
+            this.getRawExpressionChain_Stack().clear();
         return "Clean finished!";
     }
 
@@ -2193,6 +2228,41 @@ import java.util.regex.Pattern;
                 variable_name += c;
             }
         }
+    }
+
+    /**测试区*/
+
+    Stack<ArrayList<String>> recordTmpVariable=new Stack<>();
+    HashMap<String,Stack<Variable>> TmpVariable=new HashMap<>();
+
+
+    private void PushTmpVariable(HashMap<String,Variable> variableHashMap){
+        ArrayList<String> recordList=new ArrayList<>();
+        for(HashMap.Entry<String,Variable> pair:variableHashMap.entrySet())
+        {
+            recordList.add(pair.getKey());
+            if(!TmpVariable.containsKey(pair.getKey()))
+                TmpVariable.put(pair.getKey(),new Stack<>());
+            TmpVariable.get(pair.getKey()).push(pair.getValue());
+            //Log.Debug(String.format("tmp variable \"%s\" was push",pair.getValue().toString()));
+        }
+        recordTmpVariable.push(recordList);
+    }
+
+    private void PopTmpVariable()throws Exception{
+        ArrayList<String> recordList=recordTmpVariable.pop();
+        for(String tmp_name:recordList){
+            TmpVariable.get(tmp_name).pop();
+            //Log.Debug(String.format("tmp variable \"%s\" was pop",TmpVariable.get(tmp_name).pop().toString()));
+            if(TmpVariable.get(tmp_name).empty())
+                TmpVariable.remove(tmp_name);
+        }
+    }
+
+    private Variable GetTmpVariable(String name){
+        if(TmpVariable.containsKey(name))
+            return TmpVariable.get(name).peek();
+        return null;
     }
 
 }

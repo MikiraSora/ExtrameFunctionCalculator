@@ -1,3 +1,4 @@
+import com.sun.javaws.Main;
 import com.sun.org.apache.xml.internal.security.Init;
 import sun.awt.Mutex;
 
@@ -12,6 +13,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.locks.Lock;
+import java.util.logging.Level;
 
 import static java.lang.Thread.currentThread;
 
@@ -144,9 +146,83 @@ public class Log {
     public static boolean GetEnableLog(){return EnableLog;}
 
     private static class MaintenanceRunnable implements Runnable{
+        private static class HighLevelMaintenanceRunnable implements Runnable{
+            //private HighLevelMaintenanceRunnable(){}
+            //HighLevelMaintenanceRunnable(MaintenanceRunnable maintenanceRunnable){fatherMaintenanceThread=maintenanceRunnable;}
+
+            private volatile boolean isLock=true;
+            private volatile boolean isExit=false;
+
+            private MaintenanceRunnable fatherMaintenanceThread=null;
+
+            private long flushInv=30;
+            private long recuseTime=3000;
+                private long totalTime=0;
+
+                private StringBuilder stringBuilder;
+                private static String SegmentationMarker="#@#seg_marker#%#";
+
+                private int CombinCount=40;
+            private ArrayList<Message> commitArrayList=new ArrayList<>();
+
+            public void PostMessageSend(Message message){
+                commitArrayList.add(message);
+            }
+
+            @Override
+            public void run() {
+                Message message=null;
+                isExit=false;
+                isLock=false;
+                while (!isExit){
+                    while (isLock){
+                        try {
+                            currentThread().sleep(flushInv);
+                            if(!commitArrayList.isEmpty())
+                                break;
+                            totalTime+=flushInv;
+                            if(totalTime>=recuseTime){
+                                isExit=true;
+                                isLock=false;
+                                maintenanceRunnable.isHighLevelCommit=false;
+                                totalTime=0;
+                                return;
+                            }
+                        }catch (Exception e){}
+                    }
+                    totalTime=0;
+                    while(!commitArrayList.isEmpty()) {
+                        stringBuilder=new StringBuilder();
+                        for(int index=0;index<commitArrayList.size();index++){
+                            if(index>CombinCount)
+                                break;
+                            message=commitArrayList.remove(0);
+                            if(message==null)
+                                continue;
+                            stringBuilder.append(message.toString()).append(SegmentationMarker);
+                        }
+                        try {
+                            SocketWrite(stringBuilder.toString());
+                        } catch (Exception e) {}
+                    }
+                    isLock=true;
+                }
+            }
+
+            boolean isExit(){return isExit;}
+            boolean isLock(){return isLock;}
+        }
+
+        private HighLevelMaintenanceRunnable highLevelMaintenanceRunnable=new HighLevelMaintenanceRunnable();
+        private Thread highlevelThread=null;
+
         private volatile boolean isLock=true;
         private volatile boolean isExit=false;
+        public volatile boolean isHighLevelCommit=false;
+
         private long flushInv=30;
+
+        private long limitCount=1000;
 
         public boolean IsExit(){return isExit;}
 
@@ -170,26 +246,37 @@ public class Log {
                     }catch (Exception e){}
                 }
                 /*
-                for(int index=0;index<CommitLogQueue.size();index++){
-                    message=CommitLogQueue.remove(0);
-                    if(message==null)
+                while(!CommitLogQueue.isEmpty()) {
+                    message = CommitLogQueue.remove(0);
+                    if (CommitLogQueue.size() > limitCount) {
+                        //触发规则
+                        if(!isHighLevelCommit){
+                            //启动
+                            isHighLevelCommit=true;
+                            if(highlevelThread==null){
+                                highlevelThread=new Thread(highLevelMaintenanceRunnable);
+                                highlevelThread.start();
+                            }else{
+                                if(highLevelMaintenanceRunnable.isExit()){
+                                    highlevelThread.start();
+                                }
+                            }
+                        }
+                    }
+                    if(isHighLevelCommit){
+                        highLevelMaintenanceRunnable.PostMessageSend(message);
                         continue;
-                    try {
-                        LogWrite(message);
-                    }catch (Exception e){}
-                }
-                */
-                while(!CommitLogQueue.isEmpty()){
-                    message=CommitLogQueue.remove(0);
-                    if(message==null)
+                    }*/
+                    message=CommitLogQueue.isEmpty()?null:CommitLogQueue.remove(0);
+                    if (message == null)
                         continue;
                     try {
                         SocketWrite(message.toString());
-                    }catch (Exception e){}
+                    } catch (Exception e) {}
                 }
                 isLock=true;
             }
-        }
+
     }
 
     private static MaintenanceRunnable maintenanceRunnable=new MaintenanceRunnable();

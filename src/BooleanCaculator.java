@@ -170,7 +170,7 @@ public class BooleanCaculator {
                         }
                         if (c == ')') {
                             if (bracket_stack.isEmpty())
-                                throw new Exception("Extra brackets in position: " + position);
+                                Log.ExceptionError( new Exception("Extra brackets in position: " + position));
                             bracket_stack.pop();
                             if (bracket_stack.isEmpty()) {
                                 statement += ")";
@@ -312,11 +312,11 @@ public class BooleanCaculator {
             Matcher result = checkFunctionFormatRegex.matcher(text);
             result.find();
             if (result.groupCount() != 2)
-                throw new Exception("Cannot parse function ：" + text);
+                Log.ExceptionError( new Exception("Cannot parse function ：" + text));
             String function_name = result.group(1);
             String function_paramters = result.group(2);
             if (!calculator.ContainFunction(function_name))
-                throw new Exception(String.format("function %s hadnt declared!", function_name));
+                Log.ExceptionError( new Exception(String.format("function %s hadnt declared!", function_name)));
             Calculator.Function function = GetFunction(function_name);
             function.current_paramters = function_paramters;
             return function;
@@ -418,10 +418,19 @@ public class BooleanCaculator {
         ArrayList<Calculator.Expression> result_list = new ArrayList<>();
         Stack<Calculator.Symbol> operation_stack = new Stack<>();
         Calculator.Symbol symbol = null;
-        for (Calculator.Expression node : rawExpressionChain) {
+        Calculator.Expression node=null;
+        for (int position=0;position<rawExpressionChain.size();position++) {
+            node=rawExpressionChain.get(position);
             if (node.GetType() == Calculator.Expression.ExpressionType.Digit||node.GetType() == Calculator.Expression.ExpressionType.Variable)
                 result_list.add(node);
             else {
+                if(((Calculator.Symbol)node).rawText.equals("-")){
+                    if(position==0){
+                        result_list.add(new Calculator.Digit("0"));
+                    }else if(rawExpressionChain.get(position-1).GetType()== Calculator.Expression.ExpressionType.Symbol)
+                        if(((Calculator.Symbol)rawExpressionChain.get(position-1)).rawText.equals("("))
+                            result_list.add(new Calculator.Digit("0"));
+                }
                 if (operation_stack.isEmpty())
                     operation_stack.push((Calculator.Symbol) node);
                 else {
@@ -436,7 +445,7 @@ public class BooleanCaculator {
                         symbol = operation_stack.peek();
                         while (true) {
                             if (operation_stack.size() == 0)
-                                throw new Exception("喵喵喵?");
+                                Log.ExceptionError( new Exception("喵喵喵?"));
                             if (symbol.rawText.equals("(")/*symbol.symbol_type == Calculator.Symbol.SymbolType.Bracket_Left*/) {
                                 operation_stack.pop();
                                 break;
@@ -451,7 +460,7 @@ public class BooleanCaculator {
         while (!operation_stack.isEmpty()) {
             result_list.add(operation_stack.pop());
         }
-        Calculator.Expression node;
+        //Calculator.Expression node;
         for (int i = 0; i < result_list.size(); i++) {
             node = result_list.get(i);
             if (node.GetType() == Calculator.Expression.ExpressionType.Symbol)
@@ -488,21 +497,22 @@ public class BooleanCaculator {
                     if (node.GetType() == Calculator.Expression.ExpressionType.Digit||node.GetType() == Calculator.Expression.ExpressionType.Variable) {
                         digit_stack.push(node);
                     } else
-                        throw new Exception("Unknown Node");
+                        Log.ExceptionError( new Exception("Unknown Node"));
                 }
             }
         } catch (Exception e) {
-            throw new Exception(e.getMessage());
+            Log.ExceptionError( new Exception(e.getMessage()));
 
         }
         //get last expression in stack as result and output.
         Calculator.Expression va=digit_stack.pop();
         if(va.GetType()== Calculator.Expression.ExpressionType.Digit)
-            return Double.valueOf(digit_stack.pop().Solve())!=0;
+            return Double.valueOf(va.Solve())!=0;
         if(va.GetType()== Calculator.Expression.ExpressionType.Variable)
             if(((Calculator.Variable)va).variable_type== Calculator.Variable.VariableType.BooleanVariable)
                 return ((BooleanVariable)va).boolean_value;
-        throw new Exception("Uncalculatable type :"+va.GetType().toString());
+        Log.ExceptionError( new Exception("Uncalculatable type :"+va.GetType().toString()));
+        return false;
     }
 
     public BooleanCaculator(Calculator cal){calculator=cal;}
@@ -517,7 +527,7 @@ public class BooleanCaculator {
         ConverVariableToDigit();
         ConverFunctionToDigit();
         ConverToBSE();
-        return ExucuteBSE();
+            return ExucuteBSE();
     }
 
     static{
@@ -527,7 +537,7 @@ public class BooleanCaculator {
             Calculator.RegisterRawVariable(new BooleanVariable(true,null));
             Calculator.RegisterRawVariable(new BooleanVariable(false,null));
         }catch (Exception e){
-            e.printStackTrace();
+            Log.Warning(e.getMessage());
         }
     }
 
@@ -546,7 +556,7 @@ public class BooleanCaculator {
                     result.add(new BooleanVariable(va>vb,calculator));
                     return result;
                 }
-                throw new Exception("cant take a pair of valid type to calculate.");
+                Log.ExceptionError( new Exception("cant take a pair of valid type to calculate."));return null;
             }
         });
 
@@ -561,7 +571,7 @@ public class BooleanCaculator {
                     result.add(new BooleanVariable(va<vb,calculator));
                     return result;
                 }
-                throw new Exception("cant take a pair of valid type to calculate.");
+                Log.ExceptionError( new Exception("cant take a pair of valid type to calculate."));return null;
             }
         });
 
@@ -576,7 +586,7 @@ public class BooleanCaculator {
                     result.add(new BooleanVariable(va>=vb,calculator));
                     return result;
                 }
-                throw new Exception("cant take a pair of valid type to calculate.");
+                Log.ExceptionError( new Exception("cant take a pair of valid type to calculate."));return null;
             }
         });
 
@@ -591,7 +601,7 @@ public class BooleanCaculator {
                     result.add(new BooleanVariable(va<=vb,calculator));
                     return result;
                 }
-                throw new Exception("cant take a pair of valid type to calculate.");
+                Log.ExceptionError( new Exception("cant take a pair of valid type to calculate."));return null;
             }
         });
 
@@ -606,7 +616,7 @@ public class BooleanCaculator {
                     result.add(new BooleanVariable(va==vb,calculator));
                     return result;
                 }
-                throw new Exception("cant take a pair of valid type to calculate.");
+                Log.ExceptionError( new Exception("cant take a pair of valid type to calculate."));return null;
             }
         });
 
@@ -621,7 +631,7 @@ public class BooleanCaculator {
                     result.add(new BooleanVariable(va!=vb,calculator));
                     return result;
                 }
-                throw new Exception("cant take a pair of valid type to calculate.");
+                Log.ExceptionError( new Exception("cant take a pair of valid type to calculate."));return null;
             }
         });
 
@@ -636,7 +646,7 @@ public class BooleanCaculator {
                     result.add(new BooleanVariable((va!=0)&&(vb!=0),calculator));
                     return result;
                 }
-                throw new Exception("cant take a pair of valid type to calculate.");
+                Log.ExceptionError( new Exception("cant take a pair of valid type to calculate."));return null;
             }
         });
 
@@ -651,7 +661,7 @@ public class BooleanCaculator {
                     result.add(new BooleanVariable((va!=0)||(vb!=0),calculator));
                     return result;
                 }
-                throw new Exception("cant take a pair of valid type to calculate.");
+                Log.ExceptionError( new Exception("cant take a pair of valid type to calculate."));return null;
             }
         });
     }

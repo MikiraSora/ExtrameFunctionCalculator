@@ -534,7 +534,6 @@ public class CalculatorHelper {
                         BracketStack.push(pos);
                     } else if (c == ')') {
                         if (!BracketStack.isEmpty())
-                            //BracketStack.push(pos);
                             BracketStack.pop();
                         else
                             throw new Exception("Not found a pair of bracket what defining a expression");
@@ -561,6 +560,7 @@ public class CalculatorHelper {
                 double max=parameter.get("max").GetDigit().GetDouble();
                 String expr=((Calculator.ExpressionVariable)parameter.get("expr")).GetExpreesion();
                 Calculator.Function function=new Calculator.Function(String.format("tmp_execute(_index,_step,_min,_max,_out)=%s",expr),calculator);//todo 可优化
+                function.specialAbleStaticParseFunction=false;
                 String out="0";
                 for(double i=min;i<=max;i+=step){
 //                    calculator.GetFunction("loop_with").paramter.get("x").rawText=Double.toString(i);
