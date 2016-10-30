@@ -10,6 +10,14 @@
 文档已上线！
 [文档入口](https://mikirasora.github.io/ExtrameFunctionCalculator/)
 
+##分支说明
+本线主要有三个分支:master、feature、dev<br>
+master是最稳定的分支<br>
+feature是测试中但新功能能用的分支<br>
+dev是开发所用的分支，最新功能在这但也有部分出问题或者未完成<br>
+<br>
+dev_cpp是将来移植至C++的坑(深不见底）<br>
+
 ##语法列举/使用方式    
 ------
 (note :以下代码均可在ExtrameFunctionCalculator.Execute()使用)
