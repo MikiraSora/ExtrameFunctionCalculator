@@ -541,10 +541,15 @@ import java.util.regex.Pattern;
         boolean specialAbleStaticParseFunction=true;
         protected String Solve(String parameterList) throws Exception {
             Parse(parameterList);
+            if(paramter.size()!=request.GetParamterRequestCount())
+                Log.ExceptionError(new Exception(String.format("function \"%s\" requests %d paramter(s) but you input %d paramter(s)",function_name,request.GetParamterRequestCount(),paramter.size())));
+            String result;
             if(specialAbleStaticParseFunction&&this.getCalculator().ableStaticParseFunction){
                 if(staticBSEList==null)
                     StaticParseExpression();
-                return Solve(staticBSEList);
+                result= Solve(staticBSEList);
+                paramter.clear();
+                return result;
             }else{
                 staticBSEList=null;
             }
@@ -2247,6 +2252,7 @@ import java.util.regex.Pattern;
             //Log.Debug(String.format("tmp variable \"%s\" was push",pair.getValue().toString()));
         }
         recordTmpVariable.push(recordList);
+        Log.Debug(String.format("there are %d tmp variables are pushed in %d layout",recordList.size(),recordTmpVariable.size()));
     }
 
     private void PopTmpVariable()throws Exception{
@@ -2257,6 +2263,7 @@ import java.util.regex.Pattern;
             if(TmpVariable.get(tmp_name).empty())
                 TmpVariable.remove(tmp_name);
         }
+        Log.Debug(String.format("there are %d tmp variables are popped in %d layout",recordList.size(),recordTmpVariable.size()+1));
     }
 
     private Variable GetTmpVariable(String name){
