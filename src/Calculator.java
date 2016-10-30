@@ -73,7 +73,8 @@ import java.util.regex.Pattern;
         /**
          * 此方法必须被重载，根据自己不同定义表达式做出不同计算实现，但返回内容可以是被计算器计算的表达式
          * @return 可被计算的表达式*/
-        String Solve() {
+        String Solve() throws Exception
+        {
             return rawText;
         }
 
@@ -182,7 +183,7 @@ import java.util.regex.Pattern;
             Function function=null;
             RequestVariable(String name,Calculator calculator1,Function function){super(name,null,calculator1);this.function=function;}
             @Override
-            String Solve() {
+            String Solve() throws Exception{
                 if(function!=null){
                     if(function.paramter.containsKey(Variable_name))
                         return function.paramter.get(Variable_name).Solve();
@@ -529,13 +530,8 @@ import java.util.regex.Pattern;
          * @return 计算结果
          * */
         @Override
-        String Solve() {
-            try {
+        String Solve() throws Exception{
                 return Solve(current_paramters);
-            } catch (Exception e) {
-                Log.Warning(e.getMessage());
-            }
-            return null;//// TODO: 2016/10/30 搞事情，Expression的Solve()将会throws Exception. 
         }
 
         boolean specialAbleStaticParseFunction=true;
@@ -599,7 +595,7 @@ import java.util.regex.Pattern;
         /**获取函数计算结果的数值对象
          * @return 计算结果后的数值对象
          * */
-        Digit GetSolveToDigit() {
+        Digit GetSolveToDigit()throws Exception{
             return new Digit(Solve());
         }
 
@@ -809,13 +805,20 @@ import java.util.regex.Pattern;
          * @return 变量的值
          * */
         @Override
-        String Solve() {
+        String Solve()throws Exception {
             return super.Solve();
         }
 
         @Override
         public String toString() {
-            return String.format("%s=%s", GetName(), Solve());
+            String rightValue;
+            try {
+                rightValue=Solve();
+            }catch (Exception e){
+                //Log.Debug(e.getMessage());
+                rightValue="null";
+            }
+            return String.format("%s=%s", GetName(),rightValue);
         }
 
         /**
@@ -1347,7 +1350,7 @@ import java.util.regex.Pattern;
     /**
      * 将表达式链中的函数都进行计算并将结果替换
      * */
-    private void ConverFunctionToDigit() throws FunctionNotFoundException, VariableNotFoundException {
+    private void ConverFunctionToDigit() throws FunctionNotFoundException, VariableNotFoundException,Exception {
         int position = 0;
         Expression node;
         Function function;

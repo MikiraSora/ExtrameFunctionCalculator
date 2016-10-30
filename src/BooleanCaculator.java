@@ -215,7 +215,7 @@ public class BooleanCaculator {
     /**
      * 将表达式链中的函数都进行计算并将结果替换
      * */
-    private void ConverFunctionToDigit() throws Calculator.FunctionNotFoundException, Calculator.VariableNotFoundException {
+    private void ConverFunctionToDigit() throws Calculator.FunctionNotFoundException, Calculator.VariableNotFoundException,Exception {
         int position = 0;
         Calculator.Expression node;
         Calculator.Function function;
@@ -269,7 +269,7 @@ public class BooleanCaculator {
      * @return 如果返回true则是布尔运算操作符，反之不是。
      * */
     private static boolean isBooleanOperator(Calculator.Symbol op){
-        return boolOperatorSymbol.contains(op.Solve());
+        return boolOperatorSymbol.contains(op.rawText);
     }
 
     /**

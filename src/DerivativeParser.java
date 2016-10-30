@@ -142,7 +142,7 @@ public class DerivativeParser {
             return null;
         }
 
-        ArrayList<Calculator.Expression> Cover(){
+        ArrayList<Calculator.Expression> Cover()throws Exception{
             ArrayList<Calculator.Expression> resultExpressionList=new ArrayList<>();
             if(powerExtraExpressionList==null)
             {
@@ -171,7 +171,7 @@ public class DerivativeParser {
         public ResultVariable(Calculator.Expression _extraExpression){extraExpression=_extraExpression;}
 
         @Override
-        String Solve() {
+        String Solve()throws Exception{
             return derivativeVariableName+extraExpression==null?"":String.format("((%s)-1)",extraExpression.Solve());
         }
     }
