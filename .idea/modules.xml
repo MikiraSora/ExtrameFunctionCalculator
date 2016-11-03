@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/Calculator.iml" filepath="$PROJECT_DIR$/Calculator.iml" />
       <module fileurl="file://$PROJECT_DIR$/Log/Log.iml" filepath="$PROJECT_DIR$/Log/Log.iml" />
       <module fileurl="file://$PROJECT_DIR$/LogSever/LogSever.iml" filepath="$PROJECT_DIR$/LogSever/LogSever.iml" />
+      <module fileurl="file://H:/SimpleExecutaleLanguage/SimpleExecutaleLanguage.iml" filepath="H:/SimpleExecutaleLanguage/SimpleExecutaleLanguage.iml" />
     </modules>
   </component>
 </project>

@@ -24,6 +24,17 @@ public class Test {
         c.DisEnable(Calculator.EnableType.PrecisionTruncation);
 
 
+        boolean lights[]=new boolean[100];
+        for(int i=0;i<100;i++){
+            lights[i]=true;
+            if(i%3==0)
+                lights[i]=!lights[i];
+            if(i%5==0)
+                lights[i]=!lights[i];
+        }
+
+
+
         while(true){
             try {
                 System.gc();

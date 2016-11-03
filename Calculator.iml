@@ -8,5 +8,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="Log" exported="" />
+    <orderEntry type="module" module-name="SimpleExecutaleLanguage" exported="" />
   </component>
 </module>

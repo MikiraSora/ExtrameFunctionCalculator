@@ -1,7 +1,7 @@
+import com.sun.tracing.dtrace.FunctionAttributes;
+import sun.font.Script;
 
-import com.sun.org.apache.bcel.internal.generic.PUSH;
-import javafx.geometry.Pos;
-
+import javax.print.DocFlavor;
 import java.io.*;
 import java.sql.Ref;
 import java.util.*;
@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
         /**
          * 表达式类型
          * */
-        enum ExpressionType {
+        public static enum ExpressionType {
             Function,
             Variable,
             Digit,
@@ -167,19 +167,51 @@ import java.util.regex.Pattern;
     }
 
 
+    public static class ScriptFunction extends Function{
+        String function_name=null;
+        Executor executor=null;
+        //Parser.Statement.Function reference_function=null;
+
+        public ScriptFunction(String function_name,String function_param,Executor executor,Calculator calculator){
+            function_type=FunctionType.Script_Function;
+            //this.function_name=function_name;
+            this.executor=executor;
+            request=executor.parser.FunctionTable.get(function_name).request;
+            setCalculator(calculator);
+        }
+
+        @Override
+        protected String Solve(String parameterList) throws Exception {
+            Parse(parameterList);
+            //// TODO: 2016/11/2 将ArrayList转化成Hashmap
+            ArrayList<Calculator.Expression> arrayList=new ArrayList<>();
+            for(HashMap.Entry<String,Variable> pair:paramter.entrySet())
+                arrayList.add(pair.getValue());
+            return executor.ExecuteFunction(function_name,arrayList);
+        }
+
+        @Override
+        String Solve() throws Exception {
+            return super.Solve();
+        }
+
+
+    }
+
 
     public static class Function extends Expression {
 
         enum FunctionType {
             Normal_Function,
             Reflection_Function,
+            Script_Function,
             Unknown
         }
 
         /**
          * 静态解析限定，间接变量
          * */
-        class RequestVariable extends Variable{
+        public class RequestVariable extends Variable{
             Function function=null;
             RequestVariable(String name,Calculator calculator1,Function function){super(name,null,calculator1);this.function=function;}
             @Override
@@ -200,7 +232,7 @@ import java.util.regex.Pattern;
         /**
          * 静态解析限定，间接函数
          * */
-        class RequestFunction extends Function{
+        static class RequestFunction extends Function{
             Function function=null;
             RequestFunction(String name,Calculator calculator1,Function function)throws Exception{super(null,calculator1);function_name=name;this.function=function;}
 
@@ -413,7 +445,7 @@ import java.util.regex.Pattern;
         /**
          * 函数参数解析类,函数声明时便创建，以便调用时辅助参数传入
          * */
-        class ParameterRequest {
+        static class ParameterRequest {
             /**
              * 参数列表
              * */
@@ -503,6 +535,7 @@ import java.util.regex.Pattern;
             }
             if (!paramter.isEmpty())
                 this.paramter.put(request.requestion_list.get(requestIndex), new ExpressionVariable(request.requestion_list.get(requestIndex), getCalculator().Solve(paramter), getCalculator()));
+
         }
 
         /**
@@ -2238,7 +2271,7 @@ import java.util.regex.Pattern;
         }
     }
 
-    /**测试区*/
+    /*临时变量*/
 
     Stack<ArrayList<String>> recordTmpVariable=new Stack<>();
     HashMap<String,Stack<Variable>> TmpVariable=new HashMap<>();
@@ -2275,4 +2308,24 @@ import java.util.regex.Pattern;
         return null;
     }
 
+    /**脚本**/
+
+    ArrayList<Executor> ScriptList=new ArrayList<>();
+
+    public int LinkScript(String file_path)throws Exception{
+        Executor executor=new Executor(this);
+        ScriptList.add(executor);
+
+        return ScriptList.size()-1;
+    }
+
+    public void DropScript(int id_handler)throws Exception{
+        Executor executor=ScriptList.get(id_handler);
+
+    }
+
+    public Variable GetVariableFormScripts(String variable_name){
+        return null;///// TODO: 2016/11/2
+    }
+    public ScriptFunction GetFunctionFromScript(){return null;}
 }
