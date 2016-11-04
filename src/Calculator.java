@@ -2309,7 +2309,7 @@ import java.util.regex.Pattern;
     }
 
     /**脚本**/
-
+/*
     ArrayList<Executor> ScriptList=new ArrayList<>();
 
     public int LinkScript(String file_path)throws Exception{
@@ -2328,4 +2328,7 @@ import java.util.regex.Pattern;
         return null;///// TODO: 2016/11/2
     }
     public ScriptFunction GetFunctionFromScript(){return null;}
+    */
+    private ScriptManager scriptManager=new ScriptManager(this);
+    public ScriptManager GetScriptManager(){return scriptManager;}
 }

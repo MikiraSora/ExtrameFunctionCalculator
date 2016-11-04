@@ -26,4 +26,10 @@ public class ScriptManager {
     public Executor GetExecutor(String package_name){
         return ScriptMap.get(package_name);
     }
+
+    public void ReferenceAdd(String package_name,Executor executor){
+        if(!ScriptMap.containsKey(package_name))
+            ScriptMap.put(package_name, executor);
+        ScriptMap.get(package_name).Link();
+    }
 }
