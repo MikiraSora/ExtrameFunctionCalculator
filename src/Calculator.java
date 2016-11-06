@@ -172,7 +172,7 @@ import java.util.regex.Pattern;
         Executor executor=null;
         //Parser.Statement.Function reference_function=null;
 
-        public ScriptFunction(String function_name,String function_param,Executor executor,Calculator calculator){
+        public ScriptFunction(String function_name,Executor executor,Calculator calculator){
             function_type=FunctionType.Script_Function;
             //this.function_name=function_name;
             this.executor=executor;
