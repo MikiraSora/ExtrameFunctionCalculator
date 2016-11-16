@@ -722,6 +722,16 @@ import java.util.regex.Pattern;
         static HashMap<String,Float> OperatorPrioty=new HashMap<>();
 
         /**
+         * 操作符对象缓存共享
+         * */
+        static HashMap<String, Symbol> SharedSymbolCache=new HashMap<>();
+        
+        /**
+         * 获取已缓存可共享的操作符
+         * */
+        static Symbol GetSymbolMayFromCache(String op){return SharedSymbolCache.containsKey(op)?SharedSymbolCache.get(op):new Symbol(op);}
+
+        /**
          * 操作符参数查询表
          * */
         static HashMap<String,Integer> OperatorRequestParamterCount=new HashMap<>();
@@ -741,6 +751,7 @@ import java.util.regex.Pattern;
             OperatorFunction.put(operatorSymbol,operatorFunction);
             OperatorPrioty.put(operatorSymbol,operatorPrioty);
             OperatorRequestParamterCount.put(operatorSymbol,requestParamterSize);
+            SharedSymbolCache.put(operatorSymbol,Symbol.GetSymbolMayFromCache(operatorSymbol));
         }
 
         /**
