@@ -21,7 +21,11 @@ public class ScriptManager {
         if(executor==null)
             throw new Exception("cant load script "+input_file+" file by unknown cause.");
         //ScriptMap.put(executor.GetPackageName(),executor);
-        ReferenceAdd(executor.GetPackageName(),executor);
+        if(ScriptMap.containsKey(executor.GetPackageName())){
+            Log.Debug(String.format("the package %s is exsited already.",executor.GetPackageName()));
+        }
+        else
+            ReferenceAdd(executor.GetPackageName(),executor);
         return executor.GetPackageName();
     }
 
@@ -59,7 +63,7 @@ public class ScriptManager {
 
     private void ReferenceAdd(String package_name,Executor executor){
         if(!ScriptMap.containsKey(package_name))
-            ScriptMap.put(package_name, executor);
+                    ScriptMap.put(package_name, executor);
         ScriptMap.get(package_name).Link();
         if(ableCacheReferenceFunction)
             for(Parser.Statement.Function function:executor.parser.FunctionTable.values())
@@ -102,4 +106,29 @@ public class ScriptManager {
     }
 
     public boolean ContainScript(String package_name){return ScriptMap.containsKey(package_name);}
+
+    public boolean ContainFunction(String function_name){
+        if(ableCacheReferenceFunction){
+            if(CacheFunctionMap.containsKey(function_name))
+            {
+                Parser.Statement.Function function=CacheFunctionMap.get(function_name);
+                return true;
+            }
+
+        }
+        for(Executor executor:ScriptMap.values())
+            if(executor.parser.FunctionTable.containsKey(function_name))
+                return true;
+        return false;
+    }
+
+    public Calculator.Variable RequestVariable(String name){
+        Calculator.Variable variable=null;
+        for(Executor executor : ScriptMap.values()){
+            variable=executor.GetVariable(name);
+            if(variable!=null)
+                return variable;
+        }
+        return null;
+    }
 }

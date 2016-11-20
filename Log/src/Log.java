@@ -367,12 +367,13 @@ public class Log {
         return caller.getMethodName();
     }
 
-    public static void Error(String message)throws Exception{
+    public static void Error(String message){
         Message msg = new Message(Message.Type.Exception,message,GetCallerMethodName());
-        LogWrite(msg);
+        try {
+            LogWrite(msg);
+        }catch (Exception e){return;}
         Exception exception=new Exception(message);
         exception.setStackTrace(currentThread().getStackTrace());
-        throw exception;
     }
 
     public static void ExceptionError(Exception e)throws Exception{

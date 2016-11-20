@@ -174,7 +174,7 @@ import java.util.regex.Pattern;
 
         public ScriptFunction(String function_name,Executor executor,Calculator calculator){
             function_type=FunctionType.Script_Function;
-            //this.function_name=function_name;
+            this.function_name=function_name;
             this.executor=executor;
             request=executor.parser.FunctionTable.get(function_name).request;
             setCalculator(calculator);
@@ -1113,7 +1113,8 @@ import java.util.regex.Pattern;
     enum EnableType{
         FunctionStaticParse,
         ExpressionOptimize,
-        PrecisionTruncation
+        PrecisionTruncation,
+        ScriptFunctionCache
         }
 
     /**
@@ -1130,6 +1131,9 @@ import java.util.regex.Pattern;
                 break;
             case PrecisionTruncation:
                 Digit.IsPrecisionTruncation=true;
+                break;
+            case ScriptFunctionCache:
+                GetScriptManager().SetCacheReferenceFunction(true);
                 break;
         }
         Log.Debug(String.format("开启功能:%s",enableType.toString()));
@@ -1150,6 +1154,9 @@ import java.util.regex.Pattern;
             case PrecisionTruncation:
                 Digit.IsPrecisionTruncation=false;
                 break;
+            case ScriptFunctionCache:
+                GetScriptManager().SetCacheReferenceFunction(false);
+                break;
         }
         Log.Debug(String.format("关闭功能:%s",enableType.toString()));
     }
@@ -1165,9 +1172,10 @@ import java.util.regex.Pattern;
             function.setCalculator(this);
             return function;
         }
-        if (!function_table.containsKey(name))
-            Log.ExceptionError( new FunctionNotFoundException(name));
-        return function_table.get(name);
+        if (function_table.containsKey(name))
+            return function_table.get(name);
+        return GetScriptManager().RequestFunction(name);
+        //return function_table.get(name);
     }
 
     /**
@@ -1182,9 +1190,13 @@ import java.util.regex.Pattern;
         if(raw_variable_table.containsKey(name)){
             return raw_variable_table.get(name);
         }
-        if (!variable_table.containsKey(name))
-            Log.ExceptionError( new VariableNotFoundException(name));
-        return variable_table.get(name);
+        if (variable_table.containsKey(name))
+            return variable_table.get(name);
+        tmp_variable=GetScriptManager().RequestVariable(name);
+        if(tmp_variable!=null)
+            return tmp_variable;
+        Log.ExceptionError( new VariableNotFoundException(name));
+        return null;
     }
 
     /**
@@ -1849,6 +1861,10 @@ import java.util.regex.Pattern;
                 result = DumpInfo(paramter);
                 break;
             }
+            case "load_script":{
+                result=LoadScriptFile(paramter);
+                break;
+            }
             case "help": {
                 result = CalculatorHelper.GetHelp();
                 break;
@@ -2007,6 +2023,8 @@ import java.util.regex.Pattern;
         if (raw_function_table.containsKey(name))
             return true;
         if (function_table.containsKey(name))
+            return true;
+        if(GetScriptManager().ContainFunction(name))
             return true;
         return false;
     }
@@ -2320,6 +2338,16 @@ import java.util.regex.Pattern;
     }
 
     /**脚本**/
+
+    public String LoadScriptFile(String file_path)throws Exception{
+        try{
+            GetScriptManager().LoadScript(file_path);
+        }catch (Exception e){
+            Log.Error(e.getMessage());
+        }
+        return "loaded scriptfile successfully!";
+    }
+
 /*
     ArrayList<Executor> ScriptList=new ArrayList<>();
 
