@@ -1192,7 +1192,7 @@ import java.util.regex.Pattern;
         }
         if (variable_table.containsKey(name))
             return variable_table.get(name);
-        tmp_variable=GetScriptManager().RequestVariable(name);
+        tmp_variable=GetScriptManager().RequestVariable(name,null);
         if(tmp_variable!=null)
             return tmp_variable;
         Log.ExceptionError( new VariableNotFoundException(name));
@@ -2349,6 +2349,7 @@ import java.util.regex.Pattern;
             GetScriptManager().LoadScript(file_path);
         }catch (Exception e){
             Log.Error(e.getMessage());
+            return "loaded scriptfile failed!";
         }
         return "loaded scriptfile successfully!";
     }
