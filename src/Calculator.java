@@ -2339,6 +2339,11 @@ import java.util.regex.Pattern;
 
     /**脚本**/
 
+    /**
+     * 加载脚本文件(从磁盘上加载)
+     * @param file_path 脚本文件路径，比如"g:\stdmath.cml"
+     * @return 加载成功的话就会返回成功提示字符串
+     */
     public String LoadScriptFile(String file_path)throws Exception{
         try{
             GetScriptManager().LoadScript(file_path);
@@ -2348,26 +2353,10 @@ import java.util.regex.Pattern;
         return "loaded scriptfile successfully!";
     }
 
-/*
-    ArrayList<Executor> ScriptList=new ArrayList<>();
-
-    public int LinkScript(String file_path)throws Exception{
-        Executor executor=new Executor(this);
-        ScriptList.add(executor);
-
-        return ScriptList.size()-1;
-    }
-
-    public void DropScript(int id_handler)throws Exception{
-        Executor executor=ScriptList.get(id_handler);
-
-    }
-
-    public Variable GetVariableFormScripts(String variable_name){
-        return null;///// TODO: 2016/11/2
-    }
-    public ScriptFunction GetFunctionFromScript(){return null;}
-    */
     private ScriptManager scriptManager=new ScriptManager(this);
+
+    /**
+     * 获取本计算器的当前脚本管理器
+     * */
     public ScriptManager GetScriptManager(){return scriptManager;}
 }
