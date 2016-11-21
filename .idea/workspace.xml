@@ -10,11 +10,8 @@
       <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Executor$ReturnSignal.class" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Executor$Signal.class" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Executor.class" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/Test.class" afterPath="$PROJECT_DIR$/out/production/Calculator/Test.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Test.java" afterPath="$PROJECT_DIR$/src/Test.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/CalculatorHelper.java" afterPath="$PROJECT_DIR$/src/CalculatorHelper.java" />
       <change type="MODIFICATION" beforePath="H:/SimpleExecutaleLanguage/src/Executor.java" afterPath="H:/SimpleExecutaleLanguage/src/Executor.java" />
-      <change type="MODIFICATION" beforePath="H:/SimpleExecutaleLanguage/src/Parser.java" afterPath="H:/SimpleExecutaleLanguage/src/Parser.java" />
     </list>
     <ignored path="Calculator.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -39,7 +36,7 @@
       <file leaf-file-name="Calculator.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Calculator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
+            <state relative-caret-position="210">
               <caret line="189" column="0" selection-start-line="189" selection-start-column="0" selection-end-line="189" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -48,11 +45,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Log.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Log/src/Log.java">
+      <file leaf-file-name="CalculatorHelper.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/CalculatorHelper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6239">
-              <caret line="388" column="30" selection-start-line="388" selection-start-column="30" selection-end-line="388" selection-end-column="30" />
+            <state relative-caret-position="-322">
+              <caret line="573" column="50" selection-start-line="573" selection-start-column="50" selection-end-line="573" selection-end-column="50" />
               <folding />
             </state>
           </provider>
@@ -61,7 +58,7 @@
       <file leaf-file-name="ScriptManager.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ScriptManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-616">
+            <state relative-caret-position="-67">
               <caret line="154" column="19" selection-start-line="154" selection-start-column="19" selection-end-line="154" selection-end-column="19" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -83,8 +80,8 @@
       <file leaf-file-name="Executor.java" pinned="false" current-in-tab="true">
         <entry file="file://H:/SimpleExecutaleLanguage/src/Executor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="211" column="100" selection-start-line="211" selection-start-column="100" selection-end-line="211" selection-end-column="100" />
+            <state relative-caret-position="412">
+              <caret line="330" column="28" selection-start-line="330" selection-start-column="28" selection-end-line="330" selection-end-column="28" />
               <folding />
             </state>
           </provider>
@@ -151,7 +148,6 @@
         <option value="$PROJECT_DIR$/src/Function.java" />
         <option value="$PROJECT_DIR$/src/RawFunctionDeclareHelper.java" />
         <option value="$PROJECT_DIR$/src/CalculatorOptimizer.java" />
-        <option value="$PROJECT_DIR$/src/CalculatorHelper.java" />
         <option value="$PROJECT_DIR$/LogSever/src/LogServer.java" />
         <option value="$PROJECT_DIR$/src/DerivativeParser.java" />
         <option value="$PROJECT_DIR$/src/BooleanCaculator.java" />
@@ -162,6 +158,7 @@
         <option value="$PROJECT_DIR$/src/ScriptManager.java" />
         <option value="$PROJECT_DIR$/src/Test.java" />
         <option value="H:/SimpleExecutaleLanguage/src/Parser.java" />
+        <option value="$PROJECT_DIR$/src/CalculatorHelper.java" />
         <option value="H:/SimpleExecutaleLanguage/src/Executor.java" />
       </list>
     </option>
@@ -590,7 +587,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
     <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286334" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -720,18 +717,6 @@
           <line>133</line>
           <properties />
           <option name="timeStamp" value="241" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://H:/SimpleExecutaleLanguage/src/Executor.java</url>
-          <line>161</line>
-          <properties />
-          <option name="timeStamp" value="243" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://H:/SimpleExecutaleLanguage/src/Executor.java</url>
-          <line>211</line>
-          <properties />
-          <option name="timeStamp" value="244" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
@@ -964,13 +949,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/CalculatorHelper.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="561" column="149" selection-start-line="561" selection-start-column="149" selection-end-line="561" selection-end-column="149" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://D:/Program Files/Java/jdk1.8.0_101/src.zip!/java/io/FileInputStream.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="188">
@@ -985,25 +963,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Log/src/Log.java">
+    <entry file="file://H:/SimpleExecutaleLanguage/src/Parser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6239">
-          <caret line="388" column="30" selection-start-line="388" selection-start-column="30" selection-end-line="388" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Test.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="24" column="10" selection-start-line="24" selection-start-column="10" selection-end-line="24" selection-end-column="10" />
+        <state relative-caret-position="493">
+          <caret line="630" column="83" selection-start-line="630" selection-start-column="83" selection-end-line="630" selection-end-column="83" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Calculator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
+        <state relative-caret-position="210">
           <caret line="189" column="0" selection-start-line="189" selection-start-column="0" selection-end-line="189" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -1011,20 +981,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ScriptManager.java">
+    <entry file="file://$PROJECT_DIR$/src/Test.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-616">
-          <caret line="154" column="19" selection-start-line="154" selection-start-column="19" selection-end-line="154" selection-end-column="19" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://H:/SimpleExecutaleLanguage/src/Parser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="630" column="83" selection-start-line="630" selection-start-column="83" selection-end-line="630" selection-end-column="83" />
+        <state relative-caret-position="374">
+          <caret line="24" column="10" selection-start-line="24" selection-start-column="10" selection-end-line="24" selection-end-column="10" />
           <folding />
         </state>
       </provider>
@@ -1045,10 +1005,36 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Log/src/Log.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="596">
+          <caret line="388" column="30" selection-start-line="388" selection-start-column="30" selection-end-line="388" selection-end-column="30" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/CalculatorHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-322">
+          <caret line="573" column="50" selection-start-line="573" selection-start-column="50" selection-end-line="573" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ScriptManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-67">
+          <caret line="154" column="19" selection-start-line="154" selection-start-column="19" selection-end-line="154" selection-end-column="19" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://H:/SimpleExecutaleLanguage/src/Executor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="211" column="100" selection-start-line="211" selection-start-column="100" selection-end-line="211" selection-end-column="100" />
+        <state relative-caret-position="412">
+          <caret line="330" column="28" selection-start-line="330" selection-start-column="28" selection-end-line="330" selection-end-column="28" />
           <folding />
         </state>
       </provider>

@@ -569,6 +569,60 @@ public class CalculatorHelper {
                 return out;
             }
         });
+
+         /*loop_exe_with
+        * 以步长step,从min到max循环调用Execute(command),无任何内置变量
+        * 注意command是要执行的语句，如set a=1
+        * */
+        Calculator.RegisterRawFunction("loop_with(step,min,max,command)", new Calculator.ReflectionFunction.OnReflectionFunction() {
+            @Override
+            public HashMap<String, Calculator.Variable> onParseParamter(String paramter, Calculator.Function.ParameterRequest request, Calculator calculator)throws Exception{
+                char c;
+                int requestIndex = 0;
+                HashMap<String, Calculator.Variable> variableHashMap=new HashMap<String, Calculator.Variable>();
+                Stack<Integer> BracketStack = new Stack<>();
+                String paramterString = new String();
+                for (int pos = 0; pos < paramter.length(); pos++) {
+                    c = paramter.charAt(pos);
+                    if (c == '(') {
+                        BracketStack.push(pos);
+                    } else if (c == ')') {
+                        if (!BracketStack.isEmpty())
+                            BracketStack.pop();
+                        else
+                            throw new Exception("Not found a pair of bracket what defining a expression");
+                    }
+
+                    if (c == ',' && BracketStack.isEmpty()) {
+                        String requestParamterName = request.GetParamterName(requestIndex++);
+                        variableHashMap.put(requestParamterName, requestParamterName.equals("command")?new Calculator.ExpressionVariable(requestParamterName, paramterString, calculator):new Calculator.Variable(requestParamterName, paramterString, calculator));
+                        paramterString = new String();
+                    } else {
+                        paramterString += c;
+                    }
+                }
+                if (!paramter.isEmpty())
+                    variableHashMap.put(request.GetParamterName(requestIndex), new Calculator.ExpressionVariable(request.GetParamterName(requestIndex), (paramterString), calculator));
+                return variableHashMap;
+            }
+
+            @Override
+            public String onReflectionFunction(HashMap<String, Calculator.Variable> parameter, Calculator calculator) throws Exception {
+                //double x=parameter.get("x").GetDigit().GetDouble();
+                double step=parameter.get("step").GetDigit().GetDouble();
+                double min=parameter.get("min").GetDigit().GetDouble();
+                double max=parameter.get("max").GetDigit().GetDouble();
+                String command=((Calculator.ExpressionVariable)parameter.get("command")).GetExpreesion();
+                //Calculator.Function function=new Calculator.Function(String.format("tmp_execute(_index,_step,_min,_max,_out)=%s",expr),calculator);//todo 可优化
+                //function.specialAbleStaticParseFunction=false;
+                String out="0";
+                for(double i=min;i<=max;i+=step){
+//                    calculator.GetFunction("loop_with").paramter.get("x").rawText=Double.toString(i);
+                    out=calculator.Execute(command);
+                }
+                return "0";
+            }
+        });
 /*
         Calculator.RegisterRawFunction("complex_add(a_a,a_i,b_a,b_i)", new Calculator.ReflectionFunction.OnReflectionFunction(){
             @Override
