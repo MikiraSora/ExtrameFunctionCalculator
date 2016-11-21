@@ -22,7 +22,7 @@ public class Test {
         c.DisEnable(Calculator.EnableType.ExpressionOptimize);
         c.Enable(Calculator.EnableType.FunctionStaticParse);
         c.Enable(Calculator.EnableType.PrecisionTruncation);
-        c.DisEnable(Calculator.EnableType.ScriptFunctionCache);
+        c.Enable(Calculator.EnableType.ScriptFunctionCache);
 
 
         boolean lights[]=new boolean[100];

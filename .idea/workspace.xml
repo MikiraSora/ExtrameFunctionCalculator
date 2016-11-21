@@ -2,33 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ddeeca72-93f9-42ce-8261-e5e9304e1aec" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator.class" afterPath="$PROJECT_DIR$/out/production/Calculator/Calculator.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/ScriptManager.class" afterPath="$PROJECT_DIR$/out/production/Calculator/ScriptManager.class" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Executor$3.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Executor$4.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Executor$5.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Executor$6.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Executor$EndfunctionSignal.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Executor$ReturnSignal.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Executor$Signal.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Executor.class" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/Test.class" afterPath="$PROJECT_DIR$/out/production/Calculator/Test.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Executor$6.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Executor$6.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Executor.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Executor.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement$Goto.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement$Goto.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement$Return.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement$Return.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement$Set.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement$Set.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Condition$ConditionType.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Condition$ConditionType.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Condition$Else.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Condition$Else.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Condition$EndIf.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Condition$EndIf.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Condition$If.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Condition$If.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Condition$Then.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Condition$Then.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Condition.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Condition.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Label.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Label.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Loop$Break.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Loop$Break.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Loop$Continue.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Loop$Continue.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Loop$Endloop.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Loop$Endloop.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Loop$LoopBegin.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Loop$LoopBegin.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Loop$LoopType.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Loop$LoopType.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Loop.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Loop.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$SymbolType.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$SymbolType.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Calculator.java" afterPath="$PROJECT_DIR$/src/Calculator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ScriptManager.java" afterPath="$PROJECT_DIR$/src/ScriptManager.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Test.java" afterPath="$PROJECT_DIR$/src/Test.java" />
       <change type="MODIFICATION" beforePath="H:/SimpleExecutaleLanguage/src/Executor.java" afterPath="H:/SimpleExecutaleLanguage/src/Executor.java" />
       <change type="MODIFICATION" beforePath="H:/SimpleExecutaleLanguage/src/Parser.java" afterPath="H:/SimpleExecutaleLanguage/src/Parser.java" />
@@ -56,8 +39,8 @@
       <file leaf-file-name="Calculator.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Calculator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="336">
-              <caret line="2350" column="0" selection-start-line="2350" selection-start-column="0" selection-end-line="2350" selection-end-column="0" />
+            <state relative-caret-position="180">
+              <caret line="189" column="0" selection-start-line="189" selection-start-column="0" selection-end-line="189" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -78,8 +61,8 @@
       <file leaf-file-name="ScriptManager.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/ScriptManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="197">
-              <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+            <state relative-caret-position="-616">
+              <caret line="154" column="19" selection-start-line="154" selection-start-column="19" selection-end-line="154" selection-end-column="19" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -90,8 +73,8 @@
       <file leaf-file-name="Test.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Test.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="39" column="18" selection-start-line="39" selection-start-column="18" selection-end-line="39" selection-end-column="18" />
+            <state relative-caret-position="374">
+              <caret line="24" column="10" selection-start-line="24" selection-start-column="10" selection-end-line="24" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -100,8 +83,18 @@
       <file leaf-file-name="Executor.java" pinned="false" current-in-tab="true">
         <entry file="file://H:/SimpleExecutaleLanguage/src/Executor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="129">
-              <caret line="49" column="35" selection-start-line="49" selection-start-column="35" selection-end-line="49" selection-end-column="35" />
+            <state relative-caret-position="390">
+              <caret line="211" column="100" selection-start-line="211" selection-start-column="100" selection-end-line="211" selection-end-column="100" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Loader.java" pinned="false" current-in-tab="false">
+        <entry file="file://H:/SimpleExecutaleLanguage/src/Loader.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="510">
+              <caret line="33" column="86" selection-start-line="33" selection-start-column="86" selection-end-line="33" selection-end-column="86" />
               <folding />
             </state>
           </provider>
@@ -110,7 +103,7 @@
       <file leaf-file-name="BooleanCaculator.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/BooleanCaculator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-262">
+            <state relative-caret-position="17">
               <caret line="186" column="0" selection-start-line="186" selection-start-column="0" selection-end-line="186" selection-end-column="0" />
               <folding />
             </state>
@@ -120,8 +113,8 @@
       <file leaf-file-name="Parser.java" pinned="false" current-in-tab="false">
         <entry file="file://H:/SimpleExecutaleLanguage/src/Parser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="382" column="34" selection-start-line="382" selection-start-column="34" selection-end-line="382" selection-end-column="34" />
+            <state relative-caret-position="493">
+              <caret line="630" column="83" selection-start-line="630" selection-start-column="83" selection-end-line="630" selection-end-column="83" />
               <folding />
             </state>
           </provider>
@@ -165,9 +158,9 @@
         <option value="H:/SimpleExecutaleLanguage/src/Test.java" />
         <option value="H:/SimpleExecutaleLanguage/out/production/SimpleExecutaleLanguage/Executor.class" />
         <option value="$PROJECT_DIR$/Log/src/Log.java" />
-        <option value="$PROJECT_DIR$/src/Test.java" />
         <option value="$PROJECT_DIR$/src/Calculator.java" />
         <option value="$PROJECT_DIR$/src/ScriptManager.java" />
+        <option value="$PROJECT_DIR$/src/Test.java" />
         <option value="H:/SimpleExecutaleLanguage/src/Parser.java" />
         <option value="H:/SimpleExecutaleLanguage/src/Executor.java" />
       </list>
@@ -598,7 +591,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286334" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32804233" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -606,14 +599,14 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32910052" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25813448" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2570499" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329718" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1391258" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Memory View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="JProfiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32910052" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1705757" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1705757" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3546638" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
@@ -700,12 +693,6 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Calculator.java</url>
-          <line>1656</line>
-          <properties />
-          <option name="timeStamp" value="200" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Calculator.java</url>
           <line>554</line>
           <properties />
           <option name="timeStamp" value="206" />
@@ -729,16 +716,28 @@
           <option name="timeStamp" value="223" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/ScriptManager.java</url>
-          <line>26</line>
+          <url>file://H:/SimpleExecutaleLanguage/src/Executor.java</url>
+          <line>133</line>
           <properties />
-          <option name="timeStamp" value="236" />
+          <option name="timeStamp" value="241" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://H:/SimpleExecutaleLanguage/src/Executor.java</url>
+          <line>161</line>
+          <properties />
+          <option name="timeStamp" value="243" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://H:/SimpleExecutaleLanguage/src/Executor.java</url>
+          <line>211</line>
+          <properties />
+          <option name="timeStamp" value="244" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="237" />
+      <option name="time" value="245" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -747,16 +746,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/Calculator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15789">
-          <caret line="831" column="28" selection-start-line="831" selection-start-column="28" selection-end-line="831" selection-end-column="28" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/RawFunctionDeclareHelper.java" />
     <entry file="file://$PROJECT_DIR$/src/Test.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -1004,26 +993,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/BooleanCaculator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-262">
-          <caret line="186" column="0" selection-start-line="186" selection-start-column="0" selection-end-line="186" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Test.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="39" column="18" selection-start-line="39" selection-start-column="18" selection-end-line="39" selection-end-column="18" />
+        <state relative-caret-position="374">
+          <caret line="24" column="10" selection-start-line="24" selection-start-column="10" selection-end-line="24" selection-end-column="10" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Calculator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="2350" column="0" selection-start-line="2350" selection-start-column="0" selection-end-line="2350" selection-end-column="0" />
+        <state relative-caret-position="180">
+          <caret line="189" column="0" selection-start-line="189" selection-start-column="0" selection-end-line="189" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1032,8 +1013,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/ScriptManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="197">
-          <caret line="27" column="0" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
+        <state relative-caret-position="-616">
+          <caret line="154" column="19" selection-start-line="154" selection-start-column="19" selection-end-line="154" selection-end-column="19" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1042,16 +1023,32 @@
     </entry>
     <entry file="file://H:/SimpleExecutaleLanguage/src/Parser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="382" column="34" selection-start-line="382" selection-start-column="34" selection-end-line="382" selection-end-column="34" />
+        <state relative-caret-position="493">
+          <caret line="630" column="83" selection-start-line="630" selection-start-column="83" selection-end-line="630" selection-end-column="83" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/BooleanCaculator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="186" column="0" selection-start-line="186" selection-start-column="0" selection-end-line="186" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://H:/SimpleExecutaleLanguage/src/Loader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="33" column="86" selection-start-line="33" selection-start-column="86" selection-end-line="33" selection-end-column="86" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://H:/SimpleExecutaleLanguage/src/Executor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="129">
-          <caret line="49" column="35" selection-start-line="49" selection-start-column="35" selection-end-line="49" selection-end-column="35" />
+        <state relative-caret-position="390">
+          <caret line="211" column="100" selection-start-line="211" selection-start-column="100" selection-end-line="211" selection-end-column="100" />
           <folding />
         </state>
       </provider>
