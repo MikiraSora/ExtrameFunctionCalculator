@@ -37,7 +37,7 @@ public class Test {
 
 
         while(true){
-           //try {
+           try {
                 System.gc();
                 System.out.println("input : ");
                 Scanner input = new Scanner(System.in);
@@ -45,10 +45,10 @@ public class Test {
                 time=System.nanoTime();
                 System.out.print(c.Execute(expression));
                 System.out.print(String.format("(用时 %f ms)\n",(System.nanoTime()-time)/1000000.0f));
-            //}catch (Exception e){
+            }catch (Exception e){
               //  throw e;
-                //System.out.println("execute command error :"+e.getMessage());
-            //}
+                System.out.println("execute command error :"+e.getMessage());
+            }
         }
 /*
         System.out.println(String.format("test start!,calculate solve 4*1*6*(0/1+4*(1*0*1))*6+0*88888/9999"));

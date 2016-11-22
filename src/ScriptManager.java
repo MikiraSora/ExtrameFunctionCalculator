@@ -27,12 +27,14 @@ public class ScriptManager {
         Executor executor=new Executor(GetCalculator());
         executor.InitFromFile(input_file);
         if(executor==null)
-            throw new Exception("cant load script "+input_file+" file by unknown cause.");
+            throw new Exception("cant load script "+input_file+" file by unknown cause.");//// TODO: 2016/11/23 可以弄成IOException
         if(ScriptMap.containsKey(executor.GetPackageName())){
             Log.Debug(String.format("the package %s is exsited already.",executor.GetPackageName()));
         }
+        ReferenceAdd(executor.GetPackageName(),executor);
+        /*
         else
-            ReferenceAdd(executor.GetPackageName(),executor);
+            ReferenceAdd(executor.GetPackageName(),executor);*/
         return executor.GetPackageName();
     }
 
@@ -44,6 +46,7 @@ public class ScriptManager {
         if (executor==null)
             return;
         ReferenceAdd(executor.GetPackageName(),executor);
+        Log.Debug(String.format("%s is add reference count,now is %d",executor.GetPackageName(),executor.GetReferenceCount()));
     }
 
     /**
@@ -55,15 +58,20 @@ public class ScriptManager {
             return;
         Executor executor=ScriptMap.get(package_name);
         executor.Drop();
+        Log.Debug(String.format("%s increase reference count.now is %d",executor.GetPackageName(),executor.GetReferenceCount()));
         if(!executor.IsNonReferenced())
             return;
+
+        Log.Debug(String.format("%s unloaded",executor.GetPackageName()));
 
         if(ableCacheReferenceFunction){
             for(Parser.Statement.Function function:executor.parser.FunctionTable.values()){
                 if(!CacheFunctionMap.containsKey(function.GetFunctionName()))
                     continue;
-                if(CacheFunctionMap.get(function.GetFunctionName()).reference_parser.GetExecutor().GetPackageName().equals(executor.GetPackageName()))
+                if(CacheFunctionMap.get(function.GetFunctionName()).reference_parser.GetExecutor().GetPackageName().equals(executor.GetPackageName())){
                     CacheFunctionMap.remove(function.GetFunctionName());
+                    Log.Debug(String.format("%s::%s() was unresignster from cache",executor.GetPackageName(),function.GetFunctionName()));
+                }
             }
         }
 
@@ -87,9 +95,12 @@ public class ScriptManager {
      * @param executor 要被绑定脚本的执行器
      * */
     private void ReferenceAdd(String package_name,Executor executor){
-        if(!ScriptMap.containsKey(package_name))
-                    ScriptMap.put(package_name, executor);
-        ScriptMap.get(package_name).Link();
+        if(!ScriptMap.containsKey(package_name)){
+            ScriptMap.put(package_name, executor);
+            Log.Debug(String.format("%s is new script ,load to ScriptMap",package_name));
+        }
+        //ScriptMap.get(package_name).Link();
+        executor.Link();
         if(ableCacheReferenceFunction)
             for(Parser.Statement.Function function:executor.parser.FunctionTable.values())
                 if (!CacheFunctionMap.containsKey(function.GetFunctionName()))
@@ -178,21 +189,21 @@ public class ScriptManager {
         if(good_executor!=null) {
             variable = good_executor.GetVariable(name);
             if (variable != null){
-                Log.Debug(String.format("got script variable <%s> from paramester executor <%s>.",name,good_executor.GetPackageName()));
+                //Log.Debug(String.format("got script variable <%s> from paramester executor <%s>.",name,good_executor.GetPackageName()));
                 return variable;
             }
         }
         if(!ExecutingExecutorStack.empty()){
             variable = GetCurrentExecutor().GetVariable(name);
             if (variable != null){
-                Log.Debug(String.format("got script variable <%s> from current executor <%s>.",name,GetCurrentExecutor().GetPackageName()));
+                //Log.Debug(String.format("got script variable <%s> from current executor <%s>.",name,GetCurrentExecutor().GetPackageName()));
                 return variable;
             }
         }
         for(Executor executor : ScriptMap.values()){
             variable=executor.GetVariable(name);
             if(variable!=null){
-                Log.Debug(String.format("got script variable <%s> from one executor <%s> in all executons collection .",name,executor.GetPackageName()));
+                //Log.Debug(String.format("got script variable <%s> from one executor <%s> in all executons collection .",name,executor.GetPackageName()));
                 return variable;
             }
         }

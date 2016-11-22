@@ -1780,6 +1780,7 @@ import java.util.regex.Pattern;
 
     /**
      * 优化表达式开关
+     * @deprecated
      * @param sw 开关文本，格式"< 开关状态 open|close > < 优化等级 >0 >",例如"true 2""false""true 999"
      * @return 调用结果
      * */
@@ -1819,8 +1820,17 @@ import java.util.regex.Pattern;
      * @return 执行结果
      * */
     public String Execute(String text) throws Exception {
-        Log.Debug(String.format("Try Execute : %s",text));
         Clear();
+        return ExecuteEx(text);
+    }
+
+    String ScriptCallExecute(String text)throws Exception{
+        return ExecuteEx(text);
+    }
+
+    private String ExecuteEx(String text)throws Exception{
+        Log.Debug(String.format("Try Execute : %s",text));
+        //Clear(); //// TODO: 2016/11/22 此处存在和脚本语言的Call部分功能起到致命冲突，stdmath2::getCall().
         if (text.isEmpty())
             Log.ExceptionError( new Exception("empty text to execute"));
         char c;
@@ -1899,10 +1909,11 @@ import java.util.regex.Pattern;
                 result=Save(type,output_path);
                 break;
             }
+            /*被DisEnable()/Enable()代替
             case "optimize":{
                 result=Optimize(paramter);
                 break;
-            }
+            }*/
             case "delete":{
                 String type="",name="";
                 for (int position = 0; position < paramter.length(); position++) {
@@ -1921,6 +1932,7 @@ import java.util.regex.Pattern;
                 Log.ExceptionError( new Exception(String.format("unknown command \"%s\"", executeType)));
             }
         }
+        //Clear();//// TODO: 2016/11/22 尝试放到这里 ,....看来不行
         return result;
     }
 
