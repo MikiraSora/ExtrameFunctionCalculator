@@ -1867,6 +1867,11 @@ import java.util.regex.Pattern;
                 result = DumpInfo(paramter);
                 break;
             }
+            case "log":{
+                LogMessage(paramter);
+                result="";
+                break;
+            }
             case "test": {
                 result = DumpInfo(paramter);
                 break;
@@ -1881,6 +1886,10 @@ import java.util.regex.Pattern;
             }
             case "load":{
                 result = Load(paramter);
+                break;
+            }
+            case "unload_script":{
+                result = UnloadScriptFile(paramter);
                 break;
             }
             case "clear":{
@@ -2366,10 +2375,24 @@ import java.util.regex.Pattern;
         return "loaded scriptfile successfully!";
     }
 
+    public String UnloadScriptFile(String package_name)throws Exception{
+        try{
+            GetScriptManager().UnloadScript(package_name);
+        }catch (Exception e){
+            return "unloaded scriptfile failed!";
+        }
+        return "unloaded scriptfile successfully!";
+    }
+
     private ScriptManager scriptManager=new ScriptManager(this);
 
     /**
      * 获取本计算器的当前脚本管理器
      * */
     public ScriptManager GetScriptManager(){return scriptManager;}
+
+    /***/
+    public void LogMessage(String context){
+        Log.User(context);
+    }
 }

@@ -58,7 +58,7 @@ public class ScriptManager {
             return;
         Executor executor=ScriptMap.get(package_name);
         executor.Drop();
-        Log.Debug(String.format("%s increase reference count.now is %d",executor.GetPackageName(),executor.GetReferenceCount()));
+        Log.Debug(String.format("%s decrease reference count.now is %d",executor.GetPackageName(),executor.GetReferenceCount()));
         if(!executor.IsNonReferenced())
             return;
 
@@ -78,6 +78,8 @@ public class ScriptManager {
         for(Executor executor1:executor.recordIncludeExecutor){
             UnloadScript(executor1.GetPackageName());
         }
+
+        ScriptMap.remove(package_name);
     }
 
     /**
@@ -99,7 +101,6 @@ public class ScriptManager {
             ScriptMap.put(package_name, executor);
             Log.Debug(String.format("%s is new script ,load to ScriptMap",package_name));
         }
-        //ScriptMap.get(package_name).Link();
         executor.Link();
         if(ableCacheReferenceFunction)
             for(Parser.Statement.Function function:executor.parser.FunctionTable.values())

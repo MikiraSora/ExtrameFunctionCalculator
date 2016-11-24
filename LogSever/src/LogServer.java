@@ -1,3 +1,8 @@
+import com.sun.jna.Native;
+import com.sun.jna.win32.StdCallLibrary;
+import print.Printer;
+import print.color.Ansi;
+import print.color.ColoredPrinter;
 import sun.rmi.runtime.Log;
 
 import java.io.*;
@@ -14,10 +19,40 @@ class LogServerTest{
 
     private static String SegmentationMarker="#@#seg_marker#%#";
 
+    static ColoredPrinter debug_cp,exception_cp,warning_cp,user_cp,default_cp;
+
+    static {
+        try {
+            default_cp=new ColoredPrinter.Builder(0,false).foreground(Ansi.FColor.NONE).build();
+            debug_cp = new ColoredPrinter.Builder(0,false).foreground(Ansi.FColor.WHITE).build();
+            exception_cp = new ColoredPrinter.Builder(0,false).foreground(Ansi.FColor.YELLOW).background(Ansi.BColor.RED).attribute(Ansi.Attribute.BOLD).build();
+            warning_cp = new ColoredPrinter.Builder(0,false).foreground(Ansi.FColor.WHITE).background(Ansi.BColor.YELLOW).build();
+            user_cp=new ColoredPrinter.Builder(0,false).foreground(Ansi.FColor.GREEN).attribute(Ansi.Attribute.BOLD).build();
+        }catch (Exception e){
+            //nothing to do
+        }
+    }
+
+    static void PrintMessage(String message){
+        String context=message.substring(1);
+        switch (message.charAt(0)){
+            case 'U':{user_cp.println(context);break;}
+            case 'D':{debug_cp.println(context);break;}
+            case 'W':{warning_cp.println(context);break;}
+            case 'E':{exception_cp.println(context);break;}
+            default:{default_cp.println(context);break;}
+        }
+    }
+
+
     public static void main(String[] args){
-
-
-
+/*
+        ColoredPrinter cp = new ColoredPrinter.Builder(1, false)
+                .foreground(Ansi.FColor.WHITE).background(Ansi.BColor.BLUE)   //setting format
+                .build();
+        cp.clear();
+        cp.print(cp.getDateTime(), Ansi.Attribute.NONE, Ansi.FColor.CYAN, Ansi.BColor.BLACK);
+*/
         LogServer logServer=new LogServer(2857);
 
         logServer.SetOnReceiveMessage(new LogServer.OnReceiveMessage() {
@@ -25,29 +60,31 @@ class LogServerTest{
             public void onReceiveMessage(String message) {
                 String[] messageList=message.split(SegmentationMarker);
                 for(String str : messageList)
-                    System.out.println(str);
+                {
+                    PrintMessage(str);
+                }
             }
         });
 
         logServer.SetOnChangeNetStatus(new LogServer.OnChangeNetStatus() {
             @Override
             public void onWaitConnecting() {
-                System.out.println("waiting for clients in port "+logServer.GetPort());
+                PrintMessage(" "+"waiting for clients in port "+logServer.GetPort());
             }
 
             @Override
             public void onConnected() {
-                System.out.println("Connected!");
+                PrintMessage(" "+"Connected!");
             }
 
             @Override
             public void onConnectedLost() {
-                System.out.println("Connecting Lost!");
+                PrintMessage(" "+"Connecting Lost!");
             }
 
             @Override
             public boolean onConnectError(Exception e) {
-                System.out.println("Connected Error!now reset server and waiting new connection.");
+                PrintMessage(" "+"Connected Error!now reset server and waiting new connection.");
                 return false;
             }
         });

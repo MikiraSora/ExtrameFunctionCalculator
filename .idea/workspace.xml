@@ -2,13 +2,65 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ddeeca72-93f9-42ce-8261-e5e9304e1aec" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/ScriptManager.class" afterPath="$PROJECT_DIR$/out/production/Calculator/ScriptManager.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator$1.class" afterPath="$PROJECT_DIR$/out/production/Calculator/Calculator$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator$InfoType.class" afterPath="$PROJECT_DIR$/out/production/Calculator/Calculator$InfoType.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator$SaveType.class" afterPath="$PROJECT_DIR$/out/production/Calculator/Calculator$SaveType.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator.class" afterPath="$PROJECT_DIR$/out/production/Calculator/Calculator.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Log/Log$1.class" afterPath="$PROJECT_DIR$/out/production/Log/Log$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Log/Log$MaintenanceRunnable$HighLevelMaintenanceRunnable.class" afterPath="$PROJECT_DIR$/out/production/Log/Log$MaintenanceRunnable$HighLevelMaintenanceRunnable.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Log/Log$MaintenanceRunnable.class" afterPath="$PROJECT_DIR$/out/production/Log/Log$MaintenanceRunnable.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Log/Log$Message$Type.class" afterPath="$PROJECT_DIR$/out/production/Log/Log$Message$Type.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Log/Log$Message.class" afterPath="$PROJECT_DIR$/out/production/Log/Log$Message.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Log/Log.class" afterPath="$PROJECT_DIR$/out/production/Log/Log.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Log/LogTest.class" afterPath="$PROJECT_DIR$/out/production/Log/LogTest.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/LogSever/LogServer$OnChangeNetStatus.class" afterPath="$PROJECT_DIR$/out/production/LogSever/LogServer$OnChangeNetStatus.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/LogSever/LogServer$OnReceiveMessage.class" afterPath="$PROJECT_DIR$/out/production/LogSever/LogServer$OnReceiveMessage.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/LogSever/LogServer.class" afterPath="$PROJECT_DIR$/out/production/LogSever/LogServer.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/LogSever/LogServerTest$1.class" afterPath="$PROJECT_DIR$/out/production/LogSever/LogServerTest$1.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/LogSever/LogServerTest$2.class" afterPath="$PROJECT_DIR$/out/production/LogSever/LogServerTest$2.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/LogSever/LogServerTest.class" afterPath="$PROJECT_DIR$/out/production/LogSever/LogServerTest.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Executor$6.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Executor$6.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Executor$EndfunctionSignal.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Executor$EndfunctionSignal.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Executor$ReturnSignal.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Executor$ReturnSignal.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Executor$Signal.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Executor$Signal.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Executor.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Executor.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement$Action.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement$Action.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement$Call.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement$Call.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement$Function$EndFcuntion.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement$Function$EndFcuntion.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement$Function$FunctionBody.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement$Function$FunctionBody.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement$Function$FunctionType.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement$Function$FunctionType.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement$Function.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement$Function.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement$Goto.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement$Goto.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement$Return.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement$Return.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement$Set.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement$Set.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement$StatementType.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement$StatementType.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Condition$ConditionType.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Condition$ConditionType.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Condition$Else.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Condition$Else.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Condition$EndIf.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Condition$EndIf.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Condition$If.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Condition$If.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Condition$Then.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Condition$Then.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Condition.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Condition.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Label.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Label.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Loop$Break.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Loop$Break.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Loop$Continue.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Loop$Continue.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Loop$Endloop.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Loop$Endloop.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Loop$LoopBegin.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Loop$LoopBegin.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Loop$LoopType.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Loop$LoopType.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Loop.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Loop.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$SymbolType.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$SymbolType.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Unit$UnitType.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Unit$UnitType.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Unit.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Unit.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Log/src/Log.java" afterPath="$PROJECT_DIR$/Log/src/Log.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/LogSever/LogSever.iml" afterPath="$PROJECT_DIR$/LogSever/LogSever.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/LogSever/src/LogServer.java" afterPath="$PROJECT_DIR$/LogSever/src/LogServer.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Calculator.java" afterPath="$PROJECT_DIR$/src/Calculator.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ScriptManager.java" afterPath="$PROJECT_DIR$/src/ScriptManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Test.java" afterPath="$PROJECT_DIR$/src/Test.java" />
       <change type="MODIFICATION" beforePath="H:/SimpleExecutaleLanguage/src/Executor.java" afterPath="H:/SimpleExecutaleLanguage/src/Executor.java" />
+      <change type="MODIFICATION" beforePath="H:/SimpleExecutaleLanguage/src/Parser.java" afterPath="H:/SimpleExecutaleLanguage/src/Parser.java" />
     </list>
     <ignored path="Calculator.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -33,44 +85,38 @@
       <file leaf-file-name="Calculator.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Calculator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="259">
-              <caret line="2360" column="34" selection-start-line="2360" selection-start-column="34" selection-end-line="2360" selection-end-column="34" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#61220#61221#0" expanded="true" />
-                <element signature="e#61262#61263#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CalculatorHelper.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/CalculatorHelper.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2992">
-              <caret line="573" column="50" selection-start-line="573" selection-start-column="50" selection-end-line="573" selection-end-column="50" />
+            <state relative-caret-position="252">
+              <caret line="1903" column="45" selection-start-line="1903" selection-start-column="45" selection-end-line="1903" selection-end-column="45" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ScriptManager.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/ScriptManager.java">
+      <file leaf-file-name="Parser.java" pinned="false" current-in-tab="false">
+        <entry file="file://H:/SimpleExecutaleLanguage/src/Parser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="312">
-              <caret line="102" column="24" selection-start-line="102" selection-start-column="24" selection-end-line="102" selection-end-column="24" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="833">
+              <caret line="451" column="43" selection-start-line="451" selection-start-column="43" selection-end-line="451" selection-end-column="43" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Test.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ScriptManager.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/ScriptManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="507">
+              <caret line="81" column="37" selection-start-line="81" selection-start-column="37" selection-end-line="81" selection-end-column="37" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Test.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Test.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="28" column="31" selection-start-line="28" selection-start-column="31" selection-end-line="28" selection-end-column="31" />
+            <state relative-caret-position="731">
+              <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -79,21 +125,8 @@
       <file leaf-file-name="Executor.java" pinned="false" current-in-tab="false">
         <entry file="file://H:/SimpleExecutaleLanguage/src/Executor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="205">
-              <caret line="336" column="16" selection-start-line="336" selection-start-column="16" selection-end-line="336" selection-end-column="16" />
-              <folding>
-                <element signature="e#13898#13899#0" expanded="true" />
-                <element signature="e#13931#13932#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Loader.java" pinned="false" current-in-tab="false">
-        <entry file="file://H:/SimpleExecutaleLanguage/src/Loader.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
-              <caret line="33" column="86" selection-start-line="33" selection-start-column="86" selection-end-line="33" selection-end-column="86" />
+            <state relative-caret-position="405">
+              <caret line="354" column="52" selection-start-line="354" selection-start-column="52" selection-end-line="354" selection-end-column="52" />
               <folding />
             </state>
           </provider>
@@ -130,17 +163,17 @@
         <option value="$PROJECT_DIR$/src/Function.java" />
         <option value="$PROJECT_DIR$/src/RawFunctionDeclareHelper.java" />
         <option value="$PROJECT_DIR$/src/CalculatorOptimizer.java" />
-        <option value="$PROJECT_DIR$/LogSever/src/LogServer.java" />
         <option value="$PROJECT_DIR$/src/DerivativeParser.java" />
         <option value="$PROJECT_DIR$/src/BooleanCaculator.java" />
         <option value="H:/SimpleExecutaleLanguage/src/Test.java" />
         <option value="H:/SimpleExecutaleLanguage/out/production/SimpleExecutaleLanguage/Executor.class" />
-        <option value="$PROJECT_DIR$/Log/src/Log.java" />
-        <option value="H:/SimpleExecutaleLanguage/src/Parser.java" />
         <option value="$PROJECT_DIR$/src/CalculatorHelper.java" />
-        <option value="$PROJECT_DIR$/src/Calculator.java" />
         <option value="$PROJECT_DIR$/src/Test.java" />
+        <option value="$PROJECT_DIR$/Log/src/Log.java" />
+        <option value="$PROJECT_DIR$/LogSever/src/LogServer.java" />
+        <option value="H:/SimpleExecutaleLanguage/src/Parser.java" />
         <option value="H:/SimpleExecutaleLanguage/src/Executor.java" />
+        <option value="$PROJECT_DIR$/src/Calculator.java" />
         <option value="$PROJECT_DIR$/src/ScriptManager.java" />
       </list>
     </option>
@@ -251,7 +284,7 @@
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectView">
-    <navigator proportions="" version="1">
+    <navigator currentView="ProjectPane" proportions="" version="1">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -264,7 +297,113 @@
       <manualOrder />
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes />
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Calculator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Calculator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="SimpleExecutaleLanguage" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Calculator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Calculator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Calculator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Calculator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="LogSever" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Calculator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Calculator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="LogSever" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="LogServer.java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Calculator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Calculator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Log" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Calculator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Calculator" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Log" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Log.java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scratches" />
+      <pane id="PackagesPane" />
+    </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="aspect.path.notification.shown" value="true" />
@@ -272,9 +411,9 @@
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="last_opened_file_path" value="H:/SimpleExecutaleLanguage" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/LogSever/refjar/jna-3.1.0.jar!/" />
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://H:/BaiduYunDownload/Calculator/src/Calculator.java" />
-    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
   </component>
@@ -569,25 +708,25 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286334" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32804233" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3275488" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32910052" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2570499" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26681128" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329718" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1391258" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1380597" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Memory View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="JProfiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32910052" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1705757" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17004265" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3546638" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35357916" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -660,13 +799,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/Log/src/Log.java</url>
-          <line>184</line>
+          <line>183</line>
           <properties />
           <option name="timeStamp" value="194" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/LogSever/src/LogServer.java</url>
-          <line>27</line>
+          <line>62</line>
           <properties />
           <option name="timeStamp" value="196" />
         </line-breakpoint>
@@ -689,16 +828,22 @@
           <option name="timeStamp" value="217" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Test.java</url>
-          <line>45</line>
+          <url>file://$PROJECT_DIR$/src/ScriptManager.java</url>
+          <line>81</line>
           <properties />
-          <option name="timeStamp" value="251" />
+          <option name="timeStamp" value="257" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/ScriptManager.java</url>
+          <line>60</line>
+          <properties />
+          <option name="timeStamp" value="258" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="252" />
+      <option name="time" value="259" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -719,11 +864,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#61220#61221#0" expanded="true" />
-            <element signature="e#61262#61263#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -738,11 +879,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#61220#61221#0" expanded="true" />
-            <element signature="e#61262#61263#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -757,11 +894,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#61220#61221#0" expanded="true" />
-            <element signature="e#61262#61263#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -776,11 +909,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#61220#61221#0" expanded="true" />
-            <element signature="e#61262#61263#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -796,11 +925,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#61220#61221#0" expanded="true" />
-            <element signature="e#61262#61263#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -816,11 +941,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#61220#61221#0" expanded="true" />
-            <element signature="e#61262#61263#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -836,11 +957,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#61220#61221#0" expanded="true" />
-            <element signature="e#61262#61263#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -886,14 +1003,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1533">
           <caret line="41" column="31" selection-start-line="41" selection-start-column="31" selection-end-line="41" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/LogSever/src/LogServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="27" column="20" selection-start-line="27" selection-start-column="20" selection-end-line="27" selection-end-column="44" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -946,22 +1055,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://H:/SimpleExecutaleLanguage/src/Parser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="630" column="83" selection-start-line="630" selection-start-column="83" selection-end-line="630" selection-end-column="83" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Log/src/Log.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="596">
-          <caret line="388" column="30" selection-start-line="388" selection-start-column="30" selection-end-line="388" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/BooleanCaculator.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1441">
@@ -982,55 +1075,76 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
           <caret line="491" column="0" selection-start-line="491" selection-start-column="0" selection-end-line="491" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ScriptManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="102" column="24" selection-start-line="102" selection-start-column="24" selection-end-line="102" selection-end-column="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://H:/SimpleExecutaleLanguage/src/Executor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="205">
-          <caret line="336" column="16" selection-start-line="336" selection-start-column="16" selection-end-line="336" selection-end-column="16" />
-          <folding>
-            <element signature="e#13898#13899#0" expanded="true" />
-            <element signature="e#13931#13932#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Calculator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="259">
-          <caret line="2360" column="34" selection-start-line="2360" selection-start-column="34" selection-end-line="2360" selection-end-column="34" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#61220#61221#0" expanded="true" />
-            <element signature="e#61262#61263#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/CalculatorHelper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2992">
+        <state relative-caret-position="833">
           <caret line="573" column="50" selection-start-line="573" selection-start-column="50" selection-end-line="573" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/LogSever/src/LogServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="850">
+          <caret line="63" column="3" selection-start-line="63" selection-start-column="3" selection-end-line="63" selection-end-column="3" />
+          <folding>
+            <element signature="e#2605#2606#0" expanded="false" />
+            <element signature="e#2705#2706#0" expanded="false" />
+            <element signature="e#2768#2769#0" expanded="false" />
+            <element signature="e#2830#2831#0" expanded="false" />
+            <element signature="e#2897#2898#0" expanded="false" />
+            <element signature="e#2965#2966#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Log/src/Log.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="368">
+          <caret line="399" column="135" selection-start-line="399" selection-start-column="135" selection-end-line="399" selection-end-column="135" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://H:/SimpleExecutaleLanguage/src/Parser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="833">
+          <caret line="451" column="43" selection-start-line="451" selection-start-column="43" selection-end-line="451" selection-end-column="43" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Test.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="28" column="31" selection-start-line="28" selection-start-column="31" selection-end-line="28" selection-end-column="31" />
+        <state relative-caret-position="731">
+          <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://H:/SimpleExecutaleLanguage/src/Executor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="354" column="52" selection-start-line="354" selection-start-column="52" selection-end-line="354" selection-end-column="52" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Calculator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="1903" column="45" selection-start-line="1903" selection-start-column="45" selection-end-line="1903" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ScriptManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="507">
+          <caret line="81" column="37" selection-start-line="81" selection-start-column="37" selection-end-line="81" selection-end-column="37" />
           <folding />
         </state>
       </provider>
@@ -1087,7 +1201,7 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>Calculator</last-edited>
+          <last-edited>LogSever</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -1111,7 +1225,7 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
-          <last-edited>SimpleExecutaleLanguage</last-edited>
+          <last-edited>jna-3.1.0</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

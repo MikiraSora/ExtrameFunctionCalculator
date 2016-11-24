@@ -21,7 +21,7 @@ import static java.lang.Thread.currentThread;
  * Created by MikiraSora on 2016/10/10.
  */
 class LogTest{
-    /*
+
     public static void main(String[] args) {
         String message=null;
         Scanner scanner = new Scanner(System.in);
@@ -29,8 +29,6 @@ class LogTest{
 
         Log.SetPort(2857);
         Log.SetAddress("127.0.0.1");
-
-        //Lock lock=new Mutex();
 
         System.out.println("this is log client and try to connect "+Log.GetAddress()+":"+Log.GetPort());
         Log.SetIsThreadCommitLog(true);
@@ -58,7 +56,7 @@ class LogTest{
                 e.printStackTrace();
             }
         }
-    }*/
+    }
 
 }
 
@@ -66,6 +64,7 @@ public class Log {
 
     static class Message{
         enum Type{
+            User,
             Debug,
             Warning,
             Exception
@@ -126,8 +125,8 @@ public class Log {
             long sec=(time_strip-min*1000*60)/1000;
             long mill_sec=time_strip-min*60*1000-sec*1000;
             if(Log.IsShowCallerMethod())
-                return String.format("[%2d:%2d:%2d %s]%s():%s", min, sec, mill_sec, message_type.toString(), callerMethodName != null ? callerMethodName : "unknown_method", message);
-            return String.format("[%2d:%2d:%2d %s]%s", min, sec, mill_sec, message_type.toString(),message);
+                return String.format("%c[%2d:%2d:%2d %s]%s():%s",message_type.toString().charAt(0),min, sec, mill_sec, message_type.toString(), callerMethodName != null ? callerMethodName : "unknown_method", message);
+            return String.format("%c[%2d:%2d:%2d %s]%s",message_type.toString().charAt(0), min, sec, mill_sec, message_type.toString(),message);
         }
     }
 
@@ -394,6 +393,14 @@ public class Log {
             Message msg =IsShowCallerMethod?new Message(Message.Type.Warning, message,GetCallerMethodName()):new Message(Message.Type.Warning, message);
             LogWrite(msg);
         }catch (Exception e){}
+    }
+
+    public static void User(String message){
+        try {
+            Message msg =IsShowCallerMethod?new Message(Message.Type.User, message,GetCallerMethodName()):new Message(Message.Type.User, message);
+            LogWrite(msg);
+        }catch (Exception e){}
+
     }
 
     public static void DisConnect()throws Exception{
