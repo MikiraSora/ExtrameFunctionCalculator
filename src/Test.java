@@ -34,6 +34,33 @@ public class Test {
                 lights[i]=!lights[i];
         }
 
+/*
+        int money=10;
+        int pg=0,ps=0,count=0;
+        while (true){
+            if(money>=2){
+                money-=2;
+                count++;
+                pg++;
+                ps++;
+                continue;
+            }
+            if(pg>=4){
+                money+=2;
+                pg-=4;
+                continue;
+            }
+            if(ps>=2){
+                money+=2;
+                ps-=2;
+                continue;
+            }
+            if(money<2&&pg<4&&ps<2)
+                break;
+        }
+
+        c.LogMessage(String.format("钱%d,瓶身%d,瓶盖%d,瓶:%d",money,ps,pg,count));
+*/
 
 
         while(true){

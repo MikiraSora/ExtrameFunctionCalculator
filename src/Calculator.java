@@ -809,6 +809,7 @@ import java.util.regex.Pattern;
         enum VariableType{
             ExpressionVariable,
             BooleanVariable,
+            MapVariable,
             Normal,
             Unknown
         }
@@ -827,6 +828,10 @@ import java.util.regex.Pattern;
             rawText = value;
             Variable_name = name;
             setCalculator(calculator1);
+        }
+
+        void SetVariable(String expression){
+
         }
 
 
@@ -917,6 +922,83 @@ import java.util.regex.Pattern;
         @Override
         String Serialize() {
             return String.format("v##%s##%s",Variable_name,rawText);
+        }
+    }
+
+    public static class MapVariable extends Variable{
+        MapVariable(String variable_name,Calculator calculator){
+            super(variable_name,null,calculator);
+        }
+        MapVariable(String variable_name,String indexes,String variable_expr,Calculator calculator){
+            this(variable_name,calculator);
+            //// TODO: 2016/11/26  
+        }
+        
+        HashMap<String,Variable> variable_map=new HashMap<>();
+
+        @Override
+        boolean ableSetVariableDirectly() {
+            return false;
+        }
+
+        public Variable RouteGetVariable(String indexes)throws Exception{
+            ArrayList<String> getList=ParseIndexesString(indexes);
+            if(getList.isEmpty())
+                throw new Exception(String.format("%s isnt vaild indexes",indexes));
+            Variable variable=null,currentVariable=null;
+            for(String var_name:getList){
+                //能用循环艹的就打死不要用递归
+                if(currentVariable!=null){
+                    if(currentVariable.variable_type==VariableType.MapVariable)
+                        variable=((MapVariable)variable).GetVariable(var_name);
+                    else
+                        throw new Exception(String.format("%s isnt vaild index",var_name));
+                }
+                else
+                    variable=this.GetVariable(var_name);
+                if(variable==null)
+                    throw new Exception("cant found the variable "+var_name);
+                currentVariable=variable;
+            }
+            /*
+            if(currentVariable==null)
+                throw new Exception(String.format("%s%s is not found",Variable_name,indexes));
+                */
+            return currentVariable;
+        }
+
+        public Variable GetVariable(String index){
+            return variable_map.containsKey(index)?variable_map.get(index):null;
+        }
+
+        private ArrayList<String> ParseIndexesString(String indexes)throws Exception{
+            //input "[index][rin]"
+            ArrayList<String> IndexesList=new ArrayList<>();
+            Stack<Integer> recordPosition=new Stack<Integer>();
+            int recordpos=-1;
+            int position=0;
+            char c=0;
+            String indexString;
+            while (true){
+                if(position>=indexes.length())
+                    break;
+                c=indexes.charAt(position);
+                if(c=='['){
+                    recordPosition.push(position);
+                    continue;
+                }
+                if (c==']'){
+                    recordpos=recordPosition.pop();
+                    if(recordPosition.empty()){
+                        indexString=indexes.substring(recordpos,position);
+                        IndexesList.add(indexString);
+                    }
+                    continue;
+                }
+            }
+            if(!recordPosition.isEmpty())
+                throw new Exception(String.format("%s isnt balance",indexes));
+            return IndexesList;
         }
     }
 
@@ -1966,6 +2048,49 @@ import java.util.regex.Pattern;
                 variable_name += c;
             }
         }
+    }
+
+    private void SetMapVariable(String expression)throws Exception{
+        //mymapvar[myvar]["mykeyname"][5]=myvalue
+        if (expression.isEmpty())
+            Log.ExceptionError( new Exception("empty text"));
+        int position=0;
+        char c=0;
+        //读取名字
+        String variable_name="";
+        while (true){
+            if(position>=expression.length())
+                Log.Error(String.format("%s isnt vaild format"));
+            c=expression.charAt(position);
+            if(c=='[')
+                break;
+            variable_name+=c;
+            position++;
+        }
+        //读取下标
+        String indexes="";
+        Stack<Integer> balanceStack=new Stack<>();
+        while (true){
+            if(position>=expression.length())
+                Log.Error(String.format("%s isnt vaild format"));
+            c=expression.charAt(position);
+            indexes+=c;
+            position++;
+            if(c=='['){
+                balanceStack.push(position);
+                continue;
+            }
+            if(c==']'){
+                balanceStack.pop();
+                if (balanceStack.isEmpty())
+                    break;
+            }
+        }
+        if(expression.charAt(position)!='=')
+            Log.Error(String.format("%s isnt vaild format"));
+        //读取右值表达式
+        String variable_expr=expression.substring(++position);
+        //// TODO: 2016/11/26  
     }
 
     /**

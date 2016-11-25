@@ -29,7 +29,7 @@ public class ScriptManager {
         if(executor==null)
             throw new Exception("cant load script "+input_file+" file by unknown cause.");//// TODO: 2016/11/23 可以弄成IOException
         if(ScriptMap.containsKey(executor.GetPackageName())){
-            Log.Debug(String.format("the package %s is exsited already.",executor.GetPackageName()));
+            Log.Debug(String.format("the package %s had exsited already.",executor.GetPackageName()));
         }
         ReferenceAdd(executor.GetPackageName(),executor);
         /*
@@ -62,7 +62,7 @@ public class ScriptManager {
         if(!executor.IsNonReferenced())
             return;
 
-        Log.Debug(String.format("%s unloaded",executor.GetPackageName()));
+        Log.Debug(String.format("unloaded %s ",executor.GetPackageName()));
 
         if(ableCacheReferenceFunction){
             for(Parser.Statement.Function function:executor.parser.FunctionTable.values()){
@@ -70,7 +70,7 @@ public class ScriptManager {
                     continue;
                 if(CacheFunctionMap.get(function.GetFunctionName()).reference_parser.GetExecutor().GetPackageName().equals(executor.GetPackageName())){
                     CacheFunctionMap.remove(function.GetFunctionName());
-                    Log.Debug(String.format("%s::%s() was unresignster from cache",executor.GetPackageName(),function.GetFunctionName()));
+                    Log.Debug(String.format("%s::%s() was removed from cache",executor.GetPackageName(),function.GetFunctionName()));
                 }
             }
         }

@@ -2,65 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ddeeca72-93f9-42ce-8261-e5e9304e1aec" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator$1.class" afterPath="$PROJECT_DIR$/out/production/Calculator/Calculator$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator$InfoType.class" afterPath="$PROJECT_DIR$/out/production/Calculator/Calculator$InfoType.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator$SaveType.class" afterPath="$PROJECT_DIR$/out/production/Calculator/Calculator$SaveType.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator.class" afterPath="$PROJECT_DIR$/out/production/Calculator/Calculator.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Log/Log$1.class" afterPath="$PROJECT_DIR$/out/production/Log/Log$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Log/Log$MaintenanceRunnable$HighLevelMaintenanceRunnable.class" afterPath="$PROJECT_DIR$/out/production/Log/Log$MaintenanceRunnable$HighLevelMaintenanceRunnable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Log/Log$MaintenanceRunnable.class" afterPath="$PROJECT_DIR$/out/production/Log/Log$MaintenanceRunnable.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Log/Log$Message$Type.class" afterPath="$PROJECT_DIR$/out/production/Log/Log$Message$Type.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Log/Log$Message.class" afterPath="$PROJECT_DIR$/out/production/Log/Log$Message.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Log/Log.class" afterPath="$PROJECT_DIR$/out/production/Log/Log.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Log/LogTest.class" afterPath="$PROJECT_DIR$/out/production/Log/LogTest.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/LogSever/LogServer$OnChangeNetStatus.class" afterPath="$PROJECT_DIR$/out/production/LogSever/LogServer$OnChangeNetStatus.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/LogSever/LogServer$OnReceiveMessage.class" afterPath="$PROJECT_DIR$/out/production/LogSever/LogServer$OnReceiveMessage.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/LogSever/LogServer.class" afterPath="$PROJECT_DIR$/out/production/LogSever/LogServer.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/LogSever/LogServerTest$1.class" afterPath="$PROJECT_DIR$/out/production/LogSever/LogServerTest$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/LogSever/LogServerTest$2.class" afterPath="$PROJECT_DIR$/out/production/LogSever/LogServerTest$2.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/LogSever/LogServerTest.class" afterPath="$PROJECT_DIR$/out/production/LogSever/LogServerTest.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Executor$6.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Executor$6.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Executor$EndfunctionSignal.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Executor$EndfunctionSignal.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Executor$ReturnSignal.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Executor$ReturnSignal.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Executor$Signal.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Executor$Signal.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Executor.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Executor.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement$Action.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement$Action.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement$Call.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement$Call.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement$Function$EndFcuntion.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement$Function$EndFcuntion.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement$Function$FunctionBody.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement$Function$FunctionBody.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement$Function$FunctionType.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement$Function$FunctionType.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement$Function.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement$Function.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement$Goto.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement$Goto.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement$Return.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement$Return.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement$Set.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement$Set.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement$StatementType.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement$StatementType.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Statement.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Condition$ConditionType.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Condition$ConditionType.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Condition$Else.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Condition$Else.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Condition$EndIf.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Condition$EndIf.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Condition$If.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Condition$If.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Condition$Then.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Condition$Then.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Condition.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Condition.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Label.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Label.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Loop$Break.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Loop$Break.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Loop$Continue.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Loop$Continue.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Loop$Endloop.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Loop$Endloop.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Loop$LoopBegin.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Loop$LoopBegin.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Loop$LoopType.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Loop$LoopType.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Loop.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$Loop.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$SymbolType.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol$SymbolType.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Symbol.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Unit$UnitType.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Unit$UnitType.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Unit.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser$Unit.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser.class" afterPath="$PROJECT_DIR$/out/production/SimpleExecutaleLanguage/Parser.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Calculator/ScriptManager.class" afterPath="$PROJECT_DIR$/out/production/Calculator/ScriptManager.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Log/src/Log.java" afterPath="$PROJECT_DIR$/Log/src/Log.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/LogSever/LogSever.iml" afterPath="$PROJECT_DIR$/LogSever/LogSever.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/LogSever/src/LogServer.java" afterPath="$PROJECT_DIR$/LogSever/src/LogServer.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Calculator.java" afterPath="$PROJECT_DIR$/src/Calculator.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ScriptManager.java" afterPath="$PROJECT_DIR$/src/ScriptManager.java" />
-      <change type="MODIFICATION" beforePath="H:/SimpleExecutaleLanguage/src/Executor.java" afterPath="H:/SimpleExecutaleLanguage/src/Executor.java" />
-      <change type="MODIFICATION" beforePath="H:/SimpleExecutaleLanguage/src/Parser.java" afterPath="H:/SimpleExecutaleLanguage/src/Parser.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Test.java" afterPath="$PROJECT_DIR$/src/Test.java" />
     </list>
     <ignored path="Calculator.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -81,58 +27,168 @@
     <favorites_list name="Calculator" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Calculator.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Calculator.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="1903" column="45" selection-start-line="1903" selection-start-column="45" selection-end-line="1903" selection-end-column="45" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Parser.java" pinned="false" current-in-tab="false">
-        <entry file="file://H:/SimpleExecutaleLanguage/src/Parser.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="833">
-              <caret line="451" column="43" selection-start-line="451" selection-start-column="43" selection-end-line="451" selection-end-column="43" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ScriptManager.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/ScriptManager.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="507">
-              <caret line="81" column="37" selection-start-line="81" selection-start-column="37" selection-end-line="81" selection-end-column="37" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Test.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Test.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="731">
-              <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Executor.java" pinned="false" current-in-tab="false">
-        <entry file="file://H:/SimpleExecutaleLanguage/src/Executor.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="405">
-              <caret line="354" column="52" selection-start-line="354" selection-start-column="52" selection-end-line="354" selection-end-column="52" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <splitter split-orientation="horizontal" split-proportion="0.5">
+      <split-first>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file leaf-file-name="Calculator.java" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/Calculator.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="447">
+                  <caret line="2092" column="30" selection-start-line="2092" selection-start-column="30" selection-end-line="2092" selection-end-column="30" />
+                  <folding>
+                    <element signature="e#31950#31951#0" expanded="true" />
+                    <element signature="e#32010#32011#0" expanded="true" />
+                    <element signature="e#32336#32337#0" expanded="true" />
+                    <element signature="e#32372#32373#0" expanded="true" />
+                    <element signature="e#33942#33951#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Log.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/Log/src/Log.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="6307">
+                  <caret line="392" column="0" selection-start-line="392" selection-start-column="0" selection-end-line="392" selection-end-column="0" />
+                  <folding>
+                    <element signature="imports" expanded="false" />
+                    <element signature="e#2210#2211#0" expanded="false" />
+                    <element signature="e#2261#2262#0" expanded="false" />
+                    <element signature="e#5596#5597#0" expanded="false" />
+                    <element signature="e#5656#5657#0" expanded="false" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Parser.java" pinned="false" current-in-tab="false">
+            <entry file="file://H:/SimpleExecutaleLanguage/src/Parser.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="9282">
+                  <caret line="606" column="16" selection-start-line="606" selection-start-column="16" selection-end-line="606" selection-end-column="16" />
+                  <folding>
+                    <element signature="imports" expanded="false" />
+                    <element signature="e#1075#1076#0" expanded="false" />
+                    <element signature="e#1128#1129#0" expanded="false" />
+                    <element signature="e#2141#2142#0" expanded="false" />
+                    <element signature="e#2190#2191#0" expanded="false" />
+                    <element signature="e#3476#3477#0" expanded="false" />
+                    <element signature="e#3528#3529#0" expanded="false" />
+                    <element signature="e#3692#3693#0" expanded="false" />
+                    <element signature="e#3753#3754#0" expanded="false" />
+                    <element signature="e#4385#4386#0" expanded="false" />
+                    <element signature="e#4450#4451#0" expanded="false" />
+                    <element signature="e#4737#4738#0" expanded="false" />
+                    <element signature="e#4800#4801#0" expanded="false" />
+                    <element signature="e#5034#5035#0" expanded="false" />
+                    <element signature="e#5091#5092#0" expanded="false" />
+                    <element signature="e#5887#5888#0" expanded="false" />
+                    <element signature="e#5943#5944#0" expanded="false" />
+                    <element signature="e#6163#6164#0" expanded="false" />
+                    <element signature="e#6220#6221#0" expanded="false" />
+                    <element signature="e#6446#6447#0" expanded="false" />
+                    <element signature="e#6505#6506#0" expanded="false" />
+                    <element signature="e#6742#6743#0" expanded="false" />
+                    <element signature="e#6846#6847#0" expanded="false" />
+                    <element signature="e#7035#7036#0" expanded="false" />
+                    <element signature="e#7081#7082#0" expanded="false" />
+                    <element signature="e#7456#7457#0" expanded="false" />
+                    <element signature="e#7566#7567#0" expanded="false" />
+                    <element signature="e#7637#7638#0" expanded="false" />
+                    <element signature="e#7702#7703#0" expanded="false" />
+                    <element signature="e#8202#8203#0" expanded="false" />
+                    <element signature="e#8265#8266#0" expanded="false" />
+                    <element signature="e#8492#8493#0" expanded="false" />
+                    <element signature="e#8557#8558#0" expanded="false" />
+                    <element signature="e#8784#8785#0" expanded="false" />
+                    <element signature="e#8849#8850#0" expanded="false" />
+                    <element signature="e#9079#9080#0" expanded="false" />
+                    <element signature="e#9145#9146#0" expanded="false" />
+                    <element signature="e#9454#9455#0" expanded="false" />
+                    <element signature="e#9514#9515#0" expanded="false" />
+                    <element signature="e#9674#9675#0" expanded="false" />
+                    <element signature="e#9779#9780#0" expanded="false" />
+                    <element signature="e#10097#10098#0" expanded="false" />
+                    <element signature="e#10162#10163#0" expanded="false" />
+                    <element signature="e#10386#10387#0" expanded="false" />
+                    <element signature="e#10450#10451#0" expanded="false" />
+                    <element signature="e#10665#10666#0" expanded="false" />
+                    <element signature="e#10726#10727#0" expanded="false" />
+                    <element signature="e#10947#10948#0" expanded="false" />
+                    <element signature="e#11010#11011#0" expanded="false" />
+                    <element signature="e#11252#11253#0" expanded="false" />
+                    <element signature="e#11307#11308#0" expanded="false" />
+                    <element signature="e#12486#12487#0" expanded="false" />
+                    <element signature="e#12540#12541#0" expanded="false" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="ScriptManager.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/ScriptManager.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="1122">
+                  <caret line="68" column="60" selection-start-line="68" selection-start-column="60" selection-end-line="68" selection-end-column="60" />
+                  <folding>
+                    <element signature="imports" expanded="false" />
+                    <element signature="e#3258#3259#0" expanded="false" />
+                    <element signature="e#3308#3309#0" expanded="false" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Test.java" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/src/Test.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="459">
+                  <caret line="62" column="2" selection-start-line="62" selection-start-column="2" selection-end-line="62" selection-end-column="2" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Executor.java" pinned="false" current-in-tab="false">
+            <entry file="file://H:/SimpleExecutaleLanguage/src/Executor.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="5831">
+                  <caret line="354" column="52" selection-start-line="354" selection-start-column="52" selection-end-line="354" selection-end-column="52" />
+                  <folding>
+                    <element signature="imports" expanded="false" />
+                    <element signature="e#636#637#0" expanded="false" />
+                    <element signature="e#710#711#0" expanded="false" />
+                    <element signature="e#2918#2919#0" expanded="false" />
+                    <element signature="e#2971#2972#0" expanded="false" />
+                    <element signature="e#3645#3646#0" expanded="false" />
+                    <element signature="e#3699#3700#0" expanded="false" />
+                    <element signature="e#13899#13900#0" expanded="false" />
+                    <element signature="e#13932#13933#0" expanded="false" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf>
+          <file leaf-file-name="Calculator.java" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/src/Calculator.java">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="296">
+                  <caret line="933" column="34" selection-start-line="933" selection-start-column="34" selection-end-line="933" selection-end-column="34" />
+                  <folding>
+                    <element signature="e#33942#33951#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -168,13 +224,13 @@
         <option value="H:/SimpleExecutaleLanguage/src/Test.java" />
         <option value="H:/SimpleExecutaleLanguage/out/production/SimpleExecutaleLanguage/Executor.class" />
         <option value="$PROJECT_DIR$/src/CalculatorHelper.java" />
-        <option value="$PROJECT_DIR$/src/Test.java" />
         <option value="$PROJECT_DIR$/Log/src/Log.java" />
         <option value="$PROJECT_DIR$/LogSever/src/LogServer.java" />
         <option value="H:/SimpleExecutaleLanguage/src/Parser.java" />
         <option value="H:/SimpleExecutaleLanguage/src/Executor.java" />
-        <option value="$PROJECT_DIR$/src/Calculator.java" />
         <option value="$PROJECT_DIR$/src/ScriptManager.java" />
+        <option value="$PROJECT_DIR$/src/Test.java" />
+        <option value="$PROJECT_DIR$/src/Calculator.java" />
       </list>
     </option>
   </component>
@@ -298,111 +354,12 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="ProjectPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Calculator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Calculator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SimpleExecutaleLanguage" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Calculator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Calculator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Calculator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Calculator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="LogSever" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Calculator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Calculator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="LogSever" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="LogServer.java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Calculator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Calculator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Log" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Calculator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Calculator" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Log" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Log.java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.ClassesTreeStructureProvider$PsiClassOwnerTreeNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="Scratches" />
+      <pane id="ProjectPane">
+        <subPane />
+      </pane>
       <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -708,8 +665,8 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="false" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286334" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3275488" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -717,16 +674,16 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32910052" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26681128" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2527115" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329718" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1380597" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1380597" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Memory View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="JProfiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32910052" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17004265" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17004265" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35357916" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26898047" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -750,18 +707,18 @@
       <window_info id="Memory View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1705757" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17004265" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3546638" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26898047" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286334" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32804233" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3275488" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25813448" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.335141" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.329718" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1391258" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1380597" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="JProfiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32910052" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32980973" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
@@ -787,15 +744,9 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/Calculator.java</url>
-          <line>993</line>
+          <line>1075</line>
           <properties />
           <option name="timeStamp" value="119" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Calculator.java</url>
-          <line>1027</line>
-          <properties />
-          <option name="timeStamp" value="186" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/Log/src/Log.java</url>
@@ -828,22 +779,16 @@
           <option name="timeStamp" value="217" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/ScriptManager.java</url>
-          <line>81</line>
+          <url>file://$PROJECT_DIR$/Log/src/Log.java</url>
+          <line>392</line>
           <properties />
-          <option name="timeStamp" value="257" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/ScriptManager.java</url>
-          <line>60</line>
-          <properties />
-          <option name="timeStamp" value="258" />
+          <option name="timeStamp" value="259" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="259" />
+      <option name="time" value="260" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -864,7 +809,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#31950#31951#0" expanded="true" />
+            <element signature="e#32010#32011#0" expanded="true" />
+            <element signature="e#32336#32337#0" expanded="true" />
+            <element signature="e#32372#32373#0" expanded="true" />
+            <element signature="e#33942#33951#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -879,7 +830,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#31950#31951#0" expanded="true" />
+            <element signature="e#32010#32011#0" expanded="true" />
+            <element signature="e#32336#32337#0" expanded="true" />
+            <element signature="e#32372#32373#0" expanded="true" />
+            <element signature="e#33942#33951#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -894,7 +851,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#31950#31951#0" expanded="true" />
+            <element signature="e#32010#32011#0" expanded="true" />
+            <element signature="e#32336#32337#0" expanded="true" />
+            <element signature="e#32372#32373#0" expanded="true" />
+            <element signature="e#33942#33951#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -909,7 +872,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#31950#31951#0" expanded="true" />
+            <element signature="e#32010#32011#0" expanded="true" />
+            <element signature="e#32336#32337#0" expanded="true" />
+            <element signature="e#32372#32373#0" expanded="true" />
+            <element signature="e#33942#33951#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -925,7 +894,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#31950#31951#0" expanded="true" />
+            <element signature="e#32010#32011#0" expanded="true" />
+            <element signature="e#32336#32337#0" expanded="true" />
+            <element signature="e#32372#32373#0" expanded="true" />
+            <element signature="e#33942#33951#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -941,7 +916,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#31950#31951#0" expanded="true" />
+            <element signature="e#32010#32011#0" expanded="true" />
+            <element signature="e#32336#32337#0" expanded="true" />
+            <element signature="e#32372#32373#0" expanded="true" />
+            <element signature="e#33942#33951#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -957,7 +938,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#31950#31951#0" expanded="true" />
+            <element signature="e#32010#32011#0" expanded="true" />
+            <element signature="e#32336#32337#0" expanded="true" />
+            <element signature="e#32372#32373#0" expanded="true" />
+            <element signature="e#33942#33951#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1067,7 +1054,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="510">
           <caret line="33" column="86" selection-start-line="33" selection-start-column="86" selection-end-line="33" selection-end-column="86" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1101,51 +1087,131 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Log/src/Log.java">
+    <entry file="file://H:/SimpleExecutaleLanguage/src/Executor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="368">
-          <caret line="399" column="135" selection-start-line="399" selection-start-column="135" selection-end-line="399" selection-end-column="135" />
-          <folding />
+        <state relative-caret-position="5831">
+          <caret line="354" column="52" selection-start-line="354" selection-start-column="52" selection-end-line="354" selection-end-column="52" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#636#637#0" expanded="false" />
+            <element signature="e#710#711#0" expanded="false" />
+            <element signature="e#2918#2919#0" expanded="false" />
+            <element signature="e#2971#2972#0" expanded="false" />
+            <element signature="e#3645#3646#0" expanded="false" />
+            <element signature="e#3699#3700#0" expanded="false" />
+            <element signature="e#13899#13900#0" expanded="false" />
+            <element signature="e#13932#13933#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ScriptManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1122">
+          <caret line="68" column="60" selection-start-line="68" selection-start-column="60" selection-end-line="68" selection-end-column="60" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#3258#3259#0" expanded="false" />
+            <element signature="e#3308#3309#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://H:/SimpleExecutaleLanguage/src/Parser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="833">
-          <caret line="451" column="43" selection-start-line="451" selection-start-column="43" selection-end-line="451" selection-end-column="43" />
-          <folding />
+        <state relative-caret-position="9282">
+          <caret line="606" column="16" selection-start-line="606" selection-start-column="16" selection-end-line="606" selection-end-column="16" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#1075#1076#0" expanded="false" />
+            <element signature="e#1128#1129#0" expanded="false" />
+            <element signature="e#2141#2142#0" expanded="false" />
+            <element signature="e#2190#2191#0" expanded="false" />
+            <element signature="e#3476#3477#0" expanded="false" />
+            <element signature="e#3528#3529#0" expanded="false" />
+            <element signature="e#3692#3693#0" expanded="false" />
+            <element signature="e#3753#3754#0" expanded="false" />
+            <element signature="e#4385#4386#0" expanded="false" />
+            <element signature="e#4450#4451#0" expanded="false" />
+            <element signature="e#4737#4738#0" expanded="false" />
+            <element signature="e#4800#4801#0" expanded="false" />
+            <element signature="e#5034#5035#0" expanded="false" />
+            <element signature="e#5091#5092#0" expanded="false" />
+            <element signature="e#5887#5888#0" expanded="false" />
+            <element signature="e#5943#5944#0" expanded="false" />
+            <element signature="e#6163#6164#0" expanded="false" />
+            <element signature="e#6220#6221#0" expanded="false" />
+            <element signature="e#6446#6447#0" expanded="false" />
+            <element signature="e#6505#6506#0" expanded="false" />
+            <element signature="e#6742#6743#0" expanded="false" />
+            <element signature="e#6846#6847#0" expanded="false" />
+            <element signature="e#7035#7036#0" expanded="false" />
+            <element signature="e#7081#7082#0" expanded="false" />
+            <element signature="e#7456#7457#0" expanded="false" />
+            <element signature="e#7566#7567#0" expanded="false" />
+            <element signature="e#7637#7638#0" expanded="false" />
+            <element signature="e#7702#7703#0" expanded="false" />
+            <element signature="e#8202#8203#0" expanded="false" />
+            <element signature="e#8265#8266#0" expanded="false" />
+            <element signature="e#8492#8493#0" expanded="false" />
+            <element signature="e#8557#8558#0" expanded="false" />
+            <element signature="e#8784#8785#0" expanded="false" />
+            <element signature="e#8849#8850#0" expanded="false" />
+            <element signature="e#9079#9080#0" expanded="false" />
+            <element signature="e#9145#9146#0" expanded="false" />
+            <element signature="e#9454#9455#0" expanded="false" />
+            <element signature="e#9514#9515#0" expanded="false" />
+            <element signature="e#9674#9675#0" expanded="false" />
+            <element signature="e#9779#9780#0" expanded="false" />
+            <element signature="e#10097#10098#0" expanded="false" />
+            <element signature="e#10162#10163#0" expanded="false" />
+            <element signature="e#10386#10387#0" expanded="false" />
+            <element signature="e#10450#10451#0" expanded="false" />
+            <element signature="e#10665#10666#0" expanded="false" />
+            <element signature="e#10726#10727#0" expanded="false" />
+            <element signature="e#10947#10948#0" expanded="false" />
+            <element signature="e#11010#11011#0" expanded="false" />
+            <element signature="e#11252#11253#0" expanded="false" />
+            <element signature="e#11307#11308#0" expanded="false" />
+            <element signature="e#12486#12487#0" expanded="false" />
+            <element signature="e#12540#12541#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Log/src/Log.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6307">
+          <caret line="392" column="0" selection-start-line="392" selection-start-column="0" selection-end-line="392" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#2210#2211#0" expanded="false" />
+            <element signature="e#2261#2262#0" expanded="false" />
+            <element signature="e#5596#5597#0" expanded="false" />
+            <element signature="e#5656#5657#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Test.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="731">
-          <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://H:/SimpleExecutaleLanguage/src/Executor.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="354" column="52" selection-start-line="354" selection-start-column="52" selection-end-line="354" selection-end-column="52" />
+        <state relative-caret-position="459">
+          <caret line="62" column="2" selection-start-line="62" selection-start-column="2" selection-end-line="62" selection-end-column="2" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Calculator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="1903" column="45" selection-start-line="1903" selection-start-column="45" selection-end-line="1903" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ScriptManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="507">
-          <caret line="81" column="37" selection-start-line="81" selection-start-column="37" selection-end-line="81" selection-end-column="37" />
-          <folding />
+        <state relative-caret-position="447">
+          <caret line="2092" column="30" selection-start-line="2092" selection-start-column="30" selection-end-line="2092" selection-end-column="30" />
+          <folding>
+            <element signature="e#31950#31951#0" expanded="true" />
+            <element signature="e#32010#32011#0" expanded="true" />
+            <element signature="e#32336#32337#0" expanded="true" />
+            <element signature="e#32372#32373#0" expanded="true" />
+            <element signature="e#33942#33951#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
