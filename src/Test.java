@@ -34,40 +34,39 @@ public class Test {
                 lights[i]=!lights[i];
         }
 
-/*
-        int money=10;
-        int pg=0,ps=0,count=0;
-        while (true){
-            if(money>=2){
-                money-=2;
-                count++;
-                pg++;
-                ps++;
-                continue;
-            }
-            if(pg>=4){
-                money+=2;
-                pg-=4;
-                continue;
-            }
-            if(ps>=2){
-                money+=2;
-                ps-=2;
-                continue;
-            }
-            if(money<2&&pg<4&&ps<2)
-                break;
-        }
 
-        c.LogMessage(String.format("钱%d,瓶身%d,瓶盖%d,瓶:%d",money,ps,pg,count));
+        Scanner input = new Scanner(System.in);
+        /*
+        while(input.hasNextLine()) {
+            String text = input.nextLine();
+            String output = "";
+            int position = -1;
+            char ch = 0;
+            while (true) {
+                position++;
+                if (position >= text.length())
+                    break;
+                ch = text.charAt(position);
+                switch (ch) {
+                    case '@':
+                        output = "";
+                        break;
+                    case '#':
+                        output = output.substring(0, output.length() - 1);
+                        break;
+                    default:
+                        output += ch;
+                        break;
+                }
+            }
+            System.out.print(output);
+        }
 */
 
 
         while(true){
            try {
-                System.gc();
                 System.out.println("input : ");
-                Scanner input = new Scanner(System.in);
                 String expression = input.nextLine();
                 time=System.nanoTime();
                 System.out.print(c.Execute(expression));
