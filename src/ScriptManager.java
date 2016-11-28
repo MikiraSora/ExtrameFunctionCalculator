@@ -168,7 +168,7 @@ public class ScriptManager {
         if(ableCacheReferenceFunction){
             if(CacheFunctionMap.containsKey(function_name))
             {
-                Parser.Statement.Function function=CacheFunctionMap.get(function_name);
+                //Parser.Statement.Function function=CacheFunctionMap.get(function_name);
                 return true;
             }
 

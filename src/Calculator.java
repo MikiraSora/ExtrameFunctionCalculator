@@ -1,3 +1,4 @@
+import com.sun.istack.internal.NotNull;
 import com.sun.javaws.exceptions.ExitException;
 import com.sun.tracing.dtrace.FunctionAttributes;
 import sun.font.Script;
@@ -14,7 +15,7 @@ import java.util.regex.Pattern;
  * Created by mikir on 2016/8/20.
  * */
 
-    public class Calculator {
+public class Calculator {
 
     public static abstract class Expression {
         Expression() {
@@ -105,7 +106,6 @@ import java.util.regex.Pattern;
                 return;
             setReflectionFunction(onReflectionFunction);
             rawText = expression;
-            //Pattern reg = Pattern.compile("([a-zA-Z]\\w*)\\((.*)\\)");
             Matcher result = FunctionFormatRegex.matcher(expression);
             result.find();
             if (result.groupCount() != 2)
@@ -189,7 +189,7 @@ import java.util.regex.Pattern;
             ArrayList<Calculator.Expression> arrayList=new ArrayList<>();
             for(HashMap.Entry<String,Variable> pair:paramter.entrySet())
                 arrayList.add(pair.getValue());
-                return executor.ExecuteFunction(function_name,arrayList);
+            return executor.ExecuteFunction(function_name,arrayList);
         }
 
         @Override
@@ -387,9 +387,11 @@ import java.util.regex.Pattern;
                             if(position<(expression.length()-1)){
                                 tmp_c=expression.charAt(position+1);
                                 tmp_op+=tmp_c;
+                                position++;
                                 /*判断是否存在双字符组合的操作符,兼容逻辑操作符，如>= == !=*/
                                 if(!specialOperationChar.contains(" "+(tmp_op)+" ")){
                                     tmp_op=Character.toString(c);
+                                    position--;
                                 }
                             }
                         }
@@ -565,7 +567,7 @@ import java.util.regex.Pattern;
          * */
         @Override
         String Solve() throws Exception{
-                return Solve(current_paramters);
+            return Solve(current_paramters);
         }
 
         boolean specialAbleStaticParseFunction=true;
@@ -771,7 +773,7 @@ import java.util.regex.Pattern;
         int GetParamterCount(){return OperatorRequestParamterCount.get(rawText);}
     }
 
-    class VariableNotFoundException extends Exception {
+    public static class VariableNotFoundException extends Exception {
         String variable_name;
 
         private VariableNotFoundException() {
@@ -949,10 +951,6 @@ import java.util.regex.Pattern;
         }
 
         void SetValue(String indexes, String value)throws Exception{
-            /*Variable variable=RouteGetVariable(indexes);
-            //if(variable.variable_type!=VariableType.MapVariable)
-            //    variable.SetValue(value);
-            variable.SetValue(value);*/
             RouteSetVariable(indexes, value);
         }
 
@@ -1072,10 +1070,8 @@ import java.util.regex.Pattern;
 
         @Override
         String Solve() throws Exception {
-            Variable variable=GetVariable(current_indexes);
-            if(variable.variable_type!=VariableType.MapVariable)
-                Log.ExceptionError(new Exception(String.format("%s isnt MapVariable",variable.GetName())));
-            return getCalculator().Solve(variable.Solve());
+            Log.ExceptionError(new Exception(String.format("%s cant not call Solve() diectly!",GetName())));
+            return null;
         }
     }
 
@@ -1235,6 +1231,39 @@ import java.util.regex.Pattern;
         public String GetExpreesion(){return rawText;}
     }
 
+    public static class WrapperFunction extends Function{
+        Function bind_function=null;
+        String current_paramster=null;
+        public WrapperFunction(@NotNull Function function,@NotNull String currentParamster){
+            bind_function=function;
+            current_paramters=currentParamster;
+        }
+        @Override
+        String Solve() throws Exception {
+            return bind_function.Solve(current_paramters);
+        }
+    }
+
+    public static class WrapperVariable extends Variable{
+        Variable bind_variable=null;
+        String current_indexes=null;
+        public WrapperVariable(@NotNull Variable variable,String current_indexes){
+            super(null,null,null);
+            bind_variable=variable;
+            this.current_indexes=current_indexes;
+        }
+
+        @Override
+        String Solve() throws Exception {
+            return bind_variable.variable_type!=VariableType.MapVariable?bind_variable.Solve():((MapVariable)bind_variable).RouteGetVariable(current_indexes).Solve();
+        }
+
+        @Override
+        public Digit GetDigit() throws Exception {
+            return new Digit(Solve());
+        }
+    }
+
     /**
      * 已经声明定义的函数列表
      * */
@@ -1279,7 +1308,7 @@ import java.util.regex.Pattern;
         ExpressionOptimize,
         PrecisionTruncation,
         ScriptFunctionCache
-        }
+    }
 
     /**
      * 开启功能，这些功能均为可选的,可以通过DisEnable()关闭
@@ -1462,7 +1491,7 @@ import java.util.regex.Pattern;
                 }else if((!statement.isEmpty())&&c=='['){
                     //array
                     char tmp_ch=0;
-                    position--;
+                    //position--;
                     //读取下标
                     String indexes="";
                     Stack<Integer> balanceStack=new Stack<>();
@@ -1478,6 +1507,8 @@ import java.util.regex.Pattern;
                             continue;
                         }
                         if(tmp_ch==']'){
+                            if(position>=expression.length())
+                                break;
                             balanceStack.pop();
                             if (balanceStack.isEmpty()){
                                 tmp_ch=expression.charAt(position);
@@ -1492,7 +1523,8 @@ import java.util.regex.Pattern;
                     if(variable.variable_type!= Variable.VariableType.MapVariable)
                         Log.ExceptionError(new Exception(String.format("%s isnt MapVariable",statement)));
                     ((MapVariable)variable).SetIndexes(indexes);
-                    expressionArrayList.add(variable);
+                    expressionArrayList.add(new WrapperVariable(variable,indexes));
+                    position--;
                 }
                 else {
                     expr = checkConverExpression(statement);
@@ -1551,7 +1583,7 @@ import java.util.regex.Pattern;
      * @param decimalExpr 浮点文本,如"0.6(7)"
      * @return 可计算的表达式文本，如"(0.6+7/90)"
      * */
-    private static String RepeatingDecimalCoverToExpression(String decimalExpr)throws Exception{
+    static String RepeatingDecimalCoverToExpression(String decimalExpr)throws Exception{
         char c=0;
         int pos=0,notRepeatingDecimalLength=0;
         String notRepeating="",Repeating="";
@@ -1666,8 +1698,7 @@ import java.util.regex.Pattern;
             String function_paramters = result.group(2);
             if (!ContainFunction(function_name))
                 Log.ExceptionError( new Exception(String.format("function %s hadnt declared!", function_name)));
-            Function function = GetFunction(function_name);
-            function.current_paramters = function_paramters;
+            WrapperFunction function=new WrapperFunction(GetFunction(function_name),function_paramters);
             return function;
             //Get function paramater list
         }
@@ -1680,6 +1711,7 @@ import java.util.regex.Pattern;
             Variable variable=GetVariable(text);
             if(variable==null)
                 Log.ExceptionError(new VariableNotFoundException(text));
+            //因为MapVariable并不在此处理所以为了减少引用调用所以不用new WrapperVariable;
             return variable;
         }
 
@@ -1790,7 +1822,7 @@ import java.util.regex.Pattern;
                         symbol = operation_stack.peek();
                         while(symbol!=null){
                             if(!(symbol.rawText .equals("(")))
-                                    if(symbol.CompareOperationPrioty((Symbol)node) >= 0){
+                                if(symbol.CompareOperationPrioty((Symbol)node) >= 0){
                                     result_list.add(operation_stack.pop());
                                     symbol = operation_stack.size() != 0 ? operation_stack.peek() : null;
                                     continue;
@@ -1858,7 +1890,7 @@ import java.util.regex.Pattern;
                             paramterList.add(digit_stack.pop());
                         }
                     }
-                        //paramterList.add(digit_stack.isEmpty() ? (?new Digit("0")): digit_stack.pop());
+                    //paramterList.add(digit_stack.isEmpty() ? (?new Digit("0")): digit_stack.pop());
                     Collections.reverse(paramterList);
                     result=operator.Solve(paramterList,this);
                     for(Expression expr:result)
@@ -1948,12 +1980,19 @@ import java.util.regex.Pattern;
         ConverFunctionToDigit();
         CheckNormalizeChain();//// TODO: 2016/10/2 此方法存在争议，暂时保留
         ExpressionOptimization();
-
         setBSEChain_Stack(ConverToBSE(getRawExpressionChain_Stack()));
-
         String result= ExucuteBSE();
-
         Term_Solve();
+
+        /*
+        try{
+            result=String.valueOf(Integer.parseInt(result));
+        }catch (Exception e){}finally {
+            return result;
+        }*/
+        if(result.contains("."))
+            if(Integer.valueOf(result.substring(result.indexOf('.')+1)).equals(0))
+                return result.substring(0,result.indexOf('.'));
         return result;
     }
 
@@ -2239,10 +2278,10 @@ import java.util.regex.Pattern;
             RegisterVariable(variable);
         }
         else
-            if(variable.variable_type!= Variable.VariableType.MapVariable)
-                Log.Error(String.format("%s isnt MapVariable",variable_name));
-            else
-                ((MapVariable)variable).SetValue(indexes,Solve(variable_expr));
+        if(variable.variable_type!= Variable.VariableType.MapVariable)
+            Log.Error(String.format("%s isnt MapVariable",variable_name));
+        else
+            ((MapVariable)variable).SetValue(indexes,Solve(variable_expr));
 
     }
 

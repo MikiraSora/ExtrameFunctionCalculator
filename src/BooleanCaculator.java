@@ -130,7 +130,7 @@ public class BooleanCaculator {
     /**
      * 操作符列表
      * */
-    private static String specialOperationChar = "+ ++ - -- * / ~ ! != @ # $ % ^ & && ( ) ; : \" \" || ? > >= < <= , ` ' = ==";
+    private static String specialOperationChar = "+ ++ - -- * / ~ ! != @ # $ % ^ & && ( ) ; : \" \" || ? > >= < <= , ` ' = == ";
 
     /**
      * 获取名为name的变量的值
@@ -143,9 +143,134 @@ public class BooleanCaculator {
 
     /**
      * 解析文本成表达式链
-     * @param expression 表达式文本,如"4+x/(abs(sin(x))+6)+1*2"
+     * @param expression 表达式文本,如"4+x/(abs(sin(x))+6)+1*2>0==false"
      * @return 解析好的表达式链表
      * */
+    ArrayList<Calculator.Expression> ParseExpression(String expression) throws Exception {
+        ArrayList<Calculator.Expression> expressionArrayList = new ArrayList<>();
+        int position = 0;
+        char c,tmp_c;
+        Calculator.Expression expr = null;
+        String statement = new String(),tmp_op;
+        Stack<Integer> bracket_stack = new Stack<>();
+        while (true) {
+            if (position >= expression.length())
+                break;
+            c = expression.charAt(position);
+            if (specialOperationChar.contains(" "+String.valueOf(c)+" ")) {
+                if ((!statement.isEmpty()) && (c == '(')) {
+                    //Function Parser
+                    bracket_stack.clear();
+                    while (true) {
+                        if (position >= expression.length())
+                            break;
+                        c = expression.charAt(position);
+                        if (c == '(') {
+                            //判断是否有无限循环小数格式的可能
+                            if(!isDigit(statement)){
+                                bracket_stack.push(position);
+                                statement += c;
+                            }
+                            else {
+                                //无限循环小数格式
+                                int size=0;
+                                while(true){
+                                    statement+=c;
+                                    if(c==')')
+                                        break;
+                                    size++;
+                                    c=expression.charAt(++position);
+                                }
+                                expressionArrayList.add(new Calculator.ExpressionVariable("",Calculator.RepeatingDecimalCoverToExpression(statement),getCalculator()));
+                                statement="";
+                                break;
+                            }
+                        } else {
+                            if (c == ')') {
+                                if (bracket_stack.isEmpty())
+                                    Log.ExceptionError( new Exception("Extra brackets in position: " + position));
+                                bracket_stack.pop();
+                                if (bracket_stack.isEmpty()) {
+                                    statement += ")";
+                                    expressionArrayList.add(checkConverExpression(statement));//should always return Function
+                                    break;
+                                }
+                                //statement += c;
+                            } /*else {
+                                //statement += c;
+                            }*/
+                            statement += c;
+                        }
+                        position++;
+                    }
+                }else if((!statement.isEmpty())&&c=='['){
+                    //array
+                    char tmp_ch=0;
+                    //position--;
+                    //读取下标
+                    String indexes="";
+                    Stack<Integer> balanceStack=new Stack<>();
+
+                    while (true){
+                        if(position>=expression.length())
+                            Log.Error(String.format("%s isnt vaild format",expression));
+                        tmp_ch=expression.charAt(position);
+                        indexes+=tmp_ch;
+                        position++;
+                        if(tmp_ch=='['){
+                            balanceStack.push(position);
+                            continue;
+                        }
+                        if(tmp_ch==']'){
+                            if(position>=expression.length())
+                                break;
+                            balanceStack.pop();
+                            if (balanceStack.isEmpty()){
+                                tmp_ch=expression.charAt(position);
+                                if(tmp_ch!='[')
+                                    break;
+                            }
+                        }
+                    }
+                    Calculator.Variable variable=GetVariable(statement);
+                    if (variable==null)
+                        Log.ExceptionError(new Calculator.VariableNotFoundException(statement));
+                    if(variable.variable_type!= Calculator.Variable.VariableType.MapVariable)
+                        Log.ExceptionError(new Exception(String.format("%s isnt MapVariable",statement)));
+                    ((Calculator.MapVariable)variable).SetIndexes(indexes);
+                    expressionArrayList.add(new Calculator.WrapperVariable(variable,indexes));
+                    position--;
+                }
+                else {
+                    expr = checkConverExpression(statement);
+                    if (expr != null)
+                        expressionArrayList.add(expr);
+                    tmp_op=Character.toString(c);
+                    {
+                        if(position<(expression.length()-1)){
+                            tmp_c=expression.charAt(position+1);
+                            tmp_op+=tmp_c;
+                            position++;
+                            if(!specialOperationChar.contains(" "+(tmp_op)+" ")){
+                                tmp_op=Character.toString(c);
+                                position--;
+                            }
+                        }
+                    }
+                    expressionArrayList.add(new Calculator.Symbol(tmp_op));
+                }
+                //Reflush statement
+                statement = new String();
+            } else {
+                statement += c;
+            }
+            position++;
+        }
+        if (!statement.isEmpty())
+            expressionArrayList.add(checkConverExpression(statement));
+        return expressionArrayList;
+    }
+    /*
     private ArrayList<Calculator.Expression> ParseExpression(String expression) throws Exception {
         ArrayList<Calculator.Expression> expressionArrayList = new ArrayList<>();
         int position = 0;
@@ -211,6 +336,7 @@ public class BooleanCaculator {
             expressionArrayList.add(checkConverExpression(statement));
         return expressionArrayList;
     }
+*/
 
     /**
      * 将表达式链中的函数都进行计算并将结果替换
@@ -317,8 +443,7 @@ public class BooleanCaculator {
             String function_paramters = result.group(2);
             if (!calculator.ContainFunction(function_name))
                 Log.ExceptionError( new Exception(String.format("function %s hadnt declared!", function_name)));
-            Calculator.Function function = GetFunction(function_name);
-            function.current_paramters = function_paramters;
+            Calculator.WrapperFunction function=new Calculator.WrapperFunction(GetFunction(function_name),function_paramters);
             return function;
             //Get function paramater list
         }
@@ -328,7 +453,11 @@ public class BooleanCaculator {
         }
 
         if (isValidVariable(text)) {
-            return calculator.GetVariable(text);
+            Calculator.Variable variable=GetVariable(text);
+            if(variable==null)
+                Log.ExceptionError(new Calculator.VariableNotFoundException(text));
+            //因为MapVariable并不在此处理所以为了减少引用调用所以不用new WrapperVariable;
+            return variable;
         }
 
         return null;
