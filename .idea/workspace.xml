@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ddeeca72-93f9-42ce-8261-e5e9304e1aec" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/out/production/Calculator/Calculator.class" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/BooleanCaculator.java" afterPath="$PROJECT_DIR$/src/BooleanCaculator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Calculator.java" afterPath="$PROJECT_DIR$/src/Calculator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/ScriptManager.java" afterPath="$PROJECT_DIR$/src/ScriptManager.java" />
-    </list>
+    <list default="true" id="ddeeca72-93f9-42ce-8261-e5e9304e1aec" name="Default" comment="" />
     <ignored path="Calculator.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
