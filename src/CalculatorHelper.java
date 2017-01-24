@@ -574,7 +574,7 @@ public class CalculatorHelper {
         * 以步长step,从min到max循环调用Execute(command),无任何内置变量
         * 注意command是要执行的语句，如set a=1
         * */
-        Calculator.RegisterRawFunction("loop_with(step,min,max,command)", new Calculator.ReflectionFunction.OnReflectionFunction() {
+        Calculator.RegisterRawFunction("loop_exe_with(step,min,max,command)", new Calculator.ReflectionFunction.OnReflectionFunction() {
             @Override
             public HashMap<String, Calculator.Variable> onParseParamter(String paramter, Calculator.Function.ParameterRequest request, Calculator calculator)throws Exception{
                 char c;

@@ -1984,15 +1984,13 @@ public class Calculator {
         String result= ExucuteBSE();
         Term_Solve();
 
-        /*
-        try{
-            result=String.valueOf(Integer.parseInt(result));
-        }catch (Exception e){}finally {
-            return result;
-        }*/
-        if(result.contains("."))
-            if(Integer.valueOf(result.substring(result.indexOf('.')+1)).equals(0))
-                return result.substring(0,result.indexOf('.'));
+        if(result.contains(".")) {
+            String tmpDecial=result.substring(result.indexOf('.') + 1);
+            try {
+                if (Integer.valueOf(tmpDecial).equals(0))
+                    return result.substring(0, result.indexOf('.'));
+            }catch (Exception e){}
+        }
         return result;
     }
 

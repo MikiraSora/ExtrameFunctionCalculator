@@ -6,9 +6,11 @@ import java.util.Scanner;
  * Created by mikir on 2016/8/20.
 * */
 public class Test {
+
+    private static Calculator c;
+
     public static void main(String args[])throws Exception {
         System.out.println("Test Start");
-        Calculator c=new Calculator();
         System.out.println("please input \"help\" if you dont know how to use this.");
         long time = 0, prev_t = System.nanoTime();
         long times = 0;
@@ -16,23 +18,13 @@ public class Test {
         long time_max = 1000000000;//1000000000;
         long x = 0;
 
-        int a=(4+6)*2;
+        Calculator c=new Calculator();
 
         //DEBUG中，请勿随便开
         c.DisEnable(Calculator.EnableType.ExpressionOptimize);
         c.Enable(Calculator.EnableType.FunctionStaticParse);
         c.Enable(Calculator.EnableType.PrecisionTruncation);
         c.Enable(Calculator.EnableType.ScriptFunctionCache);
-
-
-        boolean lights[]=new boolean[100];
-        for(int i=0;i<100;i++){
-            lights[i]=true;
-            if(i%3==0)
-                lights[i]=!lights[i];
-            if(i%5==0)
-                lights[i]=!lights[i];
-        }
 
 
         Scanner input = new Scanner(System.in);
@@ -65,16 +57,16 @@ public class Test {
 
 
         while(true){
-           try {
+           //try {
                 System.out.println("input : ");
                 String expression = input.nextLine();
                 time=System.nanoTime();
                 System.out.print(c.Execute(expression));
                 System.out.print(String.format("(用时 %f ms)\n",(System.nanoTime()-time)/1000000.0f));
-            }catch (Exception e){
+           // }catch (Exception e){
               //  throw e;
-                System.out.println("execute command error :"+e.getMessage());
-            }
+              //  System.out.println("execute command error :"+e.getMessage());
+            //}
         }
 /*
         System.out.println(String.format("test start!,calculate solve 4*1*6*(0/1+4*(1*0*1))*6+0*88888/9999"));
