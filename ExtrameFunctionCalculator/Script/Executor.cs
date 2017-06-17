@@ -282,7 +282,7 @@ namespace ExtrameFunctionCalculator.Script
                 }
             }
             catch (ReturnSignal e) { return GetCalculator().Solve(e.ReturnValue); }
-            catch (Exception e) { throw e; }
+            //catch (Exception e) { throw e; }
             finally
             {
                 PopTmpVariable();

@@ -3,6 +3,7 @@ using ExtrameFunctionCalculator.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -194,15 +195,16 @@ namespace ExtrameFunctionCalculator
 
         public String LoadScriptFile(String file_path)
         {
+            /*
             try
-            {
+            {*/
                 GetScriptManager().LoadScript(file_path);
-            }
+           /* }
             catch (Exception e)
             {
                 Log.Error(e.Message);
                 return "loaded scriptfile failed!";
-            }
+            }*/
             return "loaded scriptfile successfully!";
         }
 
@@ -237,6 +239,7 @@ namespace ExtrameFunctionCalculator
         }
 
         public static void RegisterRawVariable(Variable variable) => raw_variable_table.Add(variable.GetName(), variable);
+
 
         public static void RegisterRawFunction(String expression, OnReflectionFunction reflectionFunction)
         {
@@ -600,7 +603,7 @@ namespace ExtrameFunctionCalculator
 
         public String Solve(String expression)
         {
-            expression = expression.Replace(" ", "");
+            //expression = expression.Replace(" ", "");
             if (Utils.isDigit(expression))
                 return expression;
             //rawExpressionChain = ParseExpression(expression);
@@ -924,7 +927,7 @@ namespace ExtrameFunctionCalculator
                         break;
                     }
                 /*
-            case "dump":
+                case "dump":
                 {
                     result = DumpInfo(paramter);
                     break;
@@ -1049,10 +1052,13 @@ namespace ExtrameFunctionCalculator
         static Calculator()
         {
             Init();
+            Log.SetIsThreadCommitLog(true);
         }
 
         static void Init()
         {
+            #region 基本操作符
+
             Symbol.RegisterOperation("+", 2, 6.0f, (paramsList, calculator) => {
                 List<Expression> result = new List<Expression>();
                 Digit a = (Digit)paramsList[0], b = (Digit)paramsList[1];
@@ -1095,6 +1101,360 @@ namespace ExtrameFunctionCalculator
             Symbol.RegisterOperation(")", 2, 99.0f, (paramsList, calculator) => {
                 return null;
             });
+
+            #endregion
+
+            #region 单参数函数
+
+            Calculator.RegisterRawFunction("cos(x)", new OnReflectionFunction() {
+                onReflectionFunction = (paramsList, calculator) => {
+                    return Math.Cos(paramsList["x"].GetDigit().GetDouble()).ToString();
+                }
+            });
+
+            Calculator.RegisterRawFunction("sin(x)", new OnReflectionFunction()
+            {
+                onReflectionFunction = (paramsList, calculator) => {
+                    return Math.Sin(paramsList["x"].GetDigit().GetDouble()).ToString();
+                }
+            });
+
+            Calculator.RegisterRawFunction("tan(x)", new OnReflectionFunction()
+            {
+                onReflectionFunction = (paramsList, calculator) => {
+                    return Math.Tan(paramsList["x"].GetDigit().GetDouble()).ToString();
+                }
+            });
+
+            Calculator.RegisterRawFunction("abs(x)", new OnReflectionFunction()
+            {
+                onReflectionFunction = (paramsList, calculator) => {
+                    return Math.Abs(paramsList["x"].GetDigit().GetDouble()).ToString();
+                }
+            });
+
+            Calculator.RegisterRawFunction("sqrt(x)", new OnReflectionFunction()
+            {
+                onReflectionFunction = (paramsList, calculator) => {
+                    return Math.Sqrt(paramsList["x"].GetDigit().GetDouble()).ToString();
+                }
+            });
+
+            Calculator.RegisterRawFunction("acos(x)", new OnReflectionFunction()
+            {
+                onReflectionFunction = (paramsList, calculator) => {
+                    return Math.Acos(paramsList["x"].GetDigit().GetDouble()).ToString();
+                }
+            });
+
+            Calculator.RegisterRawFunction("asin(x)", new OnReflectionFunction()
+            {
+                onReflectionFunction = (paramsList, calculator) => {
+                    return Math.Asin(paramsList["x"].GetDigit().GetDouble()).ToString();
+                }
+            });
+
+            Calculator.RegisterRawFunction("atan(x)", new OnReflectionFunction()
+            {
+                onReflectionFunction = (paramsList, calculator) => {
+                    return Math.Atan(paramsList["x"].GetDigit().GetDouble()).ToString();
+                }
+            });
+
+            Calculator.RegisterRawFunction("ceil(x)", new OnReflectionFunction()
+            {
+                onReflectionFunction = (paramsList, calculator) => {
+                    return Math.Ceiling(paramsList["x"].GetDigit().GetDouble()).ToString();
+                }
+            });
+
+            Calculator.RegisterRawFunction("cosh(x)", new OnReflectionFunction()
+            {
+                onReflectionFunction = (paramsList, calculator) => {
+                    return Math.Cosh(paramsList["x"].GetDigit().GetDouble()).ToString();
+                }
+            });
+
+            Calculator.RegisterRawFunction("sinh(x)", new OnReflectionFunction()
+            {
+                onReflectionFunction = (paramsList, calculator) => {
+                    return Math.Sinh(paramsList["x"].GetDigit().GetDouble()).ToString();
+                }
+            });
+
+            Calculator.RegisterRawFunction("tanh(x)", new OnReflectionFunction()
+            {
+                onReflectionFunction = (paramsList, calculator) => {
+                    return Math.Tanh(paramsList["x"].GetDigit().GetDouble()).ToString();
+                }
+            });
+
+            Calculator.RegisterRawFunction("exp(x)", new OnReflectionFunction()
+            {
+                onReflectionFunction = (paramsList, calculator) => {
+                    return Math.Exp(paramsList["x"].GetDigit().GetDouble()).ToString();
+                }
+            });
+
+            Calculator.RegisterRawFunction("floor(x)", new OnReflectionFunction()
+            {
+                onReflectionFunction = (paramsList, calculator) => {
+                    return Math.Floor(paramsList["x"].GetDigit().GetDouble()).ToString();
+                }
+            });
+
+            Calculator.RegisterRawFunction("log(x)", new OnReflectionFunction()
+            {
+                onReflectionFunction = (paramsList, calculator) => {
+                    return Math.Log(paramsList["x"].GetDigit().GetDouble()).ToString();
+                }
+            });
+
+            Calculator.RegisterRawFunction("acos(x)", new OnReflectionFunction()
+            {
+                onReflectionFunction = (paramsList, calculator) => {
+                    return Math.Acos(paramsList["x"].GetDigit().GetDouble()).ToString();
+                }
+            });
+
+            Calculator.RegisterRawFunction("log10(x)", new OnReflectionFunction()
+            {
+                onReflectionFunction = (paramsList, calculator) => {
+                    return Math.Log10(paramsList["x"].GetDigit().GetDouble()).ToString();
+                }
+            });
+
+            Random random = new Random(Environment.TickCount);
+
+            Calculator.RegisterRawFunction("random(x)", new OnReflectionFunction()
+            {
+                onReflectionFunction = (paramsList, calculator) => {
+                    return (random.Next()%((int)(paramsList["x"].GetDigit().GetDouble()))).ToString();
+                }
+            });
+
+            Calculator.RegisterRawFunction("round(x)", new OnReflectionFunction()
+            {
+                onReflectionFunction = (paramsList, calculator) => {
+                    return Math.Round(paramsList["x"].GetDigit().GetDouble()).ToString();
+                }
+            });
+
+            Calculator.RegisterRawFunction("sign(x)", new OnReflectionFunction()
+            {
+                onReflectionFunction = (paramsList, calculator) => {
+                    return Math.Sign(paramsList["x"].GetDigit().GetDouble()).ToString();
+                }
+            });
+
+            Calculator.RegisterRawFunction("truncate(x)", new OnReflectionFunction()
+            {
+                onReflectionFunction = (paramsList, calculator) => {
+                    return Math.Truncate(paramsList["x"].GetDigit().GetDouble()).ToString();
+                }
+            });
+
+            Calculator.RegisterRawFunction("toRadians(x)", new OnReflectionFunction()
+            {
+                onReflectionFunction = (paramsList, calculator) => {
+                    return (paramsList["x"].GetDigit().GetDouble()*Math.PI/180.0f).ToString();
+                }
+            });
+
+            Calculator.RegisterRawFunction("toDegrees(x)", new OnReflectionFunction()
+            {
+                onReflectionFunction = (paramsList, calculator) => {
+                    return (paramsList["x"].GetDigit().GetDouble()*180.0f/Math.PI).ToString();
+                }
+            });
+
+            Calculator.RegisterRawFunction("fact(x)", new OnReflectionFunction()
+            {
+                onReflectionFunction = (paramsList, calculator) => {
+                    BigInteger bigInt = new BigInteger(1);
+                    for (int i = 1; i <= ((int)paramsList["x"].GetDigit().GetDouble()); i++)
+                    {
+                        bigInt = bigInt*i;
+                    }
+                    return bigInt.ToString();
+                }
+            });
+
+            #endregion
+
+            #region 双参数函数
+
+            Calculator.RegisterRawFunction("mod(x,y)", new OnReflectionFunction()
+            {
+                onReflectionFunction = (paramsList, calculator) => {
+                    return (paramsList["x"].GetDigit().GetDouble() % paramsList["y"].GetDigit().GetDouble()).ToString();
+                }
+            });
+
+            Calculator.RegisterRawFunction("IEEERemainder(x,y)", new OnReflectionFunction()
+            {
+                onReflectionFunction = (paramsList, calculator) => {
+                    return Math.IEEERemainder(paramsList["x"].GetDigit().GetDouble(), paramsList["y"].GetDigit().GetDouble()).ToString();
+                }
+            });
+
+            Calculator.RegisterRawFunction("max(x,y)", new OnReflectionFunction()
+            {
+                onReflectionFunction = (paramsList, calculator) => {
+                    return Math.Max(paramsList["x"].GetDigit().GetDouble() , paramsList["y"].GetDigit().GetDouble()).ToString();
+                }
+            });
+
+            Calculator.RegisterRawFunction("min(x,y)", new OnReflectionFunction()
+            {
+                onReflectionFunction = (paramsList, calculator) => {
+                    return Math.Min(paramsList["x"].GetDigit().GetDouble(), paramsList["y"].GetDigit().GetDouble()).ToString();
+                }
+            });
+
+            Calculator.RegisterRawFunction("pow(x,y)", new OnReflectionFunction()
+            {
+                onReflectionFunction = (paramsList, calculator) => {
+                    return Math.Pow(paramsList["x"].GetDigit().GetDouble(), paramsList["y"].GetDigit().GetDouble()).ToString();
+                }
+            });
+
+            #endregion
+
+            #region 超级无敌炫酷牛逼吊炸上天函数
+
+            Calculator.RegisterRawFunction("if(condition,true_expr,false_expr)", new OnReflectionFunction()
+            {
+                onParseParameter=(String paramter, Function.ParameterRequestWrapper request, Calculator calculator) => {
+                    char c;
+                    int requestIndex = 0;
+                    Dictionary<string, Variable> variableHashMap = new Dictionary<string, Variable>();
+                    Stack<int> BracketStack = new Stack<int>();
+                    String paramterString ="";
+                    for (int pos = 0; pos < paramter.Length; pos++)
+                    {
+                        c = paramter[(pos)];
+                        if (c == '(')
+                        {
+                            BracketStack.Push(pos);
+                        }
+                        else if (c == ')')
+                        {
+                            if (!(BracketStack.Count==0))
+                                BracketStack.Pop();
+                            else
+                                throw new Exception("Not found a pair of bracket what defining a expression");
+                        }
+
+                        if (c == ',' && BracketStack.Count==0)
+                        {
+                            String requestParamterName = request.GetParamterName(requestIndex++);
+                            variableHashMap[requestParamterName]= new ExpressionVariable(requestParamterName, paramterString, calculator);
+                            paramterString = "";
+                        }
+                        else
+                        {
+                            paramterString += c;
+                        }
+                    }
+                    if (!(paramter.Length==0))
+                        variableHashMap[request.GetParamterName(requestIndex)] = new ExpressionVariable(request.GetParamterName(requestIndex), (paramterString), calculator);
+                    return variableHashMap;
+                },
+
+                onReflectionFunction = (paramsList, calculator) => {
+                    var boolcalculator = new BooleanCalculatorSupport.BooleanCalculator(calculator);
+                    if(boolcalculator.Solve(((ExpressionVariable)paramsList[("condition")]).RawText))
+                        return calculator.Solve(paramsList[("true_expr")].Solve());
+                    else
+                        return calculator.Solve(paramsList[("false_expr")].Solve());
+                }
+            });
+
+            Calculator.RegisterRawFunction("loop_with(step,min,max,expr)", new OnReflectionFunction()
+            {
+                onParseParameter = (String paramter, Function.ParameterRequestWrapper request, Calculator calculator) => {
+                    char c;
+                    int requestIndex = 0;
+                    Dictionary<String, Variable> variableHashMap = new Dictionary<string, Variable>();
+                    Stack<int> BracketStack = new Stack<int>();
+                    String paramterString = "";
+                    for (int pos = 0; pos < paramter.Length; pos++)
+                    {
+                        c = paramter[(pos)];
+                        if (c == '(')
+                        {
+                            BracketStack.Push(pos);
+                        }
+                        else if (c == ')')
+                        {
+                            if (!(BracketStack.Count==0))
+                                BracketStack.Pop();
+                            else
+                                throw new Exception("Not found a pair of bracket what defining a expression");
+                        }
+
+                        if (c == ',' && BracketStack.Count==0)
+                        {
+                            String requestParamterName = request.GetParamterName(requestIndex++);
+                            variableHashMap[requestParamterName] = requestParamterName==("expr") ? new ExpressionVariable(requestParamterName, paramterString, calculator) : new Variable(requestParamterName, paramterString, calculator);
+                            paramterString = "";
+                        }
+                        else
+                        {
+                            paramterString += c;
+                        }
+                    }
+                    if (!(paramter.Length==0))
+                        variableHashMap[request.GetParamterName(requestIndex)] = new ExpressionVariable(request.GetParamterName(requestIndex), (paramterString), calculator);
+                    return variableHashMap;
+                },
+
+                onReflectionFunction = (paramsList, calculator) => {
+                    double step = paramsList[("step")].GetDigit().GetDouble();
+                    double min = paramsList[("min")].GetDigit().GetDouble();
+                    double max = paramsList[("max")].GetDigit().GetDouble();
+                    String expr = ((ExpressionVariable)paramsList[("expr")]).RawText;
+                    Function function = new Function(String.Format("tmp_execute(_index,_step,_min,_max,_out)={0}", expr), calculator);//todo 可优化
+                    function.IsSpecialAbleStaticParseFunction = false;
+                    String result= "0";
+                    for (double i = min; i <= max; i += step)
+                    {
+                        //                    calculator.GetFunction("loop_with").paramter.get("x").rawText=Double.toString(i);
+                        result = function.Solve(String.Format("{0},{1},{2},{3},{4}", i, step, min, max, result));
+                    }
+                    return result;
+                }
+            });
+
+            Calculator.RegisterRawFunction("execute(command)",new OnReflectionFunction() {
+                onParseParameter = (string paramter, Function.ParameterRequestWrapper parameterRequest, Calculator calculator) => {
+                    Dictionary<String, Variable> ParamterMap = new Dictionary<string,Variable>();
+                    ParamterMap[parameterRequest.GetParamterName(0)] = new ExpressionVariable(parameterRequest.GetParamterName(0), paramter, calculator);
+                    return ParamterMap;
+                },
+
+                onReflectionFunction = (Dictionary<String, Variable> parameter, Calculator calculator) => {
+                    Variable variable = parameter[("command")];
+                    String execute_text = "";
+                    switch (variable.VariableType)
+                    {
+                        case VariableType.Normal:
+                            {
+                                execute_text = variable.Solve();
+                                return execute_text;
+                            }
+                        case VariableType.ExpressionVariable:
+                            {
+                                execute_text = ((ExpressionVariable)variable).RawText;
+                                break;
+                            }
+                    }
+                    return calculator.Execute(execute_text.Trim('\"'));
+                }
+            });
+
+            #endregion
         }
 
         #endregion

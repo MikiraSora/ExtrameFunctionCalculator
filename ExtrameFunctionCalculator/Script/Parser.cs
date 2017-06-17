@@ -50,7 +50,8 @@ namespace ExtrameFunctionCalculator.Script
 
             for (int position = 0; position < statements.Count; position++)
             {
-                text = statements[(position)];
+                text = statements[(position)].Trim().Trim(new char[]{'\t','\n'});
+
                 if (text.Length==0)
                     continue;
 
@@ -64,7 +65,7 @@ namespace ExtrameFunctionCalculator.Script
                 //Label
                 //text.toLowerCase();
 
-                switch (text.Trim())
+                switch (text)
                 {
                     case "endfunction":
                         PushStatement(new EndFunction(GetNewLineId(), this));
@@ -215,9 +216,9 @@ namespace ExtrameFunctionCalculator.Script
             Function function = null;
             while (true) {
                 position++;
-                unit = statement_lines[(position)];
                 if (position >= statement_lines.Count)
                     break;
+                unit = statement_lines[(position)];
                 if (unit.UnitType == UnitType.Statement) {
                     if (((Statement)unit).StatementType == StatementType.Function) {
                         if (((Function)unit).FunctionType == FunctionType.Begin) {

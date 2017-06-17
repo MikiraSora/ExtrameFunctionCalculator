@@ -140,12 +140,13 @@ namespace ExtrameFunctionCalculator.Types
         static string specialOperationChar = " + - * / [ ] ~ ! @ # $ % ^ & ( ) ; : \" | ? > < , ` ' \\ ";
 
         bool specialAbleStaticParseFunction = true;
+        public bool IsSpecialAbleStaticParseFunction { get { return specialAbleStaticParseFunction; } set { specialAbleStaticParseFunction = value; } }
 
         protected Dictionary<string, Variable> parameters = new Dictionary<string, Variable>();
 
         public Function(string expression, Calculator calculator) : base(calculator)
         {
-            if (expression == null && expression.Length == 0)
+            if (expression == null || expression.Length == 0)
                 return;
             _raw_text = expression;
             Match result = FunctionFormatRegex.Match(expression);
@@ -181,7 +182,7 @@ namespace ExtrameFunctionCalculator.Types
                 if (c == ',' && (BracketStack.Count == 0))
                 {
                     string requestParamterName = request[(requestIndex++)];
-                    this.parameters.Add(requestParamterName, new Variable(requestParamterName, this.Calculator.Solve(paramter), this.Calculator));
+                    this.parameters[requestParamterName] = new Variable(requestParamterName, this.Calculator.Solve(paramter), this.Calculator);
                     paramter = "";
                 }
                 else
@@ -190,7 +191,7 @@ namespace ExtrameFunctionCalculator.Types
                 }
             }
             if ((paramter.Length != 0))
-                this.parameters.Add(request[(requestIndex)], new ExpressionVariable(request[(requestIndex)], this.Calculator.Solve(paramter), this.Calculator));
+                this.parameters[request[(requestIndex)]] = new ExpressionVariable(request[(requestIndex)], this.Calculator.Solve(paramter), this.Calculator);
         }
 
         string ParseDeclaring(string expression)

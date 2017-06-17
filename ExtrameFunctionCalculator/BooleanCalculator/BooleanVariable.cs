@@ -25,9 +25,9 @@ namespace ExtrameFunctionCalculator.BooleanCalculatorSupport
             boolean_value = expression == TRUE ? true : expression == FALSE ? false : (Double.Parse(Calculator.Solve(expression)) == 0);
         }
 
-        BooleanVariable(bool value, Calculator calculator1):this("",value.ToString(), calculator1)
+        public BooleanVariable(bool value, Calculator calculator1):base("",value.ToString(), calculator1)
         {
-            //boolean_value=value;
+            boolean_value=value;
         }
 
         ExpressionVariable Copy()

@@ -372,8 +372,8 @@ namespace ExtrameFunctionCalculator.BooleanCalculatorSupport
             }
             catch (Exception e)
             {
-                Log.ExceptionError(new Exception(e.Message));
-
+                //Log.ExceptionError(new Exception(e.Message));
+                throw e;
             }
             //get last expression in stack as result and output.
             Expression va = digit_stack.Pop();
@@ -394,5 +394,128 @@ namespace ExtrameFunctionCalculator.BooleanCalculatorSupport
             ConverToBSE();
             return ExucuteBSE();
         }
+
+
+        #region Init
+
+        static BooleanCalculator()
+        {
+            Init();
+        }
+
+
+        static void Init()
+        {
+
+            Calculator.RegisterRawVariable(new BooleanVariable(true, null));
+
+            Calculator.RegisterRawVariable(new BooleanVariable(false, null));
+
+            Symbol.RegisterOperation(">", 2, 3.0f, (paramsList, calculator) => {
+                List<Expression> result = new List<Expression>();
+                Expression a = paramsList[0], b = paramsList[1];
+                if (!((a.IsCalculatable) && (b.IsCalculatable)))
+                    Log.ExceptionError(new Exception("cant take a pair of valid type to calculate."));
+
+                double va = double.Parse(calculator.Solve(a.Solve()));
+                double vb = double.Parse(calculator.Solve(b.Solve()));
+
+                result.Add(new BooleanVariable(va > vb, calculator));
+                return result;
+            });
+
+            Symbol.RegisterOperation("<", 2, 3.0f, (paramsList, calculator) => {
+                List<Expression> result = new List<Expression>();
+                Expression a = paramsList[0], b = paramsList[1];
+                if (!((a.IsCalculatable) && (b.IsCalculatable)))
+                    Log.ExceptionError(new Exception("cant take a pair of valid type to calculate."));
+
+                double va = double.Parse(calculator.Solve(a.Solve()));
+                double vb = double.Parse(calculator.Solve(b.Solve()));
+
+                result.Add(new BooleanVariable(va < vb, calculator));
+                return result;
+            });
+
+            Symbol.RegisterOperation(">=", 2, 3.0f, (paramsList, calculator) => {
+                List<Expression> result = new List<Expression>();
+                Expression a = paramsList[0], b = paramsList[1];
+                if (!((a.IsCalculatable) && (b.IsCalculatable)))
+                    Log.ExceptionError(new Exception("cant take a pair of valid type to calculate."));
+
+                double va = double.Parse(calculator.Solve(a.Solve()));
+                double vb = double.Parse(calculator.Solve(b.Solve()));
+
+                result.Add(new BooleanVariable(va >= vb, calculator));
+                return result;
+            });
+
+            Symbol.RegisterOperation("<=", 2, 3.0f, (paramsList, calculator) => {
+                List<Expression> result = new List<Expression>();
+                Expression a = paramsList[0], b = paramsList[1];
+                if (!((a.IsCalculatable) && (b.IsCalculatable)))
+                    Log.ExceptionError(new Exception("cant take a pair of valid type to calculate."));
+
+                double va = double.Parse(calculator.Solve(a.Solve()));
+                double vb = double.Parse(calculator.Solve(b.Solve()));
+
+                result.Add(new BooleanVariable(va <= vb, calculator));
+                return result;
+            });
+
+            Symbol.RegisterOperation("==", 2, 2.5f, (paramsList, calculator) => {
+                List<Expression> result = new List<Expression>();
+                Expression a = paramsList[0], b = paramsList[1];
+                if (!((a.IsCalculatable) && (b.IsCalculatable)))
+                    Log.ExceptionError(new Exception("cant take a pair of valid type to calculate."));
+
+                double va = double.Parse(calculator.Solve(a.Solve()));
+                double vb = double.Parse(calculator.Solve(b.Solve()));
+
+                result.Add(new BooleanVariable(va == vb, calculator));
+                return result;
+            });
+
+            Symbol.RegisterOperation("!=", 2, 2.5f, (paramsList, calculator) => {
+                List<Expression> result = new List<Expression>();
+                Expression a = paramsList[0], b = paramsList[1];
+                if (!((a.IsCalculatable) && (b.IsCalculatable)))
+                    Log.ExceptionError(new Exception("cant take a pair of valid type to calculate."));
+
+                double va = double.Parse(calculator.Solve(a.Solve()));
+                double vb = double.Parse(calculator.Solve(b.Solve()));
+
+                result.Add(new BooleanVariable(va != vb, calculator));
+                return result;
+            });
+
+            Symbol.RegisterOperation("&&", 2, 2.3f, (paramsList, calculator) => {
+                List<Expression> result = new List<Expression>();
+                Expression a = paramsList[0], b = paramsList[1];
+                if (!((a.IsCalculatable) && (b.IsCalculatable)))
+                    Log.ExceptionError(new Exception("cant take a pair of valid type to calculate."));
+
+                double va = double.Parse(calculator.Solve(a.Solve()));
+                double vb = double.Parse(calculator.Solve(b.Solve()));
+
+                result.Add(new BooleanVariable((va!=0) && (vb!=0), calculator));
+                return result;
+            });
+
+            Symbol.RegisterOperation("||", 2, 2.3f, (paramsList, calculator) => {
+                List<Expression> result = new List<Expression>();
+                Expression a = paramsList[0], b = paramsList[1];
+                if (!((a.IsCalculatable) && (b.IsCalculatable)))
+                    Log.ExceptionError(new Exception("cant take a pair of valid type to calculate."));
+
+                double va = double.Parse(calculator.Solve(a.Solve()));
+                double vb = double.Parse(calculator.Solve(b.Solve()));
+
+                result.Add(new BooleanVariable((va!=0) || (vb!=0), calculator));
+                return result;
+            });
+        }
+
+        #endregion
     }
 }

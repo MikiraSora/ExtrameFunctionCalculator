@@ -38,11 +38,11 @@ namespace ExtrameFunctionCalculator.Script.Types
             if (body == null)
                 return;
             Match result = FunctionFormatRegex.Match(statement);
-            if (result.Captures.Count != 2)
+            if (result.Groups.Count != 3)
                 throw new Exception("Cant parse function :" + statement);
             //Log.ExceptionError( new Exception("Cannot parse function ：" + expression));
-            function_name = result.Captures[1].Value;
-            request = new ExtrameFunctionCalculator.Types.Function.ParameterRequestWrapper(result.Captures[2].Value);
+            function_name = result.Groups[1].Value;
+            request = new ExtrameFunctionCalculator.Types.Function.ParameterRequestWrapper(result.Groups[2].Value);
             reference_parser = parser;
         }
 

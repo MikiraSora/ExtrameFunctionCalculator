@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
@@ -64,8 +65,8 @@ namespace ExtrameFunctionCalculator
                 long sec = (time_strip - min * 1000 * 60) / 1000;
                 long mill_sec = time_strip - min * 60 * 1000 - sec * 1000;
                 if (Log.IsShowCallerMethod)
-                    return String.Format("%c[%2d:%2d:%2d %s]%s():%s", message_type.ToString()[(0)], min, sec, mill_sec, message_type.ToString(), callerMethodName != null ? callerMethodName : "unknown_method", message);
-                return String.Format("%c[%2d:%2d:%2d %s]%s", message_type.ToString()[0], min, sec, mill_sec, message_type.ToString(), message);
+                    return String.Format("{0}[{1}:{2}:{3} {4}]{5}():{6}", message_type.ToString()[(0)], min, sec, mill_sec, message_type.ToString(), callerMethodName != null ? callerMethodName : "unknown_method", message);
+                return String.Format("{0}[{1}:{2}:{3} {4}]{5}", message_type.ToString()[0], min, sec, mill_sec, message_type.ToString(), message);
             }
         }
 
@@ -116,28 +117,7 @@ namespace ExtrameFunctionCalculator
                         }
                         catch (Exception e) { }
                     }
-                    /*
-                    while(!CommitLogQueue.isEmpty()) {
-                        message = CommitLogQueue.remove(0);
-                        if (CommitLogQueue.size() > limitCount) {
-                            //触发规则
-                            if(!isHighLevelCommit){
-                                //启动
-                                isHighLevelCommit=true;
-                                if(highlevelThread==null){
-                                    highlevelThread=new Thread(highLevelMaintenanceRunnable);
-                                    highlevelThread.start();
-                                }else{
-                                    if(highLevelMaintenanceRunnable.isExit()){
-                                        highlevelThread.start();
-                                    }
-                                }
-                            }
-                        }
-                        if(isHighLevelCommit){
-                            highLevelMaintenanceRunnable.PostMessageSend(message);
-                            continue;
-                        }*/
+
                     message = CommitLogQueue.Count == 0 ? null : CommitLogQueue[(0)];
                     if (message == null)
                         continue;
@@ -212,14 +192,18 @@ namespace ExtrameFunctionCalculator
                 socket.Close();
             if (socket != null)
                 socket.Close();
-            socket = new Socket(SocketType.Raw, ProtocolType.Tcp);
+            socket = new Socket(SocketType.Stream, ProtocolType.Tcp);
+            IPAddress ipaddr = IPAddress.Parse("127.0.0.1");
+            IPEndPoint point = new IPEndPoint(ipaddr, port);
+
+            socket.Connect(point);
         }
 
         private static void SocketWrite(String text)
         {
             if (!IsConnecting())
                 Connect();
-            socket.Send(Encoding.Default.GetBytes(text));
+            socket.Send(Encoding.UTF8.GetBytes(text));
         }
 
         public static void LogWrite(Message message)

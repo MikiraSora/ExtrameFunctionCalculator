@@ -12,6 +12,8 @@ namespace ExtrameFunctionCalculator.Types
 
         public override ExpressionType ExpressionType => ExpressionType.Digit;
 
+        public override bool IsCalculatable => true;
+
         public Digit(string digit) : base(null)
         {
             _raw_text = digit;

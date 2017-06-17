@@ -7,13 +7,18 @@ using System.Text.RegularExpressions;
 
 namespace ExtrameFunctionCalculator.Types
 {
-    public interface OnReflectionFunction
+    public class OnReflectionFunction
     {
-        string onReflectFunction(Dictionary<String, Variable> parameter, Calculator calculator);
-        string HelpDesc { get; }
-        bool IsDierivativable { get; }
-        string onDerivativeConvertParse();
-        Dictionary<String, Variable> onParseParameter(String paramter, Function.ParameterRequestWrapper request, Calculator calculator);
+        public delegate string OnFunctionSolveFunc(Dictionary<String, Variable> parameter, Calculator calculator);
+        public OnFunctionSolveFunc onReflectionFunction=null;
+
+        public string HelpDesc { get; set; } = null;
+
+        public delegate string OnDerivativeConvertParseFunc();
+        public OnDerivativeConvertParseFunc onDerivativeConvertParse=null;
+
+        public delegate Dictionary<String, Variable> OnParseParameterFunc(String paramter, Function.ParameterRequestWrapper request, Calculator calculator);
+        public OnParseParameterFunc onParseParameter=null;
     }
 
     public class ReflectionFunction:Function
@@ -44,14 +49,14 @@ namespace ExtrameFunctionCalculator.Types
 
         public override string Solve(string parameterList)
         {
-            Dictionary<String, Variable> custom_paramter = _bind_reflection_function.onParseParameter(parameterList, request,Calculator);
+            Dictionary<String, Variable> custom_paramter = _bind_reflection_function.onParseParameter?.Invoke(parameterList, request,Calculator);
 
             if (custom_paramter == null)/*返回null意味着按照国际惯例来解析传入参数*/
                 Parse(parameterList);
             else
                 parameters = custom_paramter;
                 
-            return _bind_reflection_function.onReflectFunction(parameters, Calculator);
+            return _bind_reflection_function.onReflectionFunction(parameters, Calculator);
         }
     }
 }

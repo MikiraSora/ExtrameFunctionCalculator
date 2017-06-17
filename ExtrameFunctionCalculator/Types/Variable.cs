@@ -19,7 +19,7 @@ namespace ExtrameFunctionCalculator.Types
     {
         public override ExpressionType ExpressionType { get { return ExpressionType.Variable; } }
 
-        public override bool IsCalculatable { get { return true; } }
+        public override bool IsCalculatable => true;
 
         protected string _variable_name = "";
         public string VariableName { get { return _variable_name; } }
