@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ExtrameFunctionCalculator;
+using System.Threading;
 
 namespace Test
 {
@@ -11,6 +12,8 @@ namespace Test
     {
         static void Main(string[] args)
         {
+            //SpeedTestLogger();
+
             Calculator calculator = new Calculator();
 
             while (true)
@@ -25,6 +28,33 @@ namespace Test
             }
 
             Console.ReadLine();
+        }
+
+        volatile static int counter = 0;
+
+        static void SpeedTestLogger()
+        {
+            Calculator calculator = new Calculator();
+            Log.EnableLog = false;
+            counter = 0;
+            Timer timer = new Timer((state) => {
+                Console.WriteLine($"{counter} t/s");
+                counter = 0;
+            },null,0,1000);
+
+            for (int i = 0; i < 7; i++)
+            {
+                ThreadPool.QueueUserWorkItem((state) => {
+                    while (true)
+                    {
+                        calculator.Solve("4+6*8/2*random(100)");
+                        counter++;
+                    }
+                },null);
+            }
+
+            Console.ReadLine();
+            Environment.Exit(0);
         }
     }
 }

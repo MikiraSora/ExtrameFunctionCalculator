@@ -224,7 +224,7 @@ namespace ExtrameFunctionCalculator
             return false;
         }
 
-        public static void RegisterRawVariable(Variable variable) => raw_variable_table.Add(variable.GetName(), variable);
+        public static void RegisterRawVariable(Variable variable) => raw_variable_table[variable.GetName()] = variable;
 
 
         public static void RegisterRawFunction(String expression, OnReflectionFunction reflectionFunction)
@@ -1041,9 +1041,9 @@ namespace ExtrameFunctionCalculator
 
         public void RegisterOperation(String operatorSymbol, int requestParamterSize, float operatorPrioty, OnCalculateFunc operatorFunction)
         {
-            OperatorFunction.Add(operatorSymbol, operatorFunction);
-            OperatorPrioty.Add(operatorSymbol, operatorPrioty);
-            OperatorRequestParamterCount.Add(operatorSymbol, requestParamterSize);
+            OperatorFunction[operatorSymbol] = operatorFunction;
+            OperatorPrioty[operatorSymbol] = operatorPrioty;
+            OperatorRequestParamterCount[operatorSymbol]=requestParamterSize;
             SharedSymbolCache[operatorSymbol]=GetSymbolMayFromCache(operatorSymbol);
         }
 
@@ -1324,6 +1324,8 @@ namespace ExtrameFunctionCalculator
 
             #region 超级无敌炫酷牛逼吊炸上天函数
 
+            var boolcalculator = new BooleanCalculatorSupport.BooleanCalculator(this);
+
             Calculator.RegisterRawFunction("if(condition,true_expr,false_expr)", new OnReflectionFunction()
             {
                 onParseParameter=(String paramter, Function.ParameterRequestWrapper request, Calculator calculator) => {
@@ -1364,7 +1366,6 @@ namespace ExtrameFunctionCalculator
                 },
 
                 onReflectionFunction = (paramsList, calculator) => {
-                    var boolcalculator = new BooleanCalculatorSupport.BooleanCalculator(calculator);
                     if(boolcalculator.Solve(((ExpressionVariable)paramsList[("condition")]).RawText))
                         return calculator.Solve(paramsList[("true_expr")].Solve());
                     else
@@ -1420,7 +1421,6 @@ namespace ExtrameFunctionCalculator
                     String result= "0";
                     for (double i = min; i <= max; i += step)
                     {
-                        //                    calculator.GetFunction("loop_with").paramter.get("x").rawText=Double.toString(i);
                         result = function.Solve(String.Format("{0},{1},{2},{3},{4}", i, step, min, max, result));
                     }
                     return result;
