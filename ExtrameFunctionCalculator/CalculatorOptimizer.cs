@@ -43,11 +43,11 @@ namespace ExtrameFunctionCalculator
 
             public ExtrameFunctionCalculator.Types.Symbol GetOperatorReference()=> (ExtrameFunctionCalculator.Types.Symbol)GetExpressionReference();
 
-            private float GetOperatorPriorty() { return Symbol.OperatorPrioty.ContainsKey(GetOperatorReference().RawText) ? Symbol.OperatorPrioty[(GetOperatorReference().RawText)] : -1; }
+            private float GetOperatorPriorty() { return GetOperatorReference().Calculator.OperatorPrioty.ContainsKey(GetOperatorReference().RawText) ? GetOperatorReference().Calculator.OperatorPrioty[(GetOperatorReference().RawText)] : -1; }
 
             public bool isSameLevelLayout(Operator op) => this.GetOperatorPriorty() == op.GetOperatorPriorty();
 
-            public bool isSameLevelLayout(String operatorChar) => this.GetOperatorPriorty() == (Symbol.OperatorPrioty.ContainsKey(operatorChar) ? ExtrameFunctionCalculator.Types.Symbol.OperatorPrioty[(operatorChar)] : 0);
+            public bool isSameLevelLayout(String operatorChar) => this.GetOperatorPriorty() == (GetOperatorReference().Calculator.OperatorPrioty.ContainsKey(operatorChar) ? GetOperatorReference().Calculator.OperatorPrioty[(operatorChar)] : 0);
 
             public bool isBaseOperator()
             {

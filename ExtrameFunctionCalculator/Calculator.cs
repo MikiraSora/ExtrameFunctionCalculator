@@ -24,6 +24,7 @@ namespace ExtrameFunctionCalculator
 
         public Calculator()
         {
+            Init();
             calculatorOptimizer = new CalculatorOptimizer(this);
             scriptManager = new ScriptManager(this);
         }
@@ -43,9 +44,6 @@ namespace ExtrameFunctionCalculator
         {
             switch (enableType)
             {
-                case EnableType.FunctionStaticParse:
-                    FunctionStaticEnable(true);
-                    break;
                 case EnableType.ExpressionOptimize:
                     OptimizeEnable(true);
                     break;
@@ -57,11 +55,6 @@ namespace ExtrameFunctionCalculator
                     break;
             }
             Log.Debug(String.Format("开启功能:{0}", enableType.ToString()));
-        }
-
-        void FunctionStaticEnable(bool sw)
-        {
-            Function.ableStaticParseFunction = sw;
         }
 
         void OptimizeEnable(bool sw)
@@ -95,9 +88,6 @@ namespace ExtrameFunctionCalculator
         {
             switch (enableType)
             {
-                case EnableType.FunctionStaticParse:
-                    FunctionStaticEnable(false);
-                    break;
                 case EnableType.ExpressionOptimize:
                     OptimizeEnable(false);
                     break;
@@ -286,7 +276,7 @@ namespace ExtrameFunctionCalculator
         private void RegisterFunction(Function function)
         {
             Log.Debug(function.ToString());
-            function_table.Add(function.GetName(), function);
+            function_table[function.GetName()]= function;
         }
 
         private void RegisterVariable(Variable variable)
@@ -433,7 +423,7 @@ namespace ExtrameFunctionCalculator
                                 }
                             }
                         }
-                        expressionArrayList.Add(new Symbol(tmp_op));
+                        expressionArrayList.Add(new Symbol(tmp_op,this));
                     }
                     //Reflush statement
                     statement = "";
@@ -631,7 +621,7 @@ namespace ExtrameFunctionCalculator
             for (int position = 0; position < expressionArrayList.Count; position++)
             {
                 node = expressionArrayList[(position)];
-                if (node.ExpressionType == ExpressionType.Digit || (Function.ableStaticParseFunction ? (node.ExpressionType == ExpressionType.Function || node.ExpressionType == ExpressionType.Variable) : false))
+                if (node.ExpressionType == ExpressionType.Digit)
                     result_list.Add(node);
                 else
                 {
@@ -758,7 +748,6 @@ namespace ExtrameFunctionCalculator
             catch (Exception e)
             {
                 Log.ExceptionError(new Exception(e.Message));
-
             }
             Expression resultExpr = digit_stack.Pop();
             return (resultExpr.ExpressionType == ExpressionType.Digit) ? (((Digit)resultExpr).GetDouble()).ToString() : resultExpr.Solve();
@@ -1031,58 +1020,86 @@ namespace ExtrameFunctionCalculator
         }
         #endregion
 
+        #region Operators
+
+        Symbol GetSymbolMayFromCache(String op) {
+            if(!SharedSymbolCache.ContainsKey(op))
+                SharedSymbolCache[(op)]=new Symbol(op,this);
+            return SharedSymbolCache[(op)];
+        }
+
+
+        public delegate List<Expression> OnCalculateFunc(List<Expression> parametersList, Calculator refCalculator);
+
+        internal Dictionary<string, OnCalculateFunc> OperatorFunction = new Dictionary<string, OnCalculateFunc>();
+
+        internal Dictionary<string, float> OperatorPrioty = new Dictionary<string, float>();
+
+        internal Dictionary<string, Symbol> SharedSymbolCache = new Dictionary<string, Symbol>();
+
+        internal Dictionary<string, int> OperatorRequestParamterCount = new Dictionary<string, int>();
+
+        public void RegisterOperation(String operatorSymbol, int requestParamterSize, float operatorPrioty, OnCalculateFunc operatorFunction)
+        {
+            OperatorFunction.Add(operatorSymbol, operatorFunction);
+            OperatorPrioty.Add(operatorSymbol, operatorPrioty);
+            OperatorRequestParamterCount.Add(operatorSymbol, requestParamterSize);
+            SharedSymbolCache[operatorSymbol]=GetSymbolMayFromCache(operatorSymbol);
+        }
+
+        #endregion
+
         #region Init
 
         static Calculator()
         {
-            Init();
             Log.SetIsThreadCommitLog(true);
         }
 
-        static void Init()
+        void Init()
         {
             #region 基本操作符
 
-            Symbol.RegisterOperation("+", 2, 6.0f, (paramsList, calculator) => {
+            RegisterOperation("+", 2, 6.0f, (paramsList, calculator) => {
                 List<Expression> result = new List<Expression>();
                 Digit a = (Digit)paramsList[0], b = (Digit)paramsList[1];
                 result.Add(new Digit((a.GetDouble() + b.GetDouble()).ToString()));
                 return result;
             });
 
-            Symbol.RegisterOperation("-", 2, 6.0f, (paramsList, calculator) => {
+            RegisterOperation("-", 2, 6.0f, (paramsList, calculator) => {
                 List<Expression> result = new List<Expression>();
                 Digit a = (Digit)paramsList[0], b = (Digit)paramsList[1];
                 result.Add(new Digit((a.GetDouble() - b.GetDouble()).ToString()));
                 return result;
             });
 
-            Symbol.RegisterOperation("*", 2, 9.0f, (paramsList, calculator) => {
+            RegisterOperation("*", 2, 9.0f, (paramsList, calculator) => {
                 List<Expression> result = new List<Expression>();
                 Digit a = (Digit)paramsList[0], b = (Digit)paramsList[1];
                 result.Add(new Digit((a.GetDouble() * b.GetDouble()).ToString()));
                 return result;
             });
 
-            Symbol.RegisterOperation("/", 2, 9.0f, (paramsList, calculator) => {
+            RegisterOperation("/", 2, 9.0f, (paramsList, calculator) => {
                 List<Expression> result = new List<Expression>();
                 Digit a = (Digit)paramsList[0], b = (Digit)paramsList[1];
                 result.Add(new Digit((a.GetDouble() / b.GetDouble()).ToString()));
                 return result;
             });
 
-            Symbol.RegisterOperation("^", 2, 12.0f, (paramsList, calculator) => {
+            RegisterOperation("^", 2, 12.0f, (paramsList, calculator) => {
                 List<Expression> result = new List<Expression>();
                 Digit a = (Digit)paramsList[0], b = (Digit)paramsList[1];
                 result.Add(new Digit(Math.Pow(a.GetDouble() , b.GetDouble()).ToString()));
                 return result;
             });
 
-            Symbol.RegisterOperation("(", 2, 99.0f, (paramsList, calculator) => {
+            RegisterOperation("(", 2, 99.0f, (paramsList, calculator) => {
                 return null;
             });
 
-            Symbol.RegisterOperation(")", 2, 99.0f, (paramsList, calculator) => {
+            RegisterOperation(")", 2, 99.0f, (paramsList, calculator) => {
                 return null;
             });
 
@@ -1400,7 +1417,6 @@ namespace ExtrameFunctionCalculator
                     double max = paramsList[("max")].GetDigit().GetDouble();
                     String expr = ((ExpressionVariable)paramsList[("expr")]).RawText;
                     Function function = new Function(String.Format("tmp_execute(_index,_step,_min,_max,_out)={0}", expr), calculator);//todo 可优化
-                    function.IsSpecialAbleStaticParseFunction = false;
                     String result= "0";
                     for (double i = min; i <= max; i += step)
                     {

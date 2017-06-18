@@ -20,6 +20,7 @@ namespace ExtrameFunctionCalculator.BooleanCalculatorSupport
         public BooleanCalculator(Calculator cal)
         {
             calculator = cal;
+            Init();
         }
 
         Function GetFunction(string name) => calculator.GetFunction(name);
@@ -164,7 +165,7 @@ namespace ExtrameFunctionCalculator.BooleanCalculatorSupport
                                 }
                             }
                         }
-                        expressionArrayList.Add(new Symbol(tmp_op));
+                        expressionArrayList.Add(new Symbol(tmp_op,calculator));
                     }
                     //Reflush statement
                     statement = "";
@@ -398,20 +399,14 @@ namespace ExtrameFunctionCalculator.BooleanCalculatorSupport
 
         #region Init
 
-        static BooleanCalculator()
-        {
-            Init();
-        }
-
-
-        static void Init()
+        void Init()
         {
 
             Calculator.RegisterRawVariable(new BooleanVariable(true, null));
 
             Calculator.RegisterRawVariable(new BooleanVariable(false, null));
 
-            Symbol.RegisterOperation(">", 2, 3.0f, (paramsList, calculator) => {
+            calculator.RegisterOperation(">", 2, 3.0f, (paramsList, calculator) => {
                 List<Expression> result = new List<Expression>();
                 Expression a = paramsList[0], b = paramsList[1];
                 if (!((a.IsCalculatable) && (b.IsCalculatable)))
@@ -424,7 +419,7 @@ namespace ExtrameFunctionCalculator.BooleanCalculatorSupport
                 return result;
             });
 
-            Symbol.RegisterOperation("<", 2, 3.0f, (paramsList, calculator) => {
+            calculator.RegisterOperation("<", 2, 3.0f, (paramsList, calculator) => {
                 List<Expression> result = new List<Expression>();
                 Expression a = paramsList[0], b = paramsList[1];
                 if (!((a.IsCalculatable) && (b.IsCalculatable)))
@@ -437,7 +432,7 @@ namespace ExtrameFunctionCalculator.BooleanCalculatorSupport
                 return result;
             });
 
-            Symbol.RegisterOperation(">=", 2, 3.0f, (paramsList, calculator) => {
+            calculator.RegisterOperation(">=", 2, 3.0f, (paramsList, calculator) => {
                 List<Expression> result = new List<Expression>();
                 Expression a = paramsList[0], b = paramsList[1];
                 if (!((a.IsCalculatable) && (b.IsCalculatable)))
@@ -450,7 +445,7 @@ namespace ExtrameFunctionCalculator.BooleanCalculatorSupport
                 return result;
             });
 
-            Symbol.RegisterOperation("<=", 2, 3.0f, (paramsList, calculator) => {
+            calculator.RegisterOperation("<=", 2, 3.0f, (paramsList, calculator) => {
                 List<Expression> result = new List<Expression>();
                 Expression a = paramsList[0], b = paramsList[1];
                 if (!((a.IsCalculatable) && (b.IsCalculatable)))
@@ -463,7 +458,7 @@ namespace ExtrameFunctionCalculator.BooleanCalculatorSupport
                 return result;
             });
 
-            Symbol.RegisterOperation("==", 2, 2.5f, (paramsList, calculator) => {
+            calculator.RegisterOperation("==", 2, 2.5f, (paramsList, calculator) => {
                 List<Expression> result = new List<Expression>();
                 Expression a = paramsList[0], b = paramsList[1];
                 if (!((a.IsCalculatable) && (b.IsCalculatable)))
@@ -476,7 +471,7 @@ namespace ExtrameFunctionCalculator.BooleanCalculatorSupport
                 return result;
             });
 
-            Symbol.RegisterOperation("!=", 2, 2.5f, (paramsList, calculator) => {
+            calculator.RegisterOperation("!=", 2, 2.5f, (paramsList, calculator) => {
                 List<Expression> result = new List<Expression>();
                 Expression a = paramsList[0], b = paramsList[1];
                 if (!((a.IsCalculatable) && (b.IsCalculatable)))
@@ -489,7 +484,7 @@ namespace ExtrameFunctionCalculator.BooleanCalculatorSupport
                 return result;
             });
 
-            Symbol.RegisterOperation("&&", 2, 2.3f, (paramsList, calculator) => {
+            calculator.RegisterOperation("&&", 2, 2.3f, (paramsList, calculator) => {
                 List<Expression> result = new List<Expression>();
                 Expression a = paramsList[0], b = paramsList[1];
                 if (!((a.IsCalculatable) && (b.IsCalculatable)))
@@ -502,7 +497,7 @@ namespace ExtrameFunctionCalculator.BooleanCalculatorSupport
                 return result;
             });
 
-            Symbol.RegisterOperation("||", 2, 2.3f, (paramsList, calculator) => {
+            calculator.RegisterOperation("||", 2, 2.3f, (paramsList, calculator) => {
                 List<Expression> result = new List<Expression>();
                 Expression a = paramsList[0], b = paramsList[1];
                 if (!((a.IsCalculatable) && (b.IsCalculatable)))
