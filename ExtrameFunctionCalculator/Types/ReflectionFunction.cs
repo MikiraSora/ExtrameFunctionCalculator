@@ -49,14 +49,12 @@ namespace ExtrameFunctionCalculator.Types
 
         public override string Solve(string parameterList)
         {
-            Dictionary<String, Variable> custom_paramter = _bind_reflection_function.onParseParameter?.Invoke(parameterList, request,Calculator);
+            Dictionary<String, Variable> paramter = _bind_reflection_function.onParseParameter?.Invoke(parameterList, request,Calculator);
 
-            if (custom_paramter == null)/*返回null意味着按照国际惯例来解析传入参数*/
-                Parse(parameterList);
-            else
-                parameters = custom_paramter;
+            if (paramter == null)/*返回null意味着按照国际惯例来解析传入参数*/
+                paramter = Parse(parameterList);
                 
-            return _bind_reflection_function.onReflectionFunction(parameters, Calculator);
+            return _bind_reflection_function.onReflectionFunction(paramter, Calculator);
         }
     }
 }

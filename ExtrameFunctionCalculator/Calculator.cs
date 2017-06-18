@@ -22,10 +22,6 @@ namespace ExtrameFunctionCalculator
 
         private CalculatorOptimizer calculatorOptimizer = null;
 
-        Stack<List<Expression>> BSEChain_Stack = new Stack<List<Expression>>();
-
-        Stack<List<Expression>> rawExpressionChain_Stack = new Stack<List<Expression>>();
-
         public Calculator()
         {
             calculatorOptimizer = new CalculatorOptimizer(this);
@@ -262,10 +258,12 @@ namespace ExtrameFunctionCalculator
 
         private String Clear()
         {
+            /*
             if (!(BSEChain_Stack.Count == 0))
                 this.getBSEChain_Stack().Clear();
             if (!(rawExpressionChain_Stack.Count == 0))
                 this.getRawExpressionChain_Stack().Clear();
+                */
             return "Clean finished!";
         }
 
@@ -518,43 +516,33 @@ namespace ExtrameFunctionCalculator
             ((ExpressionVariable)variable).SetValue(variable_expression);
         }
 
+        /*
         private void setBSEChain_Stack(List<Expression> list)
         {
             BSEChain_Stack.Push(list);
         }
+        
 
         private void setRawExpressionChain_Stack(List<Expression> list) { rawExpressionChain_Stack.Push(list); }
 
-        private List<Expression> getBSEChain_Stack()
-        {
-            if (BSEChain_Stack.Count == 0)
-                BSEChain_Stack.Push(new List<Expression>());
-            return BSEChain_Stack.Peek();
-        }
-
-        private List<Expression> getRawExpressionChain_Stack()
-        {
-            if (rawExpressionChain_Stack.Count == 0)
-                rawExpressionChain_Stack.Push(new List<Expression>());
-            return rawExpressionChain_Stack.Peek();
-        }
-
+        */
+        /*
         private void Term_Solve()
         {
             BSEChain_Stack.Pop();
             rawExpressionChain_Stack.Pop();
         }
-
-        private void CheckNormalizeChain()
+        */
+        private void CheckNormalizeChain(ref List<Expression> expression_list)
         {
-            foreach (Expression node in getRawExpressionChain_Stack())
+            foreach (Expression node in expression_list)
             {
                 if (node.ExpressionType != ExpressionType.Digit && node.ExpressionType != ExpressionType.Symbol)
                     Log.ExceptionError(new Exception(node.GetName() + " isnt digit or symbol."));
             }
         }
 
-        private void ConverVariableToDigit()
+        private void ConverVariableToDigit(ref List<Expression> expression_list)
         {
             int position = 0;
             Expression node;
@@ -562,15 +550,15 @@ namespace ExtrameFunctionCalculator
             Digit result;
             try
             {
-                for (position = 0; position < getRawExpressionChain_Stack().Count; position++)
+                for (position = 0; position < expression_list.Count; position++)
                 {
-                    node = getRawExpressionChain_Stack()[(position)];
+                    node = expression_list[(position)];
                     if (node.ExpressionType == ExpressionType.Variable)
                     {
                         variable = (Variable)node;
                         result = variable.GetDigit();
-                        getRawExpressionChain_Stack().RemoveAt(position);
-                        getRawExpressionChain_Stack().Insert(position, result);
+                        expression_list.RemoveAt(position);
+                        expression_list.Insert(position, result);
                     }
                 }
             }
@@ -580,41 +568,38 @@ namespace ExtrameFunctionCalculator
             }
         }
 
-        private void ConverFunctionToDigit()
+        private void ConverFunctionToDigit(ref List<Expression> expression_list)
         {
             int position = 0;
             Expression node;
             Function function;
             Digit result;
-            for (position = 0; position < getRawExpressionChain_Stack().Count; position++)
+            for (position = 0; position < expression_list.Count; position++)
             {
-                node = getRawExpressionChain_Stack()[(position)];
+                node = expression_list[(position)];
                 if (node.ExpressionType == ExpressionType.Function)
                 {
                     function = (Function)node;
                     if (function.FunctionType == FunctionType.ReflectionFunction)
                         function.Calculator = (this);
                     result = function.GetSolveToDigit();
-                    getRawExpressionChain_Stack().RemoveAt(position);
-                    getRawExpressionChain_Stack().Insert(position, result);
+                    expression_list.RemoveAt(position);
+                    expression_list.Insert(position, result);
                 }
             }
         }
 
         public String Solve(String expression)
         {
-            //expression = expression.Replace(" ", "");
             if (Utils.isDigit(expression))
                 return expression;
-            //rawExpressionChain = ParseExpression(expression);
-            setRawExpressionChain_Stack(ParseExpression(expression));
-            ConverVariableToDigit();
-            ConverFunctionToDigit();
-            CheckNormalizeChain();//// TODO: 2016/10/2 此方法存在争议，暂时保留
-            ExpressionOptimization();
-            setBSEChain_Stack(ConverToBSE(getRawExpressionChain_Stack()));
-            String result = ExucuteBSE();
-            Term_Solve();
+            List<Expression> expression_list=(ParseExpression(expression));
+            ConverVariableToDigit(ref expression_list);
+            ConverFunctionToDigit(ref expression_list);
+            CheckNormalizeChain(ref expression_list);//// TODO: 2016/10/2 此方法存在争议，暂时保留
+            expression_list=ExpressionOptimization(expression_list);
+            ConverToBSE(ref expression_list);
+            String result = ExucuteBSE(expression_list);
 
             if (result.Contains("."))
             {
@@ -629,16 +614,13 @@ namespace ExtrameFunctionCalculator
             return result;
         }
 
-        private void ExpressionOptimization()
+        private List<Expression> ExpressionOptimization(List<Expression> expression_list)
         {
-            List<Expression> optimizeResult = calculatorOptimizer.OptimizeExpression(getRawExpressionChain_Stack());
-            if (optimizeResult == null)
-                return;
-            getRawExpressionChain_Stack().Clear();
-            getRawExpressionChain_Stack().AddRange(optimizeResult);
+            List<Expression> optimizeResult = calculatorOptimizer.OptimizeExpression(expression_list);
+            return optimizeResult == null ? expression_list : optimizeResult;
         }
 
-        internal List<Expression> ConverToBSE(List<Expression> expressionArrayList)
+        internal void ConverToBSE(ref List<Expression> expressionArrayList)
         {
             if (expressionArrayList[(expressionArrayList.Count - 1)].ExpressionType == ExpressionType.Symbol ? !((/*(Symbol) */expressionArrayList[(expressionArrayList.Count - 1)]).RawText == (")")) : false)
                 Log.ExceptionError(new Exception("the last expression in list cannot be symbol"));
@@ -713,18 +695,20 @@ namespace ExtrameFunctionCalculator
                     if (((Symbol)node).RawText == ("("))
                         result_list.Remove(node);
             }
-            return result_list;
+
+            expressionArrayList.Clear();
+            expressionArrayList.AddRange(result_list);
         }
 
-        private string ExucuteBSE()
+        private string ExucuteBSE(List<Expression> expression_list)
         {
-            if (getBSEChain_Stack().Count == 1)
-                if (getBSEChain_Stack()[(0)].ExpressionType == ExpressionType.Digit)
-                    return ((((Digit)getBSEChain_Stack()[(0)]).GetDouble())).ToString();
+            if (expression_list.Count == 1)
+                if (expression_list[(0)].ExpressionType == ExpressionType.Digit)
+                    return ((((Digit)expression_list[(0)]).GetDouble())).ToString();
             Stack<Expression> digit_stack = new Stack<Expression>();
             Symbol op;
             Expression node = null;
-            List<Expression> executeList = getBSEChain_Stack();
+            List<Expression> executeList = expression_list;
             List<Expression> paramterList, result;
             try
             {

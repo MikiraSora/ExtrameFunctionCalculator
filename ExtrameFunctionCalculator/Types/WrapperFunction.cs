@@ -12,12 +12,12 @@ namespace ExtrameFunctionCalculator.Types
         public WrapperFunction(Function function, string currentParamster)
         {
             bind_function = function;
-            this._current_paramsRawText = currentParamster;
+            PushParam(currentParamster);
         }
 
         public override string Solve()
         {
-            return bind_function.Solve(_current_paramsRawText);
+            return bind_function.Solve(PopParam());
         }
     }
 }

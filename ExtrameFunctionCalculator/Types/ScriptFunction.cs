@@ -23,7 +23,7 @@ namespace ExtrameFunctionCalculator.Types
 
         public override string Solve(string parameterList)
         {
-            Parse(parameterList);
+            Dictionary<string,Variable> parameters=Parse(parameterList);
             //// TODO: 2016/11/2 将ArrayList转化成Hashmap
             List<Expression> arrayList = new List<Expression>();
             foreach (var pair in parameters)
