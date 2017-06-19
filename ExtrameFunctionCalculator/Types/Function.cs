@@ -49,8 +49,6 @@ namespace ExtrameFunctionCalculator.Types
         protected Function() : base(null) { }
 
         static Regex FunctionFormatRegex = new Regex(@"([a-zA-Z]\w*)\((.*)\)=(.+)");
-
-        static string specialOperationChar = " + - * / [ ] ~ ! @ # $ % ^ & ( ) ; : \" | ? > < , ` ' \\ ";
         
         public Function(string expression, Calculator calculator) : base(calculator)
         {

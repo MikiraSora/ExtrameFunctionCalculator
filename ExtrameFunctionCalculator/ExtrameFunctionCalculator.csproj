@@ -72,7 +72,8 @@
     <Compile Include="Types\Variable.cs" />
     <Compile Include="Types\WrapperFunction.cs" />
     <Compile Include="Types\WrapperVariable.cs" />
-    <Compile Include="Utils.cs" />
+    <Compile Include="UtilTools\ObjectPool.cs" />
+    <Compile Include="UtilTools\Utils.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
