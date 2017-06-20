@@ -246,20 +246,8 @@ namespace ExtrameFunctionCalculator
             RegisterFunction(reflectionFunction);
         }
 
-        private String Clear()
-        {
-            /*
-            if (!(BSEChain_Stack.Count == 0))
-                this.getBSEChain_Stack().Clear();
-            if (!(rawExpressionChain_Stack.Count == 0))
-                this.getRawExpressionChain_Stack().Clear();
-                */
-            return "Clean finished!";
-        }
-
         public String Reset()
         {
-            Clear();
             this.variable_table.Clear();
             this.function_table.Clear();
             return "Reset finished!";
@@ -505,24 +493,7 @@ namespace ExtrameFunctionCalculator
                 Log.ExceptionError(new Exception(String.Format("{0} is exsited and not a ExpressionVariable.", variable_name)));
             ((ExpressionVariable)variable).SetValue(variable_expression);
         }
-
-        /*
-        private void setBSEChain_Stack(List<Expression> list)
-        {
-            BSEChain_Stack.Push(list);
-        }
         
-
-        private void setRawExpressionChain_Stack(List<Expression> list) { rawExpressionChain_Stack.Push(list); }
-
-        */
-        /*
-        private void Term_Solve()
-        {
-            BSEChain_Stack.Pop();
-            rawExpressionChain_Stack.Pop();
-        }
-        */
         private void CheckNormalizeChain(ref List<Expression> expression_list)
         {
             foreach (Expression node in expression_list)
@@ -601,6 +572,7 @@ namespace ExtrameFunctionCalculator
                 }
                 catch (Exception e) { }
             }
+            Log.Debug($"{expression} = {result}");
             return result;
         }
 
@@ -727,8 +699,6 @@ namespace ExtrameFunctionCalculator
                                 paramterList.Add(digit_stack.Pop());
                             }
                         }
-                        //paramterList.add(digit_stack.isEmpty() ? (?new Digit("0")): digit_stack.pop());
-                        //Collections.reverse(paramterList);
                         paramterList.Reverse();
                         result = op.Solve(paramterList, this);
                         foreach (Expression expr in result)
@@ -757,7 +727,6 @@ namespace ExtrameFunctionCalculator
 
         public String Execute(String text)
         {
-            Clear();
             return ExecuteEx(text);
         }
 
@@ -943,11 +912,6 @@ namespace ExtrameFunctionCalculator
                 case "unload_script":
                     {
                         result = UnloadScriptFile(paramter);
-                        break;
-                    }
-                case "clear":
-                    {
-                        result = Clear();
                         break;
                     }
                 case "reset":
@@ -1140,14 +1104,14 @@ namespace ExtrameFunctionCalculator
                     return Math.Sqrt(paramsList["x"].GetDigit().GetDouble()).ToString();
                 }
             });
-
+            /*
             Calculator.RegisterRawFunction("acos(x)", new OnReflectionFunction()
             {
                 onReflectionFunction = (paramsList, calculator) => {
                     return Math.Acos(paramsList["x"].GetDigit().GetDouble()).ToString();
                 }
             });
-
+            */
             Calculator.RegisterRawFunction("asin(x)", new OnReflectionFunction()
             {
                 onReflectionFunction = (paramsList, calculator) => {

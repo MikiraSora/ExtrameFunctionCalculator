@@ -74,7 +74,7 @@ namespace ExtrameFunctionCalculator
 
             public virtual ExtrameFunctionCalculator.Types.Digit GetDigitReference() { return (ExtrameFunctionCalculator.Types.Digit)GetExpressionReference(); }
 
-            public String toString()
+            public override string ToString()
             {
                 return GetDigitReference().RawText;
             }
@@ -94,7 +94,7 @@ namespace ExtrameFunctionCalculator
                 expressionArrayList = expressions;
                 try
                 {
-                    DigitResult = new ExtrameFunctionCalculator.Types.Digit(GetCalculator().Solve(toString()));
+                    DigitResult = new ExtrameFunctionCalculator.Types.Digit(GetCalculator().Solve(ToString()));
                 }
                 catch (Exception e)
                 {
@@ -140,7 +140,7 @@ namespace ExtrameFunctionCalculator
 
         public CalculatorOptimizer(Calculator bindCalculator)
         {
-
+            calculator = bindCalculator;
         }
 
         public int OptimizeLevel { get { return optimizeLevel; } set { optimizeLevel = value; } }
@@ -162,7 +162,6 @@ namespace ExtrameFunctionCalculator
                 tmpAnalyseExpressionArrayList = Level2_Optimize(tmpAnalyseExpressionArrayList, calculator);
             */
 
-            Log.Debug(String.Format("Optimize finished: {0}", tmpAnalyseExpressionArrayList.ToString()));
             expressionArrayList = ConverToCalExpression(tmpAnalyseExpressionArrayList);
             return expressionArrayList;
         }

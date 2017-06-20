@@ -132,6 +132,8 @@ namespace ExtrameFunctionCalculator
                 devNumber += 9;
             for (int i = 0; i < notRepeatingDecimalLength; i++)
                 devNumber += 0;
+            if (notRepeating[notRepeating.Length - 1] == '.')
+                notRepeating += '0';
             return $"({notRepeating}+{Repeating}/{devNumber})";
         }
 

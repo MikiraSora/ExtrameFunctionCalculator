@@ -15,6 +15,8 @@ namespace Test
             //SpeedTestLogger();
 
             Calculator calculator = new Calculator();
+            calculator.Enable(Calculator.EnableType.ExpressionOptimize);
+            calculator.Enable(Calculator.EnableType.PrecisionTruncation);
 
             while (true)
             {

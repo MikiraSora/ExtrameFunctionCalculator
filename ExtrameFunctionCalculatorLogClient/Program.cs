@@ -34,7 +34,7 @@ namespace ExtrameFunctionCalculatorLogServer
 
     class Program
     {
-        private static String SegmentationMarker = "#@#seg_marker#%#";
+        private static String SegmentationMarker = "#@#";
 
         static void PrintMessage(String message)
         {
@@ -82,7 +82,7 @@ namespace ExtrameFunctionCalculatorLogServer
                 string[] msgs = msg.Split(new string[] { SegmentationMarker},StringSplitOptions.RemoveEmptyEntries);
                 foreach (var item in msgs)
                 {
-                    PrintMessage(item.Trim());
+                    PrintMessage(item.Trim().Replace(SegmentationMarker,""));
                 }
             };
 

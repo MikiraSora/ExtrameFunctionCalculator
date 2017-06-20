@@ -74,6 +74,8 @@ namespace ExtrameFunctionCalculator
         public static void SetShowCallerMethod(bool isShowCallerMethod) { IsThreadCommitLog = isShowCallerMethod; }
         public static bool IsShowCallerMethod { get { return _isShowCallerMethod; } }
 
+        internal static String SegmentationMarker = "#@#";
+
         private static Socket socket;
 
         public static void InitRecordTime() { Message.InitRecordTime(); }
@@ -124,7 +126,7 @@ namespace ExtrameFunctionCalculator
                     CommitLogQueue.RemoveAt(0);
                     try
                     {
-                        SocketWrite(message.toString());
+                        SocketWrite(message.toString()+Log.SegmentationMarker);
                     }
                     catch (Exception e) { }
                 }
