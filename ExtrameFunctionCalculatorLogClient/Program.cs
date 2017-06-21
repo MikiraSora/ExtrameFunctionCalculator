@@ -34,11 +34,11 @@ namespace ExtrameFunctionCalculatorLogServer
 
     class Program
     {
-        private static String SegmentationMarker = "#@#";
+        private static string SegmentationMarker = "#@#";
 
-        static void PrintMessage(String message)
+        static void PrintMessage(string message)
         {
-            String context = message.Substring(1);
+            string context = message.Substring(1);
             switch (message[(0)])
             {
                 case 'U':

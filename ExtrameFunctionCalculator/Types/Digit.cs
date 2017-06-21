@@ -34,7 +34,7 @@ namespace ExtrameFunctionCalculator.Types
             return IsIsPrecisionTruncation ? _CutMaxPerseicelDecimal(Solve()) : double.Parse(Solve());
         }
 
-        private double _CutMaxPerseicelDecimal(String digit)
+        private double _CutMaxPerseicelDecimal(string digit)
         {
             if (!digit.Contains('.'))
                 return double.Parse(digit);

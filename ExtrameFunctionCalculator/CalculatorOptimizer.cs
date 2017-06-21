@@ -47,7 +47,7 @@ namespace ExtrameFunctionCalculator
 
             public bool isSameLevelLayout(Operator op) => this.GetOperatorPriorty() == op.GetOperatorPriorty();
 
-            public bool isSameLevelLayout(String operatorChar) => this.GetOperatorPriorty() == (GetOperatorReference().Calculator.OperatorPrioty.ContainsKey(operatorChar) ? GetOperatorReference().Calculator.OperatorPrioty[(operatorChar)] : 0);
+            public bool isSameLevelLayout(string operatorChar) => this.GetOperatorPriorty() == (GetOperatorReference().Calculator.OperatorPrioty.ContainsKey(operatorChar) ? GetOperatorReference().Calculator.OperatorPrioty[(operatorChar)] : 0);
 
             public bool isBaseOperator()
             {
@@ -94,7 +94,7 @@ namespace ExtrameFunctionCalculator
                 expressionArrayList = expressions;
                 try
                 {
-                    DigitResult = new ExtrameFunctionCalculator.Types.Digit(GetCalculator().Solve(ToString()));
+                    DigitResult = new ExtrameFunctionCalculator.Types.Digit(GetCalculator()._Solve(ToString()));
                 }
                 catch (Exception e)
                 {

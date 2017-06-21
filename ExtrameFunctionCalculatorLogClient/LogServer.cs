@@ -18,7 +18,7 @@ namespace ExtrameFunctionCalculatorLogServer
         public void SetPort(int port) { this.port = port; }
         public int GetPort() { return port; }
 
-        public delegate void OnReceiveMessageFunc(String message);
+        public delegate void OnReceiveMessageFunc(string message);
         public event OnReceiveMessageFunc OnReceiveMessage;
 
         public abstract class OnChangeNetStatus

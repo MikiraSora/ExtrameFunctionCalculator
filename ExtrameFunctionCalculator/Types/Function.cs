@@ -71,7 +71,7 @@ namespace ExtrameFunctionCalculator.Types
             int requestIndex = 0;
             Stack<int> BracketStack = new Stack<int>();
             Dictionary<string, Variable> paramsMap = new Dictionary<string, Variable>();
-            String paramter = "";
+            string paramter = "";
             for (int pos = 0; pos < paramsRawText.Length; pos++)
             {
                 c = paramsRawText[(pos)];
@@ -89,7 +89,7 @@ namespace ExtrameFunctionCalculator.Types
                 if (c == ',' && (BracketStack.Count == 0))
                 {
                     string requestParamterName = request[(requestIndex++)];
-                    paramsMap[requestParamterName] = new Variable(requestParamterName, this.Calculator.Solve(paramter), this.Calculator);
+                    paramsMap[requestParamterName] = new Variable(requestParamterName, this.Calculator._Solve(paramter), this.Calculator);
                     paramter = "";
                 }
                 else
@@ -98,7 +98,7 @@ namespace ExtrameFunctionCalculator.Types
                 }
             }
             if ((paramter.Length != 0))
-                paramsMap[request[(requestIndex)]] = new ExpressionVariable(request[(requestIndex)], this.Calculator.Solve(paramter), this.Calculator);
+                paramsMap[request[(requestIndex)]] = new ExpressionVariable(request[(requestIndex)], this.Calculator._Solve(paramter), this.Calculator);
 
             return paramsMap;
         }
@@ -120,12 +120,12 @@ namespace ExtrameFunctionCalculator.Types
             Dictionary<string, Variable>  parameters =Parse(paramsRawText);
             if (parameters.Count != request.GetParamterRequestCount())
                 Log.ExceptionError(new Exception($"function \"{_function_name}\" requests {request.GetParamterRequestCount()} paramter(s) but you input {parameters.Count} paramter(s)"));
-            String exression;
+            string exression;
             exression = ParseDeclaring(_function_body,parameters);
-            return Calculator.Solve(exression);
+            return Calculator._Solve(exression);
         }
 
-        public override string Solve() => Solve(PopParam());
+        public override string Solve() => Solve("");
 
         public void BindCalculator(Calculator calculator)
         {
@@ -138,9 +138,9 @@ namespace ExtrameFunctionCalculator.Types
         
         public Digit GetSolveToDigit() => new Digit(Solve());
 
-        Stack<string> paramsExpressionStack = new Stack<string>();
+        //Stack<string> paramsExpressionStack = new Stack<string>();
 
-        public void PushParam(string paramsRawExpression) => paramsExpressionStack.Push(paramsRawExpression);
-        protected string PopParam() => paramsExpressionStack.Count==0?"":paramsExpressionStack.Pop();
+        //public void PushParam(string paramsRawExpression) => paramsExpressionStack.Push(paramsRawExpression);
+        //protected string PopParam() => paramsExpressionStack.Count==0?"":paramsExpressionStack.Pop();
     }
 }

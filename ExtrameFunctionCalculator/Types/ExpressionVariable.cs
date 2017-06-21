@@ -10,14 +10,14 @@ namespace ExtrameFunctionCalculator.Types
     {
         public override VariableType VariableType => VariableType.ExpressionVariable;
 
-        public ExpressionVariable(String name, String expr_value, Calculator calculator):base(name,expr_value,calculator)
+        public ExpressionVariable(string name, string expr_value, Calculator calculator):base(name,expr_value,calculator)
         {
 
         }
 
         public override string Solve()
         {
-            return Calculator.Solve(_raw_text);
+            return Calculator._Solve(_raw_text);
         }
 
         internal override void SetValue(string value)

@@ -16,13 +16,13 @@ namespace ExtrameFunctionCalculator.BooleanCalculatorSupport
             get { return boolean_value; }
         }
 
-        static String TRUE = "true", FALSE = "false";
+        static string TRUE = "true", FALSE = "false";
 
         public override VariableType VariableType => VariableType.BooleanVariable;
 
-        public BooleanVariable(String name, String expression, Calculator c) : base(name, expression, c)
+        public BooleanVariable(string name, string expression, Calculator c) : base(name, expression, c)
         {
-            boolean_value = expression == TRUE ? true : expression == FALSE ? false : (Double.Parse(Calculator.Solve(expression)) == 0);
+            boolean_value = expression == TRUE ? true : expression == FALSE ? false : (Double.Parse(Calculator._Solve(expression)) == 0);
         }
 
         public BooleanVariable(bool value, Calculator calculator1):base("",value.ToString(), calculator1)

@@ -25,7 +25,7 @@ namespace ExtrameFunctionCalculator.Script
 
         #region Load/Unload Script
 
-        public String LoadScript(string input_file)
+        public string LoadScript(string input_file)
         {
             Executor executor = new Executor(GetCalculator());
             executor.InitFromFile(input_file);
@@ -124,7 +124,7 @@ namespace ExtrameFunctionCalculator.Script
 
         public Executor GetCurrentExecutor() => ExecutingExecutorStack.Peek();
 
-        public ExtrameFunctionCalculator.Types.Variable RequestVariable(String name, Executor good_executor)
+        public ExtrameFunctionCalculator.Types.Variable RequestVariable(string name, Executor good_executor)
         {
             ExtrameFunctionCalculator.Types.Variable variable = null;
             if (good_executor != null)
@@ -157,7 +157,7 @@ namespace ExtrameFunctionCalculator.Script
             return null;
         }
 
-        public ExtrameFunctionCalculator.Types.ScriptFunction RequestFunction(String function_name)
+        public ExtrameFunctionCalculator.Types.ScriptFunction RequestFunction(string function_name)
         {
             if (ableCacheReferenceFunction)
             {
@@ -188,7 +188,7 @@ namespace ExtrameFunctionCalculator.Script
             ExecutingExecutorStack.Pop();
         }
 
-        private void ReferenceAdd(String package_name, Executor executor)
+        private void ReferenceAdd(string package_name, Executor executor)
         {
             if (!ScriptMap.ContainsKey(package_name))
             {

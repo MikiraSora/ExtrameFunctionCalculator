@@ -95,7 +95,7 @@ namespace ExtrameFunctionCalculator.Script
 
         #region Load Files
 
-        public void InitFromFile(String input_file)
+        public void InitFromFile(string input_file)
         {
             List<string> arrayList = new List<string>(System.IO.File.ReadAllLines(input_file));
 
@@ -152,7 +152,7 @@ namespace ExtrameFunctionCalculator.Script
         {
             public string ReturnValue { get { return value; } }
 
-            public ReturnSignal(String expr) : base(expr)
+            public ReturnSignal(string expr) : base(expr)
             {
             }
         }
@@ -281,7 +281,7 @@ namespace ExtrameFunctionCalculator.Script
                     }
                 }
             }
-            catch (ReturnSignal e) { return GetCalculator().Solve(e.ReturnValue); }
+            catch (ReturnSignal e) { return GetCalculator()._Solve(e.ReturnValue); }
             //catch (Exception e) { throw e; }
             finally
             {
@@ -332,7 +332,7 @@ namespace ExtrameFunctionCalculator.Script
         
          */
 
-        public bool isTmpVariable(String variable_name) => TmpVariable.ContainsKey(variable_name);
+        public bool isTmpVariable(string variable_name) => TmpVariable.ContainsKey(variable_name);
 
         public ExtrameFunctionCalculator.Types.Variable GetVariable(string name)
         {
@@ -341,18 +341,18 @@ namespace ExtrameFunctionCalculator.Script
             return null;
         }
 
-        public void SetVariableValue(String name, String Value)
+        public void SetVariableValue(string name, string Value)
         {
             ExtrameFunctionCalculator.Types.Variable variable = GetVariable(name);
 
             if (variable == null)
             {
                 RegisterTmpVariable(name);
-                TmpVariable[(name)].Push(new ExtrameFunctionCalculator.Types.Variable(name, GetCalculator().Solve(Value), GetCalculator()));
+                TmpVariable[(name)].Push(new ExtrameFunctionCalculator.Types.Variable(name, GetCalculator()._Solve(Value), GetCalculator()));
                 return;
             }
 
-            variable.RawText = GetCalculator().Solve(Value);
+            variable.RawText = GetCalculator()._Solve(Value);
         }
 
         public void RegisterTmpVariable(string name)
@@ -365,7 +365,7 @@ namespace ExtrameFunctionCalculator.Script
 
         #region Child Executors
 
-        public void AddChildExecutor(String input_file)
+        public void AddChildExecutor(string input_file)
         {
             Executor executor = new Executor(GetCalculator());
             executor.InitFromFile(input_file);

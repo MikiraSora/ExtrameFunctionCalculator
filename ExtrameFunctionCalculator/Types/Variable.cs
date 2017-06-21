@@ -41,7 +41,7 @@ namespace ExtrameFunctionCalculator.Types
 
         public override string ToString()
         {
-            String rightValue;
+            string rightValue;
             try
             {
                 rightValue = Solve();
@@ -60,7 +60,7 @@ namespace ExtrameFunctionCalculator.Types
 
         internal virtual void SetValue(string value)
         {
-            _raw_text = Calculator.Solve(value);
+            _raw_text = Calculator._Solve(value);
         }
     }
 }

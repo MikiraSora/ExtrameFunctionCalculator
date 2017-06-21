@@ -71,7 +71,6 @@
     <Compile Include="Types\ScriptFunction.cs" />
     <Compile Include="Types\Symbol.cs" />
     <Compile Include="Types\Variable.cs" />
-    <Compile Include="Types\WrapperFunction.cs" />
     <Compile Include="Types\WrapperVariable.cs" />
     <Compile Include="UtilTools\ObjectPool.cs" />
     <Compile Include="UtilTools\Utils.cs" />

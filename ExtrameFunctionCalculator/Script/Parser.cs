@@ -44,7 +44,7 @@ namespace ExtrameFunctionCalculator.Script
 
         public Dictionary<int , Unit> Parse(List<String> statements)
         {
-            String text = null, command = null, paramter = null;
+            string text = null, command = null, paramter = null;
             Unit unit = null;
             int c = 0;
 
@@ -181,7 +181,7 @@ namespace ExtrameFunctionCalculator.Script
             return unit;
         }
 
-        static bool IsPreCompileCommand(String command) => command.Length==0 ? false : command[(0)] == '#';
+        static bool IsPreCompileCommand(string command) => command.Length==0 ? false : command[(0)] == '#';
 
         public void SetPreCompileExecutors(Dictionary<String, ExecutorAction> ExecutorActionHashMap)=>reflectionPreExecution = ExecutorActionHashMap;
 
@@ -190,7 +190,7 @@ namespace ExtrameFunctionCalculator.Script
             if (reflectionPreExecution == null)
                 return;
             int position = 1, c = 0;
-            String command = "", param ="";
+            string command = "", param ="";
             while (true)
             {
                 if (position >= text.Length)

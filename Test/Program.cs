@@ -22,7 +22,7 @@ namespace Test
                 Console.Write("<=:");
                 string command=Console.ReadLine();
                 Console.ForegroundColor = ConsoleColor.Green;
-                string result = calculator.Solve(command);
+                string result = calculator.Execute(command);
                 if(result.Trim().Length!=0)
                     Console.WriteLine(result);
                 Console.ResetColor();
@@ -48,7 +48,7 @@ namespace Test
                 ThreadPool.QueueUserWorkItem((state) => {
                     while (true)
                     {
-                        calculator.Solve("4+6*8/2*random(100)");
+                        calculator._Solve("4+6*8/2*random(100)");
                         counter++;
                     }
                 },null);

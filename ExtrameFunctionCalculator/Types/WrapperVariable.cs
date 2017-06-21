@@ -9,8 +9,8 @@ namespace ExtrameFunctionCalculator.Types
     public class WrapperVariable : Variable
     {
         Variable bind_variable = null;
-        String current_indexes = null;
-        public WrapperVariable(Variable variable, String current_indexes) : base(null, null, null)
+        string current_indexes = null;
+        public WrapperVariable(Variable variable, string current_indexes) : base(null, null, null)
         {
             bind_variable = variable;
             this.current_indexes = current_indexes;

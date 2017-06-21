@@ -24,11 +24,11 @@ namespace ExtrameFunctionCalculator
 
             private Type message_type = Type.Debug;
 
-            String callerMethodName = null;
+            string callerMethodName = null;
 
             private long time_strip = 0;
 
-            private String message = null;
+            private string message = null;
 
             private static long recordTime = 0;
 
@@ -41,7 +41,7 @@ namespace ExtrameFunctionCalculator
                 time_strip = GetCurrentTime();
             }
 
-            public Message(Type type, long time, String message, String methodname)
+            public Message(Type type, long time, string message, string methodname)
             {
                 callerMethodName = methodname;
                 message_type = type;
@@ -49,17 +49,17 @@ namespace ExtrameFunctionCalculator
                 this.message = message;
             }
 
-            public Message(Type type, long time, String message)
+            public Message(Type type, long time, string message)
             {
                 message_type = type;
                 time_strip = time;
                 this.message = message;
             }
 
-            public Message(Type type, String message) : this(type, GetCurrentTime(), message) { }
-            public Message(Type type, String message, String methodname) : this(type, GetCurrentTime(), message, methodname) { }
+            public Message(Type type, string message) : this(type, GetCurrentTime(), message) { }
+            public Message(Type type, string message, string methodname) : this(type, GetCurrentTime(), message, methodname) { }
 
-            public String toString()
+            public string toString()
             {
                 long min = time_strip / 1000 / 60;
                 long sec = (time_strip - min * 1000 * 60) / 1000;
@@ -74,7 +74,7 @@ namespace ExtrameFunctionCalculator
         public static void SetShowCallerMethod(bool isShowCallerMethod) { IsThreadCommitLog = isShowCallerMethod; }
         public static bool IsShowCallerMethod { get { return _isShowCallerMethod; } }
 
-        internal static String SegmentationMarker = "#@#";
+        internal static string SegmentationMarker = "#@#";
 
         private static Socket socket;
 
@@ -165,9 +165,9 @@ namespace ExtrameFunctionCalculator
         public static void SetPort(int port) { Log.port = port; }
         public static int GetPort() { return port; }
 
-        private static String address = "127.0.0.1";
-        public static void SetAddress(String address) { Log.address = address; }
-        public static String GetAddress() { return address; }
+        private static string address = "127.0.0.1";
+        public static void SetAddress(string address) { Log.address = address; }
+        public static string GetAddress() { return address; }
 
         private static List<Message> messages_history = new List<Message>();
 
@@ -201,7 +201,7 @@ namespace ExtrameFunctionCalculator
             socket.Connect(point);
         }
 
-        private static void SocketWrite(String text)
+        private static void SocketWrite(string text)
         {
             if (!IsConnecting())
                 Connect();
@@ -228,7 +228,7 @@ namespace ExtrameFunctionCalculator
             PushHistory(message);
         }
 
-        public static String GetCallerMethodName()
+        public static string GetCallerMethodName()
         {
             /*暂时咕咕
             StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
@@ -239,7 +239,7 @@ namespace ExtrameFunctionCalculator
             return "Unknown_Method";
         }
 
-        public static void Error(String message)
+        public static void Error(string message)
         {
             Message msg = new Message(Message.Type.Exception, message, GetCallerMethodName());
             try
@@ -256,7 +256,7 @@ namespace ExtrameFunctionCalculator
             throw e;
         }
 
-        public static void Debug(String message)
+        public static void Debug(string message)
         {
             try
             {
@@ -266,7 +266,7 @@ namespace ExtrameFunctionCalculator
             catch (Exception e) { }
         }
 
-        public static void Warning(String message)
+        public static void Warning(string message)
         {
             try
             {
@@ -276,7 +276,7 @@ namespace ExtrameFunctionCalculator
             catch (Exception e) { }
         }
 
-        public static void User(String message)
+        public static void User(string message)
         {
             try
             {

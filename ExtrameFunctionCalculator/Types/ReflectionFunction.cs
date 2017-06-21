@@ -17,7 +17,7 @@ namespace ExtrameFunctionCalculator.Types
         public delegate string OnDerivativeConvertParseFunc();
         public OnDerivativeConvertParseFunc onDerivativeConvertParse=null;
 
-        public delegate Dictionary<String, Variable> OnParseParameterFunc(String paramter, Function.ParameterRequestWrapper request, Calculator calculator);
+        public delegate Dictionary<String, Variable> OnParseParameterFunc(string paramter, Function.ParameterRequestWrapper request, Calculator calculator);
         public OnParseParameterFunc onParseParameter=null;
     }
 

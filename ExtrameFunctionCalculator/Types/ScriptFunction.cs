@@ -9,12 +9,12 @@ namespace ExtrameFunctionCalculator.Types
 {
     public class ScriptFunction : Function
     {
-        String function_name = null;
+        string function_name = null;
         Executor executor = null;
 
         public override FunctionType FunctionType => FunctionType.ScriptFunction;
 
-        public ScriptFunction(String function_name, Executor executor, Calculator calculator) : base(null, calculator)
+        public ScriptFunction(string function_name, Executor executor, Calculator calculator) : base(null, calculator)
         {
             this.function_name = function_name;
             this.executor = executor;

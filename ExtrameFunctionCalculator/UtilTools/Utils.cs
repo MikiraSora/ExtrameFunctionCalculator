@@ -75,11 +75,11 @@ namespace ExtrameFunctionCalculator
             return hasMatchBracket;
         }
 
-        public static string RepeatingDecimalCoverToExpression(String decimalExpr)
+        public static string RepeatingDecimalCoverToExpression(string decimalExpr)
         {
             char c;
             int pos = 0, notRepeatingDecimalLength = 0;
-            String notRepeating = "", Repeating = "";
+            string notRepeating = "", Repeating = "";
             while (true)
             {
                 c = decimalExpr[(pos)];
@@ -127,7 +127,7 @@ namespace ExtrameFunctionCalculator
                 }
                 pos++;
             }
-            String devNumber = "";
+            string devNumber = "";
             for (int i = 0; i < Repeating.Length; i++)
                 devNumber += 9;
             for (int i = 0; i < notRepeatingDecimalLength; i++)
@@ -144,15 +144,15 @@ namespace ExtrameFunctionCalculator
             Match result = RepeatingDecimalReg.Match(decimalExpr);
             if (!result.Success)
                 Log.ExceptionError(new Exception(decimalExpr + " is invalid repeating decimal!"));
-            String intDigit = result.Captures[1].Value, notRepeatDecimal = result.Captures[(2)].Value, RepeatDecimal = result.Captures[3].Value, endDecimal = result.Captures[(4)].Value;
+            string intDigit = result.Captures[1].Value, notRepeatDecimal = result.Captures[(2)].Value, RepeatDecimal = result.Captures[3].Value, endDecimal = result.Captures[(4)].Value;
             if (endDecimal.Length> RepeatDecimal.Length)
                 Log.ExceptionError(new Exception(decimalExpr + " is invalid repeating decimal!"));
-            String devNumber = "";
+            string devNumber = "";
             for (int i = 0; i < RepeatDecimal.Length; i++)
                 devNumber += 9;
             for (int i = 0; i < notRepeatDecimal.Length; i++)
                 devNumber += 0;
-            String expr = String.Format("({0}.{1}+{2}/{3})", intDigit, notRepeatDecimal, RepeatDecimal, devNumber);
+            string expr = String.Format("({0}.{1}+{2}/{3})", intDigit, notRepeatDecimal, RepeatDecimal, devNumber);
             return expr;
         }
 

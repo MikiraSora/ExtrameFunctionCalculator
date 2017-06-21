@@ -10,11 +10,11 @@ namespace ExtrameFunctionCalculator.Types
     {
         public override VariableType VariableType => VariableType.MapVariable;
 
-        public MapVariable(String variable_name, Calculator calculator) : base(variable_name, null, calculator)
+        public MapVariable(string variable_name, Calculator calculator) : base(variable_name, null, calculator)
         {
         }
 
-        public MapVariable(String variable_name, String indexes, String variable_value, Calculator calculator) : this(variable_name, calculator)
+        public MapVariable(string variable_name, string indexes, string variable_value, Calculator calculator) : this(variable_name, calculator)
         {
             SetValue(indexes, variable_value);
         }
@@ -22,36 +22,36 @@ namespace ExtrameFunctionCalculator.Types
 
         Dictionary<String, Variable> variable_key_map = new Dictionary<string, Variable>();
 
-        String current_indexes = "";
-        public void SetIndexes(String current_indexes) => this.current_indexes = current_indexes;
+        string current_indexes = "";
+        public void SetIndexes(string current_indexes) => this.current_indexes = current_indexes;
 
-
-        internal override void SetValue(String value)
+        internal override void SetValue(string value)
         {
             throw new Exception("MapVariable cant call SetValue(String) directly!");
         }
 
-        internal void SetValue(String indexes, String value)
+        internal void SetValue(string indexes, string value)
         {
             RouteSetVariable(indexes, value);
         }
 
-        internal void SetValue(String path, Variable variable)
+        internal void SetValue(string path, Variable variable)
         {
             if (!IsKeyPath(path))
-                path = Calculator.Solve(path);
+                path = Calculator._Solve(path);
             variable_key_map.Add(path, variable);
         }
 
         public override bool IsSetVariableDirectly => false;
 
-        public Variable RouteGetVariable(String indexes)
+        public Variable RouteGetVariable(string indexes)
         {
             List<String> getList = ParseIndexesString(indexes);
             if (getList.Count == 0)
                 throw new Exception(String.Format("{0} isnt vaild indexes", indexes));
+
             Variable variable = null, currentVariable = null;
-            foreach (String var_name in getList)
+            foreach (string var_name in getList)
             {
                 if (currentVariable != null)
                 {
@@ -69,13 +69,13 @@ namespace ExtrameFunctionCalculator.Types
             return currentVariable;
         }
 
-        private /*Variable*/void RouteSetVariable(String indexes, String value)
+        private /*Variable*/void RouteSetVariable(string indexes, string value)
         {
             List<String> getList = ParseIndexesString(indexes);
             if (getList.Count == 0)
                 throw new Exception(String.Format("{0} isnt vaild indexes", indexes));
             Variable variable = null, currentVariable = null, tmp_variable;
-            String var_name;
+            string var_name;
             for (int position = 0; position < getList.Count; position++)
             {
                 var_name = getList[(position)];
@@ -110,13 +110,13 @@ namespace ExtrameFunctionCalculator.Types
             //return variable_key_map.containsKey(index)?variable_key_map.get(index):null;
             if (IsKeyPath(index))
                 return variable_key_map.ContainsKey(index) ? variable_key_map[(index)] : null;
-            index = Calculator.Solve(index);
+            index = Calculator._Solve(index);
             return variable_key_map.ContainsKey(index) ? variable_key_map[(index)] : null;
         }
 
-        public bool IsKeyPath(string path) => !(path[0] == path[(path.Length - 1)] && path[(0)] == '"');
+        public bool IsKeyPath(string path) => (path[0] == path[(path.Length - 1)] && path[(0)] == '"');
 
-        private List<String> ParseIndexesString(String indexes)
+        private List<String> ParseIndexesString(string indexes)
         {
             //input "[index][rin]"
             List<String> IndexesList = new List<string>();
@@ -124,7 +124,7 @@ namespace ExtrameFunctionCalculator.Types
             int recordpos = -1;
             int position = -1;
             char c = (char)0;
-            String indexString;
+            string indexString;
             while (true)
             {
                 position++;
@@ -141,7 +141,7 @@ namespace ExtrameFunctionCalculator.Types
                     recordpos = recordPosition.Pop();
                     if (recordPosition.Count == 0)
                     {
-                        indexString = indexes.Substring(recordpos + 1, position);
+                        indexString = indexes.Substring(recordpos + 1, position-recordpos-1);
                         IndexesList.Add(indexString);
                     }
                     continue;
