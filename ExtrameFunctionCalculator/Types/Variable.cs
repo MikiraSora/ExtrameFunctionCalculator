@@ -17,12 +17,11 @@ namespace ExtrameFunctionCalculator.Types
 
     public class Variable : Expression
     {
+        protected string variable_name = "";
         public override ExpressionType ExpressionType { get { return ExpressionType.Variable; } }
 
         public override bool IsCalculatable => true;
-
-        protected string _variable_name = "";
-        public string VariableName { get { return _variable_name; } }
+        public string VariableName { get { return variable_name; } }
 
         public virtual VariableType VariableType { get { return VariableType.Normal; } }
 
@@ -30,8 +29,8 @@ namespace ExtrameFunctionCalculator.Types
 
         public Variable(string name, string value, Calculator calculator) : base(calculator)
         {
-            _raw_text = value;
-            _variable_name = name;
+            raw_text = value;
+            variable_name = name;
         }
 
         public override string GetName()
@@ -55,12 +54,12 @@ namespace ExtrameFunctionCalculator.Types
 
         public virtual Digit GetDigit()
         {
-            return new Digit(_raw_text == null ? Calculator.RequestVariable(this.GetName()) : _raw_text);
+            return new Digit(raw_text == null ? Calculator.RequestVariable(this.GetName()) : raw_text);
         }
 
         internal virtual void SetValue(string value)
         {
-            _raw_text = Calculator._Solve(value);
+            raw_text = Calculator.Solve(value);
         }
     }
 }

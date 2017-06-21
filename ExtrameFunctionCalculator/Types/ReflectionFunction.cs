@@ -23,22 +23,22 @@ namespace ExtrameFunctionCalculator.Types
 
     public class ReflectionFunction:Function
     {
-        static Regex FunctionFormatRegex = new Regex(@"([a-zA-Z]\w*)\((.*)\)");
+        static Regex check_function_format_regex = new Regex(@"([a-zA-Z]\w*)\((.*)\)");
 
-        OnReflectionFunction _bind_reflection_function;
+        OnReflectionFunction bind_reflection_function;
 
         public override FunctionType FunctionType => FunctionType.ReflectionFunction;
 
         public ReflectionFunction(string expression,OnReflectionFunction onReflectionFunction) : base()
         {
-            _bind_reflection_function = onReflectionFunction;
-            _raw_text = expression;
-            Match result = FunctionFormatRegex.Match(expression);
+            bind_reflection_function = onReflectionFunction;
+            raw_text = expression;
+            Match result = check_function_format_regex.Match(expression);
             if (result.Groups.Count != 3)
                 Log.ExceptionError(new Exception("Cannot parse function ：" + expression));
-            _function_name = result.Groups[1].Value;
-            _function_paramters = result.Groups[2].Value;
-            ParameterRequestWrapper parameterRequest = new ParameterRequestWrapper(_function_paramters);
+            function_name = result.Groups[1].Value;
+            function_paramters = result.Groups[2].Value;
+            ParameterRequestWrapper parameterRequest = new ParameterRequestWrapper(function_paramters);
             request = parameterRequest;
         }
 
@@ -49,12 +49,12 @@ namespace ExtrameFunctionCalculator.Types
 
         public override string Solve(string parameterList)
         {
-            Dictionary<String, Variable> paramter = _bind_reflection_function.onParseParameter?.Invoke(parameterList, request,Calculator);
+            Dictionary<String, Variable> paramter = bind_reflection_function.onParseParameter?.Invoke(parameterList, request,Calculator);
 
             if (paramter == null)/*返回null意味着按照国际惯例来解析传入参数*/
                 paramter = Parse(parameterList);
                 
-            return _bind_reflection_function.onReflectionFunction(paramter, Calculator);
+            return bind_reflection_function.onReflectionFunction(paramter, Calculator);
         }
     }
 }

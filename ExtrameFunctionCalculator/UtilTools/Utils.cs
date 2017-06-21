@@ -9,7 +9,7 @@ namespace ExtrameFunctionCalculator
 {
     public static class Utils
     {
-        public static bool isDigit(string expression)
+        public static bool IsDigit(string expression)
         {
             if (expression.Length == 0)
                 return false;
@@ -19,13 +19,13 @@ namespace ExtrameFunctionCalculator
             return true;
         }
 
-        public static bool isValidVariable(string expression)
+        public static bool IsValidVariable(string expression)
         {
             if (expression.Length == 0)
                 return false;
             if (char.IsDigit(expression[0]))
                 return false;
-            if (isDigit(expression))
+            if (IsDigit(expression))
                 return false;
             foreach (char c in expression)
                 if (!(char.IsLetterOrDigit(c) || (c == '_')))
@@ -33,7 +33,7 @@ namespace ExtrameFunctionCalculator
             return true;
         }
 
-        public static bool isFunction(string expression)
+        public static bool IsFunction(string expression)
         {
             if (expression.Length == 0)
                 return false;
@@ -137,11 +137,11 @@ namespace ExtrameFunctionCalculator
             return $"({notRepeating}+{Repeating}/{devNumber})";
         }
 
-        static Regex RepeatingDecimalReg = new Regex(@"(\d*)\.(\d*?)(\d+?)\3+(\d*)");
+        static Regex repeating_decimal_check_regex = new Regex(@"(\d*)\.(\d*?)(\d+?)\3+(\d*)");
 
         public static string ExpressionCoverToRepeatingDecimal(string decimalExpr)
         {
-            Match result = RepeatingDecimalReg.Match(decimalExpr);
+            Match result = repeating_decimal_check_regex.Match(decimalExpr);
             if (!result.Success)
                 Log.ExceptionError(new Exception(decimalExpr + " is invalid repeating decimal!"));
             string intDigit = result.Captures[1].Value, notRepeatDecimal = result.Captures[(2)].Value, RepeatDecimal = result.Captures[3].Value, endDecimal = result.Captures[(4)].Value;
@@ -156,9 +156,9 @@ namespace ExtrameFunctionCalculator
             return expr;
         }
 
-        public static bool isRepeatingDecimal(string Decimal)
+        public static bool IsRepeatingDecimal(string Decimal)
         {
-            Match result = RepeatingDecimalReg.Match(Decimal);
+            Match result = repeating_decimal_check_regex.Match(Decimal);
             if (!result.Success)
                 return false;
             string /*intDigit=result.group(1),notRepeatDecimal=result.group(2),*/RepeatDecimal = result.Captures[3].Value, endDecimal = result.Captures[4].Value;

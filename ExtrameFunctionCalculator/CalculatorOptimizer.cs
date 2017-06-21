@@ -2,14 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using ExtrameFunctionCalculator.Types;
 
 namespace ExtrameFunctionCalculator
 {
-    class CalculatorOptimizer
+    internal class CalculatorOptimizer
     {
-
         #region 分析基本类
 
         private class Expression
@@ -22,32 +19,39 @@ namespace ExtrameFunctionCalculator
                 Unknown
             }
 
-            ExtrameFunctionCalculator.Types.Expression Cal_ExpressionReference = null;
+            private ExtrameFunctionCalculator.Types.Expression calculator_expression_reference = null;
 
             public virtual ExpressionType OptExpressionType { get { return Expression.ExpressionType.Unknown; } }
 
-            private Expression() { }
-            public Expression(ExtrameFunctionCalculator.Types.Expression cal_ExpressionReference) { Cal_ExpressionReference = cal_ExpressionReference; }
+            private Expression()
+            {
+            }
 
-            public virtual ExtrameFunctionCalculator.Types.Expression GetExpressionReference() => Cal_ExpressionReference;
+            public Expression(ExtrameFunctionCalculator.Types.Expression cal_ExpressionReference)
+            {
+                calculator_expression_reference = cal_ExpressionReference;
+            }
+
+            public virtual ExtrameFunctionCalculator.Types.Expression GetExpressionReference() => calculator_expression_reference;
         }
 
         private class Operator : Expression
         {
-            public Operator(ExtrameFunctionCalculator.Types.Symbol symbol) : base(symbol)
-            {
-
-            }
-
             public override ExpressionType OptExpressionType => ExpressionType.Operator;
 
-            public ExtrameFunctionCalculator.Types.Symbol GetOperatorReference()=> (ExtrameFunctionCalculator.Types.Symbol)GetExpressionReference();
+            public Operator(ExtrameFunctionCalculator.Types.Symbol symbol) : base(symbol)
+            {
+            }
+            public ExtrameFunctionCalculator.Types.Symbol GetOperatorReference() => (ExtrameFunctionCalculator.Types.Symbol)GetExpressionReference();
 
-            private float GetOperatorPriorty() { return GetOperatorReference().Calculator.OperatorPrioty.ContainsKey(GetOperatorReference().RawText) ? GetOperatorReference().Calculator.OperatorPrioty[(GetOperatorReference().RawText)] : -1; }
+            private float GetOperatorPriorty()
+            {
+                return GetOperatorReference().Calculator.operator_prioty.ContainsKey(GetOperatorReference().RawText) ? GetOperatorReference().Calculator.operator_prioty[(GetOperatorReference().RawText)] : -1;
+            }
 
             public bool isSameLevelLayout(Operator op) => this.GetOperatorPriorty() == op.GetOperatorPriorty();
 
-            public bool isSameLevelLayout(string operatorChar) => this.GetOperatorPriorty() == (GetOperatorReference().Calculator.OperatorPrioty.ContainsKey(operatorChar) ? GetOperatorReference().Calculator.OperatorPrioty[(operatorChar)] : 0);
+            public bool isSameLevelLayout(string operatorChar) => this.GetOperatorPriorty() == (GetOperatorReference().Calculator.operator_prioty.ContainsKey(operatorChar) ? GetOperatorReference().Calculator.operator_prioty[(operatorChar)] : 0);
 
             public bool isBaseOperator()
             {
@@ -67,12 +71,14 @@ namespace ExtrameFunctionCalculator
 
         private class Digit : Expression
         {
-            public Digit(ExtrameFunctionCalculator.Types.Digit digit) : base(digit)
-            { }
-
             public override ExpressionType OptExpressionType => ExpressionType.Digit;
 
-            public virtual ExtrameFunctionCalculator.Types.Digit GetDigitReference() { return (ExtrameFunctionCalculator.Types.Digit)GetExpressionReference(); }
+            public Digit(ExtrameFunctionCalculator.Types.Digit digit) : base(digit)
+            { }
+            public virtual ExtrameFunctionCalculator.Types.Digit GetDigitReference()
+            {
+                return (ExtrameFunctionCalculator.Types.Digit)GetExpressionReference();
+            }
 
             public override string ToString()
             {
@@ -80,38 +86,36 @@ namespace ExtrameFunctionCalculator
             }
         }
 
-        private class ExpressionDigit:Digit
+        private class ExpressionDigit : Digit
         {
-            Calculator calculator = null;
-            Calculator GetCalculator() => calculator == null ? calculator = new Calculator() : calculator;
-            ExtrameFunctionCalculator.Types.Digit DigitResult = null;
+            private Calculator calculator = null;
+            private ExtrameFunctionCalculator.Types.Digit digit_result = null;
+            private List<Expression> expression_list = null;
 
-            List<Expression> expressionArrayList = null;
-
-            public ExpressionDigit(List<Expression> expressions, Calculator calculator):base(null)
+            public ExpressionDigit(List<Expression> expressions, Calculator calculator) : base(null)
             {
                 this.calculator = calculator;
-                expressionArrayList = expressions;
+                expression_list = expressions;
                 try
                 {
-                    DigitResult = new ExtrameFunctionCalculator.Types.Digit(GetCalculator()._Solve(ToString()));
+                    digit_result = new ExtrameFunctionCalculator.Types.Digit(GetCalculator().Solve(ToString()));
                 }
                 catch (Exception e)
                 {
-                    DigitResult = new ExtrameFunctionCalculator.Types.Digit("0");
+                    digit_result = new ExtrameFunctionCalculator.Types.Digit("0");
                 }
-                expressionArrayList = null;
-
+                expression_list = null;
             }
 
-            public override ExtrameFunctionCalculator.Types.Digit GetDigitReference() => DigitResult;
+            private Calculator GetCalculator() => calculator == null ? calculator = new Calculator() : calculator;
+            public override ExtrameFunctionCalculator.Types.Digit GetDigitReference() => digit_result;
 
             public override ExtrameFunctionCalculator.Types.Expression GetExpressionReference() => this.GetDigitReference();
 
             public override string ToString()
             {
                 StringBuilder stringBuilder = new StringBuilder();
-                foreach (Expression expression in expressionArrayList)
+                foreach (Expression expression in expression_list)
                 {
                     stringBuilder.Append(expression.ToString());
                 }
@@ -119,37 +123,46 @@ namespace ExtrameFunctionCalculator
             }
         }
 
-        private class Fraction:Expression
+        private class Fraction : Expression
         {
-            private double Numerator = 1;
-            private double Denominator;
+            private double numerator = 1;
+            private double denominator;
 
             public override ExpressionType OptExpressionType => ExpressionType.Fraction;
 
-            public Fraction(double numerator, double denominator):base(null) { Numerator = numerator; Denominator = denominator; }
-            public Fraction(double denominator) : base(null) { Denominator = denominator; }
+            public Fraction(double numerator, double denominator) : base(null)
+            {
+                this.numerator = numerator; this.denominator = denominator;
+            }
 
-            public Fraction Multi(Fraction fraction) { return new Fraction(this.Numerator * fraction.Numerator, this.Denominator * fraction.Denominator); }
+            public Fraction(double denominator) : base(null)
+            {
+                this.denominator = denominator;
+            }
+
+            public Fraction Multi(Fraction fraction)
+            {
+                return new Fraction(this.numerator * fraction.numerator, this.denominator * fraction.denominator);
+            }
         }
 
-        #endregion
+        #endregion 分析基本类
 
-        private bool enableOptimize = false;
-        private int optimizeLevel = 1;
+        private bool enable_optimize = false;
+        private int optimize_level = 1;
         private Calculator calculator = null;
+
+        public int OptimizeLevel { get { return optimize_level; } set { optimize_level = value; } }
+
+        public bool Enable { get { return enable_optimize; } set { enable_optimize = value; } }
 
         public CalculatorOptimizer(Calculator bindCalculator)
         {
             calculator = bindCalculator;
         }
-
-        public int OptimizeLevel { get { return optimizeLevel; } set { optimizeLevel = value; } }
-        
-        public bool Enable { get { return enableOptimize; } set { enableOptimize = value; } }
-
         public List<ExtrameFunctionCalculator.Types.Expression> OptimizeExpression(List<ExtrameFunctionCalculator.Types.Expression> expressionArrayList)
         {
-            if (!enableOptimize)
+            if (!enable_optimize)
                 return null;
             List<Expression> tmpAnalyseExpressionArrayList = AnalyseConver(expressionArrayList);
             expressionArrayList = null;
@@ -183,7 +196,7 @@ namespace ExtrameFunctionCalculator
                 if (expression.ExpressionType == ExtrameFunctionCalculator.Types.ExpressionType.Symbol)
                 {
                     symbol = (ExtrameFunctionCalculator.Types.Symbol)expression;
-                    if (symbol.RawText==("("))
+                    if (symbol.RawText == ("("))
                     {
                         stack.Count();
                         stack.Push(position);
@@ -193,14 +206,14 @@ namespace ExtrameFunctionCalculator
                             expression = expressionArrayList[(position)];
                             if (expression.ExpressionType == ExtrameFunctionCalculator.Types.ExpressionType.Symbol)
                             {
-                                if (((ExtrameFunctionCalculator.Types.Symbol)expression).RawText==("("))
+                                if (((ExtrameFunctionCalculator.Types.Symbol)expression).RawText == ("("))
                                 {
                                     stack.Push(position);
                                 }
-                                else if (((ExtrameFunctionCalculator.Types.Symbol)expression).RawText==(")"))
+                                else if (((ExtrameFunctionCalculator.Types.Symbol)expression).RawText == (")"))
                                 {
                                     stack.Pop();
-                                    if (stack.Count==0)
+                                    if (stack.Count == 0)
                                     {
                                         result.Add(new ExpressionDigit(bracketList, calculator));
                                         bracketList = new List<Expression>();
@@ -263,10 +276,10 @@ namespace ExtrameFunctionCalculator
                         }
                         else
                         {
-                            if (((Operator)expressionArrayList[(position + 1)]).GetOperatorReference().RawText==("+") && (position != 0 ? ((Operator)expressionArrayList[(position - 1)]).isSameLevelLayout((Operator)expressionArrayList[(position + 1)]) : true))
+                            if (((Operator)expressionArrayList[(position + 1)]).GetOperatorReference().RawText == ("+") && (position != 0 ? ((Operator)expressionArrayList[(position - 1)]).isSameLevelLayout((Operator)expressionArrayList[(position + 1)]) : true))
                             {
                                 expressionArrayList.RemoveAt(position--);
-                                if(position>=expressionArrayList.Count)
+                                if (position >= expressionArrayList.Count)
                                     expressionArrayList.RemoveAt(position--);
                                 position -= 1;
                             }
@@ -299,7 +312,7 @@ namespace ExtrameFunctionCalculator
                     if (position < expressionArrayList.Count - 1)
                     {
                         expression = expressionArrayList[(position + 1)];
-                        if (expression.OptExpressionType == Expression.ExpressionType.Operator ? ((Operator)expression).GetOperatorReference().RawText==("*") : false)
+                        if (expression.OptExpressionType == Expression.ExpressionType.Operator ? ((Operator)expression).GetOperatorReference().RawText == ("*") : false)
                         {
                             expressionArrayList.RemoveAt(position);
                             expressionArrayList.RemoveAt(position);
@@ -310,12 +323,12 @@ namespace ExtrameFunctionCalculator
                     if (position > 0)
                     {
                         expression = expressionArrayList[(position - 1)];
-                        if (expression.OptExpressionType == Expression.ExpressionType.Operator ? ((Operator)expression).GetOperatorReference().RawText==("*") : false)
+                        if (expression.OptExpressionType == Expression.ExpressionType.Operator ? ((Operator)expression).GetOperatorReference().RawText == ("*") : false)
                         {
                             expressionArrayList.RemoveAt(position);
                             expressionArrayList.RemoveAt(--position);
                         }
-                        else if (expression.OptExpressionType == Expression.ExpressionType.Operator ? ((Operator)expression).GetOperatorReference().RawText==("/") : false)
+                        else if (expression.OptExpressionType == Expression.ExpressionType.Operator ? ((Operator)expression).GetOperatorReference().RawText == ("/") : false)
                         {
                             expressionArrayList.RemoveAt(position);
                             expressionArrayList.RemoveAt(--position);

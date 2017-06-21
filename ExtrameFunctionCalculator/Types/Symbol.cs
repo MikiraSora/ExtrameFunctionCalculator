@@ -8,15 +8,13 @@ namespace ExtrameFunctionCalculator.Types
 {
     public class Symbol : Expression
     {
-        private Symbol() : base(null) { }
-
         public override ExpressionType ExpressionType => ExpressionType.Symbol;
-
         public override bool IsCalculatable => base.IsCalculatable;
 
+        private Symbol() : base(null) { }
         public Symbol(string op,Calculator calculator) : base(calculator)
         {
-            _raw_text = op;
+            raw_text = op;
         }
 
         public override string GetName()
@@ -26,14 +24,14 @@ namespace ExtrameFunctionCalculator.Types
 
         public int CompareOperationPrioty(Symbol symbol)
         {
-            float val = Calculator.OperatorPrioty[(_raw_text)] - Calculator.OperatorPrioty[symbol.RawText];
+            float val = Calculator.operator_prioty[(raw_text)] - Calculator.operator_prioty[symbol.RawText];
             return val == 0 ? 0 : (val > 0 ? 1 : -1);
         }
 
-        public override string ToString() => _raw_text;
+        public override string ToString() => raw_text;
         
-        public List<Expression> Solve(List<Expression> paramterList, Calculator calculator) => Calculator.OperatorFunction[(_raw_text)](paramterList, calculator);
+        public List<Expression> Solve(List<Expression> paramterList, Calculator calculator) => Calculator.operator_function[(raw_text)](paramterList, calculator);
 
-        public int GetParamterCount() => Calculator.OperatorRequestParamterCount[_raw_text];
+        public int GetParamterCount() => Calculator.operator_request_count[raw_text];
     }
 }

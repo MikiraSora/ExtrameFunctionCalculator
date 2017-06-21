@@ -61,7 +61,6 @@
     <Compile Include="Script\Types\Statement.cs" />
     <Compile Include="Script\Types\Symbol.cs" />
     <Compile Include="Script\Types\Unit.cs" />
-    <Compile Include="Types\ComboExpression.cs" />
     <Compile Include="Types\Digit.cs" />
     <Compile Include="Types\Expression.cs" />
     <Compile Include="Types\ExpressionVariable.cs" />
@@ -71,7 +70,6 @@
     <Compile Include="Types\ScriptFunction.cs" />
     <Compile Include="Types\Symbol.cs" />
     <Compile Include="Types\Variable.cs" />
-    <Compile Include="Types\WrapperVariable.cs" />
     <Compile Include="UtilTools\ObjectPool.cs" />
     <Compile Include="UtilTools\Utils.cs" />
   </ItemGroup>

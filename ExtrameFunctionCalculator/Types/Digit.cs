@@ -16,7 +16,7 @@ namespace ExtrameFunctionCalculator.Types
 
         public Digit(string digit) : base(null)
         {
-            _raw_text = digit;
+            raw_text = digit;
         }
 
         public override string GetName()
@@ -26,15 +26,15 @@ namespace ExtrameFunctionCalculator.Types
 
         public override string Solve()
         {
-            return _raw_text;
+            return raw_text;
         }
 
         public double GetDouble()
         {
-            return IsIsPrecisionTruncation ? _CutMaxPerseicelDecimal(Solve()) : double.Parse(Solve());
+            return IsIsPrecisionTruncation ? CutMaxPerseicelDecimal(Solve()) : double.Parse(Solve());
         }
 
-        private double _CutMaxPerseicelDecimal(string digit)
+        private double CutMaxPerseicelDecimal(string digit)
         {
             if (!digit.Contains('.'))
                 return double.Parse(digit);

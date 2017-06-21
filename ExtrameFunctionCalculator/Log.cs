@@ -24,18 +24,13 @@ namespace ExtrameFunctionCalculator
 
             private Type message_type = Type.Debug;
 
-            string callerMethodName = null;
+            string caller_method_name = null;
 
             private long time_strip = 0;
 
             private string message = null;
 
             private static long recordTime = 0;
-
-            internal static void InitRecordTime() { recordTime = Environment.TickCount; }
-
-            private static long GetCurrentTime() { return Environment.TickCount - recordTime; }
-
             public Message()
             {
                 time_strip = GetCurrentTime();
@@ -43,7 +38,7 @@ namespace ExtrameFunctionCalculator
 
             public Message(Type type, long time, string message, string methodname)
             {
-                callerMethodName = methodname;
+                caller_method_name = methodname;
                 message_type = type;
                 time_strip = time;
                 this.message = message;
@@ -59,119 +54,110 @@ namespace ExtrameFunctionCalculator
             public Message(Type type, string message) : this(type, GetCurrentTime(), message) { }
             public Message(Type type, string message, string methodname) : this(type, GetCurrentTime(), message, methodname) { }
 
+            internal static void InitRecordTime() { recordTime = Environment.TickCount; }
+
+            private static long GetCurrentTime() { return Environment.TickCount - recordTime; }
+
             public string toString()
             {
                 long min = time_strip / 1000 / 60;
                 long sec = (time_strip - min * 1000 * 60) / 1000;
                 long mill_sec = time_strip - min * 60 * 1000 - sec * 1000;
                 if (Log.IsShowCallerMethod)
-                    return String.Format("{0}[{1}:{2}:{3} {4}]{5}():{6}", message_type.ToString()[(0)], min, sec, mill_sec, message_type.ToString(), callerMethodName != null ? callerMethodName : "unknown_method", message);
+                    return String.Format("{0}[{1}:{2}:{3} {4}]{5}():{6}", message_type.ToString()[(0)], min, sec, mill_sec, message_type.ToString(), caller_method_name != null ? caller_method_name : "unknown_method", message);
                 return String.Format("{0}[{1}:{2}:{3} {4}]{5}", message_type.ToString()[0], min, sec, mill_sec, message_type.ToString(), message);
             }
         }
 
-        private static bool _isShowCallerMethod = true;
-        public static void SetShowCallerMethod(bool isShowCallerMethod) { IsThreadCommitLog = isShowCallerMethod; }
-        public static bool IsShowCallerMethod { get { return _isShowCallerMethod; } }
-
-        internal static string SegmentationMarker = "#@#";
-
-        private static Socket socket;
-
-        public static void InitRecordTime() { Message.InitRecordTime(); }
-
-        public static Thread thread = null;
-
-        public static bool _enable_log = true;
-        public static bool EnableLog { get { return _enable_log; } set { _enable_log = value; } }
-
         private class MaintenanceRunnable
         {
-            private volatile bool isLock = true;
-            private volatile bool isExit = false;
-            public volatile bool isHighLevelCommit = false;
+            private volatile bool is_lock = true;
+            private volatile bool is_exit = false;
 
-            private long flushInv = 30;
+            private long flush_inv = 30;
 
-            public bool IsExit() { return isExit; }
+            private Queue<Message> commit_queue = new Queue<Message>(100);
 
-            public void Exit() { isExit = true; }
-            public void Unlock() { isLock = false; }
+            public bool IsExit() { return is_exit; }
 
-            private List<Message> CommitLogQueue = new List<Message>();
+            public void Exit() { is_exit = true; }
+            public void Unlock() { is_lock = false; }
             public void CommitLog(Message message)
             {
-                CommitLogQueue.Add(message);
+                commit_queue.Add(message);
                 Unlock();
             }
 
-            public void run()
+            public void ThreadRun()
             {
                 Message message = null;
-                isExit = false;
-                while (!isExit)
+                is_exit = false;
+                while (!is_exit)
                 {
-                    while (isLock)
+                    while (is_lock)
                     {
                         try
                         {
-                            Thread.Sleep((int)flushInv);
+                            Thread.Sleep((int)flush_inv);
                         }
                         catch (Exception e) { }
                     }
 
-                    message = CommitLogQueue.Count == 0 ? null : CommitLogQueue[(0)];
+                    message = commit_queue.Count == 0 ? null : commit_queue.Dequeue();
                     if (message == null)
                         continue;
-                    CommitLogQueue.RemoveAt(0);
                     try
                     {
-                        SocketWrite(message.toString()+Log.SegmentationMarker);
+                        SocketWrite(message.toString() + Log.segmentation_maker);
                     }
                     catch (Exception e) { }
                 }
-                isLock = true;
+                is_lock = true;
             }
 
         }
 
-        private static MaintenanceRunnable maintenanceRunnable = new MaintenanceRunnable();
-
-        private static bool IsThreadCommitLog = false;
+        private static bool is_show_caller_method = true;
+        internal static string segmentation_maker = "#@#";
+        private static Socket socket;
+        public static Thread thread = null;
+        public static bool is_enable_log = true;
+        private static MaintenanceRunnable maintenance_thread = new MaintenanceRunnable();
+        private static bool is_thread_commit_log = false;
+        private static int port = 2857;
+        private static string address = "127.0.0.1";
+        private static List<Message> messages_history = new List<Message>();
+        private static int histroy_size = 10;
+        public static bool EnableLog { get { return is_enable_log; } set { is_enable_log = value; } }
+        public static bool IsShowCallerMethod { get { return is_show_caller_method; } }
+        public static void SetShowCallerMethod(bool isShowCallerMethod) { is_thread_commit_log = isShowCallerMethod; }
+        public static void InitRecordTime() { Message.InitRecordTime(); }
         public static void SetIsThreadCommitLog(bool isThreadCommitLog)
         {
-            IsThreadCommitLog = isThreadCommitLog;
-            if (IsThreadCommitLog)
+            is_thread_commit_log = isThreadCommitLog;
+            if (is_thread_commit_log)
             {
                 if (thread == null)
                 {
-                    thread = new Thread(maintenanceRunnable.run);
+                    thread = new Thread(maintenance_thread.ThreadRun);
                     thread.Name = ("Log_Commit thread");
                     thread.Start();
                 }
-                if (maintenanceRunnable.IsExit())
+                if (maintenance_thread.IsExit())
                     thread.Start();
             }
             else
             {
                 if (thread == null)
                     return;
-                if (!maintenanceRunnable.IsExit())
-                    maintenanceRunnable.Exit();
+                if (!maintenance_thread.IsExit())
+                    maintenance_thread.Exit();
             }
         }
-
-        private static int port = 2857;
         public static void SetPort(int port) { Log.port = port; }
         public static int GetPort() { return port; }
-
-        private static string address = "127.0.0.1";
         public static void SetAddress(string address) { Log.address = address; }
         public static string GetAddress() { return address; }
-
-        private static List<Message> messages_history = new List<Message>();
-
-        private static int histroy_size = 10;
         public static void SetHistorySize(int history_size) { Log.histroy_size = history_size; }
 
         private static void PushHistory(Message message)
@@ -212,9 +198,9 @@ namespace ExtrameFunctionCalculator
         {
             if (!EnableLog)
                 return;
-            if (IsThreadCommitLog)
+            if (is_thread_commit_log)
             {
-                maintenanceRunnable.CommitLog(message);
+                maintenance_thread.CommitLog(message);
                 return;
             }
             try

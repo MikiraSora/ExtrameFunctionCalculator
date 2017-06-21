@@ -48,7 +48,7 @@ namespace Test
                 ThreadPool.QueueUserWorkItem((state) => {
                     while (true)
                     {
-                        calculator._Solve("4+6*8/2*random(100)");
+                        calculator.Solve("4+6*8/2*random(100)");
                         counter++;
                     }
                 },null);

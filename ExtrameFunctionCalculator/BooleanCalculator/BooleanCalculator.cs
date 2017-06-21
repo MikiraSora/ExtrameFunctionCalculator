@@ -30,7 +30,7 @@ namespace ExtrameFunctionCalculator.BooleanCalculatorSupport
 
         Variable GetVariable(string name) => calculator.GetVariable(name);
 
-        string RequestVariable(string name) => calculator._Solve(name);
+        string RequestVariable(string name) => calculator.Solve(name);
 
         List<Expression> ParseExpression(string expression)
         {
@@ -59,7 +59,7 @@ namespace ExtrameFunctionCalculator.BooleanCalculatorSupport
                             if (c == '(')
                             {
                                 //判断是否有无限循环小数格式的可能
-                                if (!Utils.isDigit(statement))
+                                if (!Utils.IsDigit(statement))
                                 {
                                     bracket_stack.Push(position);
                                     statement += c;
@@ -186,7 +186,7 @@ namespace ExtrameFunctionCalculator.BooleanCalculatorSupport
 
         private Expression checkConverExpression(string text)
         {
-            if (Utils.isFunction(text))
+            if (Utils.IsFunction(text))
             {
                 //Get function name
                 //Pattern reg = Pattern.compile("([a-zA-Z]\\w*)\\((.*)\\)");
@@ -203,12 +203,12 @@ namespace ExtrameFunctionCalculator.BooleanCalculatorSupport
                 //Get function paramater list
             }
 
-            if (Utils.isDigit(text))
+            if (Utils.IsDigit(text))
             {
                 return new Digit(text);
             }
 
-            if (Utils.isValidVariable(text))
+            if (Utils.IsValidVariable(text))
             {
                 Variable variable = GetVariable(text);
                 if (variable == null)
@@ -416,8 +416,8 @@ namespace ExtrameFunctionCalculator.BooleanCalculatorSupport
                 if (!((a.IsCalculatable) && (b.IsCalculatable)))
                     Log.ExceptionError(new Exception("cant take a pair of valid type to calculate."));
 
-                double va = double.Parse(calculator._Solve(a.Solve()));
-                double vb = double.Parse(calculator._Solve(b.Solve()));
+                double va = double.Parse(calculator.Solve(a.Solve()));
+                double vb = double.Parse(calculator.Solve(b.Solve()));
 
                 result.Add(new BooleanVariable(va > vb, calculator));
                 return result;
@@ -429,8 +429,8 @@ namespace ExtrameFunctionCalculator.BooleanCalculatorSupport
                 if (!((a.IsCalculatable) && (b.IsCalculatable)))
                     Log.ExceptionError(new Exception("cant take a pair of valid type to calculate."));
 
-                double va = double.Parse(calculator._Solve(a.Solve()));
-                double vb = double.Parse(calculator._Solve(b.Solve()));
+                double va = double.Parse(calculator.Solve(a.Solve()));
+                double vb = double.Parse(calculator.Solve(b.Solve()));
 
                 result.Add(new BooleanVariable(va < vb, calculator));
                 return result;
@@ -442,8 +442,8 @@ namespace ExtrameFunctionCalculator.BooleanCalculatorSupport
                 if (!((a.IsCalculatable) && (b.IsCalculatable)))
                     Log.ExceptionError(new Exception("cant take a pair of valid type to calculate."));
 
-                double va = double.Parse(calculator._Solve(a.Solve()));
-                double vb = double.Parse(calculator._Solve(b.Solve()));
+                double va = double.Parse(calculator.Solve(a.Solve()));
+                double vb = double.Parse(calculator.Solve(b.Solve()));
 
                 result.Add(new BooleanVariable(va >= vb, calculator));
                 return result;
@@ -455,8 +455,8 @@ namespace ExtrameFunctionCalculator.BooleanCalculatorSupport
                 if (!((a.IsCalculatable) && (b.IsCalculatable)))
                     Log.ExceptionError(new Exception("cant take a pair of valid type to calculate."));
 
-                double va = double.Parse(calculator._Solve(a.Solve()));
-                double vb = double.Parse(calculator._Solve(b.Solve()));
+                double va = double.Parse(calculator.Solve(a.Solve()));
+                double vb = double.Parse(calculator.Solve(b.Solve()));
 
                 result.Add(new BooleanVariable(va <= vb, calculator));
                 return result;
@@ -468,8 +468,8 @@ namespace ExtrameFunctionCalculator.BooleanCalculatorSupport
                 if (!((a.IsCalculatable) && (b.IsCalculatable)))
                     Log.ExceptionError(new Exception("cant take a pair of valid type to calculate."));
 
-                double va = double.Parse(calculator._Solve(a.Solve()));
-                double vb = double.Parse(calculator._Solve(b.Solve()));
+                double va = double.Parse(calculator.Solve(a.Solve()));
+                double vb = double.Parse(calculator.Solve(b.Solve()));
 
                 result.Add(new BooleanVariable(va == vb, calculator));
                 return result;
@@ -481,8 +481,8 @@ namespace ExtrameFunctionCalculator.BooleanCalculatorSupport
                 if (!((a.IsCalculatable) && (b.IsCalculatable)))
                     Log.ExceptionError(new Exception("cant take a pair of valid type to calculate."));
 
-                double va = double.Parse(calculator._Solve(a.Solve()));
-                double vb = double.Parse(calculator._Solve(b.Solve()));
+                double va = double.Parse(calculator.Solve(a.Solve()));
+                double vb = double.Parse(calculator.Solve(b.Solve()));
 
                 result.Add(new BooleanVariable(va != vb, calculator));
                 return result;
@@ -494,8 +494,8 @@ namespace ExtrameFunctionCalculator.BooleanCalculatorSupport
                 if (!((a.IsCalculatable) && (b.IsCalculatable)))
                     Log.ExceptionError(new Exception("cant take a pair of valid type to calculate."));
 
-                double va = double.Parse(calculator._Solve(a.Solve()));
-                double vb = double.Parse(calculator._Solve(b.Solve()));
+                double va = double.Parse(calculator.Solve(a.Solve()));
+                double vb = double.Parse(calculator.Solve(b.Solve()));
 
                 result.Add(new BooleanVariable((va!=0) && (vb!=0), calculator));
                 return result;
@@ -507,8 +507,8 @@ namespace ExtrameFunctionCalculator.BooleanCalculatorSupport
                 if (!((a.IsCalculatable) && (b.IsCalculatable)))
                     Log.ExceptionError(new Exception("cant take a pair of valid type to calculate."));
 
-                double va = double.Parse(calculator._Solve(a.Solve()));
-                double vb = double.Parse(calculator._Solve(b.Solve()));
+                double va = double.Parse(calculator.Solve(a.Solve()));
+                double vb = double.Parse(calculator.Solve(b.Solve()));
 
                 result.Add(new BooleanVariable((va!=0) || (vb!=0), calculator));
                 return result;

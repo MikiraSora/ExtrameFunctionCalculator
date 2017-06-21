@@ -38,31 +38,33 @@ namespace ExtrameFunctionCalculator.Types
 
         #endregion
 
-        protected string _function_name, _function_paramters, _function_body;
+        static Regex FunctionFormatRegex = new Regex(@"([a-zA-Z]\w*)\((.*)\)=(.+)");
+
+        protected string function_name, function_paramters, function_body;
+
+        static Regex check_function_format_regex = new Regex(@"([a-zA-Z]\w*)\((.*)\)");
 
         protected ParameterRequestWrapper request;
-        
+
         public override ExpressionType ExpressionType { get { return ExpressionType.Function; } }
 
         public virtual FunctionType FunctionType { get { return FunctionType.NormalFunction; } }
 
         protected Function() : base(null) { }
 
-        static Regex FunctionFormatRegex = new Regex(@"([a-zA-Z]\w*)\((.*)\)=(.+)");
-        
         public Function(string expression, Calculator calculator) : base(calculator)
         {
             if (expression == null || expression.Length == 0)
                 return;
-            _raw_text = expression;
+            raw_text = expression;
             Match result = FunctionFormatRegex.Match(expression);
             if (result.Groups.Count != 4)
                 Log.ExceptionError(new Exception("Cannot parse function ：" + expression));
-            _function_name = result.Groups[1].Value;
-            _function_paramters = result.Groups[2].Value;
-            ParameterRequestWrapper parameterRequest = new ParameterRequestWrapper(_function_paramters);
+            function_name = result.Groups[1].Value;
+            function_paramters = result.Groups[2].Value;
+            ParameterRequestWrapper parameterRequest = new ParameterRequestWrapper(function_paramters);
             request = parameterRequest;
-            _function_body = result.Groups[3].Value;
+            function_body = result.Groups[3].Value;
         }
 
         protected Dictionary<string, Variable> Parse(string paramsRawText)
@@ -89,7 +91,7 @@ namespace ExtrameFunctionCalculator.Types
                 if (c == ',' && (BracketStack.Count == 0))
                 {
                     string requestParamterName = request[(requestIndex++)];
-                    paramsMap[requestParamterName] = new Variable(requestParamterName, this.Calculator._Solve(paramter), this.Calculator);
+                    paramsMap[requestParamterName] = new Variable(requestParamterName, this.Calculator.Solve(paramter), this.Calculator);
                     paramter = "";
                 }
                 else
@@ -98,7 +100,7 @@ namespace ExtrameFunctionCalculator.Types
                 }
             }
             if ((paramter.Length != 0))
-                paramsMap[request[(requestIndex)]] = new ExpressionVariable(request[(requestIndex)], this.Calculator._Solve(paramter), this.Calculator);
+                paramsMap[request[(requestIndex)]] = new ExpressionVariable(request[(requestIndex)], this.Calculator.Solve(paramter), this.Calculator);
 
             return paramsMap;
         }
@@ -113,29 +115,26 @@ namespace ExtrameFunctionCalculator.Types
             return newExpression;
         }
 
-        public override string GetName() => _function_name;
+        public override string GetName() => function_name;
 
         public virtual string Solve(string paramsRawText)
         {
             Dictionary<string, Variable>  parameters =Parse(paramsRawText);
             if (parameters.Count != request.GetParamterRequestCount())
-                Log.ExceptionError(new Exception($"function \"{_function_name}\" requests {request.GetParamterRequestCount()} paramter(s) but you input {parameters.Count} paramter(s)"));
+                Log.ExceptionError(new Exception($"function \"{function_name}\" requests {request.GetParamterRequestCount()} paramter(s) but you input {parameters.Count} paramter(s)"));
             string exression;
-            exression = ParseDeclaring(_function_body,parameters);
-            return Calculator._Solve(exression);
+            exression = ParseDeclaring(function_body,parameters);
+            return Calculator.Solve(exression);
         }
 
         public override string Solve() => Solve("");
 
         public void BindCalculator(Calculator calculator)
         {
-            _ref_calculator = calculator;
+            ref_calculator = calculator;
         }
 
-        public override string ToString() => $"{_function_name}({_function_paramters})={_function_body}";
-
-        static Regex checkFunctionFormatRegex = new Regex(@"([a-zA-Z]\w*)\((.*)\)");
-        
+        public override string ToString() => $"{function_name}({function_paramters})={function_body}";
         public Digit GetSolveToDigit() => new Digit(Solve());
 
         //Stack<string> paramsExpressionStack = new Stack<string>();

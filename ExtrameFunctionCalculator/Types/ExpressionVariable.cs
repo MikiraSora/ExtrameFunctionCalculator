@@ -17,12 +17,12 @@ namespace ExtrameFunctionCalculator.Types
 
         public override string Solve()
         {
-            return Calculator._Solve(_raw_text);
+            return Calculator.Solve(raw_text);
         }
 
         internal override void SetValue(string value)
         {
-            _raw_text = value;
+            raw_text = value;
         }
 
         public override Digit GetDigit() => new Digit(Solve());

@@ -8,6 +8,7 @@ namespace ExtrameFunctionCalculator.Types
 {
     public class MapVariable : Variable
     {
+        Dictionary<String, Variable> variable_key_map = new Dictionary<string, Variable>();
         public override VariableType VariableType => VariableType.MapVariable;
 
         public MapVariable(string variable_name, Calculator calculator) : base(variable_name, null, calculator)
@@ -18,13 +19,6 @@ namespace ExtrameFunctionCalculator.Types
         {
             SetValue(indexes, variable_value);
         }
-
-
-        Dictionary<String, Variable> variable_key_map = new Dictionary<string, Variable>();
-
-        string current_indexes = "";
-        public void SetIndexes(string current_indexes) => this.current_indexes = current_indexes;
-
         internal override void SetValue(string value)
         {
             throw new Exception("MapVariable cant call SetValue(String) directly!");
@@ -38,7 +32,7 @@ namespace ExtrameFunctionCalculator.Types
         internal void SetValue(string path, Variable variable)
         {
             if (!IsKeyPath(path))
-                path = Calculator._Solve(path);
+                path = Calculator.Solve(path);
             variable_key_map.Add(path, variable);
         }
 
@@ -110,7 +104,7 @@ namespace ExtrameFunctionCalculator.Types
             //return variable_key_map.containsKey(index)?variable_key_map.get(index):null;
             if (IsKeyPath(index))
                 return variable_key_map.ContainsKey(index) ? variable_key_map[(index)] : null;
-            index = Calculator._Solve(index);
+            index = Calculator.Solve(index);
             return variable_key_map.ContainsKey(index) ? variable_key_map[(index)] : null;
         }
 

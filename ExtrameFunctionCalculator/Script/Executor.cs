@@ -281,7 +281,7 @@ namespace ExtrameFunctionCalculator.Script
                     }
                 }
             }
-            catch (ReturnSignal e) { return GetCalculator()._Solve(e.ReturnValue); }
+            catch (ReturnSignal e) { return GetCalculator().Solve(e.ReturnValue); }
             //catch (Exception e) { throw e; }
             finally
             {
@@ -348,11 +348,11 @@ namespace ExtrameFunctionCalculator.Script
             if (variable == null)
             {
                 RegisterTmpVariable(name);
-                TmpVariable[(name)].Push(new ExtrameFunctionCalculator.Types.Variable(name, GetCalculator()._Solve(Value), GetCalculator()));
+                TmpVariable[(name)].Push(new ExtrameFunctionCalculator.Types.Variable(name, GetCalculator().Solve(Value), GetCalculator()));
                 return;
             }
 
-            variable.RawText = GetCalculator()._Solve(Value);
+            variable.RawText = GetCalculator().Solve(Value);
         }
 
         public void RegisterTmpVariable(string name)
