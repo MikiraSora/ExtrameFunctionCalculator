@@ -30,7 +30,7 @@ namespace ExtrameFunctionCalculator
 
             private string message = null;
 
-            private static long recordTime = 0;
+            private static long recore_time = 0;
             public Message()
             {
                 time_strip = GetCurrentTime();
@@ -54,9 +54,9 @@ namespace ExtrameFunctionCalculator
             public Message(Type type, string message) : this(type, GetCurrentTime(), message) { }
             public Message(Type type, string message, string methodname) : this(type, GetCurrentTime(), message, methodname) { }
 
-            internal static void InitRecordTime() { recordTime = Environment.TickCount; }
+            internal static void InitRecordTime() { recore_time = Environment.TickCount; }
 
-            private static long GetCurrentTime() { return Environment.TickCount - recordTime; }
+            private static long GetCurrentTime() { return Environment.TickCount - recore_time; }
 
             public string toString()
             {

@@ -18,26 +18,24 @@ namespace ExtrameFunctionCalculator.Script.Types
 
     public abstract class Statement : Unit
     {
+        public delegate void ExecuteAction(Object obj);
+
         protected string statement;
+
+        public virtual StatementType StatementType { get { return StatementType.Unknown; } }
+
+        public override UnitType UnitType => UnitType.Statement;
 
         public string StatementContext
         {
             get { return statement; }
         }
-
-        public delegate void ExecuteAction(Object obj);
-
-        public virtual StatementType StatementType { get { return StatementType.Unknown; } }
-
         public Statement(int line,string statement) : base(line)
         {
             this.statement = statement;
         }
 
         public override string ToString() => $"{base.ToString()} - {StatementType.ToString()} : {statement}";
-
-        public override UnitType UnitType => UnitType.Statement;
-
         public virtual void Execute()
         {
 

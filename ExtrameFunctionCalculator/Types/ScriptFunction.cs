@@ -18,7 +18,7 @@ namespace ExtrameFunctionCalculator.Types
         {
             this.function_name = function_name;
             this.executor = executor;
-            request = executor.RefParser.FunctionTable[(function_name)].request;
+            request = executor.RefParser.function_table[(function_name)].request;
         }
 
         public override string Solve(string parameterList)

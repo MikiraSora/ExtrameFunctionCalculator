@@ -12,6 +12,7 @@ namespace ExtrameFunctionCalculator.Script.Types
 
         public string VariableName { get { return variable_name; } }
 
+        public override StatementType StatementType => StatementType.Set;
         public string VariableValue { get { return variable_value; } }
 
         public Set(int line, string statement) : base(line, statement)
@@ -32,7 +33,5 @@ namespace ExtrameFunctionCalculator.Script.Types
                 }
             }
         }
-
-        public override StatementType StatementType => StatementType.Set;
     }
 }

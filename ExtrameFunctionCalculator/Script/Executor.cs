@@ -11,38 +11,35 @@ namespace ExtrameFunctionCalculator.Script
     public class Executor
     {
         Calculator calculator = null;
-        Calculator GetCalculator() { return calculator == null ? calculator = new Calculator() : calculator; }
-
         string include_file_path = "";
 
-        List<Executor> recordIncludeExecutor = new List<Executor>();
-        public List<Executor> RecordIncludeExecutorList { get { return recordIncludeExecutor; } }
-
+        List<Executor> record_include_executor = new List<Executor>();
         int reference_count = 0;
-        public int ReferenceCount { get { return reference_count; } }
-
-        Stack<List<String>> recordTmpVariable = new Stack<List<string>>();
-        Dictionary<String, Stack<ExtrameFunctionCalculator.Types.Variable>> TmpVariable = new Dictionary<string, Stack<ExtrameFunctionCalculator.Types.Variable>>();
+        Stack<List<String>> record_tmp_variable_stack = new Stack<List<string>>();
+        Dictionary<String, Stack<ExtrameFunctionCalculator.Types.Variable>> tmp_variable = new Dictionary<string, Stack<ExtrameFunctionCalculator.Types.Variable>>();
 
         Parser parser;
+        private static Dictionary<String, Parser.ExecutorAction> precompling_action = null;
+        public int ReferenceCount { get { return reference_count; } }
+        public List<Executor> RecordIncludeExecutorList { get { return record_include_executor; } }
         public Parser RefParser { get { return parser; } }
-
-        private static Dictionary<String, Parser.ExecutorAction> preprocessActionMap = null;
+        public string IncludeFilePath { get { return include_file_path; } }
+        public string GetPackageName => parser.Propherty[("package_name")];
 
         static Executor()
         {
-            preprocessActionMap = new Dictionary<string, Parser.ExecutorAction>();
-            preprocessActionMap.Add("package", (param, reference_parser) =>
+            precompling_action = new Dictionary<string, Parser.ExecutorAction>();
+            precompling_action.Add("package", (param, reference_parser) =>
             {
                 reference_parser.Set("package_name", param);
             }
         );
-            preprocessActionMap.Add("version", (param, reference_parser) =>
+            precompling_action.Add("version", (param, reference_parser) =>
             {
                 reference_parser.Set("package_version", param);
             }
         );
-            preprocessActionMap.Add("include", (param, reference_parser) =>
+            precompling_action.Add("include", (param, reference_parser) =>
             {
                 try
                 {
@@ -58,7 +55,7 @@ namespace ExtrameFunctionCalculator.Script
                     Log.Error(String.Format("cant open file %s", param));
                 }
             });
-            preprocessActionMap.Add("define", (param, reference_parser) =>
+            precompling_action.Add("define", (param, reference_parser) =>
             {
                 //// TODO: 2016/11/4 实现define
 
@@ -71,8 +68,7 @@ namespace ExtrameFunctionCalculator.Script
             parser = new Parser(this);
         }
 
-        public string IncludeFilePath { get { return include_file_path; } }
-
+        Calculator GetCalculator() { return calculator == null ? calculator = new Calculator() : calculator; }
         static bool IsAbsolutePath(string path)
         {
             if (path.Length == 0)
@@ -93,15 +89,13 @@ namespace ExtrameFunctionCalculator.Script
             return "";
         }
 
-        #region Load Files
-
         public void InitFromFile(string input_file)
         {
             List<string> arrayList = new List<string>(System.IO.File.ReadAllLines(input_file));
 
             include_file_path = input_file;
 
-            parser.SetPreCompileExecutors(preprocessActionMap);
+            parser.SetPreCompileExecutors(precompling_action);
             parser.Parse(arrayList);
             parser.FunctionRegister();
 
@@ -110,19 +104,15 @@ namespace ExtrameFunctionCalculator.Script
             return;
         }
 
-        #endregion
-
-        public string GetPackageName => parser.Propherty[("package_name")];
-
         public string GetPackageVersion() => parser.Propherty[("package_version")];
 
-        public int GetCurrentExecutorFunctionCount() => parser.FunctionTable.Count;
+        public int GetCurrentExecutorFunctionCount() => parser.function_table.Count;
 
         public int GetAllExecutorFunctionCount()
         {
             int count = 0;
             count = GetCurrentExecutorFunctionCount();
-            foreach (Executor executor in recordIncludeExecutor)
+            foreach (Executor executor in record_include_executor)
             {
                 count += executor.GetAllExecutorFunctionCount();
             }
@@ -132,50 +122,19 @@ namespace ExtrameFunctionCalculator.Script
         public List<string> GetAllFunctionName()
         {
             List<string> allFunction = new List<string>();
-            foreach (var pair in parser.FunctionTable)
+            foreach (var pair in parser.function_table)
                 allFunction.Add(pair.Key);
             return allFunction;
         }
-
-        #region Singal
-
-        public abstract class Singal : Exception
-        {
-            protected string value;
-            public Singal(string value)
-            {
-                this.value = value;
-            }
-        }
-
-        class ReturnSignal : Singal
-        {
-            public string ReturnValue { get { return value; } }
-
-            public ReturnSignal(string expr) : base(expr)
-            {
-            }
-        }
-
-        class EndfunctionSignal : Singal
-        {
-            public EndfunctionSignal() : base(null)
-            {
-
-            }
-        }
-
-        #endregion
-
         public string ExecuteFunction(string name, List<ExtrameFunctionCalculator.Types.Expression> paramster)
         {
-            if (!parser.FunctionTable.ContainsKey(name))
+            if (!parser.function_table.ContainsKey(name))
             {
-                foreach (Executor executor in recordIncludeExecutor)
-                    if (executor.parser.FunctionTable.ContainsKey(name))
+                foreach (Executor executor in record_include_executor)
+                    if (executor.parser.function_table.ContainsKey(name))
                         return executor.ExecuteFunction(name, paramster);
             }
-            Function function = parser.FunctionTable[(name)];
+            Function function = parser.function_table[(name)];
             if (paramster.Count != function.ParameterRequestCount)
                 throw new Exception("not enough paramester to take");
             Dictionary<String, ExtrameFunctionCalculator.Types.Variable> param_set = new Dictionary<string, ExtrameFunctionCalculator.Types.Variable>();
@@ -290,6 +249,36 @@ namespace ExtrameFunctionCalculator.Script
             }
         }
 
+        #region Singal
+
+        public abstract class Singal : Exception
+        {
+            protected string value;
+            public Singal(string value)
+            {
+                this.value = value;
+            }
+        }
+
+        class ReturnSignal : Singal
+        {
+            public string ReturnValue { get { return value; } }
+
+            public ReturnSignal(string expr) : base(expr)
+            {
+            }
+        }
+
+        class EndfunctionSignal : Singal
+        {
+            public EndfunctionSignal() : base(null)
+            {
+
+            }
+        }
+
+        #endregion
+
         #region Variables
 
         private void PushTmpVariable(Dictionary<string, ExtrameFunctionCalculator.Types.Variable> variableHashMap)
@@ -298,28 +287,28 @@ namespace ExtrameFunctionCalculator.Script
             foreach (var pair in variableHashMap)
             {
                 recordList.Add(pair.Key);
-                if (!TmpVariable.ContainsKey(pair.Key))
-                    TmpVariable.Add(pair.Key, new Stack<ExtrameFunctionCalculator.Types.Variable>());
-                TmpVariable[(pair.Key)].Push(pair.Value);
+                if (!tmp_variable.ContainsKey(pair.Key))
+                    tmp_variable.Add(pair.Key, new Stack<ExtrameFunctionCalculator.Types.Variable>());
+                tmp_variable[(pair.Key)].Push(pair.Value);
             }
-            recordTmpVariable.Push(recordList);
+            record_tmp_variable_stack.Push(recordList);
         }
 
         private void PopTmpVariable()
         {
-            List<string> recordList = recordTmpVariable.Pop();
+            List<string> recordList = record_tmp_variable_stack.Pop();
             foreach (string tmp_name in recordList)
             {
-                TmpVariable[(tmp_name)].Pop();
-                if (TmpVariable[(tmp_name)].Count == 0)
-                    TmpVariable.Remove(tmp_name);
+                tmp_variable[(tmp_name)].Pop();
+                if (tmp_variable[(tmp_name)].Count == 0)
+                    tmp_variable.Remove(tmp_name);
             }
         }
 
         private ExtrameFunctionCalculator.Types.Variable GetTmpVariable(string name)
         {
-            if (TmpVariable.ContainsKey(name))
-                return TmpVariable[(name)].Peek();
+            if (tmp_variable.ContainsKey(name))
+                return tmp_variable[(name)].Peek();
             return null;//todo
         }
 
@@ -332,12 +321,12 @@ namespace ExtrameFunctionCalculator.Script
         
          */
 
-        public bool isTmpVariable(string variable_name) => TmpVariable.ContainsKey(variable_name);
+        public bool isTmpVariable(string variable_name) => tmp_variable.ContainsKey(variable_name);
 
         public ExtrameFunctionCalculator.Types.Variable GetVariable(string name)
         {
             if (isTmpVariable(name))
-                return TmpVariable[(name)].Peek();
+                return tmp_variable[(name)].Peek();
             return null;
         }
 
@@ -348,7 +337,7 @@ namespace ExtrameFunctionCalculator.Script
             if (variable == null)
             {
                 RegisterTmpVariable(name);
-                TmpVariable[(name)].Push(new ExtrameFunctionCalculator.Types.Variable(name, GetCalculator().Solve(Value), GetCalculator()));
+                tmp_variable[(name)].Push(new ExtrameFunctionCalculator.Types.Variable(name, GetCalculator().Solve(Value), GetCalculator()));
                 return;
             }
 
@@ -357,8 +346,8 @@ namespace ExtrameFunctionCalculator.Script
 
         public void RegisterTmpVariable(string name)
         {
-            recordTmpVariable.Peek().Add(name);
-            TmpVariable.Add(name, new Stack<ExtrameFunctionCalculator.Types.Variable>());
+            record_tmp_variable_stack.Peek().Add(name);
+            tmp_variable.Add(name, new Stack<ExtrameFunctionCalculator.Types.Variable>());
         }
 
         #endregion
@@ -369,7 +358,7 @@ namespace ExtrameFunctionCalculator.Script
         {
             Executor executor = new Executor(GetCalculator());
             executor.InitFromFile(input_file);
-            recordIncludeExecutor.Add(executor);
+            record_include_executor.Add(executor);
             GetCalculator().GetScriptManager().LoadScript(executor);
         }
 

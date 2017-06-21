@@ -12,21 +12,18 @@ namespace ExtrameFunctionCalculator.Script
         public delegate void ExecutorAction(string param, Parser reference_parser);
 
         Dictionary<int, Unit> statement_lines = new Dictionary<int, Unit>();
-        public Dictionary<int,Unit> StatementLine { get { return statement_lines; } }
-
         List<string> include_file_names = new List<string>();
 
-        Dictionary<String, int> LabelPositionCache = new Dictionary<string, int>();
+        Dictionary<String, int> label_postion_cache = new Dictionary<string, int>();
+        Dictionary<String, ExecutorAction> reflection_precompiling_execution_map = null;
+        Executor executor;
 
-        public Dictionary<String, Function> FunctionTable = new Dictionary<string, Function>();
+        public Dictionary<String, Function> function_table = new Dictionary<string, Function>();
 
         Dictionary<string, string> propherty = new Dictionary<string, string>();
 
-        public Dictionary<string,string> Propherty { get { return propherty; } }
-
-        Dictionary<String, ExecutorAction> reflectionPreExecution = null;
-
-        Executor executor;
+        public Dictionary<int, Unit> StatementLine { get { return statement_lines; } }
+        public Dictionary<string, string> Propherty { get { return propherty; } }
         public Executor RefExecutor { get { return executor; } }
 
         public Parser(Executor executor)
@@ -183,11 +180,11 @@ namespace ExtrameFunctionCalculator.Script
 
         static bool IsPreCompileCommand(string command) => command.Length==0 ? false : command[(0)] == '#';
 
-        public void SetPreCompileExecutors(Dictionary<String, ExecutorAction> ExecutorActionHashMap)=>reflectionPreExecution = ExecutorActionHashMap;
+        public void SetPreCompileExecutors(Dictionary<String, ExecutorAction> ExecutorActionHashMap)=>reflection_precompiling_execution_map = ExecutorActionHashMap;
 
         void ExecutePreCommand(int line, string text)
         {
-            if (reflectionPreExecution == null)
+            if (reflection_precompiling_execution_map == null)
                 return;
             int position = 1, c = 0;
             string command = "", param ="";
@@ -202,8 +199,8 @@ namespace ExtrameFunctionCalculator.Script
                 position++;
             }
             param = text.Substring(position + 1);
-            if (reflectionPreExecution.ContainsKey(command))
-                reflectionPreExecution[(command)].Invoke(param, this);
+            if (reflection_precompiling_execution_map.ContainsKey(command))
+                reflection_precompiling_execution_map[(command)].Invoke(param, this);
         }
 
         public void FunctionRegister()
@@ -230,7 +227,7 @@ namespace ExtrameFunctionCalculator.Script
                                 throw new SynatxErrorException(position, ("duplicate \"endfcuntion\" in current function statement"), RefExecutor);
                             function_stack.Peek().EndLine = position;
                             function = function_stack.Pop();
-                            FunctionTable.Add(function.FunctionName, function);
+                            function_table.Add(function.FunctionName, function);
                         }
                     }
                 } else if (unit.UnitType == UnitType.Symbol) {

@@ -10,18 +10,15 @@ namespace ExtrameFunctionCalculator.Script
     public class ScriptManager
     {
         Calculator calculator = null;
-        Calculator GetCalculator() { return calculator == null ? calculator = new Calculator() : calculator; }
-
-        Dictionary<String,Function> CacheFunctionMap = null;
+        private Dictionary<string, Executor> script_map = new Dictionary<string, Executor>();
+        private Stack<Executor> executing_executor_stack = new Stack<Executor>();
+        bool is_cache_reference_function = false;
+        Dictionary<String, Function> cache_function_map = null;
 
         private ScriptManager() { }
         public ScriptManager(Calculator calculator) { this.calculator = calculator; }
 
-        private Dictionary<string, Executor> ScriptMap = new Dictionary<string, Executor>();
-
-        private Stack<Executor> ExecutingExecutorStack = new Stack<Executor>();
-        bool ableCacheReferenceFunction = false;
-        public int GetLoadedSricptCount() { return ScriptMap.Count; }
+        Calculator GetCalculator() { return calculator == null ? calculator = new Calculator() : calculator; }
 
         #region Load/Unload Script
 
@@ -31,7 +28,7 @@ namespace ExtrameFunctionCalculator.Script
             executor.InitFromFile(input_file);
             if (executor == null)
                 throw new Exception("cant load script " + input_file + " file by unknown cause.");//// TODO: 2016/11/23 可以弄成IOException
-            if (ScriptMap.ContainsKey(executor.GetPackageName))
+            if (script_map.ContainsKey(executor.GetPackageName))
             {
                 Log.Debug(string.Format("the package {0} had exsited already.", executor.GetPackageName));
             }
@@ -49,9 +46,9 @@ namespace ExtrameFunctionCalculator.Script
 
         public void UnloadScript(string package_name)
         {
-            if (!ScriptMap.ContainsKey(package_name))
+            if (!script_map.ContainsKey(package_name))
                 return;
-            Executor executor = ScriptMap[(package_name)];
+            Executor executor = script_map[(package_name)];
             executor.Drop();
             Log.Debug(String.Format("{0} decrease reference count.now is {1}", executor.GetPackageName, executor.ReferenceCount));
             if (!executor.IsNonReferenced())
@@ -59,15 +56,15 @@ namespace ExtrameFunctionCalculator.Script
 
             Log.Debug(String.Format("unloaded {0} ", executor.GetPackageName));
 
-            if (ableCacheReferenceFunction)
+            if (is_cache_reference_function)
             {
-                foreach (Function function in executor.RefParser.FunctionTable.Values)
+                foreach (Function function in executor.RefParser.function_table.Values)
                 {
-                    if (!CacheFunctionMap.ContainsKey(function.FunctionName))
+                    if (!cache_function_map.ContainsKey(function.FunctionName))
                         continue;
-                    if (CacheFunctionMap[(function.FunctionName)].RefParser.RefExecutor.GetPackageName==(executor.GetPackageName))
+                    if (cache_function_map[(function.FunctionName)].RefParser.RefExecutor.GetPackageName==(executor.GetPackageName))
                     {
-                        CacheFunctionMap.Remove(function.FunctionName);
+                        cache_function_map.Remove(function.FunctionName);
                         Log.Debug(String.Format("{0}::{1}() was removed from cache", executor.GetPackageName, function.FunctionName));
                     }
                 }
@@ -78,51 +75,27 @@ namespace ExtrameFunctionCalculator.Script
                 UnloadScript(executor1.GetPackageName);
             }
 
-            ScriptMap.Remove(package_name);
+            script_map.Remove(package_name);
         }
         #endregion
 
-        public void SetCacheReferenceFunction(bool sw)
+        #region Request Variable/Function
+        public ExtrameFunctionCalculator.Types.ScriptFunction RequestFunction(string function_name)
         {
-            ableCacheReferenceFunction = sw;
-            if (sw)
+            if (is_cache_reference_function)
             {
-                if (CacheFunctionMap == null)
+                if (cache_function_map.ContainsKey(function_name))
                 {
-                    CacheFunctionMap = new Dictionary<string, Function>();
-                    //init cache
-                    foreach (Executor executor in ScriptMap.Values)
-                        foreach (Function function in executor.RefParser.FunctionTable.Values)
-                            if (!CacheFunctionMap.ContainsKey(function.FunctionName))
-                                CacheFunctionMap.Add(function.FunctionName, function);
-                }
-            }
-            else
-            {
-                CacheFunctionMap = null;
-            }
-        }
-
-        public bool ContainScript(string package_name) => ScriptMap.ContainsKey(package_name);
-
-        public bool ContainFunction(string function_name)
-        {
-            if (ableCacheReferenceFunction)
-            {
-                if (CacheFunctionMap.ContainsKey(function_name))
-                {
-                    //Parser.Statement.Function function=CacheFunctionMap.get(function_name);
-                    return true;
+                    Function function = cache_function_map[(function_name)];
+                    return new ExtrameFunctionCalculator.Types.ScriptFunction(function_name, function.RefParser.RefExecutor, GetCalculator());
                 }
 
             }
-            foreach (Executor executor in ScriptMap.Values)
-                if (executor.RefParser.FunctionTable.ContainsKey(function_name))
-                    return true;
-            return false;
+            foreach (Executor executor in script_map.Values)
+                if (executor.RefParser.function_table.ContainsKey(function_name))
+                    return new ExtrameFunctionCalculator.Types.ScriptFunction(function_name, executor, GetCalculator());
+            return null;
         }
-
-        public Executor GetCurrentExecutor() => ExecutingExecutorStack.Peek();
 
         public ExtrameFunctionCalculator.Types.Variable RequestVariable(string name, Executor good_executor)
         {
@@ -136,7 +109,7 @@ namespace ExtrameFunctionCalculator.Script
                     return variable;
                 }
             }
-            if (!(ExecutingExecutorStack.Count==0))
+            if (!(executing_executor_stack.Count == 0))
             {
                 variable = GetCurrentExecutor().GetVariable(name);
                 if (variable != null)
@@ -145,7 +118,7 @@ namespace ExtrameFunctionCalculator.Script
                     return variable;
                 }
             }
-            foreach (Executor executor in ScriptMap.Values)
+            foreach (Executor executor in script_map.Values)
             {
                 variable = executor.GetVariable(name);
                 if (variable != null)
@@ -157,50 +130,87 @@ namespace ExtrameFunctionCalculator.Script
             return null;
         }
 
-        public ExtrameFunctionCalculator.Types.ScriptFunction RequestFunction(string function_name)
+        public bool ContainFunction(string function_name)
         {
-            if (ableCacheReferenceFunction)
+            if (is_cache_reference_function)
             {
-                if (CacheFunctionMap.ContainsKey(function_name))
+                if (cache_function_map.ContainsKey(function_name))
                 {
-                   Function function = CacheFunctionMap[(function_name)];
-                    return new ExtrameFunctionCalculator.Types.ScriptFunction(function_name, function.RefParser.RefExecutor, GetCalculator());
+                    //Parser.Statement.Function function=CacheFunctionMap.get(function_name);
+                    return true;
                 }
 
             }
-            foreach (Executor executor in ScriptMap.Values)
-                if (executor.RefParser.FunctionTable.ContainsKey(function_name))
-                    return new ExtrameFunctionCalculator.Types.ScriptFunction(function_name, executor, GetCalculator());
-            return null;
+            foreach (Executor executor in script_map.Values)
+                if (executor.RefParser.function_table.ContainsKey(function_name))
+                    return true;
+            return false;
         }
 
-        public void RecordExecutingExecutor(Executor executor)
+        public void SetCacheReferenceFunction(bool sw)
         {
-            ExecutingExecutorStack.Push(executor);
-            //Log.Debug(String.format("the executor <%s> was pushed into current caller executor stack",executor.GetPackageName()));
+            is_cache_reference_function = sw;
+            if (sw)
+            {
+                if (cache_function_map == null)
+                {
+                    cache_function_map = new Dictionary<string, Function>();
+                    //init cache
+                    foreach (Executor executor in script_map.Values)
+                        foreach (Function function in executor.RefParser.function_table.Values)
+                            if (!cache_function_map.ContainsKey(function.FunctionName))
+                                cache_function_map.Add(function.FunctionName, function);
+                }
+            }
+            else
+            {
+                cache_function_map = null;
+            }
+        }
+
+
+
+
+        #endregion
+
+        #region Reference
+        public int GetLoadedSricptCount() { return script_map.Count; }
+
+        private void ReferenceAdd(string package_name, Executor executor)
+        {
+            if (!script_map.ContainsKey(package_name))
+            {
+                script_map.Add(package_name, executor);
+                Log.Debug(String.Format("{0} is new script ,load to ScriptMap", package_name));
+            }
+            executor.Link();
+            if (is_cache_reference_function)
+                foreach (Function function in executor.RefParser.function_table.Values)
+                    if (!cache_function_map.ContainsKey(function.FunctionName))
+                        cache_function_map.Add(function.FunctionName, function);
         }
 
         public void RecoveredExecutingExecutor()
         {
-            if (ExecutingExecutorStack.Count==0)
+            if (executing_executor_stack.Count == 0)
                 return;
             //Log.Debug(String.format("the executor <%s> was popped into current caller executor stack",GetCurrentExecutor().GetPackageName()));
-            ExecutingExecutorStack.Pop();
+            executing_executor_stack.Pop();
         }
 
-        private void ReferenceAdd(string package_name, Executor executor)
+        public void RecordExecutingExecutor(Executor executor)
         {
-            if (!ScriptMap.ContainsKey(package_name))
-            {
-                ScriptMap.Add(package_name, executor);
-                Log.Debug(String.Format("{0} is new script ,load to ScriptMap", package_name));
-            }
-            executor.Link();
-            if (ableCacheReferenceFunction)
-                foreach (Function function in executor.RefParser.FunctionTable.Values)
-                    if (!CacheFunctionMap.ContainsKey(function.FunctionName))
-                        CacheFunctionMap.Add(function.FunctionName, function);
+            executing_executor_stack.Push(executor);
+            //Log.Debug(String.format("the executor <%s> was pushed into current caller executor stack",executor.GetPackageName()));
         }
 
+        public Executor GetCurrentExecutor() => executing_executor_stack.Peek();
+
+        public bool ContainScript(string package_name) => script_map.ContainsKey(package_name);
+
+
+
+
+        #endregion
     }
 }

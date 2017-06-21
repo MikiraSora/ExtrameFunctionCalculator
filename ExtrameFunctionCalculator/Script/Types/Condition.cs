@@ -18,6 +18,7 @@ namespace ExtrameFunctionCalculator.Script.Types
         public int EndLine { get { return end_line; } internal set { end_line = value; } }
 
         public int ElseLine { get { return else_line; } internal set { else_line = value; } }
+        public override SymbolType SymbolType => SymbolType.ConditionBranch;
 
         public virtual ConditionType ConditionType { get { return ConditionType.Unknown; } }
 
@@ -26,8 +27,6 @@ namespace ExtrameFunctionCalculator.Script.Types
         }
 
         public override string ToString() => $"{base.ToString()} : {ConditionType.ToString()}";
-
-        public override SymbolType SymbolType => SymbolType.ConditionBranch;
     }
 
     public class If : Condition
@@ -36,39 +35,39 @@ namespace ExtrameFunctionCalculator.Script.Types
 
         public string ConditionExpression { get { return condition; } }
 
-        public If(int line,string condition) : base(line)
+        public override ConditionType ConditionType => ConditionType.If;
+
+        public If(int line, string condition) : base(line)
         {
             this.condition = condition;
         }
-
-        public override ConditionType ConditionType => ConditionType.If;
     }
 
     public class Then : Condition
     {
+        public override ConditionType ConditionType => ConditionType.Then;
+
         public Then(int line) : base(line)
         {
         }
-
-        public override ConditionType ConditionType => ConditionType.Then;
     }
 
     public class Else: Condition
     {
+        public override ConditionType ConditionType => ConditionType.Else;
+
         public Else(int line) : base(line)
         {
         }
-
-        public override ConditionType ConditionType => ConditionType.Else;
     }
 
     public class EndIf : Condition
     {
+        public override ConditionType ConditionType => ConditionType.EndIf;
+
         public EndIf(int line) : base(line)
         {
         }
-
-        public override ConditionType ConditionType => ConditionType.EndIf;
     }
 }
 

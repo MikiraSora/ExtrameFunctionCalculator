@@ -11,12 +11,12 @@ namespace ExtrameFunctionCalculator.BooleanCalculatorSupport
 {
     class BooleanCalculator
     {
-        Calculator calculator = null;
-        public Calculator Calculator { get { return calculator; } }
-        
         static Regex checkFunctionFormatRegex = new Regex("([a-zA-Z]\\w*)\\((.*)\\)");
         static string specialOperationChar = "+ ++ - -- * / ~ ! != @ # $ % ^ & && ( ) ; : \" \" || ? > >= < <= , ` ' = == ";
-
+        private List<Expression> rawExpressionChain = new List<Expression>();
+        private List<Expression> BSEChain = new List<Expression>();
+        Calculator calculator = null;
+        public Calculator Calculator { get { return calculator; } }
         public BooleanCalculator(Calculator cal)
         {
             calculator = cal;
@@ -24,10 +24,6 @@ namespace ExtrameFunctionCalculator.BooleanCalculatorSupport
         }
 
         Function GetFunction(string name) => calculator.GetFunction(name);
-
-        private List<Expression> rawExpressionChain = new List<Expression>();
-        private List<Expression> BSEChain = new List<Expression>();
-
         Variable GetVariable(string name) => calculator.GetVariable(name);
 
         string RequestVariable(string name) => calculator.Solve(name);

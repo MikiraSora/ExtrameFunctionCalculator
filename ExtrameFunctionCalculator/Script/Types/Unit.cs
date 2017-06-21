@@ -8,9 +8,7 @@ namespace ExtrameFunctionCalculator.Script.Types
 {
     public enum UnitType
     {
-        Statement,/*
-            ConditionBranch,
-            LoopBranch,*/
+        Statement,
         Symbol,
         Unknown
     }
