@@ -266,7 +266,8 @@ namespace ExtrameFunctionCalculator
                             if (((Operator)expressionArrayList[(position + 1)]).GetOperatorReference().RawText==("+") && (position != 0 ? ((Operator)expressionArrayList[(position - 1)]).isSameLevelLayout((Operator)expressionArrayList[(position + 1)]) : true))
                             {
                                 expressionArrayList.RemoveAt(position--);
-                                expressionArrayList.RemoveAt(position--);
+                                if(position>=expressionArrayList.Count)
+                                    expressionArrayList.RemoveAt(position--);
                                 position -= 1;
                             }
                         }

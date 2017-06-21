@@ -13,17 +13,16 @@ namespace Test
         static void Main(string[] args)
         {
             //SpeedTestLogger();
-
             Calculator calculator = new Calculator();
-            calculator.Enable(Calculator.EnableType.ExpressionOptimize);
+            //calculator.Enable(Calculator.EnableType.ExpressionOptimize); 傻逼玩意
             calculator.Enable(Calculator.EnableType.PrecisionTruncation);
-
+            //calculator._Solve("(4+6)*(2*sin(cos(2)))");
             while (true)
             {
                 Console.Write("<=:");
                 string command=Console.ReadLine();
                 Console.ForegroundColor = ConsoleColor.Green;
-                string result = calculator.Execute(command);
+                string result = calculator.Solve(command);
                 if(result.Trim().Length!=0)
                     Console.WriteLine(result);
                 Console.ResetColor();

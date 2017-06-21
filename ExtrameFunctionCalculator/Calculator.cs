@@ -662,6 +662,179 @@ namespace ExtrameFunctionCalculator
             expressionArrayList.AddRange(result_list);
         }
 
+        #region New Execute
+
+        public string _Solve(string expression)
+        {
+            if (Utils.isDigit(expression))
+                return expression;
+            List<Expression> expression_list = (ParseExpression(expression));
+            return _SolveExecute(expression_list);
+        }
+
+        public string _SolveExecute(List<Expression> expression_list)
+        {
+            if (expression_list.Count == 1 && expression_list[0].ExpressionType == ExpressionType.Digit)
+                return expression_list[0].RawText;
+
+            _FuckBracketExpressionList(ref expression_list);
+            ConverVariableToDigit(ref expression_list);
+            ConverFunctionToDigit(ref expression_list);
+            CheckNormalizeChain(ref expression_list);
+            expression_list = ExpressionOptimization(expression_list);
+
+            string result = _Execute(expression_list);
+
+            if (result.Contains("."))
+            {
+                String tmpDecial = result.Substring(result.IndexOf('.') + 1);
+                try
+                {
+                    if (int.Parse(tmpDecial) == (0))
+                        return result.Substring(0, result.IndexOf('.'));
+                }
+                catch (Exception e) { }
+            }
+            return result;
+        }
+
+        internal void _FuckBracketExpressionList(ref List<Expression> expression_list)
+        {
+            int position = 0,position_start,position_end;
+            while (true)
+            {
+                if (position >= expression_list.Count)
+                    break;
+                Expression node = expression_list[position];
+                if (node.ExpressionType == ExpressionType.Symbol && ((Symbol)node).RawText == "(")
+                {
+                    position_start = position;
+                    int stack = 0;
+                    while (true)
+                    {
+                        if (position >= expression_list.Count)
+                        {
+                            if (stack != 0)
+                                throw new Exception("未配对的多余括号");
+                        }
+                        node = expression_list[position];
+                        if (node.ExpressionType == ExpressionType.Symbol && ((Symbol)node).RawText == "(")
+                        {
+                            stack++;
+                        }
+                        if (node.ExpressionType == ExpressionType.Symbol && ((Symbol)node).RawText == ")")
+                        {
+                            stack--;
+                            if (stack == 0)
+                            {
+                                var sub_exprssion_list=expression_list.GetRange(position_start+1, position - position_start-1);
+                                var result = new Digit(_SolveExecute(sub_exprssion_list));
+                                expression_list.RemoveRange(position_start, position - position_start + 1);
+                                expression_list.Insert(position_start, result);
+                                position = position_start;
+                                break;
+                            }
+                        }
+                        position++;
+                    }
+                }
+                position++;
+            }
+        }
+
+        internal string _Execute(List<Expression> expression_list)
+        {
+            int position = 0;
+            List<Expression> paramsList = new List<Expression>();
+            while (true)
+            {
+                if (position >= expression_list.Count)
+                    break;
+                Expression node = expression_list[position];
+                if (node.ExpressionType == ExpressionType.Symbol)
+                {
+
+                    Symbol op = (Symbol)node,next_op;
+                    int next_symbol_position;
+                    if(GetNextSymbol(expression_list,position,out next_op,out next_symbol_position))
+                    {
+                        if (op.CompareOperationPrioty(next_op) < 0)
+                        {
+                            //下一个操作符比这个高,那就跳到那里
+                            position = next_symbol_position;
+                            continue; 
+                        } 
+                    }
+
+                    //符号计算
+                    Digit next_value, prev_value;
+                    int next_i, prev_i;
+                    if (!GetNextDigit(expression_list, position, out next_value, out next_i))
+                        throw new Exception("缺少要计算的值");
+                    if (!GetPrevDigit(expression_list, position, out prev_value, out prev_i))
+                        throw new Exception("缺少要计算的值");
+
+                    paramsList.Clear();
+                    paramsList.Add(prev_value);
+                    paramsList.Add(next_value);
+
+                    var result = op.Solve(paramsList, this);
+                    expression_list.InsertRange(prev_i, result);
+                    expression_list.Remove(next_value);
+                    expression_list.Remove(prev_value);
+                    expression_list.Remove(op);
+
+                    position = 0;
+                }
+                position++;
+            }
+            if (expression_list.Count != 1)
+                Log.ExceptionError(new Exception($"still exsit more expression object in result list"));
+            return expression_list[0].RawText;
+        }
+
+        bool GetNextSymbol(List<Expression> expression_list, int position, out Symbol next_symbol, out int next_i) => TryGetNextTypeValue<Symbol>(expression_list, position, out next_symbol, out next_i);
+
+        bool TryGetPrevTypeValue<T>(List<Expression> expression_list, int position, out T next_symbol, out int prev_i) where T:Expression
+        {
+            for (int i = position - 1; (i >=0) && (i<expression_list.Count); i--)
+            {
+                if (expression_list[i] is T)
+                {
+                    next_symbol = (T)expression_list[i];
+                    prev_i = i;
+                    return true;
+                }
+            }
+            next_symbol = null;
+            prev_i = 0;
+            return false;
+        }
+
+        bool GetNextDigit(List<Expression> expression_list, int position, out Digit next_digit, out int next_i) => TryGetNextTypeValue<Digit>(expression_list, position, out next_digit, out next_i);
+
+        bool GetPrevDigit(List<Expression> expression_list, int position, out Digit prev_digit, out int prev_i) => TryGetPrevTypeValue<Digit>(expression_list, position, out prev_digit, out prev_i);
+
+        bool GetPrevtSymbol(List<Expression> expression_list, int position, out Symbol prev_symbol, out int prev_i) => TryGetPrevTypeValue<Symbol>(expression_list, position, out prev_symbol, out prev_i);
+
+        bool TryGetNextTypeValue<T>(List<Expression> expression_list, int position, out T next_symbol, out int next_i) where T:Expression
+        {
+            for (int i = position + 1; i < expression_list.Count; i++)
+            {
+                if (expression_list[i] is T)
+                {
+                    next_symbol = (T)expression_list[i];
+                    next_i = i;
+                    return true;
+                }
+            }
+            next_symbol = null;
+            next_i = 0;
+            return false;
+        }
+
+        #endregion
+
         private string ExucuteBSE(List<Expression> expression_list)
         {
             if (expression_list.Count == 1)
