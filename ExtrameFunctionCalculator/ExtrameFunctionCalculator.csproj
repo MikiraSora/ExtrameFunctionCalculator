@@ -41,8 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BooleanCalculator\BooleanCalculator.cs" />
-    <Compile Include="BooleanCalculator\BooleanVariable.cs" />
     <Compile Include="Calculator.cs" />
     <Compile Include="CalculatorOptimizer.cs" />
     <Compile Include="Log.cs" />
@@ -61,6 +59,7 @@
     <Compile Include="Script\Types\Statement.cs" />
     <Compile Include="Script\Types\Symbol.cs" />
     <Compile Include="Script\Types\Unit.cs" />
+    <Compile Include="Types\BooleanVariable.cs" />
     <Compile Include="Types\Digit.cs" />
     <Compile Include="Types\Expression.cs" />
     <Compile Include="Types\ExpressionVariable.cs" />

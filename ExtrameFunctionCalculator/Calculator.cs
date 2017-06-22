@@ -1,5 +1,4 @@
-﻿using ExtrameFunctionCalculator.BooleanCalculatorSupport;
-using ExtrameFunctionCalculator.Script;
+﻿using ExtrameFunctionCalculator.Script;
 using ExtrameFunctionCalculator.Types;
 using System;
 using System.Collections.Generic;
@@ -20,7 +19,7 @@ namespace ExtrameFunctionCalculator
         internal Dictionary<string, float> operator_prioty = new Dictionary<string, float>();
         internal Dictionary<string, OnCalculateFunc> operator_function = new Dictionary<string, OnCalculateFunc>();
         private CalculatorOptimizer calculator_optimizer = null;
-        private static string special_operator_chars = " + - * / [ ] ~ ! @ # $ % ^ & ( ) ; : \" | ? > < , ` ' \\ ";
+        private static string special_operator_chars = /*" + - * / [ ] ~ ! @ # $ = % ^ & ( ) ; : \" | ? > < , ` ' \\ "*/"";
         private static Dictionary<String, Variable> raw_variable_table = new Dictionary<string, Variable>();
         private static Dictionary<String, ReflectionFunction> raw_function_table = new Dictionary<string, ReflectionFunction>();
         private Dictionary<String, Variable> variable_table = new Dictionary<string, Variable>();
@@ -636,6 +635,8 @@ namespace ExtrameFunctionCalculator
                                 {
                                     tmp_op = c.ToString();
                                 }
+                                else
+                                    position++;
                             }
                         }
                         expressionArrayList.Add(new Symbol(tmp_op, this));
@@ -649,8 +650,15 @@ namespace ExtrameFunctionCalculator
                 }
                 position++;
             }
+
             if (!(statement.Length == 0))
-                expressionArrayList.Add(ParseStringToExpression(statement));
+            {
+                expr = (ParseStringToExpression(statement));
+                if (expr == null)
+                    throw new Exception($"parse expression \"{expression}\" occured error!");
+                expressionArrayList.Add(expr);
+            }
+
             return expressionArrayList;
         }
 
@@ -923,7 +931,9 @@ namespace ExtrameFunctionCalculator
                     paramsList.Add(next_value);
 
                     var result = op.Solve(paramsList, this);
-                    expression_list.InsertRange(prev_i, result);
+                    Expression expr = !(result[0] is Digit) ? new Digit(result[0].Solve()) : result[0];
+
+                    expression_list.Insert(prev_i, expr);
                     expression_list.Remove(next_value);
                     expression_list.Remove(prev_value);
                     expression_list.Remove(op);
@@ -1005,7 +1015,7 @@ namespace ExtrameFunctionCalculator
                 if (variable == null)
                     Log.ExceptionError(new Exception($"Variable {text} is not found"));
                 //因为MapVariable并不在此处理所以为了减少引用调用所以不用new WrapperVariable;
-                return variable;
+                return new Digit(variable.Solve());
             }
 
             return null;
@@ -1023,12 +1033,15 @@ namespace ExtrameFunctionCalculator
         }
 
         public delegate List<Expression> OnCalculateFunc(List<Expression> parametersList, Calculator refCalculator);
+
         public void RegisterOperation(string operatorSymbol, int requestParamterSize, float operatorPrioty, OnCalculateFunc operatorFunction)
         {
             operator_function[operatorSymbol] = operatorFunction;
             operator_prioty[operatorSymbol] = operatorPrioty;
             operator_request_count[operatorSymbol] = requestParamterSize;
             shared_symbol_cache[operatorSymbol] = GetSymbolMayFromCache(operatorSymbol);
+            special_operator_chars += $" {operatorSymbol} ";
+            special_operator_chars += $" {operatorSymbol[0]} ";
         }
 
         #endregion Operators
@@ -1095,6 +1108,118 @@ namespace ExtrameFunctionCalculator
             });
 
             #endregion 基本操作符
+
+            #region 逻辑运算符
+
+            RegisterRawVariable(new BooleanVariable(true, null));
+
+            RegisterRawVariable(new BooleanVariable(false, null));
+
+            RegisterOperation(">", 2, 3.0f, (paramsList, calculator) => {
+                List<Expression> result = new List<Expression>();
+                Expression a = paramsList[0], b = paramsList[1];
+                if (!((a.IsCalculatable) && (b.IsCalculatable)))
+                    Log.ExceptionError(new Exception("cant take a pair of valid type to calculate."));
+
+                double va = double.Parse(calculator.Solve(a.Solve()));
+                double vb = double.Parse(calculator.Solve(b.Solve()));
+
+                result.Add(new BooleanVariable(va > vb, calculator));
+                return result;
+            });
+
+            RegisterOperation("<", 2, 3.0f, (paramsList, calculator) => {
+                List<Expression> result = new List<Expression>();
+                Expression a = paramsList[0], b = paramsList[1];
+                if (!((a.IsCalculatable) && (b.IsCalculatable)))
+                    Log.ExceptionError(new Exception("cant take a pair of valid type to calculate."));
+
+                double va = double.Parse(calculator.Solve(a.Solve()));
+                double vb = double.Parse(calculator.Solve(b.Solve()));
+
+                result.Add(new BooleanVariable(va < vb, calculator));
+                return result;
+            });
+
+            RegisterOperation(">=", 2, 3.0f, (paramsList, calculator) => {
+                List<Expression> result = new List<Expression>();
+                Expression a = paramsList[0], b = paramsList[1];
+                if (!((a.IsCalculatable) && (b.IsCalculatable)))
+                    Log.ExceptionError(new Exception("cant take a pair of valid type to calculate."));
+
+                double va = double.Parse(calculator.Solve(a.Solve()));
+                double vb = double.Parse(calculator.Solve(b.Solve()));
+
+                result.Add(new BooleanVariable(va >= vb, calculator));
+                return result;
+            });
+
+            RegisterOperation("<=", 2, 3.0f, (paramsList, calculator) => {
+                List<Expression> result = new List<Expression>();
+                Expression a = paramsList[0], b = paramsList[1];
+                if (!((a.IsCalculatable) && (b.IsCalculatable)))
+                    Log.ExceptionError(new Exception("cant take a pair of valid type to calculate."));
+
+                double va = double.Parse(calculator.Solve(a.Solve()));
+                double vb = double.Parse(calculator.Solve(b.Solve()));
+
+                result.Add(new BooleanVariable(va <= vb, calculator));
+                return result;
+            });
+
+            RegisterOperation("==", 2, 2.5f, (paramsList, calculator) => {
+                List<Expression> result = new List<Expression>();
+                Expression a = paramsList[0], b = paramsList[1];
+                if (!((a.IsCalculatable) && (b.IsCalculatable)))
+                    Log.ExceptionError(new Exception("cant take a pair of valid type to calculate."));
+
+                double va = double.Parse(calculator.Solve(a.Solve()));
+                double vb = double.Parse(calculator.Solve(b.Solve()));
+
+                result.Add(new BooleanVariable(va == vb, calculator));
+                return result;
+            });
+
+            RegisterOperation("!=", 2, 2.5f, (paramsList, calculator) => {
+                List<Expression> result = new List<Expression>();
+                Expression a = paramsList[0], b = paramsList[1];
+                if (!((a.IsCalculatable) && (b.IsCalculatable)))
+                    Log.ExceptionError(new Exception("cant take a pair of valid type to calculate."));
+
+                double va = double.Parse(calculator.Solve(a.Solve()));
+                double vb = double.Parse(calculator.Solve(b.Solve()));
+
+                result.Add(new BooleanVariable(va != vb, calculator));
+                return result;
+            });
+
+            RegisterOperation("&&", 2, 2.3f, (paramsList, calculator) => {
+                List<Expression> result = new List<Expression>();
+                Expression a = paramsList[0], b = paramsList[1];
+                if (!((a.IsCalculatable) && (b.IsCalculatable)))
+                    Log.ExceptionError(new Exception("cant take a pair of valid type to calculate."));
+
+                double va = double.Parse(calculator.Solve(a.Solve()));
+                double vb = double.Parse(calculator.Solve(b.Solve()));
+
+                result.Add(new BooleanVariable((va != 0) && (vb != 0), calculator));
+                return result;
+            });
+
+            RegisterOperation("||", 2, 2.3f, (paramsList, calculator) => {
+                List<Expression> result = new List<Expression>();
+                Expression a = paramsList[0], b = paramsList[1];
+                if (!((a.IsCalculatable) && (b.IsCalculatable)))
+                    Log.ExceptionError(new Exception("cant take a pair of valid type to calculate."));
+
+                double va = double.Parse(calculator.Solve(a.Solve()));
+                double vb = double.Parse(calculator.Solve(b.Solve()));
+
+                result.Add(new BooleanVariable((va != 0) || (vb != 0), calculator));
+                return result;
+            });
+
+            #endregion
 
             #region 单参数函数
 
@@ -1344,7 +1469,7 @@ namespace ExtrameFunctionCalculator
 
             #region 超级无敌炫酷牛逼吊炸上天函数
 
-            var boolcalculator = new BooleanCalculatorSupport.BooleanCalculator(this);
+            //var boolcalculator = new BooleanCalculatorSupport.BooleanCalculator(this);
 
             Calculator.RegisterRawFunction("if(condition,true_expr,false_expr)", new OnReflectionFunction()
             {
@@ -1388,7 +1513,7 @@ namespace ExtrameFunctionCalculator
 
                 onReflectionFunction = (paramsList, calculator) =>
                 {
-                    if (boolcalculator.Solve(((ExpressionVariable)paramsList[("condition")]).RawText))
+                    if (/*boolcalculator.Solve*/calculator.BoolSolve(((ExpressionVariable)paramsList[("condition")]).RawText))
                         return calculator.Solve(paramsList[("true_expr")].Solve());
                     else
                         return calculator.Solve(paramsList[("false_expr")].Solve());

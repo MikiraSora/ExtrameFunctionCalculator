@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ExtrameFunctionCalculator.BooleanCalculatorSupport;
 
 namespace ExtrameFunctionCalculator.Script
 {
@@ -206,8 +205,8 @@ namespace ExtrameFunctionCalculator.Script
                                             {
                                                 case ConditionType.If:
                                                     {
-                                                        BooleanCalculator booleanCaculator = new BooleanCalculator(calculator);
-                                                        if (!booleanCaculator.Solve(((If)unit).ConditionExpression))
+                                                        //BooleanCalculator booleanCaculator = new BooleanCalculator(calculator);
+                                                        if (!/*booleanCaculator.Solve*/calculator.BoolSolve(((If)unit).ConditionExpression))
                                                         {
                                                             position = ((If)unit).ElseLine < 0 ? ((If)unit).EndLine : ((If)unit).ElseLine;
                                                         }

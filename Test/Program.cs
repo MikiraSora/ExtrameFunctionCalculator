@@ -16,8 +16,6 @@ namespace Test
             //calculator.Enable(Calculator.EnableType.ExpressionOptimize); 傻逼玩意
             calculator.Enable(Calculator.EnableType.PrecisionTruncation);
 
-            calculator.BoolSolve("4>8");
-
             while (true)
             {
                 Console.Write("<=:");
