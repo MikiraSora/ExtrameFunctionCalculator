@@ -18,7 +18,7 @@ namespace ExtrameFunctionCalculator
         internal Dictionary<string, float> operator_prioty = new Dictionary<string, float>();
         internal Dictionary<string, OnCalculateFunc> operator_function = new Dictionary<string, OnCalculateFunc>();
         private CalculatorOptimizer calculator_optimizer = null;
-        private static string special_operator_chars = /*" + - * / [ ] ~ ! @ # $ = % ^ & ( ) ; : \" | ? > < , ` ' \\ "*/"";
+        private static string special_operator_chars = " [ ] ";
         private static Dictionary<String, Variable> raw_variable_table = new Dictionary<string, Variable>();
         private static Dictionary<String, ReflectionFunction> raw_function_table = new Dictionary<string, ReflectionFunction>();
         private Dictionary<String, Variable> variable_table = new Dictionary<string, Variable>();

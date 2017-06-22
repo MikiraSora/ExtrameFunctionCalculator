@@ -1,0 +1,24 @@
+set a=4\
+a=4
+
+set a=8\
+a=8
+
+set b=4\
+a+b=12
+
+set_expr c=a+b-d\
+set d=888\
+c+d=12
+
+set d=10\
+c=2
+
+set_map m[1]=2\
+m[1]=2
+
+set_map m[2]=1\
+m[1]+m[2]=3
+
+m[m[m[1]]]=2
+
