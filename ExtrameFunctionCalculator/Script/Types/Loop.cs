@@ -1,20 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ExtrameFunctionCalculator.Script.Types
+﻿namespace ExtrameFunctionCalculator.Script.Types
 {
     public enum LoopType
     {
         LoopBegin, Continue, Break, Endloop, Unknown
     }
 
-    public class Loop:Symbol
+    public class Loop : Symbol
     {
-        LoopBegin reference_loop = null;
-        int end_line = -1;
+        private LoopBegin reference_loop = null;
+        private int end_line = -1;
 
         public int EndLine { get { return end_line; } internal set { end_line = value; } }
 
@@ -25,6 +19,7 @@ namespace ExtrameFunctionCalculator.Script.Types
         public Loop(int line) : base(line)
         {
         }
+
         public override string ToString() => $"{base.ToString()} : {LoopType.ToString()}";
     }
 

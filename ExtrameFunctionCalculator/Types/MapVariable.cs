@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ExtrameFunctionCalculator.Types
 {
     public class MapVariable : Variable
     {
-        Dictionary<String, Variable> variable_key_map = new Dictionary<string, Variable>();
+        private Dictionary<String, Variable> variable_key_map = new Dictionary<string, Variable>();
         public override VariableType VariableType => VariableType.MapVariable;
 
         public MapVariable(string variable_name, Calculator calculator) : base(variable_name, null, calculator)
@@ -19,6 +16,7 @@ namespace ExtrameFunctionCalculator.Types
         {
             SetValue(indexes, variable_value);
         }
+
         internal override void SetValue(string value)
         {
             throw new Exception("MapVariable cant call SetValue(String) directly!");
@@ -135,7 +133,7 @@ namespace ExtrameFunctionCalculator.Types
                     recordpos = recordPosition.Pop();
                     if (recordPosition.Count == 0)
                     {
-                        indexString = indexes.Substring(recordpos + 1, position-recordpos-1);
+                        indexString = indexes.Substring(recordpos + 1, position - recordpos - 1);
                         IndexesList.Add(indexString);
                     }
                     continue;
@@ -147,6 +145,5 @@ namespace ExtrameFunctionCalculator.Types
         }
 
         public override string Solve() => throw new Exception("cant call MapVariable::Solve() !");
-
     }
 }

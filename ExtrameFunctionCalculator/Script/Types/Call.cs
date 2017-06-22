@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ExtrameFunctionCalculator.Script.Types
+﻿namespace ExtrameFunctionCalculator.Script.Types
 {
     public class Call : Statement
     {
@@ -13,6 +7,5 @@ namespace ExtrameFunctionCalculator.Script.Types
         public Call(int line, string statement) : base(line, statement)
         {
         }
-
     }
 }

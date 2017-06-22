@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace ExtrameFunctionCalculator.Types
 {
@@ -21,7 +18,9 @@ namespace ExtrameFunctionCalculator.Types
 
         public class ParameterRequestWrapper : List<String>
         {
-            private ParameterRequestWrapper() { }
+            private ParameterRequestWrapper()
+            {
+            }
 
             public ParameterRequestWrapper(string paramRawText)
             {
@@ -36,13 +35,13 @@ namespace ExtrameFunctionCalculator.Types
             public string GetParamterName(int index) => this[index];
         }
 
-        #endregion
+        #endregion ParameterRequestWrapper
 
-        static Regex FunctionFormatRegex = new Regex(@"([a-zA-Z]\w*)\((.*)\)=(.+)");
+        private static Regex FunctionFormatRegex = new Regex(@"([a-zA-Z]\w*)\((.*)\)=(.+)");
 
         protected string function_name, function_paramters, function_body;
 
-        static Regex check_function_format_regex = new Regex(@"([a-zA-Z]\w*)\((.*)\)");
+        private static Regex check_function_format_regex = new Regex(@"([a-zA-Z]\w*)\((.*)\)");
 
         protected ParameterRequestWrapper request;
 
@@ -50,7 +49,9 @@ namespace ExtrameFunctionCalculator.Types
 
         public virtual FunctionType FunctionType { get { return FunctionType.NormalFunction; } }
 
-        protected Function() : base(null) { }
+        protected Function() : base(null)
+        {
+        }
 
         public Function(string expression, Calculator calculator) : base(calculator)
         {
@@ -105,7 +106,7 @@ namespace ExtrameFunctionCalculator.Types
             return paramsMap;
         }
 
-        string ParseDeclaring(string expression, Dictionary<string, Variable> parameters)
+        private string ParseDeclaring(string expression, Dictionary<string, Variable> parameters)
         {
             string newExpression = expression;
             foreach (var pair in parameters)
@@ -119,11 +120,11 @@ namespace ExtrameFunctionCalculator.Types
 
         public virtual string Solve(string paramsRawText)
         {
-            Dictionary<string, Variable>  parameters =Parse(paramsRawText);
+            Dictionary<string, Variable> parameters = Parse(paramsRawText);
             if (parameters.Count != request.GetParamterRequestCount())
                 Log.ExceptionError(new Exception($"function \"{function_name}\" requests {request.GetParamterRequestCount()} paramter(s) but you input {parameters.Count} paramter(s)"));
             string exression;
-            exression = ParseDeclaring(function_body,parameters);
+            exression = ParseDeclaring(function_body, parameters);
             return Calculator.Solve(exression);
         }
 
@@ -135,6 +136,7 @@ namespace ExtrameFunctionCalculator.Types
         }
 
         public override string ToString() => $"{function_name}({function_paramters})={function_body}";
+
         public Digit GetSolveToDigit() => new Digit(Solve());
 
         //Stack<string> paramsExpressionStack = new Stack<string>();

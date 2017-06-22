@@ -1,23 +1,20 @@
 ﻿using ExtrameFunctionCalculator.Script.Types;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ExtrameFunctionCalculator.Script
 {
     public class Executor
     {
-        Calculator calculator = null;
-        string include_file_path = "";
+        private Calculator calculator = null;
+        private string include_file_path = "";
 
-        List<Executor> record_include_executor = new List<Executor>();
-        int reference_count = 0;
-        Stack<List<String>> record_tmp_variable_stack = new Stack<List<string>>();
-        Dictionary<String, Stack<ExtrameFunctionCalculator.Types.Variable>> tmp_variable = new Dictionary<string, Stack<ExtrameFunctionCalculator.Types.Variable>>();
+        private List<Executor> record_include_executor = new List<Executor>();
+        private int reference_count = 0;
+        private Stack<List<String>> record_tmp_variable_stack = new Stack<List<string>>();
+        private Dictionary<String, Stack<ExtrameFunctionCalculator.Types.Variable>> tmp_variable = new Dictionary<string, Stack<ExtrameFunctionCalculator.Types.Variable>>();
 
-        Parser parser;
+        private Parser parser;
         private static Dictionary<String, Parser.ExecutorAction> precompling_action = null;
         public int ReferenceCount { get { return reference_count; } }
         public List<Executor> RecordIncludeExecutorList { get { return record_include_executor; } }
@@ -57,7 +54,6 @@ namespace ExtrameFunctionCalculator.Script
             precompling_action.Add("define", (param, reference_parser) =>
             {
                 //// TODO: 2016/11/4 实现define
-
             });
         }
 
@@ -67,8 +63,10 @@ namespace ExtrameFunctionCalculator.Script
             parser = new Parser(this);
         }
 
-        Calculator GetCalculator() { return calculator == null ? calculator = new Calculator() : calculator; }
-        static bool IsAbsolutePath(string path)
+        private Calculator GetCalculator()
+        { return calculator == null ? calculator = new Calculator() : calculator; }
+
+        private static bool IsAbsolutePath(string path)
         {
             if (path.Length == 0)
                 return false;
@@ -77,7 +75,7 @@ namespace ExtrameFunctionCalculator.Script
             return false;
         }
 
-        static string GetBackFolderPath(string path)
+        private static string GetBackFolderPath(string path)
         {
             if (path.Contains("\\"))
             {
@@ -125,6 +123,7 @@ namespace ExtrameFunctionCalculator.Script
                 allFunction.Add(pair.Key);
             return allFunction;
         }
+
         public string ExecuteFunction(string name, List<ExtrameFunctionCalculator.Types.Expression> paramster)
         {
             if (!parser.function_table.ContainsKey(name))
@@ -171,7 +170,6 @@ namespace ExtrameFunctionCalculator.Script
                                             }
 
                                             throw new Exception("Miaomiao?");
-
                                         }
                                     case StatementType.Return:
                                         {
@@ -253,13 +251,14 @@ namespace ExtrameFunctionCalculator.Script
         public abstract class Singal : Exception
         {
             protected string value;
+
             public Singal(string value)
             {
                 this.value = value;
             }
         }
 
-        class ReturnSignal : Singal
+        private class ReturnSignal : Singal
         {
             public string ReturnValue { get { return value; } }
 
@@ -268,15 +267,14 @@ namespace ExtrameFunctionCalculator.Script
             }
         }
 
-        class EndfunctionSignal : Singal
+        private class EndfunctionSignal : Singal
         {
             public EndfunctionSignal() : base(null)
             {
-
             }
         }
 
-        #endregion
+        #endregion Singal
 
         #region Variables
 
@@ -316,8 +314,8 @@ namespace ExtrameFunctionCalculator.Script
 
             lv1 :当前代码文件区域
             lv2 :GetCalculator::GetVariable() -> lv3 :计算器本体区域
-                                                 lv4 :脚本遍历查询 -> lv5 :脚本本地代码区域(RequestVariable()) -> lv6 : 引用(include)的子脚本遍历查询 ..... 
-        
+                                                 lv4 :脚本遍历查询 -> lv5 :脚本本地代码区域(RequestVariable()) -> lv6 : 引用(include)的子脚本遍历查询 .....
+
          */
 
         public bool isTmpVariable(string variable_name) => tmp_variable.ContainsKey(variable_name);
@@ -349,7 +347,7 @@ namespace ExtrameFunctionCalculator.Script
             tmp_variable.Add(name, new Stack<ExtrameFunctionCalculator.Types.Variable>());
         }
 
-        #endregion
+        #endregion Variables
 
         #region Child Executors
 
@@ -366,6 +364,7 @@ namespace ExtrameFunctionCalculator.Script
         internal void Drop() => reference_count--;
 
         internal bool IsNonReferenced() => reference_count <= 0;
-        #endregion
+
+        #endregion Child Executors
     }
 }

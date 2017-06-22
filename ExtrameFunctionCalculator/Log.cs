@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace ExtrameFunctionCalculator
 {
@@ -24,13 +21,14 @@ namespace ExtrameFunctionCalculator
 
             private Type message_type = Type.Debug;
 
-            string caller_method_name = null;
+            private string caller_method_name = null;
 
             private long time_strip = 0;
 
             private string message = null;
 
             private static long recore_time = 0;
+
             public Message()
             {
                 time_strip = GetCurrentTime();
@@ -51,12 +49,23 @@ namespace ExtrameFunctionCalculator
                 this.message = message;
             }
 
-            public Message(Type type, string message) : this(type, GetCurrentTime(), message) { }
-            public Message(Type type, string message, string methodname) : this(type, GetCurrentTime(), message, methodname) { }
+            public Message(Type type, string message) : this(type, GetCurrentTime(), message)
+            {
+            }
 
-            internal static void InitRecordTime() { recore_time = Environment.TickCount; }
+            public Message(Type type, string message, string methodname) : this(type, GetCurrentTime(), message, methodname)
+            {
+            }
 
-            private static long GetCurrentTime() { return Environment.TickCount - recore_time; }
+            internal static void InitRecordTime()
+            {
+                recore_time = Environment.TickCount;
+            }
+
+            private static long GetCurrentTime()
+            {
+                return Environment.TickCount - recore_time;
+            }
 
             public string toString()
             {
@@ -78,10 +87,21 @@ namespace ExtrameFunctionCalculator
 
             private Queue<Message> commit_queue = new Queue<Message>(100);
 
-            public bool IsExit() { return is_exit; }
+            public bool IsExit()
+            {
+                return is_exit;
+            }
 
-            public void Exit() { is_exit = true; }
-            public void Unlock() { is_lock = false; }
+            public void Exit()
+            {
+                is_exit = true;
+            }
+
+            public void Unlock()
+            {
+                is_lock = false;
+            }
+
             public void CommitLog(Message message)
             {
                 commit_queue.Enqueue(message);
@@ -114,7 +134,6 @@ namespace ExtrameFunctionCalculator
                 }
                 is_lock = true;
             }
-
         }
 
         private static bool is_show_caller_method = true;
@@ -130,8 +149,17 @@ namespace ExtrameFunctionCalculator
         private static int histroy_size = 10;
         public static bool EnableLog { get { return is_enable_log; } set { is_enable_log = value; } }
         public static bool IsShowCallerMethod { get { return is_show_caller_method; } }
-        public static void SetShowCallerMethod(bool isShowCallerMethod) { is_thread_commit_log = isShowCallerMethod; }
-        public static void InitRecordTime() { Message.InitRecordTime(); }
+
+        public static void SetShowCallerMethod(bool isShowCallerMethod)
+        {
+            is_thread_commit_log = isShowCallerMethod;
+        }
+
+        public static void InitRecordTime()
+        {
+            Message.InitRecordTime();
+        }
+
         public static void SetIsThreadCommitLog(bool isThreadCommitLog)
         {
             is_thread_commit_log = isThreadCommitLog;
@@ -154,11 +182,31 @@ namespace ExtrameFunctionCalculator
                     maintenance_thread.Exit();
             }
         }
-        public static void SetPort(int port) { Log.port = port; }
-        public static int GetPort() { return port; }
-        public static void SetAddress(string address) { Log.address = address; }
-        public static string GetAddress() { return address; }
-        public static void SetHistorySize(int history_size) { Log.histroy_size = history_size; }
+
+        public static void SetPort(int port)
+        {
+            Log.port = port;
+        }
+
+        public static int GetPort()
+        {
+            return port;
+        }
+
+        public static void SetAddress(string address)
+        {
+            Log.address = address;
+        }
+
+        public static string GetAddress()
+        {
+            return address;
+        }
+
+        public static void SetHistorySize(int history_size)
+        {
+            Log.histroy_size = history_size;
+        }
 
         private static void PushHistory(Message message)
         {
@@ -270,7 +318,6 @@ namespace ExtrameFunctionCalculator
                 LogWrite(msg);
             }
             catch (Exception e) { }
-
         }
 
         public static void DisConnect()

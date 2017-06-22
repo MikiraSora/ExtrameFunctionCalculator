@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ExtrameFunctionCalculator.Types
+﻿namespace ExtrameFunctionCalculator.Types
 {
-    public class ExpressionVariable:Variable
+    public class ExpressionVariable : Variable
     {
         public override VariableType VariableType => VariableType.ExpressionVariable;
 
-        public ExpressionVariable(string name, string expr_value, Calculator calculator):base(name,expr_value,calculator)
+        public ExpressionVariable(string name, string expr_value, Calculator calculator) : base(name, expr_value, calculator)
         {
-
         }
 
         public override string Solve()

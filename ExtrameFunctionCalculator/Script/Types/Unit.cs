@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ExtrameFunctionCalculator.Script.Types
+﻿namespace ExtrameFunctionCalculator.Script.Types
 {
     public enum UnitType
     {
@@ -15,15 +9,14 @@ namespace ExtrameFunctionCalculator.Script.Types
 
     public class Unit
     {
-
         protected int line = -1;
         public int Line { get { return line; } }
 
         public virtual UnitType UnitType { get { return UnitType.Unknown; } }
 
-        public Unit(int line) {
+        public Unit(int line)
+        {
             this.line = line;
         }
-
     }
 }

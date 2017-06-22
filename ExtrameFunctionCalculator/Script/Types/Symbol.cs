@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ExtrameFunctionCalculator.Script.Types
+﻿namespace ExtrameFunctionCalculator.Script.Types
 {
     public enum SymbolType
     {
@@ -22,7 +16,6 @@ namespace ExtrameFunctionCalculator.Script.Types
 
         public Symbol(int line) : base(line)
         {
-
         }
 
         public override string ToString() => $"{base.ToString()} - {SymbolType.ToString()}";

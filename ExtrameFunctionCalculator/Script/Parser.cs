@@ -1,9 +1,6 @@
-﻿using System;
+﻿using ExtrameFunctionCalculator.Script.Types;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ExtrameFunctionCalculator.Script.Types;
 
 namespace ExtrameFunctionCalculator.Script
 {
@@ -11,16 +8,16 @@ namespace ExtrameFunctionCalculator.Script
     {
         public delegate void ExecutorAction(string param, Parser reference_parser);
 
-        Dictionary<int, Unit> statement_lines = new Dictionary<int, Unit>();
-        List<string> include_file_names = new List<string>();
+        private Dictionary<int, Unit> statement_lines = new Dictionary<int, Unit>();
+        private List<string> include_file_names = new List<string>();
 
-        Dictionary<String, int> label_postion_cache = new Dictionary<string, int>();
-        Dictionary<String, ExecutorAction> reflection_precompiling_execution_map = null;
-        Executor executor;
+        private Dictionary<String, int> label_postion_cache = new Dictionary<string, int>();
+        private Dictionary<String, ExecutorAction> reflection_precompiling_execution_map = null;
+        private Executor executor;
 
         public Dictionary<String, Function> function_table = new Dictionary<string, Function>();
 
-        Dictionary<string, string> propherty = new Dictionary<string, string>();
+        private Dictionary<string, string> propherty = new Dictionary<string, string>();
 
         public Dictionary<int, Unit> StatementLine { get { return statement_lines; } }
         public Dictionary<string, string> Propherty { get { return propherty; } }
@@ -35,11 +32,11 @@ namespace ExtrameFunctionCalculator.Script
 
         public string Get(string key) => propherty[key];
 
-        void PushStatement(Unit unit)=>statement_lines.Add(GetNewLineId(), unit);
+        private void PushStatement(Unit unit) => statement_lines.Add(GetNewLineId(), unit);
 
-        int GetNewLineId()=>statement_lines.Count;
+        private int GetNewLineId() => statement_lines.Count;
 
-        public Dictionary<int , Unit> Parse(List<String> statements)
+        public Dictionary<int, Unit> Parse(List<String> statements)
         {
             string text = null, command = null, paramter = null;
             Unit unit = null;
@@ -47,9 +44,9 @@ namespace ExtrameFunctionCalculator.Script
 
             for (int position = 0; position < statements.Count; position++)
             {
-                text = statements[(position)].Trim().Trim(new char[]{'\t','\n'});
+                text = statements[(position)].Trim().Trim(new char[] { '\t', '\n' });
 
-                if (text.Length==0)
+                if (text.Length == 0)
                     continue;
 
                 //预处理
@@ -67,27 +64,35 @@ namespace ExtrameFunctionCalculator.Script
                     case "endfunction":
                         PushStatement(new EndFunction(GetNewLineId(), this));
                         break;
+
                     case "endloop":
                         PushStatement(new EndLoop(GetNewLineId()));
                         break;
+
                     case "loop":
                         PushStatement(new LoopBegin(GetNewLineId()));
                         break;
+
                     case "break":
                         PushStatement(new Break(GetNewLineId()));
                         break;
+
                     case "continue":
                         PushStatement(new Continue(GetNewLineId()));
                         break;
+
                     case "endif":
                         PushStatement(new EndIf(GetNewLineId()));
                         break;
+
                     case "else":
                         PushStatement(new Else(GetNewLineId()));
                         break;
+
                     case "then":
                         PushStatement(new Then(GetNewLineId()));
                         break;
+
                     default:
                         {
                             unit = null;
@@ -143,7 +148,7 @@ namespace ExtrameFunctionCalculator.Script
             return null;//// TODO: 2016/10/31
         }
 
-        Unit CommandCoverToStatement(string command, string paramter)
+        private Unit CommandCoverToStatement(string command, string paramter)
         {
             Statement statement = null;
             Unit unit = null;
@@ -158,7 +163,7 @@ namespace ExtrameFunctionCalculator.Script
             return unit;
         }
 
-        Unit CommandCoverToUnit(string command, string paramter)
+        private Unit CommandCoverToUnit(string command, string paramter)
         {
             Statement statement = null;
             Unit unit = null;
@@ -178,16 +183,16 @@ namespace ExtrameFunctionCalculator.Script
             return unit;
         }
 
-        static bool IsPreCompileCommand(string command) => command.Length==0 ? false : command[(0)] == '#';
+        private static bool IsPreCompileCommand(string command) => command.Length == 0 ? false : command[(0)] == '#';
 
-        public void SetPreCompileExecutors(Dictionary<String, ExecutorAction> ExecutorActionHashMap)=>reflection_precompiling_execution_map = ExecutorActionHashMap;
+        public void SetPreCompileExecutors(Dictionary<String, ExecutorAction> ExecutorActionHashMap) => reflection_precompiling_execution_map = ExecutorActionHashMap;
 
-        void ExecutePreCommand(int line, string text)
+        private void ExecutePreCommand(int line, string text)
         {
             if (reflection_precompiling_execution_map == null)
                 return;
             int position = 1, c = 0;
-            string command = "", param ="";
+            string command = "", param = "";
             while (true)
             {
                 if (position >= text.Length)
@@ -211,17 +216,23 @@ namespace ExtrameFunctionCalculator.Script
             Stack<If> if_stack = new Stack<If>();
             Stack<LoopBegin> loop_stack = new Stack<LoopBegin>();
             Function function = null;
-            while (true) {
+            while (true)
+            {
                 position++;
                 if (position >= statement_lines.Count)
                     break;
                 unit = statement_lines[(position)];
-                if (unit.UnitType == UnitType.Statement) {
-                    if (((Statement)unit).StatementType == StatementType.Function) {
-                        if (((Function)unit).FunctionType == FunctionType.Begin) {
+                if (unit.UnitType == UnitType.Statement)
+                {
+                    if (((Statement)unit).StatementType == StatementType.Function)
+                    {
+                        if (((Function)unit).FunctionType == FunctionType.Begin)
+                        {
                             function_stack.Push((Function)unit);
-                        } else if (((Function)unit).FunctionType ==FunctionType.End) {
-                            if (function_stack.Count==0)
+                        }
+                        else if (((Function)unit).FunctionType == FunctionType.End)
+                        {
+                            if (function_stack.Count == 0)
                                 throw new SynatxErrorException(position, ("No more \"function\" head can be matched with \"endfunction\" label"), RefExecutor);
                             if (function_stack.Peek().EndLine >= 0)
                                 throw new SynatxErrorException(position, ("duplicate \"endfcuntion\" in current function statement"), RefExecutor);
@@ -230,51 +241,75 @@ namespace ExtrameFunctionCalculator.Script
                             function_table.Add(function.FunctionName, function);
                         }
                     }
-                } else if (unit.UnitType == UnitType.Symbol) {
-                    if (((Symbol)unit).SymbolType == SymbolType.ConditionBranch) {
+                }
+                else if (unit.UnitType == UnitType.Symbol)
+                {
+                    if (((Symbol)unit).SymbolType == SymbolType.ConditionBranch)
+                    {
                         //Condition Branch
-                        if (((Condition)unit).ConditionType == ConditionType.Else) {
-                            if (if_stack.Count==0)
+                        if (((Condition)unit).ConditionType == ConditionType.Else)
+                        {
+                            if (if_stack.Count == 0)
                                 throw new SynatxErrorException(position, ("No more \"if\" head can be matched with \"else\" label"), RefExecutor);
                             if (if_stack.Peek().ElseLine >= 0)
                                 throw new SynatxErrorException(position, ("duplicate \"else\" in current if branch"), RefExecutor);
                             if_stack.Peek().ElseLine = position;
-                        } else if (((Condition)unit).ConditionType == ConditionType.EndIf) {
-                            if (if_stack.Count==0)
+                        }
+                        else if (((Condition)unit).ConditionType == ConditionType.EndIf)
+                        {
+                            if (if_stack.Count == 0)
                                 throw new SynatxErrorException(position, ("No more \"if\" head can be match with \"else\" label"), RefExecutor);
                             if_stack.Peek().EndLine = position;
                             if_stack.Pop();
-                        } else if (((Condition)unit).ConditionType == ConditionType.If) {
+                        }
+                        else if (((Condition)unit).ConditionType == ConditionType.If)
+                        {
                             if_stack.Push((If)unit);
                         }
-                    } else if (((Symbol)unit).SymbolType == SymbolType.LoopBranch) {
-                        if (((Loop)unit).LoopType == LoopType.LoopBegin) {
+                    }
+                    else if (((Symbol)unit).SymbolType == SymbolType.LoopBranch)
+                    {
+                        if (((Loop)unit).LoopType == LoopType.LoopBegin)
+                        {
                             loop_stack.Push((LoopBegin)unit);
-                        } else {
-                            if (loop_stack.Count==0)
+                        }
+                        else
+                        {
+                            if (loop_stack.Count == 0)
                                 throw new SynatxErrorException(position, ("No more \"loop\" head can be matched with \"endloop\" label"), RefExecutor);
-                            if (((Loop)unit).LoopType ==LoopType.Endloop) {
+                            if (((Loop)unit).LoopType == LoopType.Endloop)
+                            {
                                 loop_stack.Peek().EndLine = position;
                                 ((Loop)unit).ReferenceLoop = loop_stack.Peek();
                                 loop_stack.Pop();
-                            } else if (((Loop)unit).LoopType == LoopType.Break) {
+                            }
+                            else if (((Loop)unit).LoopType == LoopType.Break)
+                            {
                                 if (((Loop)unit).ReferenceLoop != null)
                                     throw new SynatxErrorException(position, ("duplicate \"begin_line\" in current loop branch"), RefExecutor);
                                 ((Loop)unit).ReferenceLoop = loop_stack.Peek();
-                            } else if (((Loop)unit).LoopType == LoopType.Continue) {
+                            }
+                            else if (((Loop)unit).LoopType == LoopType.Continue)
+                            {
                                 if (((Loop)unit).ReferenceLoop != null)
                                     throw new SynatxErrorException(position, ("duplicate \"begin_line\" in current loop branch"), RefExecutor);
                                 ((Loop)unit).ReferenceLoop = loop_stack.Peek();
-                            } else if (((Symbol)unit).SymbolType== SymbolType.LoopBranch) {
-
-                            } else
+                            }
+                            else if (((Symbol)unit).SymbolType == SymbolType.LoopBranch)
+                            {
+                            }
+                            else
                                 throw new SynatxErrorException(position, ("unknown loop branch type"), RefExecutor);
                         }
-                    } else if (((Symbol)unit).SymbolType == SymbolType.Label) {
+                    }
+                    else if (((Symbol)unit).SymbolType == SymbolType.Label)
+                    {
                         //// TODO: 2016/11/1
-                    } else
+                    }
+                    else
                         throw new SynatxErrorException(position, ("unknown symbol type"), RefExecutor);
-                } else
+                }
+                else
                     throw new SynatxErrorException(position, (String.Format("unknown unit type {0}", unit.GetType().Name)), RefExecutor);
             }
             return;
@@ -283,7 +318,7 @@ namespace ExtrameFunctionCalculator.Script
 
     public class SynatxErrorException : Exception
     {
-        public SynatxErrorException(int line,string cause,Executor executor) : base(
+        public SynatxErrorException(int line, string cause, Executor executor) : base(
             $"SynatxError {executor.GetPackageName}, line {line}:{cause}"
             )
         { }

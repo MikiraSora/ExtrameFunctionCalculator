@@ -42,6 +42,7 @@ namespace ExtrameFunctionCalculator
             public Operator(ExtrameFunctionCalculator.Types.Symbol symbol) : base(symbol)
             {
             }
+
             public ExtrameFunctionCalculator.Types.Symbol GetOperatorReference() => (ExtrameFunctionCalculator.Types.Symbol)GetExpressionReference();
 
             private float GetOperatorPriorty()
@@ -75,6 +76,7 @@ namespace ExtrameFunctionCalculator
 
             public Digit(ExtrameFunctionCalculator.Types.Digit digit) : base(digit)
             { }
+
             public virtual ExtrameFunctionCalculator.Types.Digit GetDigitReference()
             {
                 return (ExtrameFunctionCalculator.Types.Digit)GetExpressionReference();
@@ -108,6 +110,7 @@ namespace ExtrameFunctionCalculator
             }
 
             private Calculator GetCalculator() => calculator == null ? calculator = new Calculator() : calculator;
+
             public override ExtrameFunctionCalculator.Types.Digit GetDigitReference() => digit_result;
 
             public override ExtrameFunctionCalculator.Types.Expression GetExpressionReference() => this.GetDigitReference();
@@ -160,6 +163,7 @@ namespace ExtrameFunctionCalculator
         {
             calculator = bindCalculator;
         }
+
         public List<ExtrameFunctionCalculator.Types.Expression> OptimizeExpression(List<ExtrameFunctionCalculator.Types.Expression> expressionArrayList)
         {
             if (!enable_optimize)

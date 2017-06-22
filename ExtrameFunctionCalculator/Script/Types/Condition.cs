@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ExtrameFunctionCalculator.Script.Types
+﻿namespace ExtrameFunctionCalculator.Script.Types
 {
     public enum ConditionType
     {
@@ -13,7 +7,7 @@ namespace ExtrameFunctionCalculator.Script.Types
 
     public class Condition : Symbol
     {
-        int end_line = -1, else_line = -1;
+        private int end_line = -1, else_line = -1;
 
         public int EndLine { get { return end_line; } internal set { end_line = value; } }
 
@@ -31,7 +25,7 @@ namespace ExtrameFunctionCalculator.Script.Types
 
     public class If : Condition
     {
-        string condition;
+        private string condition;
 
         public string ConditionExpression { get { return condition; } }
 
@@ -52,7 +46,7 @@ namespace ExtrameFunctionCalculator.Script.Types
         }
     }
 
-    public class Else: Condition
+    public class Else : Condition
     {
         public override ConditionType ConditionType => ConditionType.Else;
 
@@ -70,4 +64,3 @@ namespace ExtrameFunctionCalculator.Script.Types
         }
     }
 }
-

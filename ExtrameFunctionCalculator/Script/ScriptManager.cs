@@ -1,24 +1,28 @@
 ﻿using ExtrameFunctionCalculator.Script.Types;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ExtrameFunctionCalculator.Script
 {
     public class ScriptManager
     {
-        Calculator calculator = null;
+        private Calculator calculator = null;
         private Dictionary<string, Executor> script_map = new Dictionary<string, Executor>();
         private Stack<Executor> executing_executor_stack = new Stack<Executor>();
-        bool is_cache_reference_function = false;
-        Dictionary<String, Function> cache_function_map = null;
+        private bool is_cache_reference_function = false;
+        private Dictionary<String, Function> cache_function_map = null;
 
-        private ScriptManager() { }
-        public ScriptManager(Calculator calculator) { this.calculator = calculator; }
+        private ScriptManager()
+        {
+        }
 
-        Calculator GetCalculator() { return calculator == null ? calculator = new Calculator() : calculator; }
+        public ScriptManager(Calculator calculator)
+        {
+            this.calculator = calculator;
+        }
+
+        private Calculator GetCalculator()
+        { return calculator == null ? calculator = new Calculator() : calculator; }
 
         #region Load/Unload Script
 
@@ -62,7 +66,7 @@ namespace ExtrameFunctionCalculator.Script
                 {
                     if (!cache_function_map.ContainsKey(function.FunctionName))
                         continue;
-                    if (cache_function_map[(function.FunctionName)].RefParser.RefExecutor.GetPackageName==(executor.GetPackageName))
+                    if (cache_function_map[(function.FunctionName)].RefParser.RefExecutor.GetPackageName == (executor.GetPackageName))
                     {
                         cache_function_map.Remove(function.FunctionName);
                         Log.Debug(String.Format("{0}::{1}() was removed from cache", executor.GetPackageName, function.FunctionName));
@@ -77,9 +81,11 @@ namespace ExtrameFunctionCalculator.Script
 
             script_map.Remove(package_name);
         }
-        #endregion
+
+        #endregion Load/Unload Script
 
         #region Request Variable/Function
+
         public ExtrameFunctionCalculator.Types.ScriptFunction RequestFunction(string function_name)
         {
             if (is_cache_reference_function)
@@ -89,7 +95,6 @@ namespace ExtrameFunctionCalculator.Script
                     Function function = cache_function_map[(function_name)];
                     return new ExtrameFunctionCalculator.Types.ScriptFunction(function_name, function.RefParser.RefExecutor, GetCalculator());
                 }
-
             }
             foreach (Executor executor in script_map.Values)
                 if (executor.RefParser.function_table.ContainsKey(function_name))
@@ -139,7 +144,6 @@ namespace ExtrameFunctionCalculator.Script
                     //Parser.Statement.Function function=CacheFunctionMap.get(function_name);
                     return true;
                 }
-
             }
             foreach (Executor executor in script_map.Values)
                 if (executor.RefParser.function_table.ContainsKey(function_name))
@@ -168,13 +172,14 @@ namespace ExtrameFunctionCalculator.Script
             }
         }
 
-
-
-
-        #endregion
+        #endregion Request Variable/Function
 
         #region Reference
-        public int GetLoadedSricptCount() { return script_map.Count; }
+
+        public int GetLoadedSricptCount()
+        {
+            return script_map.Count;
+        }
 
         private void ReferenceAdd(string package_name, Executor executor)
         {
@@ -208,9 +213,6 @@ namespace ExtrameFunctionCalculator.Script
 
         public bool ContainScript(string package_name) => script_map.ContainsKey(package_name);
 
-
-
-
-        #endregion
+        #endregion Reference
     }
 }

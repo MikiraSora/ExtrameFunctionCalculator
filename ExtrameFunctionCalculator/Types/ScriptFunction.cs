@@ -1,15 +1,11 @@
 ﻿using ExtrameFunctionCalculator.Script;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ExtrameFunctionCalculator.Types
 {
     public class ScriptFunction : Function
     {
-        Executor executor = null;
+        private Executor executor = null;
 
         public override FunctionType FunctionType => FunctionType.ScriptFunction;
 
@@ -22,7 +18,7 @@ namespace ExtrameFunctionCalculator.Types
 
         public override string Solve(string parameterList)
         {
-            Dictionary<string,Variable> parameters=Parse(parameterList);
+            Dictionary<string, Variable> parameters = Parse(parameterList);
             //// TODO: 2016/11/2 将ArrayList转化成Hashmap
             List<Expression> arrayList = new List<Expression>();
             foreach (var pair in parameters)
@@ -34,6 +30,5 @@ namespace ExtrameFunctionCalculator.Types
         {
             return base.Solve();
         }
-
     }
 }

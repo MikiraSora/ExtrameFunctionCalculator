@@ -1,23 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ExtrameFunctionCalculator.Types
 {
-    class BooleanVariable : ExpressionVariable
+    internal class BooleanVariable : ExpressionVariable
     {
-        bool boolean_value = false;
-        static string TRUE = "True", FALSE = "False";
+        private bool boolean_value = false;
+        private static string TRUE = "True", FALSE = "False";
 
         public bool BoolValue
         {
             get { return boolean_value; }
         }
+
         public override VariableType VariableType => VariableType.BooleanVariable;
         public override bool IsCalculatable => false;
         public override bool IsSetVariableDirectly => false;
+
         private BooleanVariable(string name, string expression, Calculator c) : base(name, expression, c)
         {
             boolean_value = expression == TRUE ? true : expression == FALSE ? false : (Double.Parse(Calculator.Solve(expression)) == 0);
@@ -28,7 +26,7 @@ namespace ExtrameFunctionCalculator.Types
             boolean_value = value;
         }
 
-        ExpressionVariable Copy()
+        private ExpressionVariable Copy()
         {
             try
             {
@@ -39,6 +37,7 @@ namespace ExtrameFunctionCalculator.Types
                 return null;
             }
         }
+
         public override string Solve() => boolean_value ? "1" : "0";
 
         public override Digit GetDigit() => new Digit(Solve());

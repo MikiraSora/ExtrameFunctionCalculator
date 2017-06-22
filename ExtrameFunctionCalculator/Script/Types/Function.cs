@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 
 namespace ExtrameFunctionCalculator.Script.Types
@@ -14,22 +10,22 @@ namespace ExtrameFunctionCalculator.Script.Types
 
     public class Function : Statement
     {
-        int end_line=-1;
+        private int end_line = -1;
 
-        string function_name;
-        Parser reference_parser = null;
+        private string function_name;
+        private Parser reference_parser = null;
         public ExtrameFunctionCalculator.Types.Function.ParameterRequestWrapper request = null;
-        static Regex check_function_format_regex = new Regex(@"([a-zA-Z]\w*)\((.*)\)");
+        private static Regex check_function_format_regex = new Regex(@"([a-zA-Z]\w*)\((.*)\)");
         public int EndLine { get { return end_line; } internal set { end_line = value; } }
         public Parser RefParser { get { return reference_parser; } }
 
         public virtual FunctionType FunctionType { get { return FunctionType.Unknown; } }
-        public override StatementType StatementType => StatementType.Function; 
+        public override StatementType StatementType => StatementType.Function;
 
         public string FunctionName { get { return function_name; } }
         public int ParameterRequestCount { get { return request.GetParamterRequestCount(); } }
 
-        public Function(int line, string body,Parser parser) : base(line, body)
+        public Function(int line, string body, Parser parser) : base(line, body)
         {
             if (body == null)
                 return;
@@ -41,6 +37,7 @@ namespace ExtrameFunctionCalculator.Script.Types
             request = new ExtrameFunctionCalculator.Types.Function.ParameterRequestWrapper(result.Groups[2].Value);
             reference_parser = parser;
         }
+
         public override string ToString() => $"{base.ToString()} - {FunctionType.ToString()}";
     }
 
@@ -50,7 +47,6 @@ namespace ExtrameFunctionCalculator.Script.Types
 
         public FunctionBody(int line, string body, Parser parser) : base(line, body, parser)
         {
-
         }
     }
 

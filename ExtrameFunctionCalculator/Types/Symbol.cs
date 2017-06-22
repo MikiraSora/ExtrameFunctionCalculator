@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ExtrameFunctionCalculator.Types
 {
@@ -11,8 +8,11 @@ namespace ExtrameFunctionCalculator.Types
         public override ExpressionType ExpressionType => ExpressionType.Symbol;
         public override bool IsCalculatable => base.IsCalculatable;
 
-        private Symbol() : base(null) { }
-        public Symbol(string op,Calculator calculator) : base(calculator)
+        private Symbol() : base(null)
+        {
+        }
+
+        public Symbol(string op, Calculator calculator) : base(calculator)
         {
             raw_text = op;
         }
@@ -29,7 +29,7 @@ namespace ExtrameFunctionCalculator.Types
         }
 
         public override string ToString() => raw_text;
-        
+
         public List<Expression> Solve(List<Expression> paramterList, Calculator calculator) => Calculator.operator_function[(raw_text)](paramterList, calculator);
 
         public int GetParamterCount() => Calculator.operator_request_count[raw_text];

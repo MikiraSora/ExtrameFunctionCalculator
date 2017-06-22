@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ExtrameFunctionCalculator
 {
@@ -137,7 +134,7 @@ namespace ExtrameFunctionCalculator
             return $"({notRepeating}+{Repeating}/{devNumber})";
         }
 
-        static Regex repeating_decimal_check_regex = new Regex(@"(\d*)\.(\d*?)(\d+?)\3+(\d*)");
+        private static Regex repeating_decimal_check_regex = new Regex(@"(\d*)\.(\d*?)(\d+?)\3+(\d*)");
 
         public static string ExpressionCoverToRepeatingDecimal(string decimalExpr)
         {
@@ -145,7 +142,7 @@ namespace ExtrameFunctionCalculator
             if (!result.Success)
                 Log.ExceptionError(new Exception(decimalExpr + " is invalid repeating decimal!"));
             string intDigit = result.Captures[1].Value, notRepeatDecimal = result.Captures[(2)].Value, RepeatDecimal = result.Captures[3].Value, endDecimal = result.Captures[(4)].Value;
-            if (endDecimal.Length> RepeatDecimal.Length)
+            if (endDecimal.Length > RepeatDecimal.Length)
                 Log.ExceptionError(new Exception(decimalExpr + " is invalid repeating decimal!"));
             string devNumber = "";
             for (int i = 0; i < RepeatDecimal.Length; i++)

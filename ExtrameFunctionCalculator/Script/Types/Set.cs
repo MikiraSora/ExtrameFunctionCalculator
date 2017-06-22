@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ExtrameFunctionCalculator.Script.Types
+﻿namespace ExtrameFunctionCalculator.Script.Types
 {
     public class Set : Statement
     {
-        string variable_name = null, variable_value = null;
+        private string variable_name = null, variable_value = null;
 
         public string VariableName { get { return variable_name; } }
 

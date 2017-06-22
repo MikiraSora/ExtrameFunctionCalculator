@@ -9,7 +9,6 @@ namespace ExtrameFunctionCalculator
 {
     public class Calculator
     {
-
         private Dictionary<String, Stack<Variable>> tmp_variable_map = new Dictionary<string, Stack<Variable>>();
         private static Regex check_function_format_regex = new Regex("([a-zA-Z]\\w*)\\((.*)\\)");
         private ScriptManager script_manager;
@@ -110,6 +109,7 @@ namespace ExtrameFunctionCalculator
         #endregion EnableWrappers
 
         #region 变量
+
         private void SetMapVariable(string expression)
         {
             //mymapvar[myvar]["mykeyname"][5]=myvalue
@@ -347,6 +347,7 @@ namespace ExtrameFunctionCalculator
                 return true;
             return false;
         }
+
         internal Function GetFunction(string name)
         {
             if (raw_function_table.ContainsKey(name))
@@ -379,6 +380,7 @@ namespace ExtrameFunctionCalculator
             ReflectionFunction reflectionFunction = new ReflectionFunction(expression, onReflectionFunction);
             RegisterFunction(reflectionFunction);
         }
+
         private void SetFunction(string expression)
         {
             if (expression.Length == 0)
@@ -393,7 +395,7 @@ namespace ExtrameFunctionCalculator
             function_table[function.GetName()] = function;
         }
 
-        #endregion
+        #endregion 函数
 
         #region 执行
 
@@ -422,7 +424,7 @@ namespace ExtrameFunctionCalculator
         public bool BoolSolve(string expression)
         {
             if (Utils.IsDigit(expression))
-                return double.Parse(expression)!=0;
+                return double.Parse(expression) != 0;
 
             List<Expression> expression_list = (ParseExpression(expression));
             Expression result_expr = SolveExpressionList(expression_list);
@@ -671,6 +673,7 @@ namespace ExtrameFunctionCalculator
         {
             return ExecuteEx(text);
         }
+
         private string ExecuteEx(string text)
         {
             Log.Debug(String.Format("Try Execute : {0}", text));
@@ -1021,7 +1024,7 @@ namespace ExtrameFunctionCalculator
             return null;
         }
 
-        #endregion
+        #endregion 执行
 
         #region Operators
 
@@ -1115,7 +1118,8 @@ namespace ExtrameFunctionCalculator
 
             RegisterRawVariable(new BooleanVariable(false, null));
 
-            RegisterOperation(">", 2, 3.0f, (paramsList, calculator) => {
+            RegisterOperation(">", 2, 3.0f, (paramsList, calculator) =>
+            {
                 List<Expression> result = new List<Expression>();
                 Expression a = paramsList[0], b = paramsList[1];
                 if (!((a.IsCalculatable) && (b.IsCalculatable)))
@@ -1128,7 +1132,8 @@ namespace ExtrameFunctionCalculator
                 return result;
             });
 
-            RegisterOperation("<", 2, 3.0f, (paramsList, calculator) => {
+            RegisterOperation("<", 2, 3.0f, (paramsList, calculator) =>
+            {
                 List<Expression> result = new List<Expression>();
                 Expression a = paramsList[0], b = paramsList[1];
                 if (!((a.IsCalculatable) && (b.IsCalculatable)))
@@ -1141,7 +1146,8 @@ namespace ExtrameFunctionCalculator
                 return result;
             });
 
-            RegisterOperation(">=", 2, 3.0f, (paramsList, calculator) => {
+            RegisterOperation(">=", 2, 3.0f, (paramsList, calculator) =>
+            {
                 List<Expression> result = new List<Expression>();
                 Expression a = paramsList[0], b = paramsList[1];
                 if (!((a.IsCalculatable) && (b.IsCalculatable)))
@@ -1154,7 +1160,8 @@ namespace ExtrameFunctionCalculator
                 return result;
             });
 
-            RegisterOperation("<=", 2, 3.0f, (paramsList, calculator) => {
+            RegisterOperation("<=", 2, 3.0f, (paramsList, calculator) =>
+            {
                 List<Expression> result = new List<Expression>();
                 Expression a = paramsList[0], b = paramsList[1];
                 if (!((a.IsCalculatable) && (b.IsCalculatable)))
@@ -1167,7 +1174,8 @@ namespace ExtrameFunctionCalculator
                 return result;
             });
 
-            RegisterOperation("==", 2, 2.5f, (paramsList, calculator) => {
+            RegisterOperation("==", 2, 2.5f, (paramsList, calculator) =>
+            {
                 List<Expression> result = new List<Expression>();
                 Expression a = paramsList[0], b = paramsList[1];
                 if (!((a.IsCalculatable) && (b.IsCalculatable)))
@@ -1180,7 +1188,8 @@ namespace ExtrameFunctionCalculator
                 return result;
             });
 
-            RegisterOperation("!=", 2, 2.5f, (paramsList, calculator) => {
+            RegisterOperation("!=", 2, 2.5f, (paramsList, calculator) =>
+            {
                 List<Expression> result = new List<Expression>();
                 Expression a = paramsList[0], b = paramsList[1];
                 if (!((a.IsCalculatable) && (b.IsCalculatable)))
@@ -1193,7 +1202,8 @@ namespace ExtrameFunctionCalculator
                 return result;
             });
 
-            RegisterOperation("&&", 2, 2.3f, (paramsList, calculator) => {
+            RegisterOperation("&&", 2, 2.3f, (paramsList, calculator) =>
+            {
                 List<Expression> result = new List<Expression>();
                 Expression a = paramsList[0], b = paramsList[1];
                 if (!((a.IsCalculatable) && (b.IsCalculatable)))
@@ -1206,7 +1216,8 @@ namespace ExtrameFunctionCalculator
                 return result;
             });
 
-            RegisterOperation("||", 2, 2.3f, (paramsList, calculator) => {
+            RegisterOperation("||", 2, 2.3f, (paramsList, calculator) =>
+            {
                 List<Expression> result = new List<Expression>();
                 Expression a = paramsList[0], b = paramsList[1];
                 if (!((a.IsCalculatable) && (b.IsCalculatable)))
@@ -1219,7 +1230,7 @@ namespace ExtrameFunctionCalculator
                 return result;
             });
 
-            #endregion
+            #endregion 逻辑运算符
 
             #region 单参数函数
 
@@ -1610,6 +1621,5 @@ namespace ExtrameFunctionCalculator
         }
 
         #endregion Init
-
     }
 }

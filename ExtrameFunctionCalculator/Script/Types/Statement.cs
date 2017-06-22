@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ExtrameFunctionCalculator.Script.Types
 {
@@ -30,15 +26,16 @@ namespace ExtrameFunctionCalculator.Script.Types
         {
             get { return statement; }
         }
-        public Statement(int line,string statement) : base(line)
+
+        public Statement(int line, string statement) : base(line)
         {
             this.statement = statement;
         }
 
         public override string ToString() => $"{base.ToString()} - {StatementType.ToString()} : {statement}";
+
         public virtual void Execute()
         {
-
         }
     }
 }

@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ExtrameFunctionCalculator.UtilTools
 {
@@ -13,7 +10,7 @@ namespace ExtrameFunctionCalculator.UtilTools
 
     public static class ObjectPool
     {
-        static Dictionary<Type, Stack<object>> StoreObjectMap = new Dictionary<Type, Stack<object>>();
+        private static Dictionary<Type, Stack<object>> StoreObjectMap = new Dictionary<Type, Stack<object>>();
 
         public static int Capacity { get; set; } = 100;
 
