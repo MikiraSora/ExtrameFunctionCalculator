@@ -122,7 +122,7 @@ namespace ExtrameFunctionCalculator
             while (true)
             {
                 if (position >= expression.Length)
-                    Log.Error(String.Format("%s isnt vaild format", expression));
+                    Log.Error(String.Format("{0} isnt vaild format", expression));
                 c = expression[(position)];
                 if (c == '[')
                     break;

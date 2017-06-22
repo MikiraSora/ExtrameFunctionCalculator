@@ -9,7 +9,6 @@ namespace ExtrameFunctionCalculator.Types
 {
     public class ScriptFunction : Function
     {
-        string function_name = null;
         Executor executor = null;
 
         public override FunctionType FunctionType => FunctionType.ScriptFunction;

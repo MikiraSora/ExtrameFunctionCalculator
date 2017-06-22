@@ -32,8 +32,7 @@ namespace ExtrameFunctionCalculatorLogServer
 
         OnChangeNetStatus trigger_onChangeNetStatus = null;
         public void SetOnChangeNetStatus(OnChangeNetStatus onChangeNetStatus) { trigger_onChangeNetStatus = onChangeNetStatus; }
-
-        private volatile bool Looping = true;
+        
         public void StopLoop() { Looping = false; }
 
         public void LoopRun()
