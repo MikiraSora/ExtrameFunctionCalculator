@@ -84,7 +84,7 @@ namespace ExtrameFunctionCalculator
             public void Unlock() { is_lock = false; }
             public void CommitLog(Message message)
             {
-                commit_queue.Add(message);
+                commit_queue.Enqueue(message);
                 Unlock();
             }
 

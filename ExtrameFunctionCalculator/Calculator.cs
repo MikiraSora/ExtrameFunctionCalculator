@@ -1,4 +1,5 @@
-﻿using ExtrameFunctionCalculator.Script;
+﻿using ExtrameFunctionCalculator.BooleanCalculatorSupport;
+using ExtrameFunctionCalculator.Script;
 using ExtrameFunctionCalculator.Types;
 using System;
 using System.Collections.Generic;
@@ -9,25 +10,21 @@ namespace ExtrameFunctionCalculator
 {
     public class Calculator
     {
-        private Dictionary<String, Function> function_table = new Dictionary<string, Function>();
-        private Dictionary<String, Variable> variable_table = new Dictionary<string, Variable>();
-        private static Dictionary<String, ReflectionFunction> raw_function_table = new Dictionary<string, ReflectionFunction>();
 
-        private static Dictionary<String, Variable> raw_variable_table = new Dictionary<string, Variable>();
-
-        private static string special_operator_chars = " + - * / [ ] ~ ! @ # $ % ^ & ( ) ; : \" | ? > < , ` ' \\ ";
-
-        private CalculatorOptimizer calculator_optimizer = null;
-
-        internal Dictionary<string, OnCalculateFunc> operator_function = new Dictionary<string, OnCalculateFunc>();
-        internal Dictionary<string, float> operator_prioty = new Dictionary<string, float>();
-        internal Dictionary<string, Symbol> shared_symbol_cache = new Dictionary<string, Symbol>();
-        internal Dictionary<string, int> operator_request_count = new Dictionary<string, int>();
-        private Stack<List<String>> record_tmp_variable_stack = new Stack<List<string>>();
-
-        private ScriptManager script_manager;
-        private static Regex check_function_format_regex = new Regex("([a-zA-Z]\\w*)\\((.*)\\)");
         private Dictionary<String, Stack<Variable>> tmp_variable_map = new Dictionary<string, Stack<Variable>>();
+        private static Regex check_function_format_regex = new Regex("([a-zA-Z]\\w*)\\((.*)\\)");
+        private ScriptManager script_manager;
+        private Stack<List<String>> record_tmp_variable_stack = new Stack<List<string>>();
+        internal Dictionary<string, int> operator_request_count = new Dictionary<string, int>();
+        internal Dictionary<string, Symbol> shared_symbol_cache = new Dictionary<string, Symbol>();
+        internal Dictionary<string, float> operator_prioty = new Dictionary<string, float>();
+        internal Dictionary<string, OnCalculateFunc> operator_function = new Dictionary<string, OnCalculateFunc>();
+        private CalculatorOptimizer calculator_optimizer = null;
+        private static string special_operator_chars = " + - * / [ ] ~ ! @ # $ % ^ & ( ) ; : \" | ? > < , ` ' \\ ";
+        private static Dictionary<String, Variable> raw_variable_table = new Dictionary<string, Variable>();
+        private static Dictionary<String, ReflectionFunction> raw_function_table = new Dictionary<string, ReflectionFunction>();
+        private Dictionary<String, Variable> variable_table = new Dictionary<string, Variable>();
+        private Dictionary<String, Function> function_table = new Dictionary<string, Function>();
 
         public Calculator()
         {
@@ -406,7 +403,39 @@ namespace ExtrameFunctionCalculator
             if (Utils.IsDigit(expression))
                 return expression;
             List<Expression> expression_list = (ParseExpression(expression));
-            return SolveExpressionList(expression_list);
+            Expression result_expr = SolveExpressionList(expression_list);
+
+            string result = result_expr.RawText;
+
+            if (result.Contains("."))
+            {
+                string tmpDecial = result.Substring(result.IndexOf('.') + 1);
+                try
+                {
+                    if (int.Parse(tmpDecial) == (0))
+                        return result.Substring(0, result.IndexOf('.'));
+                }
+                catch (Exception e) { }
+            }
+            return result;
+        }
+
+        public bool BoolSolve(string expression)
+        {
+            if (Utils.IsDigit(expression))
+                return double.Parse(expression)!=0;
+
+            List<Expression> expression_list = (ParseExpression(expression));
+            Expression result_expr = SolveExpressionList(expression_list);
+
+            if (result_expr.ExpressionType == ExpressionType.Digit)
+                return Double.Parse(result_expr.Solve()) != 0;
+            if (result_expr.ExpressionType == ExpressionType.Variable)
+                if (((Variable)result_expr).VariableType == VariableType.BooleanVariable)
+                    return ((BooleanVariable)result_expr).BoolValue;
+
+            Log.ExceptionError(new Exception("Uncalculatable type :" + result_expr.ExpressionType.ToString()));
+            return false;
         }
 
         private void CheckNormalizeChain(ref List<Expression> expression_list)
@@ -794,10 +823,10 @@ namespace ExtrameFunctionCalculator
             return result;
         }
 
-        public string SolveExpressionList(List<Expression> expression_list)
+        public Expression SolveExpressionList(List<Expression> expression_list)
         {
             if (expression_list.Count == 1 && expression_list[0].ExpressionType == ExpressionType.Digit)
-                return expression_list[0].RawText;
+                return expression_list[0];
 
             CalculateBracket(ref expression_list);
             ConverVariableToDigit(ref expression_list);
@@ -805,19 +834,7 @@ namespace ExtrameFunctionCalculator
             CheckNormalizeChain(ref expression_list);
             expression_list = ExpressionOptimization(expression_list);
 
-            string result = CalculateExecute(expression_list);
-
-            if (result.Contains("."))
-            {
-                string tmpDecial = result.Substring(result.IndexOf('.') + 1);
-                try
-                {
-                    if (int.Parse(tmpDecial) == (0))
-                        return result.Substring(0, result.IndexOf('.'));
-                }
-                catch (Exception e) { }
-            }
-            return result;
+            return CalculateExecute(expression_list);
         }
 
         internal void CalculateBracket(ref List<Expression> expression_list)
@@ -850,7 +867,7 @@ namespace ExtrameFunctionCalculator
                             if (stack == 0)
                             {
                                 var sub_exprssion_list = expression_list.GetRange(position_start + 1, position - position_start - 1);
-                                var result = new Digit(SolveExpressionList(sub_exprssion_list));
+                                var result = new Digit(SolveExpressionList(sub_exprssion_list).RawText);
                                 expression_list.RemoveRange(position_start, position - position_start + 1);
                                 expression_list.Insert(position_start, result);
                                 position = position_start;
@@ -864,7 +881,7 @@ namespace ExtrameFunctionCalculator
             }
         }
 
-        internal string CalculateExecute(List<Expression> expression_list)
+        internal Expression CalculateExecute(List<Expression> expression_list)
         {
             int position = 0;
             List<Expression> paramsList = new List<Expression>();
@@ -918,7 +935,7 @@ namespace ExtrameFunctionCalculator
             }
             if (expression_list.Count != 1)
                 Log.ExceptionError(new Exception($"still exsit more expression object in result list"));
-            return expression_list[0].RawText;
+            return expression_list[0];
         }
 
         private bool GetNextSymbol(List<Expression> expression_list, int position, out Symbol next_symbol, out int next_i) => TryGetNextTypeValue<Symbol>(expression_list, position, out next_symbol, out next_i);
@@ -961,7 +978,7 @@ namespace ExtrameFunctionCalculator
             return false;
         }
 
-        private Expression ParseStringToExpression(string text)
+        internal Expression ParseStringToExpression(string text)
         {
             if (Utils.IsFunction(text))
             {

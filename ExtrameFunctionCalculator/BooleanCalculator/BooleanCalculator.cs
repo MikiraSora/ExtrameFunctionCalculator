@@ -180,7 +180,8 @@ namespace ExtrameFunctionCalculator.BooleanCalculatorSupport
             return expressionArrayList;
         }
 
-        private Expression checkConverExpression(string text)
+        private Expression checkConverExpression(string text) => calculator.ParseStringToExpression(text);
+            /*
         {
             if (Utils.IsFunction(text))
             {
@@ -215,6 +216,7 @@ namespace ExtrameFunctionCalculator.BooleanCalculatorSupport
 
             return null;
         }
+        */
 
         private void ConverFunctionToDigit()
         {
