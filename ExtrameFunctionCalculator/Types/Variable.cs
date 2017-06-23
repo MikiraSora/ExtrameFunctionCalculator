@@ -41,7 +41,7 @@ namespace ExtrameFunctionCalculator.Types
             {
                 rightValue = Solve();
             }
-            catch (Exception e)
+            catch
             {
                 rightValue = "null";
             }

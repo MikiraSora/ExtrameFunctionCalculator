@@ -120,7 +120,7 @@ namespace ExtrameFunctionCalculator
                         {
                             Thread.Sleep((int)flush_inv);
                         }
-                        catch (Exception e) { }
+                        catch{ }
                     }
 
                     message = commit_queue.Count == 0 ? null : commit_queue.Dequeue();
@@ -130,7 +130,7 @@ namespace ExtrameFunctionCalculator
                     {
                         SocketWrite(message.toString() + Log.segmentation_maker);
                     }
-                    catch (Exception e) { }
+                    catch{ }
                 }
                 is_lock = true;
             }
@@ -255,7 +255,7 @@ namespace ExtrameFunctionCalculator
             {
                 SocketWrite(message.toString());
             }
-            catch (Exception e)
+            catch
             {
                 return;
             }
@@ -280,7 +280,7 @@ namespace ExtrameFunctionCalculator
             {
                 LogWrite(msg);
             }
-            catch (Exception e) { return; }
+            catch{ return; }
         }
 
         public static void ExceptionError(Exception e)
@@ -297,7 +297,7 @@ namespace ExtrameFunctionCalculator
                 Message msg = IsShowCallerMethod ? new Message(Message.Type.Debug, message, GetCallerMethodName()) : new Message(Message.Type.Debug, message);
                 LogWrite(msg);
             }
-            catch (Exception e) { }
+            catch{ }
         }
 
         public static void Warning(string message)
@@ -307,7 +307,7 @@ namespace ExtrameFunctionCalculator
                 Message msg = IsShowCallerMethod ? new Message(Message.Type.Warning, message, GetCallerMethodName()) : new Message(Message.Type.Warning, message);
                 LogWrite(msg);
             }
-            catch (Exception e) { }
+            catch{ }
         }
 
         public static void User(string message)
@@ -317,7 +317,7 @@ namespace ExtrameFunctionCalculator
                 Message msg = IsShowCallerMethod ? new Message(Message.Type.User, message, GetCallerMethodName()) : new Message(Message.Type.User, message);
                 LogWrite(msg);
             }
-            catch (Exception e) { }
+            catch{ }
         }
 
         public static void DisConnect()

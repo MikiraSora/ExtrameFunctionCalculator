@@ -1,7 +1,6 @@
-﻿using System;
+﻿using ExtrameFunctionCalculator;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Diagnostics;
-using ExtrameFunctionCalculator;
+using System;
 using System.IO;
 
 namespace CalculatorUnitTest
@@ -14,15 +13,15 @@ namespace CalculatorUnitTest
         {
             Calculator calculator = new Calculator();
 
-            string[] test_data = File.ReadAllLines(Environment.CurrentDirectory+"\\TestData\\normal_solve.txt");
+            string[] test_data = File.ReadAllLines(Environment.CurrentDirectory + "\\TestData\\normal_solve.txt");
             foreach (var case_string in test_data)
             {
                 string casestring = case_string.Trim();
                 if (casestring.Length == 0)
                     continue;
 
-                double value = double.Parse(calculator.Solve(casestring.Substring(0,casestring.LastIndexOf('='))));
-                Assert.AreEqual<double>(double.Parse(casestring.Substring(casestring.LastIndexOf('=')+1)),value);
+                double value = double.Parse(calculator.Solve(casestring.Substring(0, casestring.LastIndexOf('='))));
+                Assert.AreEqual<double>(double.Parse(casestring.Substring(casestring.LastIndexOf('=') + 1)), value);
             }
         }
 
@@ -54,7 +53,7 @@ namespace CalculatorUnitTest
                 string casestring = case_string.Trim();
                 if (casestring.Length == 0)
                     continue;
-                
+
                 if (casestring[casestring.Length - 1] == '\\')
                 {
                     calculator.Execute(casestring.Substring(0, casestring.Length - 1));

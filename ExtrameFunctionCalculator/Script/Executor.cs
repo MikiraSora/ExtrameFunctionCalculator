@@ -46,7 +46,7 @@ namespace ExtrameFunctionCalculator.Script
                             param = GetBackFolderPath(reference_parser.RefExecutor.IncludeFilePath) + param.Substring(2);
                     reference_parser.RefExecutor.AddChildExecutor(param);
                 }
-                catch (Exception e)
+                catch
                 {
                     Log.Error(String.Format("cant open file %s", param));
                 }
@@ -177,7 +177,7 @@ namespace ExtrameFunctionCalculator.Script
                                         }
                                     case StatementType.Call:
                                         {
-                                            GetCalculator().ScriptCallExecute(((Statement)unit).StatementContext);
+                                            GetCalculator().Execute(((Statement)unit).StatementContext);
                                             break;
                                         }
                                     case StatementType.Set:

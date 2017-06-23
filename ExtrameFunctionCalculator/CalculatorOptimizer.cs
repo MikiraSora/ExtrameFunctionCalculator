@@ -102,7 +102,7 @@ namespace ExtrameFunctionCalculator
                 {
                     digit_result = new ExtrameFunctionCalculator.Types.Digit(GetCalculator().Solve(ToString()));
                 }
-                catch (Exception e)
+                catch
                 {
                     digit_result = new ExtrameFunctionCalculator.Types.Digit("0");
                 }

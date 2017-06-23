@@ -32,7 +32,7 @@ namespace ExtrameFunctionCalculator.Types
             {
                 return this;//new BooleanVariable(boolean_value,calculator);
             }
-            catch (Exception e)
+            catch
             {
                 return null;
             }

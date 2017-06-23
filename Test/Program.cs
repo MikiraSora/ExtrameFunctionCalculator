@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ExtrameFunctionCalculator;
-using System.Threading;
+﻿using ExtrameFunctionCalculator;
+using System;
 
 namespace Test
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             Calculator calculator = new Calculator();
             //calculator.Enable(Calculator.EnableType.ExpressionOptimize); 傻逼玩意
@@ -19,10 +14,10 @@ namespace Test
             while (true)
             {
                 Console.Write("<=:");
-                string command=Console.ReadLine();
+                string command = Console.ReadLine();
                 Console.ForegroundColor = ConsoleColor.Green;
                 string result = calculator.Execute(command);
-                if(result.Trim().Length!=0)
+                if (result.Trim().Length != 0)
                     Console.WriteLine(result);
                 Console.ResetColor();
             }

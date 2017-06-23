@@ -109,7 +109,7 @@ namespace ExtrameFunctionCalculator
         #endregion EnableWrappers
 
         #region 变量
-
+       
         private void SetMapVariable(string expression)
         {
             //mymapvar[myvar]["mykeyname"][5]=myvalue
@@ -321,7 +321,7 @@ namespace ExtrameFunctionCalculator
             {
                 GetScriptManager().UnloadScript(package_name);
             }
-            catch (Exception e)
+            catch
             {
                 return "unloaded scriptfile failed!";
             }
@@ -416,7 +416,7 @@ namespace ExtrameFunctionCalculator
                     if (int.Parse(tmpDecial) == (0))
                         return result.Substring(0, result.IndexOf('.'));
                 }
-                catch (Exception e) { }
+                catch { }
             }
             return result;
         }
@@ -508,7 +508,7 @@ namespace ExtrameFunctionCalculator
             return optimizeResult == null ? expression_list : optimizeResult;
         }
 
-        private List<Expression> ParseExpression(string expression)
+        public List<Expression> ParseExpression(string expression)
         {
             List<Expression> expressionArrayList = new List<Expression>();
             int position = 0;
@@ -665,11 +665,6 @@ namespace ExtrameFunctionCalculator
         }
 
         public string Execute(string text)
-        {
-            return ExecuteEx(text);
-        }
-
-        internal string ScriptCallExecute(string text)
         {
             return ExecuteEx(text);
         }
@@ -850,7 +845,7 @@ namespace ExtrameFunctionCalculator
 
         internal void CalculateBracket(ref List<Expression> expression_list)
         {
-            int position = 0, position_start, position_end;
+            int position = 0, position_start;
             while (true)
             {
                 if (position >= expression_list.Count)

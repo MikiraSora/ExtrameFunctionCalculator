@@ -1,40 +1,54 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
-using System.Diagnostics;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace ExtrameFunctionCalculatorLogServer
 {
     public class LogServer
     {
-
-        public LogServer(int port) { this.port = port; }
+        public LogServer(int port)
+        {
+            this.port = port;
+        }
 
         private int port = 2857;
-        public void SetPort(int port) { this.port = port; }
-        public int GetPort() { return port; }
+
+        public void SetPort(int port)
+        {
+            this.port = port;
+        }
+
+        public int GetPort()
+        {
+            return port;
+        }
 
         public delegate void OnReceiveMessageFunc(string message);
+
         public event OnReceiveMessageFunc OnReceiveMessage;
 
         public abstract class OnChangeNetStatus
         {
             public abstract void onWaitConnecting();
+
             public abstract void onConnected();
+
             public abstract bool onConnectError(Exception e);
+
             public abstract void onConnectedLost();
         }
 
+        private OnChangeNetStatus trigger_onChangeNetStatus = null;
 
-        OnChangeNetStatus trigger_onChangeNetStatus = null;
-        public void SetOnChangeNetStatus(OnChangeNetStatus onChangeNetStatus) { trigger_onChangeNetStatus = onChangeNetStatus; }
-        
+        public void SetOnChangeNetStatus(OnChangeNetStatus onChangeNetStatus)
+        {
+            trigger_onChangeNetStatus = onChangeNetStatus;
+        }
+
         public void LoopRun()
-        {          
+        {
             Socket socket = null;
 
             try
@@ -46,7 +60,7 @@ namespace ExtrameFunctionCalculatorLogServer
                 IPEndPoint point = new IPEndPoint(ipaddr, port);
                 socket.Bind(point);
                 socket.Listen(0);
-                var responseSocket=socket.Accept();
+                var responseSocket = socket.Accept();
                 if (trigger_onChangeNetStatus != null)
                     trigger_onChangeNetStatus.onConnected();
 
@@ -63,7 +77,7 @@ namespace ExtrameFunctionCalculatorLogServer
                     Debug.Print($"receive data size:{size}");
 
                     string message = Encoding.UTF8.GetString(buffer).Trim();
-                    message=message.Replace("\0", "");
+                    message = message.Replace("\0", "");
                     OnReceiveMessage?.Invoke(message);
                 }
 

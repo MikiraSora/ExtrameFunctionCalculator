@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using static ExtrameFunctionCalculatorLogServer.LogServer;
 
 namespace ExtrameFunctionCalculatorLogServer
 {
-    class ChangeNetStatus : OnChangeNetStatus
+    internal class ChangeNetStatus : OnChangeNetStatus
     {
         public override void onConnected()
         {
@@ -32,11 +27,11 @@ namespace ExtrameFunctionCalculatorLogServer
         }
     }
 
-    class Program
+    internal class Program
     {
         private static string SegmentationMarker = "#@#";
 
-        static void PrintMessage(string message)
+        private static void PrintMessage(string message)
         {
             string context = message.Substring(1);
             switch (message[(0)])
@@ -71,7 +66,7 @@ namespace ExtrameFunctionCalculatorLogServer
             Console.ResetColor();
         }
 
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             LogServer server = new LogServer(2857);
 
@@ -79,14 +74,14 @@ namespace ExtrameFunctionCalculatorLogServer
 
             server.OnReceiveMessage += (msg) =>
             {
-                string[] msgs = msg.Split(new string[] { SegmentationMarker},StringSplitOptions.RemoveEmptyEntries);
+                string[] msgs = msg.Split(new string[] { SegmentationMarker }, StringSplitOptions.RemoveEmptyEntries);
                 foreach (var item in msgs)
                 {
-                    PrintMessage(item.Trim().Replace(SegmentationMarker,""));
+                    PrintMessage(item.Trim().Replace(SegmentationMarker, ""));
                 }
             };
 
-            while(true)
+            while (true)
                 server.LoopRun();
         }
     }
