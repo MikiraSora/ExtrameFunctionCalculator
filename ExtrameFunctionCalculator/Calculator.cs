@@ -24,6 +24,8 @@ namespace ExtrameFunctionCalculator
         private Dictionary<String, Variable> variable_table = new Dictionary<string, Variable>();
         private Dictionary<String, Function> function_table = new Dictionary<string, Function>();
 
+
+
         public Calculator()
         {
             Init();
@@ -443,7 +445,7 @@ namespace ExtrameFunctionCalculator
         {
             foreach (Expression node in expression_list)
             {
-                if (node.ExpressionType != ExpressionType.Digit && node.ExpressionType != ExpressionType.Symbol)
+                if (/*node.ExpressionType != ExpressionType.Digit && node.ExpressionType != ExpressionType.Symbol*/!(ExpressionType.Digit | ExpressionType.Symbol).HasFlag(node.ExpressionType))
                     Log.ExceptionError(new Exception(node.GetName() + " isnt digit or symbol."));
             }
         }
@@ -516,7 +518,7 @@ namespace ExtrameFunctionCalculator
             Expression expr = null;
             string statement = "", tmp_op;
             Stack<int> bracket_stack = new Stack<int>();
-            while (true)
+                while (true)
             {
                 if (position >= expression.Length)
                     break;

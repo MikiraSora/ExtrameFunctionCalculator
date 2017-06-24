@@ -4,12 +4,13 @@ using System.Text.RegularExpressions;
 
 namespace ExtrameFunctionCalculator.Types
 {
+    [Flags]
     public enum FunctionType
     {
-        NormalFunction,
-        ReflectionFunction,
-        ScriptFunction,
-        Unknown
+        NormalFunction=1,
+        ReflectionFunction=2,
+        ScriptFunction=4,
+        Unknown=8
     }
 
     public class Function : Expression

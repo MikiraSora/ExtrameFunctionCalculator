@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
 
 namespace ExtrameFunctionCalculator.UtilTools
 {
@@ -8,38 +9,50 @@ namespace ExtrameFunctionCalculator.UtilTools
         void Release();
     }
 
-    public static class ObjectPool
+    public class ObjectPool<T> where T : class
     {
-        private static Dictionary<Type, Stack<object>> StoreObjectMap = new Dictionary<Type, Stack<object>>();
+        public delegate T CreateNewObjectFunc();
+        public delegate void ResetObjectFunc(T obj);
 
-        public static int Capacity { get; set; } = 100;
+        Queue<T> pool;
 
-        public delegate T OnCreateNewFunc<T>();
+        CreateNewObjectFunc create_function;
 
-        public static T GetObject<T>(OnCreateNewFunc<T> GenObjectFunction)
+        ResetObjectFunc reset_function;
+
+        int capacity;
+
+        public ObjectPool(CreateNewObjectFunc create_func,ResetObjectFunc reset_func,int capacity=100)
         {
-            Type type = typeof(T);
-            if (!StoreObjectMap.ContainsKey(type))
-                StoreObjectMap.Add(type, new Stack<object>());
-            if (StoreObjectMap[type].Count == 0)
-                StoreObjectMap[type].Push(GenObjectFunction());
-            return (T)StoreObjectMap[type].Pop();
+            if (create_func == null || reset_func == null || capacity <= 0)
+                throw new Exception("Invaid Parameters");
+
+            this.capacity = capacity;
+            this.create_function = create_func;
+            this.reset_function = reset_func;
+
+            pool = new Queue<T>(capacity);
         }
 
-        public static void ReleaseObject<T>(T obj)
+        public void Push(T item)
         {
-            Type type = typeof(T);
-            if (IsFull(obj))
+            if (item != null&&pool.Count>=capacity)
                 return;
-            StoreObjectMap[type].Push(obj);
+            lock (pool)
+            {
+                pool.Enqueue(item);
+            }
         }
 
-        public static bool IsFull<T>(T obj)
+        public T Pop()
         {
-            Type type = typeof(T);
-            if (!StoreObjectMap.ContainsKey(type))
-                StoreObjectMap.Add(type, new Stack<object>());
-            return StoreObjectMap[type].Count >= Capacity;
+            T obj;
+            lock (pool)
+            {
+                obj = pool.Count == 0 ? create_function() : pool.Dequeue();
+            }
+            reset_function(obj);
+            return obj;
         }
     }
 }

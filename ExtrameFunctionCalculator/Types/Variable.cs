@@ -2,13 +2,14 @@
 
 namespace ExtrameFunctionCalculator.Types
 {
+    [Flags]
     public enum VariableType
     {
-        ExpressionVariable,
-        BooleanVariable,
-        MapVariable,
-        Normal,
-        Unknown
+        ExpressionVariable=1,
+        BooleanVariable=2,
+        MapVariable=4,
+        Normal=8,
+        Unknown=16
     }
 
     public class Variable : Expression
