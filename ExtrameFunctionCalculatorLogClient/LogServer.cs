@@ -77,7 +77,7 @@ namespace ExtrameFunctionCalculatorLogServer
                     Debug.Print($"receive data size:{size}");
 
                     string message = Encoding.UTF8.GetString(buffer).Trim();
-                    message = message.Replace("\0", "");
+                    message = message.Replace("\0", string.Empty);
                     OnReceiveMessage?.Invoke(message);
                 }
 

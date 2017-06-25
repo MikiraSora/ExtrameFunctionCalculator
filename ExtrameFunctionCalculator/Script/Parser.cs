@@ -96,7 +96,7 @@ namespace ExtrameFunctionCalculator.Script
                     default:
                         {
                             unit = null;
-                            command = "";
+                            command = string.Empty;
                             for (int tmp_position = 0; tmp_position < text.Length; tmp_position++)
                             {
                                 c = text[(tmp_position)];
@@ -116,7 +116,7 @@ namespace ExtrameFunctionCalculator.Script
                                 PushStatement(unit);
                                 break;
                             }
-                            command = "";
+                            command = string.Empty;
                             //if(x+1)
                             for (int tmp_position = 0; tmp_position < text.Length; tmp_position++)
                             {
@@ -192,7 +192,7 @@ namespace ExtrameFunctionCalculator.Script
             if (reflection_precompiling_execution_map == null)
                 return;
             int position = 1, c = 0;
-            string command = "", param = "";
+            string command = string.Empty, param = string.Empty;
             while (true)
             {
                 if (position >= text.Length)

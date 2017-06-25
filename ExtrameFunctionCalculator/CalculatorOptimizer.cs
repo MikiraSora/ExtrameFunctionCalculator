@@ -98,14 +98,9 @@ namespace ExtrameFunctionCalculator
             {
                 this.calculator = calculator;
                 expression_list = expressions;
-                try
-                {
-                    digit_result = new ExtrameFunctionCalculator.Types.Digit(GetCalculator().Solve(ToString()));
-                }
-                catch
-                {
-                    digit_result = new ExtrameFunctionCalculator.Types.Digit("0");
-                }
+
+                digit_result = new ExtrameFunctionCalculator.Types.Digit(GetCalculator().Solve(ToString()));
+
                 expression_list = null;
             }
 

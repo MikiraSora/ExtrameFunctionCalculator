@@ -70,8 +70,8 @@ namespace ExtrameFunctionCalculator
 
         private string Optimize(string sw)
         {
-            string level = sw.Substring(sw.IndexOf(" ")).Replace(" ", "");
-            sw = sw.Substring(0, sw.IndexOf(" ")).Replace(" ", "");
+            string level = sw.Substring(sw.IndexOf(" ")).Replace(" ", string.Empty);
+            sw = sw.Substring(0, sw.IndexOf(" ")).Replace(" ", string.Empty);
             switch (sw)
             {
                 case "true":
@@ -112,7 +112,7 @@ namespace ExtrameFunctionCalculator
         #endregion EnableWrappers
 
         #region 变量
-       
+
         private void SetMapVariable(string expression)
         {
             //mymapvar[myvar]["mykeyname"][5]=myvalue
@@ -121,7 +121,7 @@ namespace ExtrameFunctionCalculator
             int position = 0;
             char c = (char)0;
             //读取名字
-            string variable_name = "";
+            string variable_name = string.Empty;
             while (true)
             {
                 if (position >= expression.Length)
@@ -133,7 +133,7 @@ namespace ExtrameFunctionCalculator
                 position++;
             }
             //读取下标
-            string indexes = "";
+            string indexes = string.Empty;
             Stack<int> balanceStack = new Stack<int>();
             while (true)
             {
@@ -177,7 +177,7 @@ namespace ExtrameFunctionCalculator
         private void SetVariable(string expression)
         {
             char c;
-            string variable_name = "", variable_expression = "";
+            string variable_name = string.Empty, variable_expression = string.Empty;
             for (int position = 0; position < expression.Length - 1; position++)
             {
                 c = expression[(position)];
@@ -220,7 +220,7 @@ namespace ExtrameFunctionCalculator
             if (expression.Length == 0)
                 Log.ExceptionError(new Exception("empty text"));
             char c;
-            string variable_name = "", variable_expression = "";
+            string variable_name = string.Empty, variable_expression = string.Empty;
             Variable variable = null;
             for (int position = 0; position < expression.Length - 1; position++)
             {
@@ -416,12 +416,10 @@ namespace ExtrameFunctionCalculator
             if (result.Contains("."))
             {
                 string tmpDecial = result.Substring(result.IndexOf('.') + 1);
-                try
-                {
-                    if (int.Parse(tmpDecial) == (0))
-                        return result.Substring(0, result.IndexOf('.'));
-                }
-                catch { }
+
+                if (int.Parse(tmpDecial) == (0))
+                    return result.Substring(0, result.IndexOf('.'));
+
             }
             return result;
         }
@@ -463,23 +461,17 @@ namespace ExtrameFunctionCalculator
             Expression node;
             Variable variable;
             Digit result;
-            try
+
+            for (position = 0; position < expression_list.Count; position++)
             {
-                for (position = 0; position < expression_list.Count; position++)
+                node = expression_list[(position)];
+                if (node.ExpressionType == ExpressionType.Variable)
                 {
-                    node = expression_list[(position)];
-                    if (node.ExpressionType == ExpressionType.Variable)
-                    {
-                        variable = (Variable)node;
-                        result = variable.GetDigit();
-                        expression_list.RemoveAt(position);
-                        expression_list.Insert(position, result);
-                    }
+                    variable = (Variable)node;
+                    result = variable.GetDigit();
+                    expression_list.RemoveAt(position);
+                    expression_list.Insert(position, result);
                 }
-            }
-            catch (Exception e)
-            {
-                Log.Warning(e.Message);
             }
         }
 
@@ -523,9 +515,9 @@ namespace ExtrameFunctionCalculator
             int position = 0;
             char c, tmp_c;
             Expression expr = null;
-            string statement = "", tmp_op;
+            string statement = string.Empty, tmp_op;
             Stack<int> bracket_stack = new Stack<int>();
-                while (true)
+            while (true)
             {
                 if (position >= expression.Length)
                     break;
@@ -561,8 +553,8 @@ namespace ExtrameFunctionCalculator
                                         size++;
                                         c = expression[(++position)];
                                     }
-                                    expressionArrayList.Add(new ExpressionVariable("", Utils.RepeatingDecimalCoverToExpression(statement), this));
-                                    statement = "";
+                                    expressionArrayList.Add(new ExpressionVariable(string.Empty, Utils.RepeatingDecimalCoverToExpression(statement), this));
+                                    statement = string.Empty;
                                     break;
                                 }
                             }
@@ -594,7 +586,7 @@ namespace ExtrameFunctionCalculator
                         char tmp_ch = (char)0;
                         //position--;
                         //读取下标
-                        string indexes = "";
+                        string indexes = string.Empty;
                         Stack<int> balanceStack = new Stack<int>();
 
                         while (true)
@@ -653,7 +645,7 @@ namespace ExtrameFunctionCalculator
                         expressionArrayList.Add(new Symbol(tmp_op, this));
                     }
                     //Reflush statement
-                    statement = "";
+                    statement = string.Empty;
                 }
                 else
                 {
@@ -666,7 +658,7 @@ namespace ExtrameFunctionCalculator
             {
                 expr = (ParseStringToExpression(statement));
                 if (expr == null)
-                    throw new Exception($"parse expression \"{expression}\" occured error!");
+                    throw new Exception($"cant parse expression \"{expression}\" for internal error.");
                 expressionArrayList.Add(expr);
             }
 
@@ -675,7 +667,14 @@ namespace ExtrameFunctionCalculator
 
         public string Execute(string text)
         {
-            return ExecuteEx(text);
+            try
+            {
+                return ExecuteEx(text);
+            }
+            catch (Exception e)
+            {
+                return $"ocurred a error -> {e.Message}";
+            }
         }
 
         private string ExecuteEx(string text)
@@ -685,8 +684,8 @@ namespace ExtrameFunctionCalculator
             if (text.Length == 0)
                 Log.ExceptionError(new Exception("empty text to execute"));
             char c;
-            string executeType = "", paramter = "";
-            string result = "";
+            string executeType = string.Empty, paramter = string.Empty;
+            string result = string.Empty;
 
             for (int position = 0; position < text.Length; position++)
             {
@@ -737,7 +736,7 @@ namespace ExtrameFunctionCalculator
                 case "log":
                     {
                         Log.User(paramter);
-                        result = "";
+                        result = string.Empty;
                         break;
                     }
                 /*
@@ -784,7 +783,7 @@ namespace ExtrameFunctionCalculator
                 /*
             case "save":
                 {
-                    string type = "", output_path = "";
+                    string type = string.Empty, output_path = string.Empty;
                     for (int position = 0; position < paramter.length(); position++)
                     {
                         c = paramter.charAt(position);
@@ -810,7 +809,7 @@ namespace ExtrameFunctionCalculator
                 /*
                 case "delete":
                     {
-                        string type = "", name = "";
+                        string type = string.Empty, name = string.Empty;
                         for (int position = 0; position < paramter.Length; position++)
                         {
                             c = paramter[(position)];
@@ -964,11 +963,13 @@ namespace ExtrameFunctionCalculator
 
         private bool TryGetPrevTypeValue<T>(List<Expression> expression_list, int position, out T next_symbol, out int prev_i) where T : Expression
         {
+            T tmp;
             for (int i = position - 1; (i >= 0) && (i < expression_list.Count); i--)
             {
-                if (expression_list[i] is T)
+                tmp = expression_list[i] as T;
+                if (tmp!=null)
                 {
-                    next_symbol = (T)expression_list[i];
+                    next_symbol = tmp;
                     prev_i = i;
                     return true;
                 }
@@ -986,11 +987,13 @@ namespace ExtrameFunctionCalculator
 
         private bool TryGetNextTypeValue<T>(List<Expression> expression_list, int position, out T next_symbol, out int next_i) where T : Expression
         {
+            T tmp;
             for (int i = position + 1; i < expression_list.Count; i++)
             {
-                if (expression_list[i] is T)
+                tmp = expression_list[i] as T;
+                if (tmp!=null)
                 {
-                    next_symbol = (T)expression_list[i];
+                    next_symbol = tmp;
                     next_i = i;
                     return true;
                 }
@@ -1499,7 +1502,7 @@ namespace ExtrameFunctionCalculator
                     int requestIndex = 0;
                     Dictionary<string, Variable> variableHashMap = new Dictionary<string, Variable>();
                     Stack<int> BracketStack = new Stack<int>();
-                    string paramterString = "";
+                    string paramterString = string.Empty;
                     for (int pos = 0; pos < paramter.Length; pos++)
                     {
                         c = paramter[(pos)];
@@ -1519,7 +1522,7 @@ namespace ExtrameFunctionCalculator
                         {
                             string requestParamterName = request.GetParamterName(requestIndex++);
                             variableHashMap[requestParamterName] = new ExpressionVariable(requestParamterName, paramterString, calculator);
-                            paramterString = "";
+                            paramterString = string.Empty;
                         }
                         else
                         {
@@ -1548,7 +1551,7 @@ namespace ExtrameFunctionCalculator
                     int requestIndex = 0;
                     Dictionary<String, Variable> variableHashMap = new Dictionary<string, Variable>();
                     Stack<int> BracketStack = new Stack<int>();
-                    string paramterString = "";
+                    string paramterString = string.Empty;
                     for (int pos = 0; pos < paramter.Length; pos++)
                     {
                         c = paramter[(pos)];
@@ -1568,7 +1571,7 @@ namespace ExtrameFunctionCalculator
                         {
                             string requestParamterName = request.GetParamterName(requestIndex++);
                             variableHashMap[requestParamterName] = requestParamterName == ("expr") ? new ExpressionVariable(requestParamterName, paramterString, calculator) : new Variable(requestParamterName, paramterString, calculator);
-                            paramterString = "";
+                            paramterString = string.Empty;
                         }
                         else
                         {
@@ -1608,7 +1611,7 @@ namespace ExtrameFunctionCalculator
                 onReflectionFunction = (Dictionary<String, Variable> parameter, Calculator calculator) =>
                 {
                     Variable variable = parameter[("command")];
-                    string execute_text = "";
+                    string execute_text = string.Empty;
                     switch (variable.VariableType)
                     {
                         case VariableType.Normal:

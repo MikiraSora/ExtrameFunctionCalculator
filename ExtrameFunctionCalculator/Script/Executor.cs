@@ -7,7 +7,7 @@ namespace ExtrameFunctionCalculator.Script
     public class Executor
     {
         private Calculator calculator = null;
-        private string include_file_path = "";
+        private string include_file_path = string.Empty;
 
         private List<Executor> record_include_executor = new List<Executor>();
         private int reference_count = 0;
@@ -48,7 +48,7 @@ namespace ExtrameFunctionCalculator.Script
                 }
                 catch
                 {
-                    Log.Error(String.Format("cant open file %s", param));
+                    Log.ExceptionError(new Exception(string.Format("cant open file %s", param)));
                 }
             });
             precompling_action.Add("define", (param, reference_parser) =>
@@ -83,7 +83,7 @@ namespace ExtrameFunctionCalculator.Script
                     if (path[(i)] == '\\')
                         return path.Substring(0, i + 1);
             }
-            return "";
+            return string.Empty;
         }
 
         public void InitFromFile(string input_file)

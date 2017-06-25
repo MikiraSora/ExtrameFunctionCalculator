@@ -14,7 +14,7 @@ namespace ExtrameFunctionCalculator.Types
 
     public class Variable : Expression
     {
-        protected string variable_name = "";
+        protected string variable_name = string.Empty;
         public override ExpressionType ExpressionType { get { return ExpressionType.Variable; } }
 
         public override bool IsCalculatable => true;

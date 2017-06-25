@@ -18,7 +18,7 @@ namespace ExtrameFunctionCalculator.Types
         protected Calculator ref_calculator = null;
         public Calculator Calculator { get { return ref_calculator; } internal set { ref_calculator = value; } }
 
-        protected string raw_text = "";
+        protected string raw_text = string.Empty;
         public string RawText { get { return raw_text; } internal set { raw_text = value; } }
 
         private Expression() : this(null)

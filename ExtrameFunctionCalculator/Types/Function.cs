@@ -70,7 +70,7 @@ namespace ExtrameFunctionCalculator.Types
             int requestIndex = 0;
             Stack<int> BracketStack = new Stack<int>();
             Dictionary<string, Variable> paramsMap = new Dictionary<string, Variable>();
-            string paramter = "";
+            string paramter = string.Empty;
             for (int pos = 0; pos < paramsRawText.Length; pos++)
             {
                 c = paramsRawText[(pos)];
@@ -89,7 +89,7 @@ namespace ExtrameFunctionCalculator.Types
                 {
                     string requestParamterName = request[(requestIndex++)];
                     paramsMap[requestParamterName] = new Variable(requestParamterName, this.Calculator.Solve(paramter), this.Calculator);
-                    paramter = "";
+                    paramter = string.Empty;
                 }
                 else
                 {
@@ -124,7 +124,7 @@ namespace ExtrameFunctionCalculator.Types
             return Calculator.Solve(exression);
         }
 
-        public override string Solve() => Solve("");
+        public override string Solve() => Solve(string.Empty);
 
         public void BindCalculator(Calculator calculator)
         {
@@ -138,6 +138,6 @@ namespace ExtrameFunctionCalculator.Types
         //Stack<string> paramsExpressionStack = new Stack<string>();
 
         //public void PushParam(string paramsRawExpression) => paramsExpressionStack.Push(paramsRawExpression);
-        //protected string PopParam() => paramsExpressionStack.Count==0?"":paramsExpressionStack.Pop();
+        //protected string PopParam() => paramsExpressionStack.Count==0?string.Empty:paramsExpressionStack.Pop();
     }
 }

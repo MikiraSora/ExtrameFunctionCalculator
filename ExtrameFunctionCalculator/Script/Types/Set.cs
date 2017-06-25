@@ -12,7 +12,7 @@
         public Set(int line, string statement) : base(line, statement)
         {
             char c;
-            variable_name = "";
+            variable_name = string.Empty;
             for (int position = 0; position < this.statement.Length - 1; position++)
             {
                 c = this.statement[position];

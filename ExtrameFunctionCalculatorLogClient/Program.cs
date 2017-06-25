@@ -77,7 +77,7 @@ namespace ExtrameFunctionCalculatorLogServer
                 string[] msgs = msg.Split(new string[] { SegmentationMarker }, StringSplitOptions.RemoveEmptyEntries);
                 foreach (var item in msgs)
                 {
-                    PrintMessage(item.Trim().Replace(SegmentationMarker, ""));
+                    PrintMessage(item.Trim().Replace(SegmentationMarker, string.Empty));
                 }
             };
 

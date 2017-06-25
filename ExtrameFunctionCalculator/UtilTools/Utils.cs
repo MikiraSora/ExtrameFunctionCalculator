@@ -76,7 +76,7 @@ namespace ExtrameFunctionCalculator
         {
             char c;
             int pos = 0, notRepeatingDecimalLength = 0;
-            string notRepeating = "", Repeating = "";
+            string notRepeating = string.Empty, Repeating = string.Empty;
             while (true)
             {
                 c = decimalExpr[(pos)];
@@ -124,7 +124,7 @@ namespace ExtrameFunctionCalculator
                 }
                 pos++;
             }
-            string devNumber = "";
+            string devNumber = string.Empty;
             for (int i = 0; i < Repeating.Length; i++)
                 devNumber += 9;
             for (int i = 0; i < notRepeatingDecimalLength; i++)
@@ -144,7 +144,7 @@ namespace ExtrameFunctionCalculator
             string intDigit = result.Captures[1].Value, notRepeatDecimal = result.Captures[(2)].Value, RepeatDecimal = result.Captures[3].Value, endDecimal = result.Captures[(4)].Value;
             if (endDecimal.Length > RepeatDecimal.Length)
                 Log.ExceptionError(new Exception(decimalExpr + " is invalid repeating decimal!"));
-            string devNumber = "";
+            string devNumber = string.Empty;
             for (int i = 0; i < RepeatDecimal.Length; i++)
                 devNumber += 9;
             for (int i = 0; i < notRepeatDecimal.Length; i++)
