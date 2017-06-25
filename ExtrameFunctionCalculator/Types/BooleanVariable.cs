@@ -40,8 +40,6 @@ namespace ExtrameFunctionCalculator.Types
 
         public override string Solve() => boolean_value ? "1" : "0";
 
-        public override Digit GetDigit() => new Digit(Solve());
-
         public override string GetName() => boolean_value ? TRUE : FALSE;
     }
 }

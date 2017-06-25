@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ExtrameFunctionCalculator.UtilTools;
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
@@ -23,8 +24,6 @@ namespace ExtrameFunctionCalculator.Types
 
     public class ReflectionFunction : Function
     {
-        private static Regex check_function_format_regex = new Regex(@"([a-zA-Z]\w*)\((.*)\)");
-
         private OnReflectionFunction bind_reflection_function;
 
         public override FunctionType FunctionType => FunctionType.ReflectionFunction;
@@ -33,13 +32,10 @@ namespace ExtrameFunctionCalculator.Types
         {
             bind_reflection_function = onReflectionFunction;
             raw_text = expression;
-            Match result = check_function_format_regex.Match(expression);
-            if (result.Groups.Count != 3)
+
+            if (!ParserUtils.TryParseTextToFunctionDeclear(expression, out function_name, out function_paramters))
                 Log.ExceptionError(new Exception("Cannot parse function ：" + expression));
-            function_name = result.Groups[1].Value;
-            function_paramters = result.Groups[2].Value;
-            ParameterRequestWrapper parameterRequest = new ParameterRequestWrapper(function_paramters);
-            request = parameterRequest;
+            request = new ParameterRequestWrapper(function_paramters);
         }
 
         public override string Solve()

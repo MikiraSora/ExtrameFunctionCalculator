@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ExtrameFunctionCalculator.UtilTools;
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
@@ -37,12 +38,10 @@ namespace ExtrameFunctionCalculator.Types
         }
 
         #endregion ParameterRequestWrapper
-
-        private static Regex FunctionFormatRegex = new Regex(@"([a-zA-Z]\w*)\((.*)\)=(.+)");
+        
 
         protected string function_name, function_paramters, function_body;
-
-        private static Regex check_function_format_regex = new Regex(@"([a-zA-Z]\w*)\((.*)\)");
+        
 
         protected ParameterRequestWrapper request;
 
@@ -59,14 +58,10 @@ namespace ExtrameFunctionCalculator.Types
             if (expression == null || expression.Length == 0)
                 return;
             raw_text = expression;
-            Match result = FunctionFormatRegex.Match(expression);
-            if (result.Groups.Count != 4)
+
+            if(!ParserUtils.TryParseTextToFunction(expression,out function_name,out function_paramters,out function_body))
                 Log.ExceptionError(new Exception("Cannot parse function ：" + expression));
-            function_name = result.Groups[1].Value;
-            function_paramters = result.Groups[2].Value;
-            ParameterRequestWrapper parameterRequest = new ParameterRequestWrapper(function_paramters);
-            request = parameterRequest;
-            function_body = result.Groups[3].Value;
+            request = new ParameterRequestWrapper(function_paramters);
         }
 
         protected Dictionary<string, Variable> Parse(string paramsRawText)

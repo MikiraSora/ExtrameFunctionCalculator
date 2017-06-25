@@ -70,6 +70,7 @@
     <Compile Include="Types\Symbol.cs" />
     <Compile Include="Types\Variable.cs" />
     <Compile Include="UtilTools\ObjectPool.cs" />
+    <Compile Include="UtilTools\ParserUtils.cs" />
     <Compile Include="UtilTools\Utils.cs" />
   </ItemGroup>
   <ItemGroup />

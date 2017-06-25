@@ -1,5 +1,6 @@
 ﻿using ExtrameFunctionCalculator.Script;
 using ExtrameFunctionCalculator.Types;
+using ExtrameFunctionCalculator.UtilTools;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
@@ -24,7 +25,7 @@ namespace ExtrameFunctionCalculator
         private Dictionary<String, Variable> variable_table = new Dictionary<string, Variable>();
         private Dictionary<String, Function> function_table = new Dictionary<string, Function>();
 
-
+        ObjectPool<Digit> digit_cache_pool = new ObjectPool<Digit>(() => new Digit("0"), (digit) => { });
 
         public Calculator()
         {
@@ -410,6 +411,8 @@ namespace ExtrameFunctionCalculator
 
             string result = result_expr.RawText;
 
+            digit_cache_pool.Push(result_expr as Digit);
+
             if (result.Contains("."))
             {
                 string tmpDecial = result.Substring(result.IndexOf('.') + 1);
@@ -432,7 +435,11 @@ namespace ExtrameFunctionCalculator
             Expression result_expr = SolveExpressionList(expression_list);
 
             if (result_expr.ExpressionType == ExpressionType.Digit)
-                return Double.Parse(result_expr.Solve()) != 0;
+            {
+                string result = result_expr.Solve();
+                digit_cache_pool.Push((Digit)result_expr);
+                return Double.Parse(result) != 0;
+            }
             if (result_expr.ExpressionType == ExpressionType.Variable)
                 if (((Variable)result_expr).VariableType == VariableType.BooleanVariable)
                     return ((BooleanVariable)result_expr).BoolValue;
@@ -875,7 +882,7 @@ namespace ExtrameFunctionCalculator
                             if (stack == 0)
                             {
                                 var sub_exprssion_list = expression_list.GetRange(position_start + 1, position - position_start - 1);
-                                var result = new Digit(SolveExpressionList(sub_exprssion_list).RawText);
+                                var result = digit_cache_pool.Pop((obj)=> { obj.RawText=SolveExpressionList(sub_exprssion_list).RawText; });
                                 expression_list.RemoveRange(position_start, position - position_start + 1);
                                 expression_list.Insert(position_start, result);
                                 position = position_start;
@@ -922,7 +929,7 @@ namespace ExtrameFunctionCalculator
                             throw new Exception("缺少要计算的值");
                         else
                         {
-                            prev_value = new Digit("0");
+                            prev_value = digit_cache_pool.Pop((obj)=> { obj.RawText = "0"; });
                             prev_i = position == 0 ? 0 : position - 1;
                         }
 
@@ -931,12 +938,15 @@ namespace ExtrameFunctionCalculator
                     paramsList.Add(next_value);
 
                     var result = op.Solve(paramsList, this);
-                    Expression expr = !(result[0] is Digit) ? new Digit(result[0].Solve()) : result[0];
+                    Expression expr = !(result[0] is Digit) ? digit_cache_pool.Pop(obj=> { obj.RawText = result[0].Solve(); }) : result[0];
 
                     expression_list.Insert(prev_i, expr);
                     expression_list.Remove(next_value);
                     expression_list.Remove(prev_value);
                     expression_list.Remove(op);
+
+                    digit_cache_pool.Push(next_value);
+                    digit_cache_pool.Push(prev_value);
 
                     position = 0;
                     continue;
@@ -947,6 +957,8 @@ namespace ExtrameFunctionCalculator
                 Log.ExceptionError(new Exception($"still exsit more expression object in result list"));
             return expression_list[0];
         }
+
+        #region GetNode
 
         private bool GetNextSymbol(List<Expression> expression_list, int position, out Symbol next_symbol, out int next_i) => TryGetNextTypeValue<Symbol>(expression_list, position, out next_symbol, out next_i);
 
@@ -988,25 +1000,25 @@ namespace ExtrameFunctionCalculator
             return false;
         }
 
+        #endregion
+
         internal Expression ParseStringToExpression(string text)
         {
             if (Utils.IsFunction(text))
             {
-                //Get function name
-                Match result = check_function_format_regex.Match(text);
-                if (result.Groups.Count != 3)
+                string function_name;
+                string function_paramters;
+                if(!ParserUtils.TryParseTextToFunctionDeclear(text,out function_name,out function_paramters))
                     Log.ExceptionError(new Exception("Cannot parse function ：" + text));
-                string function_name = result.Groups[(1)].Value;
-                string function_paramters = result.Groups[(2)].Value;
                 if (!ContainFunction(function_name))
                     Log.ExceptionError(new Exception(String.Format("function {0} hadnt declared!", function_name)));
                 Function function = GetFunction(function_name);
 
-                return new Digit(function.Solve(function_paramters));
+                return digit_cache_pool.Pop(obj => { obj.RawText = function.Solve(function_paramters); });
             }
             if (Utils.IsDigit(text))
             {
-                return new Digit(text);
+                return digit_cache_pool.Pop(obj => { obj.RawText = text; }) ;
             }
 
             if (Utils.IsValidVariable(text))
@@ -1015,7 +1027,7 @@ namespace ExtrameFunctionCalculator
                 if (variable == null)
                     Log.ExceptionError(new Exception($"Variable {text} is not found"));
                 //因为MapVariable并不在此处理所以为了减少引用调用所以不用new WrapperVariable;
-                return new Digit(variable.Solve());
+                return digit_cache_pool.Pop(obj => { obj.RawText = variable.Solve(); });
             }
 
             return null;
@@ -1061,7 +1073,7 @@ namespace ExtrameFunctionCalculator
             {
                 List<Expression> result = new List<Expression>();
                 Digit a = (Digit)paramsList[0], b = (Digit)paramsList[1];
-                result.Add(new Digit((a.GetDouble() + b.GetDouble()).ToString()));
+                result.Add(digit_cache_pool.Pop(obj=> { obj.RawText = (a.GetDouble() + b.GetDouble()).ToString(); }));
                 return result;
             });
 
@@ -1069,7 +1081,7 @@ namespace ExtrameFunctionCalculator
             {
                 List<Expression> result = new List<Expression>();
                 Digit a = (Digit)paramsList[0], b = (Digit)paramsList[1];
-                result.Add(new Digit((a.GetDouble() - b.GetDouble()).ToString()));
+                result.Add(digit_cache_pool.Pop(obj => { obj.RawText = (a.GetDouble() - b.GetDouble()).ToString(); }));
                 return result;
             });
 
@@ -1077,7 +1089,7 @@ namespace ExtrameFunctionCalculator
             {
                 List<Expression> result = new List<Expression>();
                 Digit a = (Digit)paramsList[0], b = (Digit)paramsList[1];
-                result.Add(new Digit((a.GetDouble() * b.GetDouble()).ToString()));
+                result.Add(digit_cache_pool.Pop(obj => { obj.RawText = (a.GetDouble() * b.GetDouble()).ToString(); }));
                 return result;
             });
 
@@ -1085,7 +1097,7 @@ namespace ExtrameFunctionCalculator
             {
                 List<Expression> result = new List<Expression>();
                 Digit a = (Digit)paramsList[0], b = (Digit)paramsList[1];
-                result.Add(new Digit((a.GetDouble() / b.GetDouble()).ToString()));
+                result.Add(digit_cache_pool.Pop(obj => { obj.RawText = (a.GetDouble() / b.GetDouble()).ToString(); }));
                 return result;
             });
 
@@ -1093,7 +1105,7 @@ namespace ExtrameFunctionCalculator
             {
                 List<Expression> result = new List<Expression>();
                 Digit a = (Digit)paramsList[0], b = (Digit)paramsList[1];
-                result.Add(new Digit(Math.Pow(a.GetDouble(), b.GetDouble()).ToString()));
+                result.Add(digit_cache_pool.Pop(obj => { obj.RawText = Math.Pow(a.GetDouble(), b.GetDouble()).ToString(); }));
                 return result;
             });
 

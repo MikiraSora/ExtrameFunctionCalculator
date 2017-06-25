@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
+using System.Diagnostics;
 
 namespace ExtrameFunctionCalculator.UtilTools
 {
@@ -13,6 +14,7 @@ namespace ExtrameFunctionCalculator.UtilTools
     {
         public delegate T CreateNewObjectFunc();
         public delegate void ResetObjectFunc(T obj);
+        public delegate void SetObjectValueFunc(T obj);
 
         Queue<T> pool;
 
@@ -32,27 +34,45 @@ namespace ExtrameFunctionCalculator.UtilTools
             this.reset_function = reset_func;
 
             pool = new Queue<T>(capacity);
+
+            for (int i = 0; i < capacity/3; i++)
+            {
+                T obj = create_function();
+                reset_function(obj);
+                pool.Enqueue(obj);
+            }
         }
 
         public void Push(T item)
         {
-            if (item != null&&pool.Count>=capacity)
-                return;
             lock (pool)
             {
+                if (item != null && pool.Count >= capacity)
+                    return;
                 pool.Enqueue(item);
+                //Debug.Print($"push obj {item.GetHashCode()} , now capacity is {pool.Count}");
             }
         }
 
-        public T Pop()
+        public T Pop(SetObjectValueFunc settter_func=null)
         {
             T obj;
             lock (pool)
             {
                 obj = pool.Count == 0 ? create_function() : pool.Dequeue();
+                //Debug.Print($"pop a {(pool.Count==0?"new":"cached")} obj {obj.GetHashCode()}, now capacity is {pool.Count}");
             }
-            reset_function(obj);
+
+            if (settter_func == null)
+                reset_function(obj);
+            else
+                settter_func(obj);
             return obj;
+        }
+
+        public override string ToString()
+        {
+            return $"Cached/Capacity : {pool.Count}/{capacity}";
         }
     }
 }
