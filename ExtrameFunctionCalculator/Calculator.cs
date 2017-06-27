@@ -37,6 +37,7 @@ namespace ExtrameFunctionCalculator
         private Dictionary<String, Function> function_table = new Dictionary<string, Function>();
 
         ObjectPool<Digit> digit_cache_pool = new ObjectPool<Digit>(() => new Digit("0"), (digit) => { });
+        ObjectPool<List<Expression>> expression_list_cache_pool = new ObjectPool<List<Expression>>(()=>new List<Expression>(),(list)=> { list.Clear(); });
 
         public Calculator()
         {
@@ -322,16 +323,7 @@ namespace ExtrameFunctionCalculator
 
         public string LoadScriptFile(string file_path)
         {
-            /*
-            try
-            {*/
             GetScriptManager().LoadScript(file_path);
-            /* }
-             catch (Exception e)
-             {
-                 Log.Error(e.Message);
-                 return "loaded scriptfile failed!";
-             }*/
             return "loaded scriptfile successfully!";
         }
 
@@ -527,7 +519,7 @@ namespace ExtrameFunctionCalculator
 
         public List<Expression> ParseExpression(string expression)
         {
-            List<Expression> expressionArrayList = new List<Expression>();
+            List<Expression> expressionArrayList = expression_list_cache_pool.Pop();
             int position = 0;
             char c, tmp_c;
             Expression expr = null;
@@ -829,8 +821,8 @@ namespace ExtrameFunctionCalculator
         internal Expression CalculateExecute(List<Expression> expression_list)
         {
             int position = 0;
-            List<Expression> paramsList = new List<Expression>();
-            while (true)
+            List<Expression> paramsList = expression_list_cache_pool.Pop();
+            while (true) 
             {
                 if (position >= expression_list.Count)
                     break;
@@ -841,61 +833,70 @@ namespace ExtrameFunctionCalculator
                     int next_symbol_position;
                     if (GetNextSymbol(expression_list, position, out next_op, out next_symbol_position))
                     {
-                        if (op.CompareOperationPrioty(next_op) < 0)
+                        if (op.CompareOperationPrioty(next_op) <= 0)
                         {
-                            //下一个操作符比这个高,那就跳到那里
+                            //下一个操作符比这个高或者相同,那就跳到那里
                             position = next_symbol_position;
                             continue;
                         }
                     }
-
                     //符号计算
-
                     paramsList.Clear();
                     SymbolInfo symbol_info = operator_info[op.RawText];
                     Digit next_value, prev_value;
                     int next_i=position, prev_i=position;
-
-                    for (int i = 0; i < symbol_info.right_params_request+symbol_info.left_params_request; i++)
+                    
+                    for (int r = 0,l=0; r+l < symbol_info.right_params_request+symbol_info.left_params_request; )
                     {
-                        if (!GetPrevDigit(expression_list, prev_i, out prev_value, out prev_i))
+                        if (l < symbol_info.left_params_request)
                         {
-                            if (!symbol_info.able_default_param_value)
-                                throw new Exception("缺少必要的参数");
-                            prev_value = digit_cache_pool.Pop((obj) => { obj.RawText = symbol_info.default_param_value; });
-                            prev_i = position == 0 ? 0 : position - 1;
+                            if (!GetPrevDigit(expression_list, prev_i, out prev_value, out prev_i))
+                            {
+                                if (!symbol_info.able_default_param_value)
+                                    throw new Exception("缺少必要的参数");
+                                prev_value = digit_cache_pool.Pop((obj) => { obj.RawText = symbol_info.default_param_value; });
+                                prev_i = position == 0 ? 0 : position - 1;
+                            }
+
+                            paramsList.Add(prev_value);
+                            l++;
                         }
 
-                        i++;
-                        paramsList.Add(prev_value);
-
-                        if (!GetNextDigit(expression_list, next_i, out next_value, out next_i))
+                        if (r < symbol_info.right_params_request)
                         {
-                            if (!symbol_info.able_default_param_value)
-                                throw new Exception("缺少必要的参数");
-                            next_value = digit_cache_pool.Pop((obj) => { obj.RawText = symbol_info.default_param_value; });
-                            next_i = position == 0 ? 0 : position - 1;
-                        }
+                            if (!GetNextDigit(expression_list, next_i, out next_value, out next_i))
+                            {
+                                if (!symbol_info.able_default_param_value)
+                                    throw new Exception("缺少必要的参数");
+                                next_value = digit_cache_pool.Pop((obj) => { obj.RawText = symbol_info.default_param_value; });
+                                next_i = position == 0 ? 0 : position - 1;
+                            }
 
-                        paramsList.Add(next_value);
+                            paramsList.Add(next_value);
+                            r++;
+                        }
                     }
 
                     var result = op.Solve(paramsList, this);
                     Expression expr = !(result[0] is Digit) ? digit_cache_pool.Pop(obj=> { obj.RawText = result[0].Solve(); }) : result[0];
 
                     expression_list.Insert(prev_i, expr);
+
                     foreach (var digit in paramsList)
                     {
                         expression_list.Remove(digit);
                         digit_cache_pool.Push((Digit)digit);
                     }
+
                     expression_list.Remove(op);
+                    expression_list_cache_pool.Push(result);
 
                     position = 0;
                     continue;
                 }
                 position++;
             }
+            expression_list_cache_pool.Push(paramsList);
             if (expression_list.Count != 1)
                 Log.ExceptionError(new Exception($"still exsit more expression object in result list"));
             return expression_list[0];
@@ -993,7 +994,7 @@ namespace ExtrameFunctionCalculator
 
         public delegate List<Expression> OnCalculateFunc(List<Expression> parametersList, Calculator refCalculator);
 
-        public void RegisterOperation(string operatorSymbol, int requestParamterSize, float operatorPrioty, OnCalculateFunc operatorFunction,bool able_default_param_value = false, string default_param_value = "0")
+        public void RegisterOperator(string operatorSymbol, int requestParamterSize, float operatorPrioty, OnCalculateFunc operatorFunction,bool able_default_param_value = false, string default_param_value = "0")
         {
             int t = requestParamterSize / 2;
             RegisterOperation(operatorSymbol, (t,requestParamterSize-t), operatorPrioty, operatorFunction,able_default_param_value,default_param_value);
@@ -1033,60 +1034,60 @@ namespace ExtrameFunctionCalculator
         {
             #region 基本操作符
 
-            RegisterOperation("+", 2, 6.0f, (paramsList, calculator) =>
+            RegisterOperator("+", 2, 10, (paramsList, calculator) =>
             {
-                List<Expression> result = new List<Expression>();
+                List<Expression> result = expression_list_cache_pool.Pop();
                 Digit a = (Digit)paramsList[0], b = (Digit)paramsList[1];
                 result.Add(digit_cache_pool.Pop(obj=> { obj.RawText = (a.GetDouble() + b.GetDouble()).ToString(); }));
                 return result;
             });
 
-            RegisterOperation("-", 2, 6.0f, (paramsList, calculator) =>
+            RegisterOperator("-", 2, 10, (paramsList, calculator) =>
             {
-                List<Expression> result = new List<Expression>();
+                List<Expression> result = expression_list_cache_pool.Pop();
                 Digit a = (Digit)paramsList[0], b = (Digit)paramsList[1];
                 result.Add(digit_cache_pool.Pop(obj => { obj.RawText = (a.GetDouble() - b.GetDouble()).ToString(); }));
                 return result;
             },true);
 
-            RegisterOperation("*", 2, 9.0f, (paramsList, calculator) =>
+            RegisterOperator("*", 2, 11, (paramsList, calculator) =>
             {
-                List<Expression> result = new List<Expression>();
+                List<Expression> result = expression_list_cache_pool.Pop();
                 Digit a = (Digit)paramsList[0], b = (Digit)paramsList[1];
                 result.Add(digit_cache_pool.Pop(obj => { obj.RawText = (a.GetDouble() * b.GetDouble()).ToString(); }));
                 return result;
             });
 
-            RegisterOperation("/", 2, 9.0f, (paramsList, calculator) =>
+            RegisterOperator("/", 2, 11, (paramsList, calculator) =>
             {
-                List<Expression> result = new List<Expression>();
+                List<Expression> result = expression_list_cache_pool.Pop();
                 Digit a = (Digit)paramsList[0], b = (Digit)paramsList[1];
                 result.Add(digit_cache_pool.Pop(obj => { obj.RawText = (a.GetDouble() / b.GetDouble()).ToString(); }));
                 return result;
             });
 
-            RegisterOperation("%", 2, 9.0f, (paramsList, calculator) =>
+            RegisterOperator("%", 2, 11, (paramsList, calculator) =>
             {
-                List<Expression> result = new List<Expression>();
+                List<Expression> result = expression_list_cache_pool.Pop();
                 Digit a = (Digit)paramsList[0], b = (Digit)paramsList[1];
                 result.Add(digit_cache_pool.Pop(obj => { obj.RawText = ((int)a.GetDouble() % (int)b.GetDouble()).ToString(); }));
                 return result;
             });
 
-            RegisterOperation("^", 2, 12.0f, (paramsList, calculator) =>
+            RegisterOperator("^^", 2, 12.0f, (paramsList, calculator) =>
             {
-                List<Expression> result = new List<Expression>();
+                List<Expression> result = expression_list_cache_pool.Pop();
                 Digit a = (Digit)paramsList[0], b = (Digit)paramsList[1];
                 result.Add(digit_cache_pool.Pop(obj => { obj.RawText = Math.Pow(a.GetDouble(), b.GetDouble()).ToString(); }));
                 return result;
             });
 
-            RegisterOperation("(", 2, 99.0f, (paramsList, calculator) =>
+            RegisterOperator("(", 2, 99.0f, (paramsList, calculator) =>
             {
                 return null;
             });
 
-            RegisterOperation(")", 2, 99.0f, (paramsList, calculator) =>
+            RegisterOperator(")", 2, 99.0f, (paramsList, calculator) =>
             {
                 return null;
             });
@@ -1099,9 +1100,9 @@ namespace ExtrameFunctionCalculator
 
             RegisterRawVariable(new BooleanVariable(false, null));
 
-            RegisterOperation(">", 2, 3.0f, (paramsList, calculator) =>
+            RegisterOperator(">", 2, 8, (paramsList, calculator) =>
             {
-                List<Expression> result = new List<Expression>();
+                List<Expression> result = expression_list_cache_pool.Pop();
                 Expression a = paramsList[0], b = paramsList[1];
                 if (!((a.IsCalculatable) && (b.IsCalculatable)))
                     Log.ExceptionError(new Exception("cant take a pair of valid type to calculate."));
@@ -1113,9 +1114,9 @@ namespace ExtrameFunctionCalculator
                 return result;
             });
 
-            RegisterOperation("<", 2, 3.0f, (paramsList, calculator) =>
+            RegisterOperator("<", 2, 8, (paramsList, calculator) =>
             {
-                List<Expression> result = new List<Expression>();
+                List<Expression> result = expression_list_cache_pool.Pop();
                 Expression a = paramsList[0], b = paramsList[1];
                 if (!((a.IsCalculatable) && (b.IsCalculatable)))
                     Log.ExceptionError(new Exception("cant take a pair of valid type to calculate."));
@@ -1127,9 +1128,9 @@ namespace ExtrameFunctionCalculator
                 return result;
             });
 
-            RegisterOperation(">=", 2, 3.0f, (paramsList, calculator) =>
+            RegisterOperator(">=", 2, 8, (paramsList, calculator) =>
             {
-                List<Expression> result = new List<Expression>();
+                List<Expression> result = expression_list_cache_pool.Pop();
                 Expression a = paramsList[0], b = paramsList[1];
                 if (!((a.IsCalculatable) && (b.IsCalculatable)))
                     Log.ExceptionError(new Exception("cant take a pair of valid type to calculate."));
@@ -1141,9 +1142,9 @@ namespace ExtrameFunctionCalculator
                 return result;
             });
 
-            RegisterOperation("<=", 2, 3.0f, (paramsList, calculator) =>
+            RegisterOperator("<=", 2, 8, (paramsList, calculator) =>
             {
-                List<Expression> result = new List<Expression>();
+                List<Expression> result = expression_list_cache_pool.Pop();
                 Expression a = paramsList[0], b = paramsList[1];
                 if (!((a.IsCalculatable) && (b.IsCalculatable)))
                     Log.ExceptionError(new Exception("cant take a pair of valid type to calculate."));
@@ -1155,9 +1156,9 @@ namespace ExtrameFunctionCalculator
                 return result;
             });
 
-            RegisterOperation("==", 2, 2.5f, (paramsList, calculator) =>
+            RegisterOperator("==", 2, 7, (paramsList, calculator) =>
             {
-                List<Expression> result = new List<Expression>();
+                List<Expression> result = expression_list_cache_pool.Pop();
                 Expression a = paramsList[0], b = paramsList[1];
                 if (!((a.IsCalculatable) && (b.IsCalculatable)))
                     Log.ExceptionError(new Exception("cant take a pair of valid type to calculate."));
@@ -1169,9 +1170,9 @@ namespace ExtrameFunctionCalculator
                 return result;
             });
 
-            RegisterOperation("!=", 2, 2.5f, (paramsList, calculator) =>
+            RegisterOperator("!=", 2, 7, (paramsList, calculator) =>
             {
-                List<Expression> result = new List<Expression>();
+                List<Expression> result = expression_list_cache_pool.Pop();
                 Expression a = paramsList[0], b = paramsList[1];
                 if (!((a.IsCalculatable) && (b.IsCalculatable)))
                     Log.ExceptionError(new Exception("cant take a pair of valid type to calculate."));
@@ -1183,9 +1184,9 @@ namespace ExtrameFunctionCalculator
                 return result;
             });
 
-            RegisterOperation("&&", 2, 2.3f, (paramsList, calculator) =>
+            RegisterOperator("&&", 2, 3, (paramsList, calculator) =>
             {
-                List<Expression> result = new List<Expression>();
+                List<Expression> result = expression_list_cache_pool.Pop();
                 Expression a = paramsList[0], b = paramsList[1];
                 if (!((a.IsCalculatable) && (b.IsCalculatable)))
                     Log.ExceptionError(new Exception("cant take a pair of valid type to calculate."));
@@ -1197,9 +1198,9 @@ namespace ExtrameFunctionCalculator
                 return result;
             });
 
-            RegisterOperation("||", 2, 2.3f, (paramsList, calculator) =>
+            RegisterOperator("||", 2, 2, (paramsList, calculator) =>
             {
-                List<Expression> result = new List<Expression>();
+                List<Expression> result = expression_list_cache_pool.Pop();
                 Expression a = paramsList[0], b = paramsList[1];
                 if (!((a.IsCalculatable) && (b.IsCalculatable)))
                     Log.ExceptionError(new Exception("cant take a pair of valid type to calculate."));
@@ -1211,7 +1212,75 @@ namespace ExtrameFunctionCalculator
                 return result;
             });
 
+            RegisterOperation("!", (0, 1), 12, (paramsList, calculator) => {
+                List<Expression> result = expression_list_cache_pool.Pop();
+                Expression a = paramsList[0];
+                if (!(a.IsCalculatable))
+                    Log.ExceptionError(new Exception("cant take a pair of valid type to calculate."));
+
+                double va = double.Parse(calculator.Solve(a.Solve()));
+
+                result.Add(new BooleanVariable(!(va != 0), calculator));
+                return result;
+            });
+
             #endregion 逻辑运算符
+
+            #region 位运算操作符
+
+            RegisterOperator("<<", 2, 9, (paramsList, calculator) =>
+            {
+                List<Expression> result = expression_list_cache_pool.Pop();
+                Digit a = (Digit)paramsList[0], b = (Digit)paramsList[1];
+                result.Add(digit_cache_pool.Pop(obj => { obj.RawText = ((int)a.GetDouble() << (int)b.GetDouble()).ToString(); }));
+                return result;
+            });
+
+            RegisterOperator(">>", 2, 9, (paramsList, calculator) =>
+            {
+                List<Expression> result = expression_list_cache_pool.Pop();
+                Digit a = (Digit)paramsList[0], b = (Digit)paramsList[1];
+                result.Add(digit_cache_pool.Pop(obj => { obj.RawText = ((int)a.GetDouble() >> (int)b.GetDouble()).ToString(); }));
+                return result;
+            });
+
+            RegisterOperator("&", 2, 6.0f, (paramsList, calculator) =>
+            {
+                List<Expression> result = expression_list_cache_pool.Pop();
+                Digit a = (Digit)paramsList[0], b = (Digit)paramsList[1];
+                result.Add(digit_cache_pool.Pop(obj => { obj.RawText = ((int)a.GetDouble() & (int)b.GetDouble()).ToString(); }));
+                return result;
+            });
+
+            RegisterOperator("|", 2, 4, (paramsList, calculator) =>
+            {
+                List<Expression> result = expression_list_cache_pool.Pop();
+                Digit a = (Digit)paramsList[0], b = (Digit)paramsList[1];
+                result.Add(digit_cache_pool.Pop(obj => { obj.RawText = ((int)a.GetDouble() | (int)b.GetDouble()).ToString(); }));
+                return result;
+            });
+
+            RegisterOperator("^", 2, 5, (paramsList, calculator) =>
+            {
+                List<Expression> result = expression_list_cache_pool.Pop();
+                Digit a = (Digit)paramsList[0], b = (Digit)paramsList[1];
+                result.Add(digit_cache_pool.Pop(obj => { obj.RawText = ((int)a.GetDouble() ^ (int)b.GetDouble()).ToString(); }));
+                return result;
+            });
+
+            RegisterOperation("~", (0, 1), 12, (paramsList, calculator) => {
+                List<Expression> result = expression_list_cache_pool.Pop();
+                Expression a = paramsList[0];
+                if (!(a.IsCalculatable))
+                    Log.ExceptionError(new Exception("cant take a pair of valid type to calculate."));
+
+                double va = double.Parse(calculator.Solve(a.Solve()));
+
+                result.Add(digit_cache_pool.Pop(obj => { obj.RawText = (~((int)va)).ToString(); }));
+                return result;
+            });
+            
+            #endregion
 
             #region 单参数函数
 
@@ -1460,8 +1529,6 @@ namespace ExtrameFunctionCalculator
             #endregion 双参数函数
 
             #region 超级无敌炫酷牛逼吊炸上天函数
-
-            //var boolcalculator = new BooleanCalculatorSupport.BooleanCalculator(this);
 
             Calculator.RegisterRawFunction("if(condition,true_expr,false_expr)", new OnReflectionFunction()
             {

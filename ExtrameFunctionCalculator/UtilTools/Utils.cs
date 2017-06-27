@@ -158,7 +158,7 @@ namespace ExtrameFunctionCalculator
             Match result = repeating_decimal_check_regex.Match(Decimal);
             if (!result.Success)
                 return false;
-            string /*intDigit=result.group(1),notRepeatDecimal=result.group(2),*/RepeatDecimal = result.Captures[3].Value, endDecimal = result.Captures[4].Value;
+            string RepeatDecimal = result.Captures[3].Value, endDecimal = result.Captures[4].Value;
             if (endDecimal.Length > RepeatDecimal.Length)
                 return false;
             return true;
