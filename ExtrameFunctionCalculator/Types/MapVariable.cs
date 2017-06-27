@@ -102,6 +102,9 @@ namespace ExtrameFunctionCalculator.Types
             //return variable_key_map.containsKey(index)?variable_key_map.get(index):null;
             if (IsKeyPath(index))
                 return variable_key_map.ContainsKey(index) ? variable_key_map[(index)] : null;
+            Variable variable;
+            if (Calculator.TryGetVariable(index, out variable))
+                return variable;
             index = Calculator.Solve(index);
             return variable_key_map.ContainsKey(index) ? variable_key_map[(index)] : null;
         }

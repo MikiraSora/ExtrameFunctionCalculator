@@ -38,7 +38,5 @@ namespace ExtrameFunctionCalculator.UtilTools
 
             return true;
         }
-
-
     }
 }

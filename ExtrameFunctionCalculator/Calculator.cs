@@ -1,8 +1,8 @@
 ﻿using ExtrameFunctionCalculator.Script;
 using ExtrameFunctionCalculator.Types;
 using ExtrameFunctionCalculator.UtilTools;
-using System;
 using System.Collections.Generic;
+using System;
 using System.Numerics;
 using System.Text.RegularExpressions;
 
@@ -11,13 +11,15 @@ namespace ExtrameFunctionCalculator
     public class Calculator
     {
         private Dictionary<String, Stack<Variable>> tmp_variable_map = new Dictionary<string, Stack<Variable>>();
-        private static Regex check_function_format_regex = new Regex("([a-zA-Z]\\w*)\\((.*)\\)");
         private ScriptManager script_manager;
         private Stack<List<String>> record_tmp_variable_stack = new Stack<List<string>>();
+
         internal Dictionary<string, int> operator_request_count = new Dictionary<string, int>();
         internal Dictionary<string, Symbol> shared_symbol_cache = new Dictionary<string, Symbol>();
         internal Dictionary<string, float> operator_prioty = new Dictionary<string, float>();
         internal Dictionary<string, OnCalculateFunc> operator_function = new Dictionary<string, OnCalculateFunc>();
+        internal Dictionary<string, (int left, int right)> operator_params_request = new Dictionary<string, (int left, int right)>();
+
         private CalculatorOptimizer calculator_optimizer = null;
         private static string special_operator_chars = " [ ] ";
         private static Dictionary<String, Variable> raw_variable_table = new Dictionary<string, Variable>();
@@ -299,6 +301,12 @@ namespace ExtrameFunctionCalculator
             return null;
         }
 
+        public bool TryGetVariable(string name,out Variable variable)
+        {
+            variable = GetVariable(name);
+            return variable != null;
+        }
+
         #endregion 变量
 
         #region 脚本
@@ -442,8 +450,7 @@ namespace ExtrameFunctionCalculator
                 if (((Variable)result_expr).VariableType == VariableType.BooleanVariable)
                     return ((BooleanVariable)result_expr).BoolValue;
 
-            Log.ExceptionError(new Exception("Uncalculatable type :" + result_expr.ExpressionType.ToString()));
-            return false;
+            throw new Exception("Uncalculatable type :" + result_expr.ExpressionType.ToString());
         }
 
         private void CheckNormalizeChain(ref List<Expression> expression_list)
@@ -571,10 +578,7 @@ namespace ExtrameFunctionCalculator
                                         expressionArrayList.Add(ParseStringToExpression(statement));//should always return Function
                                         break;
                                     }
-                                    //statement += c;
-                                } /*else {
-                                //statement += c;
-                            }*/
+                                }
                                 statement += c;
                             }
                             position++;
@@ -582,9 +586,8 @@ namespace ExtrameFunctionCalculator
                     }
                     else if ((!(statement.Length == 0)) && c == '[')
                     {
-                        //array
+                        //array/map
                         char tmp_ch = (char)0;
-                        //position--;
                         //读取下标
                         string indexes = string.Empty;
                         Stack<int> balanceStack = new Stack<int>();
@@ -619,8 +622,7 @@ namespace ExtrameFunctionCalculator
                             Log.ExceptionError(new Exception($"variable {statement} is not found"));
                         if (variable.VariableType != VariableType.MapVariable)
                             Log.ExceptionError(new Exception(String.Format("{0} isnt MapVariable", statement)));
-                        //((MapVariable)variable).SetIndexes(indexes);
-                        expressionArrayList.Add(/*new WrapperVariable(variable, indexes)*/((MapVariable)variable).RouteGetVariable(indexes));
+                        expressionArrayList.Add(((MapVariable)variable).RouteGetVariable(indexes));
                         position--;
                     }
                     else
@@ -669,7 +671,7 @@ namespace ExtrameFunctionCalculator
         {
             try
             {
-                return ExecuteEx(text);
+                return ParseExecuteCommand(text);
             }
             catch (Exception e)
             {
@@ -677,11 +679,11 @@ namespace ExtrameFunctionCalculator
             }
         }
 
-        private string ExecuteEx(string text)
+        private string ParseExecuteCommand(string text)
         {
             Log.Debug(String.Format("Try Execute : {0}", text));
             //Clear(); //// TODO: 2016/11/22 此处存在和脚本语言的Call部分功能起到致命冲突，stdmath2::getCall().
-            if (text.Length == 0)
+            if (string.IsNullOrWhiteSpace(text))
                 Log.ExceptionError(new Exception("empty text to execute"));
             char c;
             string executeType = string.Empty, paramter = string.Empty;
@@ -722,12 +724,6 @@ namespace ExtrameFunctionCalculator
                         result = Solve(paramter);
                         break;
                     }
-                /*
-                case "dump":
-                {
-                    result = DumpInfo(paramter);
-                    break;
-                }*/
                 case "set_map":
                     {
                         SetMapVariable(paramter);
@@ -739,30 +735,11 @@ namespace ExtrameFunctionCalculator
                         result = string.Empty;
                         break;
                     }
-                /*
-            case "test":
-                {
-                    result = DumpInfo(paramter);
-                    break;
-                }*/
                 case "load_script":
                     {
                         result = LoadScriptFile(paramter);
                         break;
                     }
-                /*
-            case "help":
-                {
-                    result = CalculatorHelper.GetHelp();
-                    break;
-                }*/
-                /*
-            case "load":
-                {
-                    result = Load(paramter);
-                    break;
-                }
-                */
                 case "unload_script":
                     {
                         result = UnloadScriptFile(paramter);
@@ -773,67 +750,12 @@ namespace ExtrameFunctionCalculator
                         result = Reset();
                         break;
                     }
-                /*
-            case "reg_df":
-                {
-                    result = new DerivativeParser(this).Solve(paramter, "x");
-                    break;
-                }
-                */
-                /*
-            case "save":
-                {
-                    string type = string.Empty, output_path = string.Empty;
-                    for (int position = 0; position < paramter.length(); position++)
-                    {
-                        c = paramter.charAt(position);
-                        if (c == ' ')
-                        {
-                            output_path = paramter.substring(position + 1);
-                            break;
-                        }
-                        else
-                        {
-                            type += c;
-                        }
-                    }
-                    result = Save(type, output_path);
-                    break;
-                }
-                */
-                /*被DisEnable()/Enable()代替
-                case "optimize":{
-                    result=Optimize(paramter);
-                    break;
-                }*/
-                /*
-                case "delete":
-                    {
-                        string type = string.Empty, name = string.Empty;
-                        for (int position = 0; position < paramter.Length; position++)
-                        {
-                            c = paramter[(position)];
-                            if (c == ' ')
-                            {
-                                name = paramter.Substring(position + 1);
-                                break;
-                            }
-                            else
-                            {
-                                type += c;
-                            }
-                        }
-                        result = Delete(type, name);
-                        break;
-                    }
-                    */
                 default:
                     {
                         Log.ExceptionError(new Exception(String.Format("unknown command \"{0}\"", executeType)));
                         break;
                     }
             }
-            //Clear();//// TODO: 2016/11/22 尝试放到这里 ,....看来不行
             return result;
         }
 
@@ -1059,6 +981,16 @@ namespace ExtrameFunctionCalculator
             special_operator_chars += $" {operatorSymbol[0]} ";
         }
 
+        public void RegisterOperation(string operatorSymbol, (int,int) request_params_count, float operatorPrioty, OnCalculateFunc operatorFunction)
+        {
+            operator_function[operatorSymbol] = operatorFunction;
+            operator_prioty[operatorSymbol] = operatorPrioty;
+            operator_request_count[operatorSymbol] = requestParamterSize;
+            shared_symbol_cache[operatorSymbol] = GetSymbolMayFromCache(operatorSymbol);
+            special_operator_chars += $" {operatorSymbol} ";
+            special_operator_chars += $" {operatorSymbol[0]} ";
+        }
+
         #endregion Operators
 
         #region Init
@@ -1101,6 +1033,14 @@ namespace ExtrameFunctionCalculator
                 List<Expression> result = new List<Expression>();
                 Digit a = (Digit)paramsList[0], b = (Digit)paramsList[1];
                 result.Add(digit_cache_pool.Pop(obj => { obj.RawText = (a.GetDouble() / b.GetDouble()).ToString(); }));
+                return result;
+            });
+
+            RegisterOperation("%", 2, 9.0f, (paramsList, calculator) =>
+            {
+                List<Expression> result = new List<Expression>();
+                Digit a = (Digit)paramsList[0], b = (Digit)paramsList[1];
+                result.Add(digit_cache_pool.Pop(obj => { obj.RawText = ((int)a.GetDouble() % (int)b.GetDouble()).ToString(); }));
                 return result;
             });
 

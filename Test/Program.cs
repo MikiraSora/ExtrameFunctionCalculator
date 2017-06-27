@@ -14,11 +14,7 @@ namespace Test
             //Speed();
             //Test();
             Calculator calculator = new Calculator();
-            //calculator.Enable(Calculator.EnableType.ExpressionOptimize); 傻逼玩意
             calculator.Enable(Calculator.EnableType.PrecisionTruncation);
-
-            string a, b, c;
-            ParserUtils.TryParseTextToFunctionDeclear("funA222(x,y))",out a,out b);
 
             while (true)
             {
@@ -39,6 +35,7 @@ namespace Test
             //2: 79000t/s
 
             Calculator calculator = new Calculator();
+            Log.EnableLog = false;
             //calculator.Enable(Calculator.EnableType.ExpressionOptimize); 傻逼玩意
             calculator.Enable(Calculator.EnableType.PrecisionTruncation);
 
