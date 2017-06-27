@@ -70,7 +70,7 @@ namespace ExtrameFunctionCalculator.Types
             string var_name;
             for (int position = 0; position < getList.Count; position++)
             {
-                var_name = getList[(position)];
+                var_name = getList[position];
                 //能用循环艹的就打死不要用递归
                 if (currentVariable != null)
                 {
@@ -101,15 +101,15 @@ namespace ExtrameFunctionCalculator.Types
         {
             //return variable_key_map.containsKey(index)?variable_key_map.get(index):null;
             if (IsKeyPath(index))
-                return variable_key_map.ContainsKey(index) ? variable_key_map[(index)] : null;
+                return variable_key_map.ContainsKey(index) ? variable_key_map[index] : null;
             Variable variable;
             if (Calculator.TryGetVariable(index, out variable))
                 return variable;
             index = Calculator.Solve(index);
-            return variable_key_map.ContainsKey(index) ? variable_key_map[(index)] : null;
+            return variable_key_map.ContainsKey(index) ? variable_key_map[index] : null;
         }
 
-        public bool IsKeyPath(string path) => (path[0] == path[(path.Length - 1)] && path[(0)] == '"');
+        public bool IsKeyPath(string path) => (path[0] == path[path.Length - 1] && path[0] == '"');
 
         private List<String> ParseIndexesString(string indexes)
         {
@@ -125,7 +125,7 @@ namespace ExtrameFunctionCalculator.Types
                 position++;
                 if (position >= indexes.Length)
                     break;
-                c = indexes[(position)];
+                c = indexes[position];
                 if (c == '[')
                 {
                     recordPosition.Push(position);

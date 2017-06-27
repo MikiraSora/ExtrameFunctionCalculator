@@ -73,7 +73,7 @@ namespace ExtrameFunctionCalculator
                 long sec = (time_strip - min * 1000 * 60) / 1000;
                 long mill_sec = time_strip - min * 60 * 1000 - sec * 1000;
                 if (Log.IsShowCallerMethod)
-                    return String.Format("{0}[{1}:{2}:{3} {4}]{5}():{6}", message_type.ToString()[(0)], min, sec, mill_sec, message_type.ToString(), caller_method_name != null ? caller_method_name : "unknown_method", message);
+                    return String.Format("{0}[{1}:{2}:{3} {4}]{5}():{6}", message_type.ToString()[0], min, sec, mill_sec, message_type.ToString(), caller_method_name != null ? caller_method_name : "unknown_method", message);
                 return String.Format("{0}[{1}:{2}:{3} {4}]{5}", message_type.ToString()[0], min, sec, mill_sec, message_type.ToString(), message);
             }
         }

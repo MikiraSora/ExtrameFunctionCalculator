@@ -47,12 +47,12 @@ namespace ExtrameFunctionCalculator
 
             private float GetOperatorPriorty()
             {
-                return GetOperatorReference().Calculator.operator_prioty.ContainsKey(GetOperatorReference().RawText) ? GetOperatorReference().Calculator.operator_prioty[(GetOperatorReference().RawText)] : -1;
+                return GetOperatorReference().Calculator.operator_info.ContainsKey(GetOperatorReference().RawText) ? GetOperatorReference().Calculator.operator_info[GetOperatorReference().RawText].prioty : -1;
             }
 
             public bool isSameLevelLayout(Operator op) => this.GetOperatorPriorty() == op.GetOperatorPriorty();
 
-            public bool isSameLevelLayout(string operatorChar) => this.GetOperatorPriorty() == (GetOperatorReference().Calculator.operator_prioty.ContainsKey(operatorChar) ? GetOperatorReference().Calculator.operator_prioty[(operatorChar)] : 0);
+            public bool isSameLevelLayout(string operatorChar) => this.GetOperatorPriorty() == (GetOperatorReference().Calculator.operator_info.ContainsKey(operatorChar) ? GetOperatorReference().Calculator.operator_info[operatorChar].prioty : 0);
 
             public bool isBaseOperator()
             {
@@ -186,7 +186,7 @@ namespace ExtrameFunctionCalculator
             ExtrameFunctionCalculator.Types.Symbol symbol = null;
             for (int position = 0; position < expressionArrayList.Count; position++)
             {
-                expression = expressionArrayList[(position)];
+                expression = expressionArrayList[position];
                 if (expression.ExpressionType == ExtrameFunctionCalculator.Types.ExpressionType.Digit)
                 {
                     result.Add(new Digit((ExtrameFunctionCalculator.Types.Digit)expression));
@@ -202,7 +202,7 @@ namespace ExtrameFunctionCalculator
                         bracketList = new List<Expression>();
                         for (++position; position < expressionArrayList.Count; position++)
                         {
-                            expression = expressionArrayList[(position)];
+                            expression = expressionArrayList[position];
                             if (expression.ExpressionType == ExtrameFunctionCalculator.Types.ExpressionType.Symbol)
                             {
                                 if (((ExtrameFunctionCalculator.Types.Symbol)expression).RawText == ("("))
@@ -241,7 +241,7 @@ namespace ExtrameFunctionCalculator
             Expression expression = null;
             for (int i = 0; i < expressions.Count; i++)
             {
-                expression = expressions[(i)];
+                expression = expressions[i];
                 resultArrayList.Add(expression.GetExpressionReference());
             }
             return resultArrayList;
@@ -265,9 +265,9 @@ namespace ExtrameFunctionCalculator
                     * */
                     if (position != expressionArrayList.Count - 1)/*判断是否在末尾，如果是就跳过后面的删除*/
                     {
-                        if (((Operator)expressionArrayList[(position + 1)]).isSameLevelLayout("*"))
+                        if (((Operator)expressionArrayList[position + 1]).isSameLevelLayout("*"))
                         {
-                            while ((position + 1) < expressionArrayList.Count ? ((Operator)expressionArrayList[(position + 1)]).isSameLevelLayout("*") : false)
+                            while ((position + 1) < expressionArrayList.Count ? ((Operator)expressionArrayList[position + 1]).isSameLevelLayout("*") : false)
                             {
                                 expressionArrayList.RemoveAt(position + 1);
                                 expressionArrayList.RemoveAt(position + 1);
@@ -275,7 +275,7 @@ namespace ExtrameFunctionCalculator
                         }
                         else
                         {
-                            if (((Operator)expressionArrayList[(position + 1)]).GetOperatorReference().RawText == ("+") && (position != 0 ? ((Operator)expressionArrayList[(position - 1)]).isSameLevelLayout((Operator)expressionArrayList[(position + 1)]) : true))
+                            if (((Operator)expressionArrayList[position + 1]).GetOperatorReference().RawText == ("+") && (position != 0 ? ((Operator)expressionArrayList[(position - 1)]).isSameLevelLayout((Operator)expressionArrayList[position + 1]) : true))
                             {
                                 expressionArrayList.RemoveAt(position--);
                                 if (position >= expressionArrayList.Count)
@@ -284,17 +284,17 @@ namespace ExtrameFunctionCalculator
                             }
                         }
                     }
-                    if (position != 0 ? expressionArrayList[(position - 1)].OptExpressionType == Expression.ExpressionType.Operator : false)/*判断是否在首位，如果是就跳前面的删除*/
+                    if (position != 0 ? expressionArrayList[position - 1].OptExpressionType == Expression.ExpressionType.Operator : false)/*判断是否在首位，如果是就跳前面的删除*/
                     {
-                        if (((Operator)expressionArrayList[(position - 1)]).isSameLevelLayout("*"))
+                        if (((Operator)expressionArrayList[position - 1]).isSameLevelLayout("*"))
                         {
-                            while ((position - 1) >= 0 ? ((Operator)expressionArrayList[(position - 1)]).isSameLevelLayout("*") : false)
+                            while ((position - 1) >= 0 ? ((Operator)expressionArrayList[position - 1]).isSameLevelLayout("*") : false)
                             {
                                 expressionArrayList.RemoveAt(--position);
                                 expressionArrayList.RemoveAt(--position);
                             }
                         }
-                        else if (((Operator)expressionArrayList[(position - 1)]).isSameLevelLayout("+"))
+                        else if (((Operator)expressionArrayList[position - 1]).isSameLevelLayout("+"))
                         {
                             expressionArrayList.RemoveAt(position--);
                             expressionArrayList.RemoveAt(position);
@@ -310,7 +310,7 @@ namespace ExtrameFunctionCalculator
                     * */
                     if (position < expressionArrayList.Count - 1)
                     {
-                        expression = expressionArrayList[(position + 1)];
+                        expression = expressionArrayList[position + 1];
                         if (expression.OptExpressionType == Expression.ExpressionType.Operator ? ((Operator)expression).GetOperatorReference().RawText == ("*") : false)
                         {
                             expressionArrayList.RemoveAt(position);
@@ -321,7 +321,7 @@ namespace ExtrameFunctionCalculator
                     }
                     if (position > 0)
                     {
-                        expression = expressionArrayList[(position - 1)];
+                        expression = expressionArrayList[position - 1];
                         if (expression.OptExpressionType == Expression.ExpressionType.Operator ? ((Operator)expression).GetOperatorReference().RawText == ("*") : false)
                         {
                             expressionArrayList.RemoveAt(position);
@@ -363,9 +363,9 @@ namespace ExtrameFunctionCalculator
 
             if (expressionArrayList.Count >= 3)
             {
-                while (expressionArrayList[(expressionArrayList.Count - 3)].OptExpressionType == Expression.ExpressionType.Fraction && expressionArrayList.get(expressionArrayList.size() - 1).GetType() == Expression.ExpressionType.Fraction && (expressionArrayList[(expressionArrayList.Count - 2)].GetType() == Expression.ExpressionType.Operator ? ((Operator)expressionArrayList.get(expressionArrayList.size() - 2)).GetOperatorReference().rawText.equals("*") : false))
+                while (expressionArrayList[expressionArrayList.Count - 3)].OptExpressionType == Expression.ExpressionType.Fraction && expressionArrayList.get(expressionArrayList.size() - 1).GetType() == Expression.ExpressionType.Fraction && (expressionArrayList[(expressionArrayList.Count - 2].GetType() == Expression.ExpressionType.Operator ? ((Operator)expressionArrayList.get(expressionArrayList.size() - 2)).GetOperatorReference().rawText.equals("*") : false))
                 {
-                    a = (Fraction)expressionArrayList[(expressionArrayList.Count - 1)];
+                    a = (Fraction)expressionArrayList[expressionArrayList.Count - 1];
                     expressionArrayList.RemoveAt(expressionArrayList.Count - 1);
                     expressionArrayList.RemoveAt(expressionArrayList.Count - 1);
                     b = (Fraction)expressionArrayList[expressionArrayList.Count - 1];
@@ -374,7 +374,7 @@ namespace ExtrameFunctionCalculator
                 }
             }
 
-            f = (Fraction)expressionArrayList[(expressionArrayList.Count - 1)];
+            f = (Fraction)expressionArrayList[expressionArrayList.Count - 1];
             re
             expressionArrayList.RemoveAt(expressionArrayList.size() - 1);
             expressionArrayList.add(new Operator(new Calculator.Symbol("*")));

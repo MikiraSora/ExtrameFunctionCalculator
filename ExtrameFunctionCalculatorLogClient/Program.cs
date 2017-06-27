@@ -34,7 +34,7 @@ namespace ExtrameFunctionCalculatorLogServer
         private static void PrintMessage(string message)
         {
             string context = message.Substring(1);
-            switch (message[(0)])
+            switch (message[0])
             {
                 case 'U':
                     {

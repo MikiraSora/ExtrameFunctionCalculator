@@ -44,7 +44,7 @@ namespace ExtrameFunctionCalculator.Script
 
             for (int position = 0; position < statements.Count; position++)
             {
-                text = statements[(position)].Trim().Trim(new char[] { '\t', '\n' });
+                text = statements[position].Trim().Trim(new char[] { '\t', '\n' });
 
                 if (text.Length == 0)
                     continue;
@@ -99,7 +99,7 @@ namespace ExtrameFunctionCalculator.Script
                             command = string.Empty;
                             for (int tmp_position = 0; tmp_position < text.Length; tmp_position++)
                             {
-                                c = text[(tmp_position)];
+                                c = text[tmp_position];
                                 if (c == ' ')
                                 {
                                     paramter = text.Substring(tmp_position + 1);
@@ -183,7 +183,7 @@ namespace ExtrameFunctionCalculator.Script
             return unit;
         }
 
-        private static bool IsPreCompileCommand(string command) => command.Length == 0 ? false : command[(0)] == '#';
+        private static bool IsPreCompileCommand(string command) => command.Length == 0 ? false : command[0] == '#';
 
         public void SetPreCompileExecutors(Dictionary<String, ExecutorAction> ExecutorActionHashMap) => reflection_precompiling_execution_map = ExecutorActionHashMap;
 
@@ -197,7 +197,7 @@ namespace ExtrameFunctionCalculator.Script
             {
                 if (position >= text.Length)
                     throw new SynatxErrorException(line, "Cant parse preCompile command: " + text, RefExecutor);
-                c = text[(position)];
+                c = text[position];
                 if (c == ' ')
                     break;
                 command += (char)c;
@@ -205,7 +205,7 @@ namespace ExtrameFunctionCalculator.Script
             }
             param = text.Substring(position + 1);
             if (reflection_precompiling_execution_map.ContainsKey(command))
-                reflection_precompiling_execution_map[(command)].Invoke(param, this);
+                reflection_precompiling_execution_map[command].Invoke(param, this);
         }
 
         public void FunctionRegister()
@@ -221,7 +221,7 @@ namespace ExtrameFunctionCalculator.Script
                 position++;
                 if (position >= statement_lines.Count)
                     break;
-                unit = statement_lines[(position)];
+                unit = statement_lines[position];
                 if (unit.UnitType == UnitType.Statement)
                 {
                     if (((Statement)unit).StatementType == StatementType.Function)

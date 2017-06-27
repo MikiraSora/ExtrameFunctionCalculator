@@ -79,7 +79,7 @@ namespace ExtrameFunctionCalculator
             string notRepeating = string.Empty, Repeating = string.Empty;
             while (true)
             {
-                c = decimalExpr[(pos)];
+                c = decimalExpr[pos];
                 if (c != '(' && c != ')')
                 {
                     if (c != '.')
@@ -92,7 +92,7 @@ namespace ExtrameFunctionCalculator
                         pos++;
                         while (true)
                         {
-                            c = decimalExpr[(pos)];
+                            c = decimalExpr[pos];
                             if (c == '(')
                                 break;
                             notRepeating += c;
@@ -111,7 +111,7 @@ namespace ExtrameFunctionCalculator
                         pos++;
                         while (true)
                         {
-                            c = decimalExpr[(pos)];
+                            c = decimalExpr[pos];
                             if (c == ')')
                                 break;
                             Repeating += c;
@@ -141,7 +141,7 @@ namespace ExtrameFunctionCalculator
             Match result = repeating_decimal_check_regex.Match(decimalExpr);
             if (!result.Success)
                 Log.ExceptionError(new Exception(decimalExpr + " is invalid repeating decimal!"));
-            string intDigit = result.Captures[1].Value, notRepeatDecimal = result.Captures[(2)].Value, RepeatDecimal = result.Captures[3].Value, endDecimal = result.Captures[(4)].Value;
+            string intDigit = result.Captures[1].Value, notRepeatDecimal = result.Captures[2].Value, RepeatDecimal = result.Captures[3].Value, endDecimal = result.Captures[4].Value;
             if (endDecimal.Length > RepeatDecimal.Length)
                 Log.ExceptionError(new Exception(decimalExpr + " is invalid repeating decimal!"));
             string devNumber = string.Empty;

@@ -52,7 +52,7 @@ namespace ExtrameFunctionCalculator.Script
         {
             if (!script_map.ContainsKey(package_name))
                 return;
-            Executor executor = script_map[(package_name)];
+            Executor executor = script_map[package_name];
             executor.Drop();
             Log.Debug(String.Format("{0} decrease reference count.now is {1}", executor.GetPackageName, executor.ReferenceCount));
             if (!executor.IsNonReferenced())
@@ -66,7 +66,7 @@ namespace ExtrameFunctionCalculator.Script
                 {
                     if (!cache_function_map.ContainsKey(function.FunctionName))
                         continue;
-                    if (cache_function_map[(function.FunctionName)].RefParser.RefExecutor.GetPackageName == (executor.GetPackageName))
+                    if (cache_function_map[function.FunctionName].RefParser.RefExecutor.GetPackageName == (executor.GetPackageName))
                     {
                         cache_function_map.Remove(function.FunctionName);
                         Log.Debug(String.Format("{0}::{1}() was removed from cache", executor.GetPackageName, function.FunctionName));
@@ -92,7 +92,7 @@ namespace ExtrameFunctionCalculator.Script
             {
                 if (cache_function_map.ContainsKey(function_name))
                 {
-                    Function function = cache_function_map[(function_name)];
+                    Function function = cache_function_map[function_name];
                     return new ExtrameFunctionCalculator.Types.ScriptFunction(function_name, function.RefParser.RefExecutor, GetCalculator());
                 }
             }

@@ -73,7 +73,7 @@ namespace ExtrameFunctionCalculator.Types
             string paramter = string.Empty;
             for (int pos = 0; pos < paramsRawText.Length; pos++)
             {
-                c = paramsRawText[(pos)];
+                c = paramsRawText[pos];
                 if (c == '(')
                 {
                     BracketStack.Push(pos);
@@ -87,7 +87,7 @@ namespace ExtrameFunctionCalculator.Types
                 }
                 if (c == ',' && (BracketStack.Count == 0))
                 {
-                    string requestParamterName = request[(requestIndex++)];
+                    string requestParamterName = request[requestIndex++];
                     paramsMap[requestParamterName] = new Variable(requestParamterName, this.Calculator.Solve(paramter), this.Calculator);
                     paramter = string.Empty;
                 }
@@ -97,7 +97,7 @@ namespace ExtrameFunctionCalculator.Types
                 }
             }
             if ((paramter.Length != 0))
-                paramsMap[request[(requestIndex)]] = new ExpressionVariable(request[(requestIndex)], this.Calculator.Solve(paramter), this.Calculator);
+                paramsMap[request[requestIndex]] = new ExpressionVariable(request[requestIndex], this.Calculator.Solve(paramter), this.Calculator);
 
             return paramsMap;
         }

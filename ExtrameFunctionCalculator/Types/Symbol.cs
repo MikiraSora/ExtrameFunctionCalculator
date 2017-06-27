@@ -24,14 +24,12 @@ namespace ExtrameFunctionCalculator.Types
 
         public int CompareOperationPrioty(Symbol symbol)
         {
-            float val = Calculator.operator_prioty[(raw_text)] - Calculator.operator_prioty[symbol.RawText];
+            float val = Calculator.operator_info[raw_text].prioty - Calculator.operator_info[symbol.RawText].prioty;
             return val == 0 ? 0 : (val > 0 ? 1 : -1);
         }
 
         public override string ToString() => raw_text;
 
-        public List<Expression> Solve(List<Expression> paramterList, Calculator calculator) => Calculator.operator_function[(raw_text)](paramterList, calculator);
-
-        public int GetParamterCount() => Calculator.operator_request_count[raw_text];
+        public List<Expression> Solve(List<Expression> paramterList, Calculator calculator) => Calculator.operator_info[raw_text].call_function(paramterList, calculator);
     }
 }
