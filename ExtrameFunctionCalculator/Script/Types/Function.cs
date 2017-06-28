@@ -1,6 +1,5 @@
 ﻿using ExtrameFunctionCalculator.UtilTools;
 using System;
-using System.Text.RegularExpressions;
 
 namespace ExtrameFunctionCalculator.Script.Types
 {

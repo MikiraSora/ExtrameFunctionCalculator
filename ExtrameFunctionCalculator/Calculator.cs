@@ -1,16 +1,14 @@
 ﻿using ExtrameFunctionCalculator.Script;
 using ExtrameFunctionCalculator.Types;
 using ExtrameFunctionCalculator.UtilTools;
-using System.Collections.Generic;
 using System;
+using System.Collections.Generic;
 using System.Numerics;
-using System.Text.RegularExpressions;
 
 namespace ExtrameFunctionCalculator
 {
     public class Calculator
     {
-
         internal struct SymbolInfo
         {
             public string symbol;
@@ -20,13 +18,14 @@ namespace ExtrameFunctionCalculator
             public OnCalculateFunc call_function;
             public bool able_default_param_value;
             public string default_param_value;
+            public bool is_right_to_left;
         }
 
         private Dictionary<String, Stack<Variable>> tmp_variable_map = new Dictionary<string, Stack<Variable>>();
         private ScriptManager script_manager;
         private Stack<List<String>> record_tmp_variable_stack = new Stack<List<string>>();
 
-        internal Dictionary<string, SymbolInfo> operator_info=new Dictionary<string, SymbolInfo>();
+        internal Dictionary<string, SymbolInfo> operator_info = new Dictionary<string, SymbolInfo>();
         internal Dictionary<string, Symbol> shared_symbol_cache = new Dictionary<string, Symbol>();
 
         private CalculatorOptimizer calculator_optimizer = null;
@@ -36,8 +35,8 @@ namespace ExtrameFunctionCalculator
         private Dictionary<String, Variable> variable_table = new Dictionary<string, Variable>();
         private Dictionary<String, Function> function_table = new Dictionary<string, Function>();
 
-        ObjectPool<Digit> digit_cache_pool = new ObjectPool<Digit>(() => new Digit("0"), (digit) => { });
-        ObjectPool<List<Expression>> expression_list_cache_pool = new ObjectPool<List<Expression>>(()=>new List<Expression>(),(list)=> { list.Clear(); });
+        private ObjectPool<Digit> digit_cache_pool = new ObjectPool<Digit>(() => new Digit("0"), (digit) => { });
+        private ObjectPool<List<Expression>> expression_list_cache_pool = new ObjectPool<List<Expression>>(() => new List<Expression>(), (list) => { list.Clear(); });
 
         public Calculator()
         {
@@ -311,7 +310,7 @@ namespace ExtrameFunctionCalculator
             return null;
         }
 
-        public bool TryGetVariable(string name,out Variable variable)
+        public bool TryGetVariable(string name, out Variable variable)
         {
             variable = GetVariable(name);
             return variable != null;
@@ -421,16 +420,18 @@ namespace ExtrameFunctionCalculator
             string result = result_expr.RawText;
 
             digit_cache_pool.Push(result_expr as Digit);
+            double d = double.Parse(result);
 
+            /*
             if (result.Contains("."))
             {
                 string tmpDecial = result.Substring(result.IndexOf('.') + 1);
 
                 if (int.Parse(tmpDecial) == (0))
                     return result.Substring(0, result.IndexOf('.'));
+            }*/
 
-            }
-            return result;
+            return ((int)d) == d ? ((int)d).ToString() : d.ToString();
         }
 
         public bool BoolSolve(string expression)
@@ -804,7 +805,7 @@ namespace ExtrameFunctionCalculator
                             if (stack == 0)
                             {
                                 var sub_exprssion_list = expression_list.GetRange(position_start + 1, position - position_start - 1);
-                                var result = digit_cache_pool.Pop((obj)=> { obj.RawText=SolveExpressionList(sub_exprssion_list).RawText; });
+                                var result = digit_cache_pool.Pop((obj) => { obj.RawText = SolveExpressionList(sub_exprssion_list).RawText; });
                                 expression_list.RemoveRange(position_start, position - position_start + 1);
                                 expression_list.Insert(position_start, result);
                                 position = position_start;
@@ -822,7 +823,8 @@ namespace ExtrameFunctionCalculator
         {
             int position = 0;
             List<Expression> paramsList = expression_list_cache_pool.Pop();
-            while (true) 
+
+            while (true)
             {
                 if (position >= expression_list.Count)
                     break;
@@ -830,23 +832,25 @@ namespace ExtrameFunctionCalculator
                 if (node.ExpressionType == ExpressionType.Symbol)
                 {
                     Symbol op = (Symbol)node, next_op;
+                    SymbolInfo symbol_info = operator_info[op.RawText];
                     int next_symbol_position;
+
                     if (GetNextSymbol(expression_list, position, out next_op, out next_symbol_position))
                     {
-                        if (op.CompareOperationPrioty(next_op) <= 0)
+                        int prioty = op.CompareOperationPrioty(next_op);
+                        if (symbol_info.is_right_to_left ? prioty <= 0 : prioty < 0)
                         {
-                            //下一个操作符比这个高或者相同,那就跳到那里
                             position = next_symbol_position;
                             continue;
                         }
                     }
+
                     //符号计算
                     paramsList.Clear();
-                    SymbolInfo symbol_info = operator_info[op.RawText];
                     Digit next_value, prev_value;
-                    int next_i=position, prev_i=position;
-                    
-                    for (int r = 0,l=0; r+l < symbol_info.right_params_request+symbol_info.left_params_request; )
+                    int next_i = position, prev_i = position;
+
+                    for (int r = 0, l = 0; r + l < symbol_info.right_params_request + symbol_info.left_params_request;)
                     {
                         if (l < symbol_info.left_params_request)
                         {
@@ -878,7 +882,7 @@ namespace ExtrameFunctionCalculator
                     }
 
                     var result = op.Solve(paramsList, this);
-                    Expression expr = !(result[0] is Digit) ? digit_cache_pool.Pop(obj=> { obj.RawText = result[0].Solve(); }) : result[0];
+                    Expression expr = !(result[0] is Digit) ? digit_cache_pool.Pop(obj => { obj.RawText = result[0].Solve(); }) : result[0];
 
                     expression_list.Insert(prev_i, expr);
 
@@ -912,7 +916,7 @@ namespace ExtrameFunctionCalculator
             for (int i = position - 1; (i >= 0) && (i < expression_list.Count); i--)
             {
                 tmp = expression_list[i] as T;
-                if (tmp!=null)
+                if (tmp != null)
                 {
                     next_symbol = tmp;
                     prev_i = i;
@@ -936,7 +940,7 @@ namespace ExtrameFunctionCalculator
             for (int i = position + 1; i < expression_list.Count; i++)
             {
                 tmp = expression_list[i] as T;
-                if (tmp!=null)
+                if (tmp != null)
                 {
                     next_symbol = tmp;
                     next_i = i;
@@ -948,7 +952,7 @@ namespace ExtrameFunctionCalculator
             return false;
         }
 
-        #endregion
+        #endregion GetNode
 
         internal Expression ParseStringToExpression(string text)
         {
@@ -956,7 +960,7 @@ namespace ExtrameFunctionCalculator
             {
                 string function_name;
                 string function_paramters;
-                if(!ParserUtils.TryParseTextToFunctionDeclear(text,out function_name,out function_paramters))
+                if (!ParserUtils.TryParseTextToFunctionDeclear(text, out function_name, out function_paramters))
                     Log.ExceptionError(new Exception("Cannot parse function ：" + text));
                 if (!ContainFunction(function_name))
                     Log.ExceptionError(new Exception(String.Format("function {0} hadnt declared!", function_name)));
@@ -966,7 +970,7 @@ namespace ExtrameFunctionCalculator
             }
             if (Utils.IsDigit(text))
             {
-                return digit_cache_pool.Pop(obj => { obj.RawText = text; }) ;
+                return digit_cache_pool.Pop(obj => { obj.RawText = text; });
             }
 
             if (Utils.IsValidVariable(text))
@@ -994,15 +998,14 @@ namespace ExtrameFunctionCalculator
 
         public delegate List<Expression> OnCalculateFunc(List<Expression> parametersList, Calculator refCalculator);
 
-        public void RegisterOperator(string operatorSymbol, int requestParamterSize, float operatorPrioty, OnCalculateFunc operatorFunction,bool able_default_param_value = false, string default_param_value = "0")
+        public void RegisterOperator(string operatorSymbol, int requestParamterSize, float operatorPrioty, OnCalculateFunc operatorFunction, bool able_default_param_value = false, string default_param_value = "0", bool is_right_to_left = false)
         {
             int t = requestParamterSize / 2;
-            RegisterOperation(operatorSymbol, (t,requestParamterSize-t), operatorPrioty, operatorFunction,able_default_param_value,default_param_value);
+            RegisterOperation(operatorSymbol, (t, requestParamterSize - t), operatorPrioty, operatorFunction, able_default_param_value, default_param_value, is_right_to_left);
         }
 
-        public void RegisterOperation(string operatorSymbol, (int l,int r) request_params_count, float operatorPrioty, OnCalculateFunc operatorFunction,bool able_default_param_value=false,string default_param_value="0")
+        public void RegisterOperation(string operatorSymbol, (int l, int r) request_params_count, float operatorPrioty, OnCalculateFunc operatorFunction, bool able_default_param_value = false, string default_param_value = "0", bool is_right_to_left = false)
         {
-
             SymbolInfo info = new SymbolInfo()
             {
                 call_function = operatorFunction,
@@ -1011,9 +1014,10 @@ namespace ExtrameFunctionCalculator
                 right_params_request = request_params_count.r,
                 symbol = operatorSymbol,
                 able_default_param_value = able_default_param_value,
-                default_param_value=default_param_value 
+                default_param_value = default_param_value,
+                is_right_to_left = is_right_to_left
             };
-            
+
             shared_symbol_cache[operatorSymbol] = GetSymbolMayFromCache(operatorSymbol);
             this.operator_info[operatorSymbol] = info;
 
@@ -1038,7 +1042,7 @@ namespace ExtrameFunctionCalculator
             {
                 List<Expression> result = expression_list_cache_pool.Pop();
                 Digit a = (Digit)paramsList[0], b = (Digit)paramsList[1];
-                result.Add(digit_cache_pool.Pop(obj=> { obj.RawText = (a.GetDouble() + b.GetDouble()).ToString(); }));
+                result.Add(digit_cache_pool.Pop(obj => { obj.RawText = (a.GetDouble() + b.GetDouble()).ToString(); }));
                 return result;
             });
 
@@ -1048,7 +1052,7 @@ namespace ExtrameFunctionCalculator
                 Digit a = (Digit)paramsList[0], b = (Digit)paramsList[1];
                 result.Add(digit_cache_pool.Pop(obj => { obj.RawText = (a.GetDouble() - b.GetDouble()).ToString(); }));
                 return result;
-            },true);
+            }, true);
 
             RegisterOperator("*", 2, 11, (paramsList, calculator) =>
             {
@@ -1212,7 +1216,8 @@ namespace ExtrameFunctionCalculator
                 return result;
             });
 
-            RegisterOperation("!", (0, 1), 12, (paramsList, calculator) => {
+            RegisterOperation("!", (0, 1), 12, (paramsList, calculator) =>
+            {
                 List<Expression> result = expression_list_cache_pool.Pop();
                 Expression a = paramsList[0];
                 if (!(a.IsCalculatable))
@@ -1222,7 +1227,7 @@ namespace ExtrameFunctionCalculator
 
                 result.Add(new BooleanVariable(!(va != 0), calculator));
                 return result;
-            });
+            }, false, "0", true);
 
             #endregion 逻辑运算符
 
@@ -1268,7 +1273,8 @@ namespace ExtrameFunctionCalculator
                 return result;
             });
 
-            RegisterOperation("~", (0, 1), 12, (paramsList, calculator) => {
+            RegisterOperation("~", (0, 1), 12, (paramsList, calculator) =>
+            {
                 List<Expression> result = expression_list_cache_pool.Pop();
                 Expression a = paramsList[0];
                 if (!(a.IsCalculatable))
@@ -1278,9 +1284,9 @@ namespace ExtrameFunctionCalculator
 
                 result.Add(digit_cache_pool.Pop(obj => { obj.RawText = (~((int)va)).ToString(); }));
                 return result;
-            });
-            
-            #endregion
+            }, false, "0", true);
+
+            #endregion 位运算操作符
 
             #region 单参数函数
 

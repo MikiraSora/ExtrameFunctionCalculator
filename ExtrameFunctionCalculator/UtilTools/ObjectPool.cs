@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Concurrent;
-using System.Diagnostics;
 
 namespace ExtrameFunctionCalculator.UtilTools
 {
@@ -13,18 +11,20 @@ namespace ExtrameFunctionCalculator.UtilTools
     public class ObjectPool<T> where T : class
     {
         public delegate T CreateNewObjectFunc();
+
         public delegate void ResetObjectFunc(T obj);
+
         public delegate void SetObjectValueFunc(T obj);
 
-        Queue<T> pool;
+        private Queue<T> pool;
 
-        CreateNewObjectFunc create_function;
+        private CreateNewObjectFunc create_function;
 
-        ResetObjectFunc reset_function;
+        private ResetObjectFunc reset_function;
 
-        int capacity;
+        private int capacity;
 
-        public ObjectPool(CreateNewObjectFunc create_func,ResetObjectFunc reset_func,int capacity=100)
+        public ObjectPool(CreateNewObjectFunc create_func, ResetObjectFunc reset_func, int capacity = 100)
         {
             if (create_func == null || reset_func == null || capacity <= 0)
                 throw new Exception("Invaid Parameters");
@@ -35,7 +35,7 @@ namespace ExtrameFunctionCalculator.UtilTools
 
             pool = new Queue<T>(capacity);
 
-            for (int i = 0; i < capacity/3; i++)
+            for (int i = 0; i < capacity / 3; i++)
             {
                 T obj = create_function();
                 reset_function(obj);
@@ -54,7 +54,7 @@ namespace ExtrameFunctionCalculator.UtilTools
             }
         }
 
-        public T Pop(SetObjectValueFunc settter_func=null)
+        public T Pop(SetObjectValueFunc settter_func = null)
         {
             T obj;
             lock (pool)

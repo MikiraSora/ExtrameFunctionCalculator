@@ -8,7 +8,6 @@ namespace Test
 {
     internal class Program
     {
-
         private static void Main(string[] args)
         {
             //Speed();
@@ -40,7 +39,8 @@ namespace Test
             calculator.Enable(Calculator.EnableType.PrecisionTruncation);
 
             int i = 0;
-            Timer t = new Timer((state) => {
+            Timer t = new Timer((state) =>
+            {
                 Console.WriteLine($"Calculate Speed:{i}t/s");
                 i = 0;
             }, null, 0, 1000);
@@ -59,7 +59,8 @@ namespace Test
             string a, b, c;
 
             int i = 0;
-            Timer t = new Timer((state) => {
+            Timer t = new Timer((state) =>
+            {
                 Console.WriteLine($"Calculate Speed:{i}t/s");
                 i = 0;
             }, null, 0, 1000);

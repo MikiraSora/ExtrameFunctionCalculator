@@ -1,17 +1,16 @@
 ﻿using ExtrameFunctionCalculator.UtilTools;
 using System;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 
 namespace ExtrameFunctionCalculator.Types
 {
     [Flags]
     public enum FunctionType
     {
-        NormalFunction=1,
-        ReflectionFunction=2,
-        ScriptFunction=4,
-        Unknown=8
+        NormalFunction = 1,
+        ReflectionFunction = 2,
+        ScriptFunction = 4,
+        Unknown = 8
     }
 
     public class Function : Expression
@@ -38,10 +37,8 @@ namespace ExtrameFunctionCalculator.Types
         }
 
         #endregion ParameterRequestWrapper
-        
 
         protected string function_name, function_paramters, function_body;
-        
 
         protected ParameterRequestWrapper request;
 
@@ -59,7 +56,7 @@ namespace ExtrameFunctionCalculator.Types
                 return;
             raw_text = expression;
 
-            if(!ParserUtils.TryParseTextToFunction(expression,out function_name,out function_paramters,out function_body))
+            if (!ParserUtils.TryParseTextToFunction(expression, out function_name, out function_paramters, out function_body))
                 Log.ExceptionError(new Exception("Cannot parse function ：" + expression));
             request = new ParameterRequestWrapper(function_paramters);
         }

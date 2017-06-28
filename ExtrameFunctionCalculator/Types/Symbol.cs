@@ -31,5 +31,7 @@ namespace ExtrameFunctionCalculator.Types
         public override string ToString() => raw_text;
 
         public List<Expression> Solve(List<Expression> paramterList, Calculator calculator) => Calculator.operator_info[raw_text].call_function(paramterList, calculator);
+
+        public bool IsSameLayoutPrioty(Symbol symbol) => CompareOperationPrioty(symbol) == 0;
     }
 }

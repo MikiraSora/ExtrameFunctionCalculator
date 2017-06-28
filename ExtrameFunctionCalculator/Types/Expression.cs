@@ -5,12 +5,12 @@ namespace ExtrameFunctionCalculator.Types
     [Flags]
     public enum ExpressionType
     {
-        Function=1,
-        Variable=2,
-        Digit=4,
-        Symbol=8,
-        Derivative=16,
-        Unknown=32
+        Function = 1,
+        Variable = 2,
+        Digit = 4,
+        Symbol = 8,
+        Derivative = 16,
+        Unknown = 32
     }
 
     public abstract class Expression
