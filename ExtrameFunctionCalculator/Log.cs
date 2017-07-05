@@ -96,16 +96,11 @@ namespace ExtrameFunctionCalculator
             {
                 is_exit = true;
             }
-
-            public void Unlock()
-            {
-                is_lock = false;
-            }
+            
 
             public void CommitLog(Message message)
             {
                 commit_queue.Enqueue(message);
-                Unlock();
             }
 
             public void ThreadRun()
@@ -114,14 +109,12 @@ namespace ExtrameFunctionCalculator
                 is_exit = false;
                 while (!is_exit)
                 {
-                    while (is_lock)
-                    {
                         try
                         {
                             Thread.Sleep((int)flush_inv);
                         }
                         catch { }
-                    }
+                    
 
                     message = commit_queue.Count == 0 ? null : commit_queue.Dequeue();
                     if (message == null)
@@ -193,6 +186,11 @@ namespace ExtrameFunctionCalculator
             return port;
         }
 
+        public static void Stop()
+        {
+            maintenance_thread.Exit();
+        }
+
         public static void SetAddress(string address)
         {
             Log.address = address;
@@ -253,7 +251,10 @@ namespace ExtrameFunctionCalculator
             }
             try
             {
-                SocketWrite(message.toString());
+                if (IsConnecting())
+                    SocketWrite(message.toString());
+                else
+                    System.Diagnostics.Debug.Print(message.toString());
             }
             catch
             {

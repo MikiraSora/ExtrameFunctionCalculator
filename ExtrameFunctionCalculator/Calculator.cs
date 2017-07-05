@@ -671,14 +671,7 @@ namespace ExtrameFunctionCalculator
 
         public string Execute(string text)
         {
-            try
-            {
-                return ParseExecuteCommand(text);
-            }
-            catch (Exception e)
-            {
-                return $"ocurred a error -> {e.Message}";
-            }
+            return ParseExecuteCommand(text);
         }
 
         private string ParseExecuteCommand(string text)
@@ -1031,7 +1024,7 @@ namespace ExtrameFunctionCalculator
 
         static Calculator()
         {
-            Log.SetIsThreadCommitLog(true);
+            //Log.SetIsThreadCommitLog(true);
         }
 
         private void Init()
