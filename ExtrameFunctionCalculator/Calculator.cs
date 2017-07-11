@@ -359,7 +359,7 @@ namespace ExtrameFunctionCalculator
             return false;
         }
 
-        internal Function GetFunction(string name)
+        public Function GetFunction(string name)
         {
             if (raw_function_table.ContainsKey(name))
             {

@@ -26,7 +26,7 @@ namespace CalculatorGUI.Controller
 
         public ObservableCollection<DisplayItem> MessageList { get; set; }
 
-        Calculator CurrentCalculator { get; set; }
+        public Calculator CurrentCalculator { get; set; }
 
         public SolvePartPage()
         {

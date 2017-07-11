@@ -42,6 +42,8 @@ namespace ExtrameFunctionCalculator.Types
 
         protected ParameterRequestWrapper request;
 
+        public ParameterRequestWrapper FunctionParamesters { get { return request; } }
+
         public override ExpressionType ExpressionType { get { return ExpressionType.Function; } }
 
         public virtual FunctionType FunctionType { get { return FunctionType.NormalFunction; } }

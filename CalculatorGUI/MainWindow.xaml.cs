@@ -1,4 +1,5 @@
 ﻿using CalculatorGUI.Controller;
+using CalculatorGUI.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -164,6 +165,30 @@ namespace CalculatorGUI
                 InputCommand.Text = NoticeString;
                 InputCommand.Foreground = LostFocusBrush;
             }
+        }
+
+        private void MenuItem_Click_2(object sender, RoutedEventArgs e)
+        {
+            DisplayItem item = DisplayList.SelectedItem as DisplayItem;
+
+            if (item == null)
+            {
+                MessageBox.Show("select item is null");
+                return;
+            }
+
+            if (item.Message.StartsWith(">reg "))
+            {
+                MessageBox.Show("this is not a function");
+                return;
+            }
+
+            string function = item.Message.Substring(5);
+            function = function.Substring(0, function.IndexOf("(")).Trim();
+
+            ExtrameFunctionCalculator.Types.Function rawFunction = pageController.CurrentCalculator.GetFunction(function);
+            
+            MyFunctionPrinterPanel.AppendFunctionPrinterData(function,rawFunction.FunctionParamesters.ToArray(),rawFunction.FunctionParamesters[0]);
         }
     }
 }

@@ -5,26 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CalculatorGUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="1600">
+        Title="ExtrameFunctionCalculator GUI" Height="600" Width="1600" ResizeMode="CanMinimize">
     <Grid>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+                <ColumnDefinition Width="3*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
 
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"></RowDefinition>
+                    <RowDefinition Height="1.2*"></RowDefinition>
                     <RowDefinition Height="12*"></RowDefinition>
                     <RowDefinition Height="1*"></RowDefinition>
                 </Grid.RowDefinitions>
 
                 <StackPanel Orientation="Horizontal">
-                    <Button FontSize="25" Margin="4.5" Name="CreateNewCalculatorInstanceButton" Click="CreateNewCalculatorInstanceButton_Click">New</Button>
-                    <Button FontSize="25" Margin="4.5">Save</Button>
-                    <Button FontSize="25" Margin="4.5">Load</Button>
-                    <Button FontSize="25" Margin="4.5">About...</Button>
+                    <Button BorderBrush="Transparent" Background="Transparent" FontSize="25" Margin="4.5" Name="CreateNewCalculatorInstanceButton" 
+                            Click="CreateNewCalculatorInstanceButton_Click"
+                            FontFamily="Segoe UI Symbol">&#xE109;</Button>
+                    <Button BorderBrush="Transparent" Background="Transparent" FontSize="25" Margin="4.5" FontFamily="Segoe UI Symbol">&#xE105;</Button>
+                    <Button BorderBrush="Transparent" Background="Transparent" FontSize="25" Margin="4.5" FontFamily="Segoe UI Symbol">&#xE2B3;</Button>
+                    <Button BorderBrush="Transparent" Background="Transparent" FontSize="25" Margin="4.5" FontFamily="Segoe UI Symbol">&#xE11B;</Button>
                 </StackPanel>
 
                 <ListBox Grid.Row="1" Name="DisplayList" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto">
@@ -37,6 +40,7 @@
                                 <MenuItem Header="Execute" Name="ExecuteStatusItem" Click="ExecuteStatusItem_Click"></MenuItem>
                                 <MenuItem Header="Comment" Name="CommentStatusItem" Click="CommentStatusItem_Click"></MenuItem>
                             </MenuItem>
+                            <MenuItem Header="Print Function" Click="MenuItem_Click_2"></MenuItem>
                         </ContextMenu>
                     </ListBox.ContextMenu>
                     <ListBox.ItemTemplate>
@@ -60,7 +64,16 @@
                     <TextBox Grid.Column="1" VerticalContentAlignment="Center" FontSize="25" GotFocus="InputCommand_GotFocus" LostFocus="InputCommand_LostFocus"  KeyDown="TextBox_KeyDown" Name="InputCommand" PreviewKeyDown="InputCommand_PreviewKeyDown">Expr</TextBox>
                     <Button Grid.Column="2" FontSize="25" Click="Button_Click">Send</Button>
                 </Grid>
+            </Grid>
 
+            <Grid Grid.Column="1">
+                <local:CoordnationCanvas x:Name="MainCoordnationCanvas"></local:CoordnationCanvas>
+            </Grid>
+
+            <Grid Grid.Column="2">
+                <local:FunctionPrinterPanel x:Name="MyFunctionPrinterPanel">
+                    
+                </local:FunctionPrinterPanel>
             </Grid>
         </Grid>
     </Grid>
