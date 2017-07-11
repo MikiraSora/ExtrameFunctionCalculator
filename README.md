@@ -2,6 +2,8 @@
 
 -------
 
+[![Build Status](https://travis-ci.org/[MikiraSora]/[ExtrameFunctionCalculator].png)](https://travis-ci.org/[MikiraSora]/[ExtrameFunctionCalculator])
+
 ## 简介:
 此项目是一个功能看起来很强大的计算器类库，提供一个计算器Calculator类,后者能够计算出一个表达式字符串。
 

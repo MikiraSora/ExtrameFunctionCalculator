@@ -1,0 +1,4 @@
+language: csharp
+solution: ExtrameFunctionCalculator.sln
+install:
+ - nuget restore ExtrameFunctionCalculator.sln
