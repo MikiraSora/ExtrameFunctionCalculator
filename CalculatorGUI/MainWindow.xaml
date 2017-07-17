@@ -67,11 +67,11 @@
             </Grid>
 
             <Grid Grid.Column="1">
-                <local:CoordnationCanvas x:Name="MainCoordnationCanvas"></local:CoordnationCanvas>
+                <local:CoordnationCanvas x:Name="MainCoordnationCanvas" OnDrawData="MainCoordnationCanvas_OnDrawData"></local:CoordnationCanvas>
             </Grid>
 
             <Grid Grid.Column="2">
-                <local:FunctionPrinterPanel x:Name="MyFunctionPrinterPanel">
+                <local:FunctionPrinterPanel x:Name="MyFunctionPrinterPanel" OnFunctionPrinterApply="MyFunctionPrinterPanel_OnFunctionPrinterApply">
                     
                 </local:FunctionPrinterPanel>
             </Grid>

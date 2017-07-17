@@ -343,5 +343,10 @@ namespace CalculatorGUI
                 drawDataGeometry.AddGeometry(new LineGeometry((lines[i - 1]), (lines[i])));
             }
         }
+
+        public void ClearAllLines()
+        {
+            drawDataGeometry.Clear();
+        }
     }
 }

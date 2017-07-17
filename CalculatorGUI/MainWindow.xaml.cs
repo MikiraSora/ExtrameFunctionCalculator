@@ -2,8 +2,10 @@
 using CalculatorGUI.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -189,6 +191,97 @@ namespace CalculatorGUI
             ExtrameFunctionCalculator.Types.Function rawFunction = pageController.CurrentCalculator.GetFunction(function);
             
             MyFunctionPrinterPanel.AppendFunctionPrinterData(function,rawFunction.FunctionParamesters.ToArray(),rawFunction.FunctionParamesters[0]);
+        }
+
+        List<FunctionPrinterData> CurrentFunctionData;
+
+        private void MyFunctionPrinterPanel_OnFunctionPrinterApply(ObservableCollection<FunctionPrinterData> data)
+        {
+            CurrentFunctionData = data.ToList();
+            DrawFunctions();
+        }
+
+        private void MainCoordnationCanvas_OnDrawData(object sender, PathGeometry drawProvider)
+        {
+            DrawFunctions();
+        }
+
+        volatile bool isCalculating = false;
+
+        void DrawFunctions()
+        {
+            if (CurrentFunctionData == null || isCalculating)
+                return;
+
+            List<FunctionPrinterData> current_functionList = CurrentFunctionData;
+
+            System.Collections.Generic.List<System.Collections.Generic.List<Point>> ResultList = new List<List<Point>>();
+
+            int task_count = 0;
+
+            foreach (var data in current_functionList)
+            {
+                task_count++;
+                ThreadPool.QueueUserWorkItem((state) => {
+                    string function_head = data.FunctionName+"(";
+                    string independent_var_name=string.Empty;
+                    System.Collections.Generic.List<Point> result_point = new List<Point>();
+                    ParamestersData tmp_param_data;
+                    double cal_Value = 0;
+                    for (int i = 0; i < data.Paramesters.Count-1; i++)
+                    {
+                        tmp_param_data = data.Paramesters[i];
+                        function_head += $"??{tmp_param_data.Name},";
+                        if (tmp_param_data.IsIndependent)
+                            independent_var_name = tmp_param_data.Name;
+                    }
+
+                    if (data.Paramesters[data.Paramesters.Count - 1].IsIndependent)
+                        independent_var_name = data.Paramesters[data.Paramesters.Count - 1].Name;
+                    function_head += $"??{data.Paramesters[data.Paramesters.Count-1].Name})";
+                    
+                    for (double i = 0; i < MainCoordnationCanvas.ActualWidth; i=i+MainCoordnationCanvas.Step* 0.1f)
+                    {
+                        double real_x = MainCoordnationCanvas.GetRealCurrentX(i);
+                        string tmp = function_head;
+
+                        foreach (var param in data.Paramesters)
+                        {
+                            if (param.IsIndependent)
+                                continue;
+                            tmp = tmp.Replace("??" + param.Name,param.Value);
+                        }
+
+                        tmp = tmp.Replace("??" + independent_var_name, real_x.ToString());
+                        cal_Value = double.Parse(pageController.CurrentCalculator.Solve(tmp));
+                        result_point.Add(new Point(real_x, cal_Value));
+                    }
+
+                    ResultList.Add(result_point);
+                    
+                    task_count--;
+                    if (task_count == 0)
+                        ReleaseDrawingStatus(ResultList);
+                }, null);
+            }
+        }
+
+        void ReleaseDrawingStatus(System.Collections.Generic.List<System.Collections.Generic.List<Point>> result_list)
+        {
+            Dispatcher.Invoke(() => {
+                MainCoordnationCanvas.ClearAllLines();
+
+                foreach (var points in result_list)
+                {
+                    MainCoordnationCanvas.AppendLines(points.ToArray(), true);
+                }
+                isCalculating = false;
+            });
+        }
+
+        void HoldDrawingStatus()
+        {
+            isCalculating = true;
         }
     }
 }

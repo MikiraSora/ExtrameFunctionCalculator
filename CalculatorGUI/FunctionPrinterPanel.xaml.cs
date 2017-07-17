@@ -70,6 +70,10 @@ namespace CalculatorGUI
     {
         ObservableCollection<FunctionPrinterData> FunctionList = new ObservableCollection<FunctionPrinterData>();
 
+        public delegate void FunctionPrinterApplyFunc(ObservableCollection<FunctionPrinterData> data);
+
+        public event FunctionPrinterApplyFunc OnFunctionPrinterApply;
+
         public FunctionPrinterPanel()
         {
             InitializeComponent();
@@ -79,7 +83,7 @@ namespace CalculatorGUI
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
+            OnFunctionPrinterApply?.Invoke(FunctionList);
         }
 
         public void AppendFunctionPrinterData(string function_name, string[] function_paramesters, string independent_name)

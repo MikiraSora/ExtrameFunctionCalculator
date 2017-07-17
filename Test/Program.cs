@@ -11,7 +11,7 @@ namespace Test
         private static void Main(string[] args)
         {
             //Speed();
-            //Test();
+            Test();
             Calculator calculator = new Calculator();
             calculator.Enable(Calculator.EnableType.PrecisionTruncation);
 
@@ -54,9 +54,9 @@ namespace Test
 
         public static void Test()
         {
-            string fun = "functionACQ(x,y,z)";
-            Regex check_function_format_regex = new Regex(@"([a-zA-Z]\w*)\((.*)\)=(.+)");
-            string a, b, c;
+            Calculator cal = new Calculator();
+
+            cal.Execute("reg f(x,y,z)=x^^2+y-z*min(x,y)");
 
             int i = 0;
             Timer t = new Timer((state) =>
@@ -65,11 +65,20 @@ namespace Test
                 i = 0;
             }, null, 0, 1000);
 
-            while (true)
+            for (int tx = 0; tx < 2; tx++)
             {
-                ParserUtils.TryParseTextToFunctionDeclear(fun, out a, out b);
-                i++;
+
+                ThreadPool.QueueUserWorkItem((state) => 
+                {
+                    while (true)
+                    {
+                        cal.Execute("solve f(10,20,30)");
+                        i++;
+                    }
+                }, null);
             }
+
+            Console.ReadLine();
         }
     }
 }
