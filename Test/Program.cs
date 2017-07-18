@@ -11,7 +11,7 @@ namespace Test
         private static void Main(string[] args)
         {
             //Speed();
-            Test();
+            //Test();
             Calculator calculator = new Calculator();
             calculator.Enable(Calculator.EnableType.PrecisionTruncation);
 

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.15
+VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExtrameFunctionCalculator", "ExtrameFunctionCalculator\ExtrameFunctionCalculator.csproj", "{DB81DFDD-E0C8-4DF1-A043-162C80379276}"
 EndProject
@@ -82,7 +82,6 @@ Global
 		{31A8DFA9-881A-4F0F-9732-BAF8497D6352}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{31A8DFA9-881A-4F0F-9732-BAF8497D6352}.Debug|x86.Build.0 = Debug|Any CPU
 		{31A8DFA9-881A-4F0F-9732-BAF8497D6352}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{31A8DFA9-881A-4F0F-9732-BAF8497D6352}.Release|Any CPU.Build.0 = Release|Any CPU
 		{31A8DFA9-881A-4F0F-9732-BAF8497D6352}.Release|ARM.ActiveCfg = Release|Any CPU
 		{31A8DFA9-881A-4F0F-9732-BAF8497D6352}.Release|ARM.Build.0 = Release|Any CPU
 		{31A8DFA9-881A-4F0F-9732-BAF8497D6352}.Release|x64.ActiveCfg = Release|Any CPU
